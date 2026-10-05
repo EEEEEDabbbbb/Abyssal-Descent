@@ -263,7 +263,7 @@ const BOT_SOURCE = `
       else if (++floorSteps > 4000) { stuck = 'too long on floor at ' + before + ' phase ' + G.phase + ' cell ' + G.map[G.playerPos.y][G.playerPos.x].content; break; }
     }
     const gear = Object.values(p.equipment).filter(Boolean).map(i => i.rarity[0]).join('');
-    return { statusErrors: (G._statusErrors || []).slice(0, 5), cls, seed, floor: G.floor, level: p.level, died: !!G._gameOverShown, diedToBoss: G._gameOverShown && diedToBoss,
+    return { conquered: !!(G.meta.conquestRewards && G.meta.conquestRewards.conquered), statusErrors: (G._statusErrors || []).slice(0, 5), cls, seed, floor: G.floor, level: p.level, died: !!G._gameOverShown, diedToBoss: G._gameOverShown && diedToBoss,
              killedBy: G._gameOverShown ? p._lastHitBy : null, atk: p.base.atk, def: p.base.def, hp: p.base.maxHp, gear, stuck, growth, fights: fights.concat(G._botFight ? [{ ...G._botFight, hp1: 0 }] : []) };
   };
 })();

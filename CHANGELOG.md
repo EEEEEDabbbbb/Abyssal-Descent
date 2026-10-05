@@ -84,6 +84,10 @@
   page scroll sideways.
 
 ### Accessibility
+- Secondary text (descriptions, hints, labels) was too faint to read
+  comfortably (about 2.5:1 contrast); it now meets the WCAG AA 4.5:1 minimum.
+- The title screen was cut off at the top and bottom on windows shorter than
+  about 850px (most laptops); it now fits, and scrolls if it ever can't.
 - Tooltips work without a mouse: they open on keyboard focus and on a long
   press on touch screens (the press doesn't also trigger the button).
 - Unusable abilities stay focusable and their tooltip says why ("Not enough
