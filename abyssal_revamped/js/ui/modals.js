@@ -473,7 +473,7 @@ function openHowToPlay() {
       <b style="color:var(--accent-gold)">Progression</b><br>
       Leveling up in a run grants stats (based on your class) and Talent Points, spent in the Talent Tree for this run only. Soul Shards are earned from bosses, events and every death; spend them in the Shard Emporium on permanent upgrades, class unlocks and loadouts. Each class also earns Class XP — master two classes (level 20) to fuse them in the Fusion Lab.<br><br>
       <b style="color:var(--accent-gold)">Saving</b><br>
-      Runs auto-save on every floor and after each fight (up to 3 runs at once). Use 💾 Save or <i>Save & Quit</i> from the pause menu (Esc) any time outside combat. Every run has a seed (shown in the pause menu); enter one in World Settings to replay the same floors.<br><br>
+      Runs auto-save on every floor and after each fight (up to 3 runs at once). Use 💾 Save or <i>Save & Quit</i> from the pause menu (Esc) any time outside combat. Every run has a seed (shown in the pause menu); enter one in World Settings to replay the same floors, or try the 📅 Daily Descent: the same floors for everyone, every day.<br><br>
       <b style="color:var(--accent-gold)">Records</b><br>
       The 🏆 Records screen keeps your lifetime totals, your last 20 runs and 20 achievements, each worth Soul Shards the first time.<br><br>
       <b style="color:var(--accent-gold)">Floor 50</b><br>

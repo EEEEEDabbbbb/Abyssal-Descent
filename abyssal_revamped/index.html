@@ -23,6 +23,7 @@
     <button class="title-btn primary" onclick="showClassSelect()">⚔ Begin Descent</button>
     <button class="title-btn" onclick="showContinue()" id="continue-btn" style="display:none">↺ Continue Run</button>
     <button class="title-btn" onclick="showNGPlusModal()" id="ngplus-btn" style="display:none">🔄 New Game+</button>
+    <button class="title-btn" onclick="startDailyDescent()" id="daily-btn" title="Today's shared seed: same floors for everyone, standard settings, any class">📅 Daily Descent</button>
     <button class="title-btn" onclick="showShardShop()">⚗ Shard Emporium</button>
     <button class="title-btn" onclick="showScreen('fusion-lab-screen')">⚗ Fusion Lab</button>
     <button class="title-btn" onclick="showScreen('collection-screen')">📖 Class Collection</button>
@@ -45,7 +46,7 @@
 <div id="class-select-screen" class="screen" style="flex-direction:column;padding:1rem;overflow:hidden">
   <div class="cs-header">
     <h2>Choose Your Class</h2>
-    <div style="font-size:0.72rem;color:var(--text-dim);margin-top:0.25rem">50 floors of darkness await.</div>
+    <div id="class-select-sub" style="font-size:0.72rem;color:var(--text-dim);margin-top:0.25rem">50 floors of darkness await.</div>
   </div>
   <div style="margin-bottom:0.5rem;display:flex;gap:0.4rem;align-items:center">
     <input id="class-search" type="text" placeholder="🔍 Search classes..." autocomplete="off" spellcheck="false"

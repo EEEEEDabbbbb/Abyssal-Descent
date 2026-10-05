@@ -67,6 +67,9 @@
 - The enemy's "Next:" move now shows roughly how much damage it will do to
   you (≈45), so you can decide when to defend or heal. The estimate is read
   from the move's own formula, your DEF and the element matchup.
+- Daily Descent (title screen): everyone gets the same floors each day, with
+  standard settings and any class. Your best floor for the day is shown on
+  the button and in Records.
 - Minimap in the corner of the map (toggle with M or in Settings); click it
   to walk somewhere you have already seen.
 - Run statistics: kills, damage, biggest hit, chests, steps, play time and

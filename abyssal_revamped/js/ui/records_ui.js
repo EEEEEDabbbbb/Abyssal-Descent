@@ -66,6 +66,7 @@ function showRecords(tab = 'overview') {
       ['Damage dealt', _fmt(L.dmgDealt)], ['Shards earned', _fmt(L.shards)], ['Play time', formatPlayTime(L.playMs)],
       ['Classes unlocked', _fmt((m.unlockedClasses || []).length)], ['New Game+', _fmt(m.ngPlus)], ['Achievements', `${earned}/${ACHIEVEMENTS.length}`],
     ];
+    if (m.daily && m.daily.key === todayKey()) tiles.push(["Today's Daily best", `Floor ${m.daily.best}`]);
     body = `<div class="rs-grid">${tiles.map(([k, v]) => `<div class="rs-tile"><span class="rs-val">${v}</span><span class="rs-label">${k}</span></div>`).join('')}</div>`;
   } else if (tab === 'achievements') {
     body = `<div class="ach-grid">${ACHIEVEMENTS.map(a => {
@@ -82,7 +83,7 @@ function showRecords(tab = 'overview') {
     body = runs.length ? `<div class="run-hist">${runs.map(r => `
       <div class="run-row">
         <span class="run-icon">${r.icon || '⚔'}</span>
-        <span class="run-main"><b>${r.className}</b> · Floor ${r.floor} · Lv ${r.level}${r.ngPlus ? ` · NG+${r.ngPlus}` : ''}<br>${_outcomeLabel(r)}</span>
+        <span class="run-main"><b>${r.className}</b> · Floor ${r.floor} · Lv ${r.level}${r.ngPlus ? ` · NG+${r.ngPlus}` : ''}${r.daily ? ' · 📅 Daily' : ''}<br>${_outcomeLabel(r)}</span>
         <span class="run-side">${_fmt(r.kills)} kills · ⚗ ${_fmt(r.shards)}<br>${formatPlayTime(r.playMs)} · ${new Date(r.at).toLocaleDateString()}${r.seed ? `<br><span class="rs-seed">${r.seed}</span>` : ''}</span>
       </div>`).join('')}</div>` : '<div style="text-align:center;color:var(--text-dim);padding:1rem">No finished runs yet.</div>';
   }

@@ -62,6 +62,10 @@ function showScreen(id) {
 
   if (id === 'title-screen')        renderTitleScreen();
   if (id === 'class-select-screen') {
+    const sub = document.getElementById('class-select-sub');
+    if (sub) sub.innerHTML = G._dailyMode
+      ? `<span style="color:var(--accent-gold)">📅 Daily Descent: today's shared floors, standard settings. Pick any class.</span>`
+      : '50 floors of darkness await.';
     // Preload fusion files for any unlocked fusions before rendering
     const fusions = G.meta.unlockedFusions || [];
     if (fusions.length > 0 && typeof preloadPlayerFusions === 'function') {
@@ -89,6 +93,11 @@ function renderTitleScreen() {
 
   // Continue: any saved run. New Game+: unlocked by beating floor 50.
   _updateContinueBtn();
+  const dailyBtn = document.getElementById('daily-btn');
+  if (dailyBtn) {
+    const d = m.daily && m.daily.key === todayKey() ? m.daily : null;
+    dailyBtn.textContent = d ? `📅 Daily Descent · best floor ${d.best}` : '📅 Daily Descent';
+  }
   // First visit (no runs yet): draw the eye to How To Play without blocking anything
   const howto = document.getElementById('howto-btn');
   if (howto) howto.classList.toggle('first-visit-hint', !m.maxFloor && !((m.lifetime || {}).runs));
@@ -127,7 +136,7 @@ function initTitleRunes() {
   }
 }
 
-function showClassSelect()   { showScreen('class-select-screen'); }
+function showClassSelect()   { G._dailyMode = false; showScreen('class-select-screen'); }
 function showShardShop()     { openShardEmporium(); }
 function showLoadoutSelect() { openLoadoutModal(); }
 function showHowToPlay()     { openHowToPlay(); }

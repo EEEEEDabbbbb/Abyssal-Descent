@@ -158,6 +158,29 @@ test('the Records screen renders every tab', async () => {
   assert.ok(r.history >= 1);
 });
 
+test('Daily Descent: same seed for everyone today, standard settings, best floor kept', async () => {
+  const r = await run(async () => {
+    G.meta = defaultMeta(); G._gameOverShown = false;
+    G.worldGen.difficulty = 'nightmare';
+    startDailyDescent();
+    const sub = document.getElementById('class-select-sub').textContent;
+    G.selectedClass = 'shadowblade';
+    startRun();
+    await new Promise(res => { const t = setInterval(() => { if (G.player) { clearInterval(t); res(); } }, 20); });
+    const seed = G.seed, diff = G.worldGen.difficulty, daily = G.daily;
+    G.floor = 7; recordRunEnd('died');
+    const best = G.meta.daily;
+    renderTitleScreen();
+    return { sub, seed, diff, daily, best, btn: document.getElementById('daily-btn').textContent, expected: dailySeed() };
+  });
+  assert.match(r.sub, /Daily Descent/);
+  assert.equal(r.seed, r.expected);
+  assert.equal(r.diff, 'normal');
+  assert.equal(r.best.best, 7);
+  assert.equal(r.best.key, r.daily);
+  assert.match(r.btn, /best floor 7/);
+});
+
 test('no page errors', () => {
   assert.deepEqual(ctx.errors, []);
 });

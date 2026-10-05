@@ -479,6 +479,8 @@ Maps are procedurally generated using BSP (Binary Space Partitioning), creating 
 
 The map is fog-of-war; tiles reveal as you walk within range. Secret rooms look like solid wall until you step inside; walls nearby sometimes give a hint. The full map can be revealed via the Dark Altar event (spend MP). Move with WASD/arrows, the on-screen pad, or by tapping a revealed tile. The minimap (M) shows everything you have revealed.
 
+**Seeds & the Daily Descent.** Every run has a seed (pause menu); the same seed and World Settings always build the same floors. The 📅 Daily Descent on the title screen uses one seed per calendar day with standard settings and any class; your best floor that day is kept.
+
 **Merchants** (one per floor) sell 3 pieces of gear rolled with the floor's loot odds, a healing potion that keeps up with your depth (Blood Flask → Heavy Elixir from floor 7 → Grand Elixir from 15 → Abyssal Tincture from 25), and one more consumable rolled with the floor's loot odds. Stock can be rerolled for gold, and you can sell items there for a quarter of what the merchant would charge for that rarity on the current floor.
 
 ---

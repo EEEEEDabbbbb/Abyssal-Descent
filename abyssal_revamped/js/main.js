@@ -78,17 +78,29 @@ function resetRunState() {
   G._biomeProcs = 0;
   G._biomeMoves = 0;
   G.seed       = null;
+  G.daily      = null;
   G.rngState   = null; // outside a run, rand() uses Math.random
   _playClockStart = null;
 }
 
+// ── Daily Descent ────────────────────────────────────────────
+// Everyone gets the same seed on the same (local) day, with standard world
+// settings and any class. The best depth per day is kept in G.meta.daily.
+function todayKey(d = new Date()) {
+  return `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+}
+function dailySeed(key = todayKey()) { return 'DAILY' + key; }
+function startDailyDescent() { G._dailyMode = true; showScreen('class-select-screen'); }
+
 function startRun() {
   if (!G.selectedClass) return;
   const classId = G.selectedClass;
-  showWorldGenModal(async () => {
-    const seed = G._pendingSeed;
+  const daily = G._dailyMode ? todayKey() : null;
+  const begin = async () => {
+    const seed = daily ? dailySeed(daily) : G._pendingSeed;
     resetRunState();
     G.selectedClass = classId;
+    G.daily = daily;
     seedRun(seed);
     G._pendingSeed = null;
     try {
@@ -119,11 +131,19 @@ function startRun() {
     logEntry('system', `You descend as the ${G.player.name}. (Seed ${G.seed})`);
     logEntry('system', `🗺 Entering ${biome.name}.`);
 
+    if (daily) logEntry('system', `📅 Daily Descent for ${daily.slice(0, 4)}-${daily.slice(4, 6)}-${daily.slice(6)}: everyone plays these floors today.`);
     showScreen('game-screen');
     startPlayClock();
     autoSaveRun();
     updateUI();
-  });
+  };
+  if (daily) {
+    // Standard settings so every daily run is comparable
+    G.worldGen = { roomCount:'normal', difficulty:'normal', enemyDensity:'normal', treasureRate:'normal', mapSize:'normal' };
+    begin();
+  } else {
+    showWorldGenModal(begin);
+  }
 }
 
 const MOVE_KEYS = {

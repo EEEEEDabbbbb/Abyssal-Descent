@@ -117,6 +117,7 @@ function _serialiseRun() {
     killedBoss: G.killedBoss,
     worldGen:   { ...G.worldGen },
     seed:       G.seed || null,
+    daily:      G.daily || null,
     rngState:   typeof G.rngState === 'number' ? G.rngState : null,
     selectedClass: G.selectedClass || p.classId,
     log:        G.log.slice(0, 30),
@@ -166,6 +167,7 @@ async function _deserialiseRun(data) {
   G.exitPos    = data.exitPos || null;
   G.killedBoss = data.killedBoss || false;
   G.worldGen   = data.worldGen || G.worldGen;
+  G.daily = data.daily || null;
   if (data.seed && typeof data.rngState === 'number') { G.seed = data.seed; G.rngState = data.rngState; }
   else seedRun(); // saves from before seeds existed get a fresh one
   G.selectedClass = data.selectedClass || p.classId;

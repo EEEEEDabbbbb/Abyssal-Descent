@@ -76,7 +76,7 @@ function recordRunEnd(outcome) {
   const entry = {
     at: Date.now(), outcome,
     classId: p.classId, className: cls ? cls.name : p.classId, icon: cls ? cls.icon : '⚔',
-    floor: G.floor, level: p.level, seed: G.seed || null, ngPlus: G.meta.ngPlus || 0,
+    floor: G.floor, level: p.level, seed: G.seed || null, ngPlus: G.meta.ngPlus || 0, daily: G.daily || null,
     killedBy: outcome === 'died' ? (p._lastHitBy || 'the Abyss') : null,
     kills: s.kills, bosses: s.bosses, shards: s.shards, playMs: s.playMs, bestHit: s.bestHit,
   };
@@ -89,6 +89,11 @@ function recordRunEnd(outcome) {
   L.kills += s.kills; L.bosses += s.bosses; L.shards += s.shards; L.playMs += s.playMs;
   L.dmgDealt += s.dmgDealt;
   L.bestHit = Math.max(L.bestHit, s.bestHit);
+  if (G.daily) {
+    if (!m.daily || m.daily.key !== G.daily) m.daily = { key: G.daily, best: 0, runs: 0 };
+    m.daily.best = Math.max(m.daily.best, G.floor);
+    m.daily.runs++;
+  }
   saveMeta();
   return entry;
 }
