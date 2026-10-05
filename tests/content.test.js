@@ -144,7 +144,7 @@ test('a hit your shield soaks is still logged with its damage', async () => {
 
 test('the "Next:" telegraph estimates the damage a move will do', async () => {
   const r = await run(() => {
-    __startTestRun('ironclad', 12);
+    __startTestRun('ironclad', 12, 'TELEGRAPH'); // seeded: the same enemy and dice every run
     const p = G.player; p.passives = [];
     const e = getRandomEnemy(12, false); e.element = 'normal';
     startCombat(e); G.turn = 'enemy';
