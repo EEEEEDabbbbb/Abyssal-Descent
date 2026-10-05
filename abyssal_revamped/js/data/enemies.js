@@ -723,7 +723,7 @@ const ENEMY_POOL = {
   void_stalker:{
     id:'void_stalker', name:'Void Stalker', icon:'🌀', element:'shadow',
     title:'It has been watching you since floor one.',
-    hp:90, maxHp:90, atk:24, def:7, spd:16, xp:48, gold:[16,28], loot:0.6,
+    hp:90, maxHp:90, atk:20, def:7, spd:16, xp:48, gold:[16,28], loot:0.6,
     patterns:['shadow_slash','void_tear','basic','culling_strike'],
     status:[],patternIndex:0
   },
@@ -1518,13 +1518,23 @@ function enemyCurve(floor, noMilestone = false) {
   return { hp: lerp(1) * m, atk: lerp(2) * m, def: lerp(3), xp: lerp(4) * m, gold: lerp(5) };
 }
 
-// Average base stats of a pool (cached) — used to normalise it
+// movePower — average ATK multiplier of an enemy's moves (read from the move
+// formulas, see _enemyMoveTerms); moves we can't read count as 1.2.
+function movePower(patterns) {
+  if (!patterns || !patterns.length) return 1;
+  return patterns.reduce((s, m) => { const t = _enemyMoveTerms(m); return s + (t ? t.reduce((a, [x]) => a + x, 0) : 1.2); }, 0) / patterns.length;
+}
+
+// Average base stats of a pool (cached) — used to normalise it. `threat` is
+// ATK × move power: how hard a pool member hits on average.
 const _poolAvgCache = {};
 function poolAverage(ids) {
   const key = ids.join();
   if (!_poolAvgCache[key]) {
     const avg = k => ids.reduce((s, id) => s + (k === 'gold' ? (ENEMY_POOL[id].gold[0] + ENEMY_POOL[id].gold[1]) / 2 : ENEMY_POOL[id][k]), 0) / ids.length;
-    _poolAvgCache[key] = { hp: avg('hp'), atk: avg('atk'), def: avg('def'), xp: avg('xp'), gold: avg('gold') };
+    const a = { hp: avg('hp'), atk: avg('atk'), def: avg('def'), xp: avg('xp'), gold: avg('gold') };
+    a.threat = ids.reduce((s, id) => s + (ENEMY_POOL[id].atk / a.atk) * movePower(ENEMY_POOL[id].patterns), 0) / ids.length;
+    _poolAvgCache[key] = a;
   }
   return _poolAvgCache[key];
 }
@@ -1535,9 +1545,13 @@ function scaleEnemyToFloor(e, floor, poolAvg, mult = {}) {
   const c = enemyCurve(floor);
   const diff = getDifficultyMult() * getNgPlusMult();
   const rel = k => (e[k] || 0) / (poolAvg[k] || 1);
+  // Enemies whose moves hit far harder than average get some of that back
+  // off their ATK (square root: they stay dangerous, just not run-ending)
+  const threat = rel('atk') * movePower(e.patterns);
+  const threatAdj = poolAvg.threat ? Math.sqrt(poolAvg.threat / Math.max(0.2, threat)) : 1;
   e.hp    = Math.max(1, Math.round(rel('hp')  * c.hp  * (mult.hp  || 1) * diff));
   e.maxHp = e.hp;
-  e.atk   = Math.max(1, Math.round(rel('atk') * c.atk * (mult.atk || 1) * diff));
+  e.atk   = Math.max(1, Math.round(rel('atk') * threatAdj * c.atk * (mult.atk || 1) * diff));
   e.def   = Math.max(0, Math.round(rel('def') * c.def * (mult.def || 1)));
   e.spd   = Math.max(1, Math.round((e.spd || 8) * enemySpdScale(floor)));
   e.xp    = Math.round(rel('xp') * c.xp * (mult.xp || 1));

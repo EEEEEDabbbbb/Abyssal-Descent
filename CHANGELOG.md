@@ -27,6 +27,10 @@
   tiers phase in over four floors, and milestone floors add +20% (was +50%).
   The same bot now dies anywhere from floor 6 to 25 (median 10–18 depending
   on class), and a fully upgraded account reaches floors 12–30.
+- Enemies whose moves hit much harder than average (Lava Crawler, Void
+  Shade, Flame Archon…) have a bit less ATK, so a single unlucky
+  encounter is less often run-ending. Void Stalker, the top killer in
+  testing, was toned down.
 - Guardians, bosses and secret bosses follow the same curve. Secret bosses
   used fixed stats: deadly on floor 5, trivial on floor 30.
 - Initiative and flee chance compare SPD as a ratio and enemy SPD grows
