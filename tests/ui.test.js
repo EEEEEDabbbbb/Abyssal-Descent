@@ -265,3 +265,23 @@ test('in a fight, R then a number key uses that item; Esc cancels', async () => 
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('quitting from the pause menu mid-fight brings you back to that fight on Continue', async () => {
+  const { page, errors } = await gamePage();
+  await page.evaluate(() => {
+    G._enemyTurnDelay = 0; localStorage.clear(); assignRunSlot(); saveRun();
+    const { x, y } = G.playerPos;
+    const [dx, dy] = [[1,0],[-1,0],[0,1],[0,-1]].find(([dx, dy]) => { const c = G.map[y+dy] && G.map[y+dy][x+dx]; return c && c.type !== 'wall' && !c.content; });
+    const cell = G.map[y+dy][x+dx]; cell.content = 'enemy'; cell.enemy = getRandomEnemy(1, false); cell.enemy.hp = cell.enemy.maxHp = 400; cell.enemy.atk = 1;
+    movePlayer(dx, dy);
+    showPauseMenu();
+  });
+  await page.click('#overlay-content button:has-text("Quit to Title")');
+  assert.equal(await page.evaluate(() => document.querySelector('.screen.active').id), 'title-screen');
+  await page.click('text=Continue');
+  await page.click('#overlay-content [onclick^="continueRun"]');
+  await page.waitForFunction(() => G.player && G.inCombat, null, { timeout: 5000 });
+  assert.equal(await page.evaluate(() => G.enemies[0].maxHp), 400);
+  assert.deepEqual(errors, []);
+  await page.close();
+});

@@ -8,6 +8,7 @@
   were losing to. The game now saves as each fight starts, and Continue puts
   you back at the start of that fight with the same dice. An unclaimed boss
   reward is still waiting after a reload (it used to restart the boss fight).
+  The pause menu can now quit to the title mid-fight, too.
 - Event outcomes (wagers, mimics, collapsing racks) and a merchant's stock
   are fixed by where they are on the floor, so reloading and taking a
   different route can't re-roll them. In a Daily Descent everyone gets the

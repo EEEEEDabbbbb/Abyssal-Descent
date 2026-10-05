@@ -410,7 +410,8 @@ function showPauseMenu() {
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();showTalentTree()">🌟 Talents${G.player?.talentPoints?` (${G.player.talentPoints})`:''}</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();showRunStats()">📊 Run Stats</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();openSettings()">⚙ Settings</button>
-      ${G.inCombat ? '' : `<button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();saveAndQuit()">💾 Save &amp; Quit to Title</button>`}
+      ${!G.inCombat ? `<button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();saveAndQuit()">💾 Save &amp; Quit to Title</button>`
+        : G._runSaveSlot != null ? `<button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem;white-space:normal" onclick="closeModal();returnToTitle()">💾 Quit to Title <span style="font-size:0.7em;opacity:0.75">(this fight restarts on Continue)</span></button>` : ''}
       <button class="title-btn danger" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();confirmAbandon()">↩ Abandon Run</button>
     </div>`;
   showModal(html);
