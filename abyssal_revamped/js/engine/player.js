@@ -220,13 +220,10 @@ function renderItemComparison(item) {
   return `<div style="font-size:0.68rem;margin-bottom:0.6rem">vs ${cur ? cur.name : 'empty slot'}: ${rows}</div>`;
 }
 
-function estimateItemValue(item) {
-  const rarityBase = {common:10,uncommon:18,rare:30,epic:50,legendary:80,mythical:120,divine:180};
-  return rarityBase[item.rarity] || 10;
-}
-
+// getSellPrice — merchants pay a quarter of what they'd charge for the item
+// on this floor (so selling stays worthwhile deeper down)
 function getSellPrice(item) {
-  return Math.max(1, Math.floor((item.shopPrice || estimateItemValue(item)) * 0.5));
+  return Math.max(1, Math.floor(gearShopPrice(item.rarity) * 0.25));
 }
 
 function dropItem(idx) {

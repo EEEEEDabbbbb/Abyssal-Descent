@@ -33,7 +33,8 @@
 - Merchants always sell a healing potion that keeps up with your depth,
   plus a consumable rolled with the floor's loot odds (they only ever sold
   floor-1 potions before). HP-regen gear restores 2% max HP per turn
-  instead of a flat 5.
+  instead of a flat 5. Selling pays a quarter of the merchant's price at
+  your depth (a mythical item sold for 60 gold on any floor).
 - Armour can block at most 85% of a hit (high-DEF builds took a flat 1
   damage from anything weaker than them).
 - Life Drain heals the enemy for half the damage dealt (was all of it).

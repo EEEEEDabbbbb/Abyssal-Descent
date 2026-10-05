@@ -85,14 +85,17 @@ function showShop(cell, cx, cy) {
   renderShop();
 }
 
+// Rarity price multipliers — rarer items cost proportionally more
+const RARITY_PRICE_MULT = {
+  common: 1, uncommon: 1.5, rare: 2.5,
+  epic: 4, legendary: 7, mythical: 12, divine: 20
+};
+// Typical merchant price for a piece of gear on this floor (before the random part)
+function gearShopPrice(rarity, floor = G.floor) { return (30 + floor * 4) * (RARITY_PRICE_MULT[rarity] || 1); }
+
 function _generateShopItems() {
   const floor = G.floor;
   const items = [];
-  // Rarity price multipliers — rarer items cost proportionally more
-  const RARITY_PRICE_MULT = {
-    common: 1, uncommon: 1.5, rare: 2.5,
-    epic: 4, legendary: 7, mythical: 12, divine: 20
-  };
   // 3 items + 2 consumables
   for (let i=0;i<3;i++) {
     const item = getRandomItemByFloor(floor);
