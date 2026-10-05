@@ -38,7 +38,7 @@ function showContinue() {
   showModal(`
     <div class="modal-title" style="color:var(--accent-gold)">↺ Continue Run</div>
     <div style="font-size:0.72rem;color:var(--text-dim);text-align:center;margin-bottom:1rem">
-      Select a save to resume. Your run will pick up exactly where you left off.
+      Select a save to resume. Your run picks up where you left off (a fight you left starts over).
     </div>
     <div class="continue-slots-list">${rows}</div>
     <button class="title-btn" style="margin-top:1rem;width:100%" onclick="closeModal()">← Back</button>
@@ -78,6 +78,7 @@ async function continueRun(slotIndex) {
   showScreen('game-screen');
   updateUI();
   _updateContinueBtn();
+  resumePendingRunState();
 }
 
 // Confirm before deleting — prevent fat-finger disasters

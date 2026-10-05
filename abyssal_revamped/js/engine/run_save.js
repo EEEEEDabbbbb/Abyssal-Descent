@@ -124,11 +124,51 @@ function _serialiseRun() {
     _secretBossTriggeredThisRun: G._secretBossTriggeredThisRun,
     _pendingSecretBoss: G._pendingSecretBoss || null,
     _secretBossCell:    G._secretBossCell ? { ...G._secretBossCell } : null,
+    pendingCombat: G._pendingCombat ? _serialisePendingCombat(G._pendingCombat) : null,
+    pendingReward: G._rewardChoices ? JSON.parse(JSON.stringify(G._rewardChoices)) : null,
     player,
     map:        G.map ? G.map.map(row => row.map(_serialiseCell)) : null,
     mapW:       G.mapW,
     mapH:       G.mapH,
   };
+}
+
+// A fight in progress is saved as it was when it started. Enemies that stand
+// on the player's tile are already in the map, so only that is noted (a flee
+// then leaves the same, wounded enemy behind); anything else is copied.
+function _serialisePendingCombat(list) {
+  const { x, y } = G.playerPos;
+  const cell = G.map && G.map[y] && G.map[y][x];
+  const onCell = !!cell && (cell.enemies ? cell.enemies.includes(list[0]) : cell.enemy === list[0]);
+  return {
+    onCell,
+    enemies: onCell ? null : JSON.parse(JSON.stringify(list)),
+    prevPos: G._prevPlayerPos ? { ...G._prevPlayerPos } : null,
+  };
+}
+
+// saveCombatStart — startCombat() calls this before the fight changes anything
+function saveCombatStart(enemyList) {
+  G._pendingCombat = enemyList;
+  try { autoSaveRun(); } finally { G._pendingCombat = null; }
+}
+
+// resumePendingRunState — after loading: re-enter a fight that was in
+// progress (from its start) or re-open an unclaimed boss reward
+function resumePendingRunState() {
+  const { combat, reward } = G._resume || {};
+  G._resume = null;
+  if (combat) {
+    const c = G.map[G.playerPos.y] && G.map[G.playerPos.y][G.playerPos.x];
+    const foes = combat.onCell ? c && (c.enemies || c.enemy) : combat.enemies;
+    if (foes) {
+      G._prevPlayerPos = combat.prevPos;
+      logEntry('system', '⚔ You left in the middle of a fight. It starts over.');
+      startCombat(foes);
+      return;
+    }
+  }
+  if (reward && reward.length) showFloorReward(reward);
 }
 
 // ensureClassLoaded — fusion class data lives in lazy-loaded files
@@ -175,6 +215,7 @@ async function _deserialiseRun(data) {
   G._secretBossTriggeredThisRun = data._secretBossTriggeredThisRun || false;
   G._pendingSecretBoss = data._secretBossTriggeredThisRun ? data._pendingSecretBoss : null;
   G._secretBossCell    = data._secretBossCell || null;
+  G._resume = { combat: data.pendingCombat || null, reward: data.pendingReward ? data.pendingReward.map(rehydrateItem) : null };
   G._currentEvent  = null;
   G._rewardChoices = null;
   G._gameOverShown = false;

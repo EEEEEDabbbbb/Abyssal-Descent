@@ -7,7 +7,8 @@ let ctx;
 const run = (fn, arg) => ctx.page.evaluate(fn, arg);
 
 async function fresh() {
-  await ctx.page.evaluate(() => localStorage.clear());
+  // End any run first: leaving the page auto-saves a live run (pagehide)
+  await ctx.page.evaluate(() => { if (typeof resetRunState === 'function') resetRunState(); localStorage.clear(); });
   await ctx.page.reload();
   await ctx.page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
   await ctx.page.evaluate(() => ensureAbilitiesLoaded());
@@ -234,6 +235,98 @@ test('a new run never overwrites another run\'s save', async () => {
   });
   assert.equal(r.after, r.before);
   assert.equal(r.slot, null);
+});
+
+// Steps onto a fresh enemy next to the player (runs in the page)
+const STEP_INTO_FIGHT = `
+  window.__stepIntoFight = function(hp) {
+    const { x, y } = G.playerPos;
+    const [dx, dy] = [[1,0],[-1,0],[0,1],[0,-1]].find(([dx, dy]) => { const c = G.map[y+dy] && G.map[y+dy][x+dx]; return c && c.type !== 'wall' && !c.content; });
+    const cell = G.map[y+dy][x+dx];
+    cell.content = 'enemy'; cell.enemy = getRandomEnemy(G.floor, false); cell.enemy.hp = cell.enemy.maxHp = hp;
+    const rngBefore = G.rngState;
+    movePlayer(dx, dy);
+    return { from: { x, y }, to: { x: x+dx, y: y+dy }, rngBefore };
+  };
+`;
+
+test('closing the game mid-fight restarts that fight on Continue (it cannot be dodged)', async () => {
+  await fresh();
+  await ctx.page.addScriptTag({ content: STEP_INTO_FIGHT });
+  const r = await run(async () => {
+    __startTestRun('shadowblade', 3); assignRunSlot(); saveRun();
+    const hp0 = G.player.stats.hp;
+    const step = __stepIntoFight(500);
+    const inFight = G.inCombat;
+    const saved = JSON.parse(localStorage.getItem(LS_RUN_KEY(G._runSaveSlot)));
+    await new Promise(res => setTimeout(res, 50));
+    G.enemies[0].hp = 10; G.player.stats.hp = 1;           // the fight goes badly…
+    const slot = G._runSaveSlot;
+    resetRunState();                                       // …so the tab is closed
+    await loadRun(slot); resumePendingRunState();
+    return { inFight, inCombat: G.inCombat, hp: G.player.stats.hp, hp0, enemyHp: G.enemies && G.enemies[0].hp,
+      pos: G.playerPos, to: step.to, sameDice: saved.rngState === step.rngBefore };
+  });
+  assert.equal(r.inFight, true);
+  assert.equal(r.inCombat, true, 'Continue puts you back in the fight');
+  assert.deepEqual(r.pos, r.to);
+  assert.equal(r.enemyHp, 500, 'the fight starts over');
+  assert.equal(r.hp, r.hp0, 'with your HP as it started');
+  assert.equal(r.sameDice, true, 'with the same dice');
+  await run(() => { endCombat(false); resetRunState(); });
+});
+
+test('after fleeing or winning, Continue does not restart the fight', async () => {
+  await fresh();
+  await ctx.page.addScriptTag({ content: STEP_INTO_FIGHT });
+  const r = await run(async () => {
+    __startTestRun('shadowblade', 3); assignRunSlot(); saveRun();
+    const step = __stepIntoFight(500);
+    await new Promise(res => setTimeout(res, 50));
+    G.turn = 'player'; G.player.stats.spd = 9999;
+    for (let i = 0; i < 20 && G.inCombat; i++) { G.turn = 'player'; playerAction('flee'); }
+    const fled = !G.inCombat;
+    const slot = G._runSaveSlot;
+    resetRunState(); await loadRun(slot); resumePendingRunState();
+    const afterFlee = { inCombat: G.inCombat, pos: { ...G.playerPos }, enemyLeft: G.map[step.to.y][step.to.x].content };
+    // Now win one
+    const step2 = __stepIntoFight(1);
+    await new Promise(res => setTimeout(res, 50));
+    for (let i = 0; i < 5 && G.inCombat; i++) { G.turn = 'player'; playerAction('attack'); await new Promise(res => setTimeout(res, 20)); }
+    const won = !G.inCombat && G.player.stats.hp > 0;
+    resetRunState(); await loadRun(slot); resumePendingRunState();
+    return { fled, afterFlee, from: step.from, won, afterWin: { inCombat: G.inCombat, cell: G.map[step2.to.y][step2.to.x].content } };
+  });
+  assert.equal(r.fled, true);
+  assert.deepEqual(r.afterFlee, { inCombat: false, pos: r.from, enemyLeft: 'enemy' });
+  assert.equal(r.won, true);
+  assert.deepEqual(r.afterWin, { inCombat: false, cell: 'visited' });
+});
+
+test('an unclaimed boss reward is still waiting after a reload', async () => {
+  await fresh();
+  const r = await run(async () => {
+    __startTestRun('shadowblade', 5); assignRunSlot(); saveRun();
+    const boss = getBossForFloor(5);
+    G.map[G.playerPos.y][G.playerPos.x].content = 'boss_active';
+    startCombat(boss);
+    boss.hp = 0; winCombat();
+    const names = G._rewardChoices.map(i => i.name);
+    const slot = G._runSaveSlot;
+    document.getElementById('overlay').classList.remove('active');         // tab closed on the reward screen
+    resetRunState(); await loadRun(slot); resumePendingRunState();
+    const again = (G._rewardChoices || []).map(i => i.name);
+    const shown = document.getElementById('overlay').classList.contains('active') && /Boss Reward/.test(document.getElementById('overlay-content').textContent);
+    claimReward(0);
+    resetRunState(); await loadRun(slot); resumePendingRunState();
+    return { names, again, shown, inCombat: G.inCombat, rewardAfterClaim: G._rewardChoices,
+      claimed: G.player.inventory.some(i => i.name === names[0]) };
+  });
+  assert.deepEqual(r.again, r.names);
+  assert.equal(r.shown, true);
+  assert.equal(r.inCombat, false);
+  assert.equal(r.rewardAfterClaim, null);
+  assert.equal(r.claimed, true);
 });
 
 test('abandoning a run deletes its save (no repeat shard payouts)', async () => {

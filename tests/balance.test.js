@@ -13,8 +13,9 @@ after(async () => { await ctx.browser.close(); });
 test('regular enemies never get much stronger from one floor to the next', async () => {
   const jumps = await run(() => {
     G.meta = defaultMeta(); G.worldGen.difficulty = 'normal';
+    seedRun('CURVE'); // seeded: the sample averages are the same every run
     const avg = f => {
-      let hp = 0, atk = 0; const n = 600;
+      let hp = 0, atk = 0; const n = 1000;
       for (let i = 0; i < n; i++) { const e = getRandomEnemy(f, false); hp += e.hp; atk += e.atk; }
       return { hp: hp / n, atk: atk / n };
     };

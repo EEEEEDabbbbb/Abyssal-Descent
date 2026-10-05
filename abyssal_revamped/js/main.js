@@ -71,6 +71,7 @@ function resetRunState() {
   _lastLogLength = -1;
   G._currentEvent = null;
   G._rewardChoices = null;
+  G._resume = null;
   G._pendingSecretBoss = null;
   G._secretBossCell = null;
   G._secretBossTriggeredThisRun = false;

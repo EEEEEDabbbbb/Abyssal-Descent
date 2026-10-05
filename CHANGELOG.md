@@ -15,6 +15,11 @@
 - A boss low on HP could chain Life Drain every turn and out-heal you
   forever. Enemies never use a draining move twice in a row now.
 - Cleaved counted its DEF loss twice.
+- Closing the game mid-fight and pressing Continue rewound you to before
+  the fight, so you could walk around an enemy (or a guardian or boss) you
+  were losing to. The game now saves as each fight starts, and Continue puts
+  you back at the start of that fight with the same dice. An unclaimed boss
+  reward is still waiting after a reload (it used to restart the boss fight).
 - Removed 4,650 duplicate ability definitions (the ability file is 40% smaller,
   so the game loads faster).
 
@@ -74,7 +79,7 @@
   World Settings). The same seed and settings build the same floors, and
   reloading a save can't re-roll chests, drops or flee attempts.
 - The enemy's "Next:" move now shows roughly how much damage it will do to
-  you (≈45), so you can decide when to defend or heal. The estimate is read
+  you (≈45 dmg), so you can decide when to defend or heal. The estimate is read
   from the move's own formula, your DEF and the element matchup.
 - Daily Descent (title screen): everyone gets the same floors each day, with
   standard settings and any class (always at NG+0, so New Game+ players get

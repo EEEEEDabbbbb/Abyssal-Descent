@@ -546,6 +546,10 @@ function advanceRound() {
 function startCombat(enemyOrEnemies) {
   const enemyList = (Array.isArray(enemyOrEnemies) ? enemyOrEnemies : [enemyOrEnemies]).filter(Boolean);
   if (!enemyList.length) return;
+  // Save as the fight starts, before anything changes: closing the game
+  // mid-fight restarts this fight on Continue (same enemies, same dice)
+  // instead of rewinding to before it, so a lost fight can't be dodged.
+  if (typeof saveCombatStart === 'function') saveCombatStart(enemyList);
   enemyList.forEach(prepareEnemy); // gives enemies a `stats` view (stats.js)
   // Remember each enemy's stats as the fight starts, so an enemy you flee
   // from goes back to normal instead of keeping this fight's buffs/debuffs.
@@ -930,6 +934,7 @@ function playerAction(type, abilityId=null) {
       cell.content = survivors.length ? 'enemy' : 'visited';
       // Step back to where you came from so you aren't standing on the enemy
       if (G._prevPlayerPos) G.playerPos = { ...G._prevPlayerPos };
+      if (typeof autoSaveRun === 'function') autoSaveRun();
       updateUI(); return;
     }
     logEntry('system','Failed to flee!');
@@ -1287,6 +1292,8 @@ function winCombat() {
     G.phase = 'explore';
     G.map[G.playerPos.y][G.playerPos.x].content = 'visited';
     showFloorReward(); // in modals.js — shows 3-item choice modal
+    checkAchievements();
+    if (typeof autoSaveRun === 'function') autoSaveRun(); // the choice survives a reload
     return;
   }
 

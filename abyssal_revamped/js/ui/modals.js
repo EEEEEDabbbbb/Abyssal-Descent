@@ -229,8 +229,9 @@ function closeShopKeepAlive() {
 }
 
 // ── Floor reward (boss floors) ───────────────────────────────
-function showFloorReward() {
-  const choices = [
+// choices: the saved choices when resuming a run (see resumePendingRunState)
+function showFloorReward(choices) {
+  choices = choices || [
     getBossLootByFloor(G.floor),
     getBossLootByFloor(G.floor),
     getBossLootByFloor(G.floor),
@@ -262,6 +263,7 @@ function claimReward(idx) {
   G.phase = 'explore';
   G.map[G.playerPos.y][G.playerPos.x].content = 'visited';
   G.inCombat = false;
+  if (typeof autoSaveRun === 'function') autoSaveRun();
   updateUI();
 }
 
@@ -472,7 +474,7 @@ function openHowToPlay() {
       <b style="color:var(--accent-gold)">Exploration</b><br>
       Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼. The minimap (M) shows everything you've uncovered; click it to walk there. Auto-explore (X or 🧭) walks to the nearest chest or unexplored ground and stops when an enemy comes into view. Each level-up restores a quarter of your HP and MP, and descending restores some too.<br><br>
       <b style="color:var(--accent-gold)">Combat</b><br>
-      Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do and roughly how hard it will hit you (≈45) — Defend before the big ones.<br><br>
+      Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do and roughly how hard it will hit you (≈45 dmg) — Defend before the big ones.<br><br>
       <b style="color:var(--accent-gold)">Buffs & Debuffs</b><br>
       Effects last the number of turns shown and end with the fight — nothing temporary carries over. Bosses resist executes and shake off stuns quickly.<br><br>
       <b style="color:var(--accent-gold)">Elements</b><br>

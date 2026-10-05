@@ -170,7 +170,7 @@ test('the "Next:" telegraph estimates the damage a move will do', async () => {
   }
   assert.ok(r.brood_swarm.est > 0);
   assert.equal(r.channel, null);
-  assert.match(String(r.shown), /^≈\d+$/);
+  assert.match(String(r.shown), /^≈\d+ dmg$/);
 });
 
 test('a low-HP boss never drains twice in a row', async () => {

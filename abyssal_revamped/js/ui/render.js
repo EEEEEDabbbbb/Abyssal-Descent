@@ -416,7 +416,7 @@ function renderCombatView(view) {
         <div class="enemy-title" style="font-style:italic;color:var(--text-dim);font-size:0.68rem">"${e.title||''}"</div>
         <div class="enemy-next-move" style="font-size:0.72rem;color:var(--text-dim);margin-top:3px;display:flex;align-items:center;justify-content:center;gap:5px">
           <span style="opacity:0.65">Next:</span>
-          <span style="color:${isBoss?'var(--accent-crimson-bright)':'var(--text-main,#ddd)'};font-weight:600">${nextMove.icon} ${nextMove.label}</span>${nextMove.est ? `<span class="next-est" title="Estimated damage to you (before shield)">≈${nextMove.est}</span>` : ''}
+          <span style="color:${isBoss?'var(--accent-crimson-bright)':'var(--text-main,#ddd)'};font-weight:600">${nextMove.icon} ${nextMove.label}</span>${nextMove.est ? `<span class="next-est" title="Estimated damage to you (before shield)">≈${nextMove.est} dmg</span>` : ''}
         </div>
         ${isBoss?`<div class="round-counter" style="font-size:0.65rem;color:var(--text-dim)">Turn ${G.combatRound+1}${e.enrageTurns?' · Enrage in '+(e.enrageTurns-((e.enrageCount||0)%e.enrageTurns))+' turns':''}</div>`:''}
         <div class="enemy-hp-bar">
@@ -465,7 +465,7 @@ function renderPackCombatView(view, enemies) {
         ${alive?`
         <div class="enemy-next-move" style="font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:4px">
           <span style="opacity:0.65">Next:</span>
-          <span style="font-weight:600">${nextMove.icon} ${nextMove.label}</span>${nextMove.est ? `<span class="next-est" title="Estimated damage to you (before shield)">≈${nextMove.est}</span>` : ''}
+          <span style="font-weight:600">${nextMove.icon} ${nextMove.label}</span>${nextMove.est ? `<span class="next-est" title="Estimated damage to you (before shield)">≈${nextMove.est} dmg</span>` : ''}
         </div>` : `<div style="font-size:0.7rem;color:var(--text-dim);margin-top:2px">Defeated</div>`}
         <div class="enemy-hp-bar">
           <div class="resource-bar-label">
