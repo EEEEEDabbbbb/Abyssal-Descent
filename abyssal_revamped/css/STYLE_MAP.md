@@ -36,9 +36,10 @@ FIX: removed from class rule; added inline on inventory card only (render.js lin
 To add padding so content doesn't sit under the ✕: wrap content in a div with `padding-top:0.5rem`.
 
 ## TITLE BUTTONS (`.title-btn`)
-⚠️ `.title-btn` has `min-width:340px` — designed for title screen full-width buttons.
-When used inside modals/event dialogs, ALWAYS override with inline:
-  `style="min-width:0; max-width:100%; font-size:0.8rem; padding:0.5rem 1rem"`
+⚠️ `.title-btn` has a fixed 340px width — designed for title screen buttons.
+Inside dialogs `#overlay-content .title-btn` already resets it (min-width 0,
+max-width 100%), and `.death-actions .title-btn` / `.cs-footer .title-btn` do
+the same for the death screen and class select. Anywhere else, override it.
 
 ## GAME SCREEN LAYOUT
 `#game-screen.active` — CSS grid: `220px 1fr 220px` columns, `auto 1fr` rows
@@ -75,3 +76,15 @@ Staggered fade-in animations using `deathFadeIn` keyframes with `animation-delay
 `.seg-btn` / `.seg-group` — pill-style option selectors (world gen, settings rows)
 `.toggle` / `.toggle-track` / `.toggle-thumb` — CSS-only toggle switches
 `.settings-slider` — range input styled to match theme
+
+## NEWER UI PIECES (end of style.css)
+- `.minimap` — canvas in the map's corner (render.js `drawMinimap`); click walks there.
+- `.auto-explore-btn` — the 🧭 button, bottom-left of `.map-viewport` (which is `position:relative`).
+- `.dpad` / `.dpad-btn` — on-screen movement pad, bottom-right of the map.
+- `.next-est` — the "≈12 dmg" pill after the enemy's Next: move.
+- `.key-hint` — number-key badge on event/reward choices; hidden on touch screens (`hover:none`).
+- `#toast-container` / `.toast` — achievement toasts (records.js `showToast`).
+- `.rs-grid` / `.rs-tile` — run-stat tiles (death screen, Records overview).
+- `.ach-grid` / `.ach` / `.run-hist` / `.run-row` — Records achievements and history tabs.
+- `.tooltip` — the single shared tooltip; elements opt in with `data-tip-*` attributes (render.js `initTooltips`).
+- `.title-btn.first-visit-hint` — glowing How To Play button before the first run.
