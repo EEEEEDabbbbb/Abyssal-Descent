@@ -27,6 +27,11 @@
   Shade, Flame Archon…) have a bit less ATK, so a single unlucky
   encounter is less often run-ending. Void Stalker, the top killer in
   testing, was toned down.
+- Enemy Bleed (Shadow Slash, Talon Rake) deals 12% of the enemy's ATK per
+  stack each turn, down from 20%. It ignores DEF and stacks up to 10, so
+  its users (Void Stalker, the Shadow Tyrant, Cursed Knight, Harpy…) were
+  far and away the top killers in testing. Now deaths spread across the
+  whole bestiary, and the honest bot's median depth rose by about two floors.
 - Guardians, bosses and secret bosses follow the same curve. Secret bosses
   used fixed stats: deadly on floor 5, trivial on floor 30.
 - Initiative and flee chance compare SPD as a ratio and enemy SPD grows
@@ -89,8 +94,8 @@
   haven't taken ("You're leaving 2 chests behind"). Enter descends; with
   nothing left behind you go straight down as before.
 - Number keys pick choices in events, boss rewards and the in-fight item
-  menu (R), Esc cancels the item menu, and Enter continues after an event,
-  so a keyboard player never needs the mouse.
+  menu (R), Esc cancels the item menu, Enter continues after an event, and
+  ? opens How to Play, so a keyboard player never needs the mouse.
 
 ### Death screen
 - The buttons were narrower than the panels above them on wider screens.
