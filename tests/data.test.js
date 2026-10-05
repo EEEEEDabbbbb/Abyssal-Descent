@@ -37,6 +37,26 @@ test('players never get duplicate ability buttons', async () => {
   assert.deepEqual(dupes, []);
 });
 
+test('every base class has a full kit of 8 different abilities', async () => {
+  const short = await ctx.page.evaluate(() => Object.values(CLASSES)
+    .filter(c => new Set(c.abilities).size < 8).map(c => `${c.id}: ${new Set(c.abilities).size}`));
+  assert.deepEqual(short, []);
+});
+
+test('no class kit has two abilities with the same name', async () => {
+  const dupes = await ctx.page.evaluate(() => Object.values(CLASSES).flatMap(c => {
+    const names = c.abilities.map(a => ABILITIES[a] && ABILITIES[a].name);
+    return names.filter((n, i) => names.indexOf(n) !== i).map(n => `${c.id}: ${n}`);
+  }));
+  assert.deepEqual(dupes, []);
+});
+
+test('no class has its Burst (or any burst) on the normal ability bar', async () => {
+  const bad = await ctx.page.evaluate(() => [...Object.values(CLASSES), ...Object.values(FUSION_CLASSES)]
+    .filter(c => (c.abilities || []).some(a => ABILITIES[a] && ABILITIES[a].costType === 'burst')).map(c => c.id));
+  assert.deepEqual(bad, []);
+});
+
 test('every class element is a real element', async () => {
   const bad = await ctx.page.evaluate(() =>
     [...Object.values(CLASSES), ...Object.values(FUSION_CLASSES)]

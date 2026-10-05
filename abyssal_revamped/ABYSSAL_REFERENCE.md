@@ -42,40 +42,40 @@ Free or unlockable with Soul Shards. Unlock requires reaching the listed floor o
 |---|---|---|---|
 | 🗡️ | Shadowblade | Shadow | Free |
 | 🛡️ | Ironclad | Steel | Free |
-| 🔥 | Pyromancer | Fire | 30 shards (Floor 2) |
-| 🌍 | Geomancer | Ground | 40 shards (Floor 3) |
-| 🗡️ | Sentinel | Steel | 40 shards (Floor 3) |
-| 🦁 | Beastmaster | Normal | 50 shards (Floor 4) |
-| ⚡ | Stormcaller | Electric | 65 shards (Floor 5) |
-| 🩸 | Blood Knight | Dark | 70 shards (Floor 6) |
-| 🔱 | Runeblade | Normal | 75 shards (Floor 7) |
-| 🌊 | Tidecaller | Water | 75 shards (Floor 7) |
-| 💨 | Windwalker | Wind | 85 shards (Floor 8) |
-| ⚔️ | Warlord | Fighting | 95 shards (Floor 9) |
-| 🪦 | Gravewarden | Ghost | 105 shards (Floor 10) |
-| ❄️ | Frostweaver | Ice | 130 shards (Floor 12) |
-| ⚜️ | Paladin | Fairy | 145 shards (Floor 13) |
-| 🐉 | Dragonknight | Dragon | 160 shards (Floor 14) |
-| 🌙 | Soulweaver | Ghost | 175 shards (Floor 15) |
-| 💀 | Necromancer | Ghost | 175 shards (Floor 15) |
-| 💡 | Lightbringer | Light | 185 shards (Floor 16) |
-| ⚔️ | Spellsword | Psychic | 200 shards (Floor 17) |
-| 🔊 | Soundbreaker | Sound | 200 shards (Floor 17) |
-| 🧲 | Magnetist | Magnet | 215 shards (Floor 18) |
-| 🌀 | Gravitist | Gravity | 240 shards (Floor 20) |
-| 🦠 | Plague Doctor | Poison | 260 shards (Floor 21) |
-| 🌀 | Voidmancer | Shadow | 280 shards (Floor 22) |
-| 🤖 | Techsavant | Tech | 295 shards (Floor 23) |
-| ⏳ | Chronomancer | Time | 310 shards (Floor 24) |
-| 🔯 | Hexblade | Dark | 330 shards (Floor 25) |
-| 👼 | Spiritwalker | Spirit | 345 shards (Floor 26) |
-| 💎 | Crystalmancer | Crystal | 380 shards (Floor 29) |
-| 🦠 | Pestilence Lord | Poison | 420 shards (Floor 32) |
-| 🔮 | Arcanist | Psychic | 460 shards (Floor 35) |
-| ☄️ | Doomcaster | Dark | 520 shards (Floor 38) |
-| 🌌 | Cosmomancer | Cosmic | 580 shards (Floor 43) |
-| 👻 | Phantom | Ghost | 650 shards (Floor 46) |
-| 🖤 | Nullbringer | Dark | 700 shards (Floor 47) |
+| 🔥 | Pyromancer | Fire | 15 shards (Floor 2) |
+| 🌍 | Geomancer | Ground | 20 shards (Floor 3) |
+| 🗡️ | Sentinel | Steel | 20 shards (Floor 3) |
+| 🦁 | Beastmaster | Normal | 25 shards (Floor 4) |
+| ⚡ | Stormcaller | Electric | 30 shards (Floor 5) |
+| 🩸 | Blood Knight | Dark | 35 shards (Floor 6) |
+| 🔱 | Runeblade | Normal | 40 shards (Floor 7) |
+| 🌊 | Tidecaller | Water | 40 shards (Floor 7) |
+| 💨 | Windwalker | Wind | 40 shards (Floor 8) |
+| ⚔️ | Warlord | Fighting | 50 shards (Floor 9) |
+| 🪦 | Gravewarden | Ghost | 50 shards (Floor 10) |
+| ❄️ | Frostweaver | Ice | 65 shards (Floor 12) |
+| ⚜️ | Paladin | Fairy | 70 shards (Floor 13) |
+| 🐉 | Dragonknight | Dragon | 80 shards (Floor 14) |
+| 🌙 | Soulweaver | Ghost | 90 shards (Floor 15) |
+| 💀 | Necromancer | Ghost | 90 shards (Floor 15) |
+| 💡 | Lightbringer | Light | 90 shards (Floor 16) |
+| ⚔️ | Spellsword | Psychic | 100 shards (Floor 17) |
+| 🔊 | Soundbreaker | Sound | 100 shards (Floor 17) |
+| 🧲 | Magnetist | Magnet | 110 shards (Floor 18) |
+| 🌀 | Gravitist | Gravity | 120 shards (Floor 20) |
+| 🦠 | Plague Doctor | Poison | 130 shards (Floor 21) |
+| 🌀 | Voidmancer | Shadow | 140 shards (Floor 22) |
+| 🤖 | Techsavant | Tech | 150 shards (Floor 23) |
+| ⏳ | Chronomancer | Time | 155 shards (Floor 24) |
+| 🔯 | Hexblade | Dark | 165 shards (Floor 25) |
+| 👼 | Spiritwalker | Spirit | 170 shards (Floor 26) |
+| 💎 | Crystalmancer | Crystal | 190 shards (Floor 29) |
+| 🦠 | Pestilence Lord | Poison | 210 shards (Floor 32) |
+| 🔮 | Arcanist | Psychic | 230 shards (Floor 35) |
+| ☄️ | Doomcaster | Dark | 260 shards (Floor 38) |
+| 🌌 | Cosmomancer | Cosmic | 290 shards (Floor 43) |
+| 👻 | Phantom | Ghost | 325 shards (Floor 46) |
+| 🖤 | Nullbringer | Dark | 350 shards (Floor 47) |
 
 **Class Mechanical Highlights**
 - **Shadowblade:** Combo counter — Night Blade deals +20% per stack (max 10). Vanish guarantees next hit at 200% damage.
@@ -442,6 +442,12 @@ Sound · Light · Cosmic · Crystal · Nuclear · Tech · Spirit · Magma · Sto
 ## 📈 Meta Progression
 
 Progress persists between runs via Soul Shards earned through gameplay. Three systems allow permanent improvements.
+
+**Earning Soul Shards**
+- Every run that ends (death or abandon): 1.5 per floor reached, plus 2 per level above 1 on death.
+- Each boss: 5 + the floor number (10 on floor 5, 55 on floor 50).
+- Each new depth record: 2 per floor deeper than your previous best.
+- Some events (Soul Well, freed souls) and first-time Abyss conquest (150).
 
 ### Talent Tree (9 Talents)
 Bought with Talent Points (2 per level-up) during a run; talents reset when the run ends.

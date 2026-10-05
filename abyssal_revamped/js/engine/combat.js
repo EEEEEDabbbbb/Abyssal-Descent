@@ -717,7 +717,11 @@ function getAbilityCost(p, ab) {
 function canUseAbility(p, abilityId) {
   const ab = ABILITIES[abilityId];
   if (!ab) return { ok:false, reason:'Unknown ability' };
+  if (ab.costType === 'burst') return { ok:false, reason:'Bursts are used with the Burst button' };
   if ((p.cooldowns[abilityId] || 0) > 0) return { ok:false, reason:`${ab.name} on cooldown (${p.cooldowns[abilityId]} turns)` };
+  // Optional per-ability check, e.g. a Sunder that is already on this enemy
+  const why = ab.unusable && G.inCombat && G.enemy ? ab.unusable(p, G.enemy) : null;
+  if (why) return { ok:false, reason: why };
   const cost = getAbilityCost(p, ab);
   if (ab.costType === 'hp' ? p.stats.hp <= cost + 1 : p.stats.mp < cost) {
     return { ok:false, reason: ab.costType === 'hp' ? 'Not enough HP!' : 'Not enough mana!' };
@@ -1147,7 +1151,7 @@ function winCombat() {
   G.player.gold += goldGain;
 
   if (e.isBoss) {
-    const shardBonus = Math.round(5 + G.floor * 0.5);
+    const shardBonus = Math.round(5 + G.floor);
     G.meta.soulShards += shardBonus;
     G.killedBoss = true;
     logEntry('reward', `★ Boss slain! +${shardBonus} Soul Shards.`);

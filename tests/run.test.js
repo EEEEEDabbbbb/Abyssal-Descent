@@ -104,6 +104,35 @@ test('reloading a save cannot re-roll what happens next', async () => {
   assert.equal(r.seed, 'SCUM42');
 });
 
+test('a new depth record pays Soul Shards once', async () => {
+  const r = await run(() => {
+    __startTestRun('shadowblade', 1);
+    G.meta.maxFloor = 3; G.meta.soulShards = 0;
+    G.floor = 3; nextFloor();            // floor 4: new record
+    const first = G.meta.soulShards;
+    G.floor = 2; nextFloor();            // floor 3: not a record
+    return { first, second: G.meta.soulShards, best: G.meta.maxFloor };
+  });
+  assert.deepEqual(r, { first: 2, second: 2, best: 4 });
+});
+
+test('Sunders hit, and can\'t be wasted on an enemy that already has them', async () => {
+  const r = await run(async () => {
+    await ensureClassLoaded('nullbringer');
+    __startTestRun('nullbringer', 3);
+    const e = getRandomEnemy(3); e.hp = e.maxHp = 9999;
+    startCombat(e); G.turn = 'player';
+    const hp0 = e.hp;
+    playerAction('ability', 'sunder_form');
+    const hit = hp0 - e.hp;
+    G.turn = 'player'; G.player.cooldowns.sunder_form = 0; G.player.stats.mp = 999;
+    return { hit, again: canUseAbility(G.player, 'sunder_form').ok, def: e.def };
+  });
+  assert.ok(r.hit > 0, JSON.stringify(r));
+  assert.equal(r.again, false);
+  assert.equal(r.def, 0);
+});
+
 test('save → load keeps packs, consumables, dropped items, stats and secret-boss state', async () => {
   const r = await run(async () => {
     __startTestRun('shadowblade', 6);

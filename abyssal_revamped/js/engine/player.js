@@ -45,13 +45,16 @@
 
 const INVENTORY_SIZE = 12;
 
+// Burst abilities live on the Burst button, never on the ability bar
+function notBurst(id) { return !(ABILITIES[id] && ABILITIES[id].costType === 'burst'); }
+
 function createPlayer(classId) {
   const clsData = getClassData(classId);
   if (!clsData) throw new Error(`Class data for "${classId}" is not loaded`);
   const cls = deepCopy(clsData);
   const m   = G.meta;
   const shardBonuses = getShardShopBonuses();
-  const classAbilities = [...new Set(cls.abilities || [])];
+  const classAbilities = [...new Set(cls.abilities || [])].filter(notBurst);
 
   const cooldowns = {};
   classAbilities.forEach(abId => { cooldowns[abId] = 0; });
@@ -383,7 +386,7 @@ function refreshPlayerAbilities(p) {
   const classAbilities = p._baseAbilities || [...new Set(cls ? cls.abilities : p.abilities)];
   const core = p._swapAbilities && p._swapAbilities.length ? p._swapAbilities : classAbilities;
   const granted = ((p.equipment.weapon && p.equipment.weapon.grantAbilities) || []).filter(a => ABILITIES[a]);
-  p.abilities = [...new Set([...core, ...granted])];
+  p.abilities = [...new Set([...core, ...granted])].filter(notBurst);
   p.abilities.forEach(a => { if (p.cooldowns[a] === undefined) p.cooldowns[a] = 0; });
 }
 

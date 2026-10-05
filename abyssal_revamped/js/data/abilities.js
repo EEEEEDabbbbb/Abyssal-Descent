@@ -4382,14 +4382,14 @@ const ABILITIES = {
   spectral_drain:{
     id:'spectral_drain', name:'Spectral Drain', icon:'👻',
     cost:30, costType:'mp', cooldown:0, maxCooldown:3, color:'#cc4488', element:'ghost',
-    desc:'Drain spectral energy. 220% ATK ghost. Heals 80% of damage. Below 30% HP, lifesteal triples instead.',
+    desc:'Drain spectral energy. 220% ATK ghost. Heals 55% of damage. Below 30% HP, lifesteal triples instead.',
     tags:['magic','ghost','drain'],
     use:(p,e)=>{
       const lowHp = p.stats.hp/p.stats.maxHp < 0.30;
       const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
       const dmg=Math.round(calcDmg(p.stats.atk*2.2,e.def*0.35)*(isCrit?critMult:1));
       dealDmgToEnemy(e,dmg,isCrit,false,true,'ghost');
-      const healMult = lowHp ? 2.4 : 0.8;
+      const healMult = lowHp ? 1.65 : 0.55;
       const heal=Math.round(dmg*healMult); p.stats.hp=Math.min(p.stats.maxHp,p.stats.hp+heal);
       const drainNote = lowHp ? ' TRIPLE LIFESTEAL!' : '';
       const drainNote2 = lowHp ? ' (Low HP triple!)' : '';
@@ -4399,13 +4399,13 @@ const ABILITIES = {
   soul_collapse:{
     id:'soul_collapse', name:'Soul Collapse', icon:'💀',
     cost:38, costType:'mp', cooldown:0, maxCooldown:4, color:'#ff22aa', element:'ghost',
-    desc:'Collapse the enemy\'s soul. 300% ATK ghost. Heal 100% of damage dealt. Converts 50% of excess healing into ATK bonus (lasts 3 turns).',
+    desc:'Collapse the enemy\'s soul. 300% ATK ghost. Heal 70% of damage dealt. Converts 50% of excess healing into ATK bonus (lasts 3 turns).',
     tags:['magic','ghost','drain'],
     use:(p,e)=>{
       const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
       const dmg=Math.round(calcDmg(p.stats.atk*3.0,e.def*0.25)*(isCrit?critMult:1));
       dealDmgToEnemy(e,dmg,isCrit,false,true,'ghost');
-      const potentialHeal=Math.round(dmg*1.0);
+      const potentialHeal=Math.round(dmg*0.7);
       const actualHeal=Math.min(p.stats.maxHp-p.stats.hp,potentialHeal);
       const excess=potentialHeal-actualHeal;
       p.stats.hp=Math.min(p.stats.maxHp,p.stats.hp+actualHeal);
@@ -4436,7 +4436,7 @@ const ABILITIES = {
   dominion:{
     id:'dominion', name:'Dominion', icon:'🔱',
     cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#885500', element:'dark',
-    desc:'Assert dominion. 130% ATK dark. Reduces enemy ATK by 15% and SPD by 10% permanently for this combat. Stacks up to 5×.',
+    desc:'Assert dominion. 130% ATK dark. Reduces enemy ATK by 10% and SPD by 5% for the rest of this combat. Stacks up to 5×.',
     tags:['magic','dark','debuff'],
     use:(p,e)=>{
       p._dominionStacks=(p._dominionStacks||0)+1;
@@ -4444,9 +4444,9 @@ const ABILITIES = {
       const dmg=Math.round(calcDmg(p.stats.atk*1.3,e.def*0.5)*(isCrit?critMult:1));
       dealDmgToEnemy(e,dmg,isCrit,false,false,'dark');
       if(p._dominionStacks<=5){
-        const atkPen=Math.round(e.atk*0.15); const spdPen=Math.round((e.spd||8)*0.10);
+        const atkPen=Math.round(e.atk*0.10); const spdPen=Math.round((e.spd||8)*0.05);
         e.atk=Math.max(1,e.atk-atkPen); e.spd=Math.max(1,(e.spd||8)-spdPen);
-        addStatus(e,{id:'dominion',name:'Dominated',type:'debuff',icon:'🔱',duration:999,atkPen,spdPen});
+        addStatus(e,{id:'dominion',name:'Dominated',type:'debuff',icon:'🔱',duration:999,stacks:1,atkPen,spdPen});
         return isCrit?`Dominion CRITS for ${dmg}! -${atkPen} ATK, -${spdPen} SPD. (${p._dominionStacks}×)`:`Dominion asserts ${dmg}. -${atkPen} ATK, -${spdPen} SPD. (${p._dominionStacks}×)`;
       }
       return isCrit?`Dominion CRITS for ${dmg}! (Max stacks reached)`:`Dominion strikes for ${dmg}. (Max stacks)`;
@@ -4469,7 +4469,7 @@ const ABILITIES = {
   },
   ability_lock:{
     id:'ability_lock', name:'Ability Lock', icon:'🔒',
-    cost:32, costType:'mp', cooldown:0, maxCooldown:4, color:'#774400', element:'dark',
+    cost:32, costType:'mp', cooldown:0, maxCooldown:6, color:'#774400', element:'dark',
     desc:'Lock out the enemy\'s next 2 turns of action. 160% ATK dark. Stuns for 2 turns.',
     tags:['magic','dark','stun','control'],
     use:(p,e)=>{
@@ -4483,7 +4483,7 @@ const ABILITIES = {
   total_suppression:{
     id:'total_suppression', name:'Total Suppression', icon:'⛔',
     cost:45, costType:'mp', cooldown:0, maxCooldown:5, color:'#885500', element:'dark',
-    desc:'Total suppression. 250% ATK dark. Reduces ALL enemy stats by 30%. Applies Suppressed: enemy deals 40% less damage for 4 turns.',
+    desc:'Total suppression. 250% ATK dark. Reduces ALL enemy stats by 30%. Applies Suppressed: enemy deals 25% less damage for 4 turns.',
     tags:['magic','dark','debuff','control'],
     use:(p,e)=>{
       const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -4491,8 +4491,8 @@ const ABILITIES = {
       dealDmgToEnemy(e,dmg,isCrit,false,false,'dark');
       const atkPen=Math.round(e.atk*0.3); const defPen=Math.round(e.def*0.3); const spdPen=Math.round((e.spd||8)*0.3);
       e.atk=Math.max(1,e.atk-atkPen); e.def=Math.max(0,e.def-defPen); e.spd=Math.max(1,(e.spd||8)-spdPen);
-      addStatus(e,{id:'suppressed',name:'Suppressed',type:'debuff',icon:'⛔',duration:4,atkPen,defPen,spdPen,dmgReduction:0.40});
-      return isCrit?`Total Suppression CRITS for ${dmg}!!! All stats -30%. 40% damage reduction for 4 turns.`:`Total Suppression dominates for ${dmg}. Enemy suppressed.`;
+      addStatus(e,{id:'suppressed',name:'Suppressed',type:'debuff',icon:'⛔',duration:4,atkPen,defPen,spdPen,dmgReduction:0.25});
+      return isCrit?`Total Suppression CRITS for ${dmg}!!! All stats -30%. 25% damage reduction for 4 turns.`:`Total Suppression dominates for ${dmg}. Enemy suppressed.`;
     }
   },
   abyssal_tyrant_burst:{
@@ -4848,76 +4848,86 @@ const ABILITIES = {
   sunder_flesh:{
     id:'sunder_flesh', name:'Sunder Flesh', icon:'🩻',
     cost:30, costType:'mp', cooldown:0, maxCooldown:3, color:'#1a0033', element:'void',
-    desc:'Permanently strip the enemy of all healing and regeneration for this combat. Applies SUNDER: FLESH.',
+    desc:'110% ATK void. Permanently strip the enemy of all healing and regeneration for this combat. Applies SUNDER: FLESH.',
     tags:['debuff','void'],
+    unusable:(p,e)=>e._sunders && e._sunders.flesh ? 'Flesh is already sundered.' : null,
     use:(p,e)=>{
       if(e._sunders && e._sunders.flesh){ return 'Flesh is already sundered.'; }
       e._sunders = e._sunders || {};
       e._sunders.flesh = true;
+      const dmg=Math.round(calcDmg(p.stats.atk*1.1,e.def*0.5)); dealDmgToEnemy(e,dmg,false,false,false,'void');
       addStatus(e,{id:'sunder_flesh',name:'☠ FLESH',type:'debuff',icon:'🩻',duration:999});
       const count = Object.keys(e._sunders).length;
-      return `Sunder Flesh tears away all recovery. [${count}/5 Sundered] Enemy cannot heal.`;
+      return `Sunder Flesh hits for ${dmg} and tears away all recovery. [${count}/5 Sundered] Enemy cannot heal.`;
     }
   },
   sunder_will:{
     id:'sunder_will', name:'Sunder Will', icon:'💔',
     cost:35, costType:'mp', cooldown:0, maxCooldown:3, color:'#1a0033', element:'void',
-    desc:'Permanently reduce enemy ATK by 60% for this combat. Applies SUNDER: WILL.',
+    desc:'110% ATK void. Permanently reduce enemy ATK by 60% for this combat. Applies SUNDER: WILL.',
     tags:['debuff','void'],
+    unusable:(p,e)=>e._sunders && e._sunders.will ? 'Will is already sundered.' : null,
     use:(p,e)=>{
       if(e._sunders && e._sunders.will){ return 'Will is already sundered.'; }
       e._sunders = e._sunders || {};
       e._sunders.will = true;
+      const dmg=Math.round(calcDmg(p.stats.atk*1.1,e.def*0.5)); dealDmgToEnemy(e,dmg,false,false,false,'void');
       const reduction = Math.round(e.atk * 0.60);
       e.atk = Math.max(1, e.atk - reduction);
       addStatus(e,{id:'sunder_will',name:'💔 WILL',type:'debuff',icon:'💔',duration:999});
       const count = Object.keys(e._sunders).length;
-      return `Sunder Will shreds resolve. ATK -${reduction}. [${count}/5 Sundered]`;
+      return `Sunder Will hits for ${dmg} and shreds resolve. ATK -${reduction}. [${count}/5 Sundered]`;
     }
   },
   sunder_form:{
     id:'sunder_form', name:'Sunder Form', icon:'🫥',
     cost:35, costType:'mp', cooldown:0, maxCooldown:3, color:'#1a0033', element:'void',
-    desc:'Permanently reduce enemy DEF to 0 for this combat. Applies SUNDER: FORM.',
+    desc:'110% ATK void. Permanently reduce enemy DEF to 0 for this combat. Applies SUNDER: FORM.',
     tags:['debuff','void'],
+    unusable:(p,e)=>e._sunders && e._sunders.form ? 'Form is already sundered.' : null,
     use:(p,e)=>{
       if(e._sunders && e._sunders.form){ return 'Form is already sundered.'; }
       e._sunders = e._sunders || {};
       e._sunders.form = true;
+      const dmg=Math.round(calcDmg(p.stats.atk*1.1,e.def*0.5)); dealDmgToEnemy(e,dmg,false,false,false,'void');
       e.def = 0;
       addStatus(e,{id:'sunder_form',name:'🫥 FORM',type:'debuff',icon:'🫥',duration:999});
       const count = Object.keys(e._sunders).length;
-      return `Sunder Form dissolves all defenses. DEF → 0. [${count}/5 Sundered]`;
+      return `Sunder Form hits for ${dmg} and dissolves all defenses. DEF → 0. [${count}/5 Sundered]`;
     }
   },
   sunder_time:{
     id:'sunder_time', name:'Sunder Time', icon:'⏸️',
     cost:30, costType:'mp', cooldown:0, maxCooldown:3, color:'#1a0033', element:'void',
-    desc:'Permanently halve enemy SPD and prevent SPD buffs for this combat. Applies SUNDER: TIME.',
+    desc:'110% ATK void. Permanently halve enemy SPD and prevent SPD buffs for this combat. Applies SUNDER: TIME.',
     tags:['debuff','void'],
+    unusable:(p,e)=>e._sunders && e._sunders.time ? 'Time is already sundered.' : null,
     use:(p,e)=>{
       if(e._sunders && e._sunders.time){ return 'Time is already sundered.'; }
       e._sunders = e._sunders || {};
       e._sunders.time = true;
+      const dmg=Math.round(calcDmg(p.stats.atk*1.1,e.def*0.5)); dealDmgToEnemy(e,dmg,false,false,false,'void');
       e.spd = Math.max(1, Math.round(e.spd * 0.5));
       addStatus(e,{id:'sunder_time',name:'⏸ TIME',type:'debuff',icon:'⏸️',duration:999});
       const count = Object.keys(e._sunders).length;
-      return `Sunder Time freezes momentum. SPD halved. [${count}/5 Sundered]`;
+      return `Sunder Time hits for ${dmg} and freezes momentum. SPD halved. [${count}/5 Sundered]`;
     }
   },
   sunder_existence:{
     id:'sunder_existence', name:'Sunder Existence', icon:'🌑',
     cost:40, costType:'mp', cooldown:0, maxCooldown:4, color:'#1a0033', element:'void',
-    desc:"Disable the enemy's passive ability permanently for this combat. Applies SUNDER: EXISTENCE.",
+    desc:"110% ATK void. Disable the enemy's passive ability permanently for this combat. Applies SUNDER: EXISTENCE.",
     tags:['debuff','void'],
+    unusable:(p,e)=>e._sunders && e._sunders.existence ? 'Existence is already sundered.' : null,
     use:(p,e)=>{
       if(e._sunders && e._sunders.existence){ return 'Existence is already sundered.'; }
       e._sunders = e._sunders || {};
       e._sunders.existence = true;
+      const dmg=Math.round(calcDmg(p.stats.atk*1.1,e.def*0.5)); dealDmgToEnemy(e,dmg,false,false,false,'void');
       e._passiveDisabled = true;
       addStatus(e,{id:'sunder_existence',name:'🌑 EXIST',type:'debuff',icon:'🌑',duration:999});
       const count = Object.keys(e._sunders).length;
-      return `Sunder Existence erases innate power. Passive disabled. [${count}/5 Sundered]`;
+      return `Sunder Existence hits for ${dmg} and erases innate power. Passive disabled. [${count}/5 Sundered]`;
     }
   },
   nullbringer_burst:{

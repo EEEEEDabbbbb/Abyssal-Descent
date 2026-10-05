@@ -11915,7 +11915,7 @@ ABILITIES.ice_magnet_final = {
 ABILITIES.fighting_fighting_strike = {
   id:'fighting_fighting_strike', name:'Iron Strike', icon:'👊',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#c03028', element:'fighting',
-  desc:'Fighting-infused Fighting strike. 155% ATK physical.',
+  desc:'Fighting-infused strike. 155% ATK physical.',
   tags:['physical','fighting'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -11927,57 +11927,57 @@ ABILITIES.fighting_fighting_strike = {
 };
 
 ABILITIES.fighting_fighting_dot_strike = {
-  id:'fighting_fighting_dot_strike', name:'Fighting Fighting Wave', icon:'👊',
+  id:'fighting_fighting_dot_strike', name:'Fighting Wave', icon:'👊',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#c03028', element:'fighting',
-  desc:'Fighting and Fighting energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Fighting energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','fighting','fighting'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'fighting');
-    addStatus(e,{id:'dot_fighting_fighting_dot_strike',name:'Fighting Fighting Wave',type:'debuff',icon:'👊',duration:4,
+    addStatus(e,{id:'dot_fighting_fighting_dot_strike',name:'Fighting Wave',type:'debuff',icon:'👊',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'fighting');}});
-    return isCrit?`Fighting Fighting Wave CRITS for ${dmg}! DoT applied.`:`Fighting Fighting Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Fighting Wave CRITS for ${dmg}! DoT applied.`:`Fighting Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.fighting_fighting_stance = {
-  id:'fighting_fighting_stance', name:'Fighting Fighting Stance', icon:'👊',
+  id:'fighting_fighting_stance', name:'Fighting Stance', icon:'👊',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#c03028', element:'fighting',
-  desc:'Combine Fighting and Fighting into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Fighting into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','fighting','fighting'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_fighting_fighting_stance',name:'Fighting Fighting Stance',type:'buff',icon:'👊',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Fighting Fighting Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_fighting_fighting_stance',name:'Fighting Stance',type:'buff',icon:'👊',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Fighting Stance active.`;
   }
 };
 
 ABILITIES.fighting_fighting_blast = {
-  id:'fighting_fighting_blast', name:'Fighting Burst', icon:'👊',
+  id:'fighting_fighting_blast', name:'Fighting Blast', icon:'👊',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#c03028', element:'fighting',
-  desc:'Focused Fighting burst. 195% ATK magic.',
+  desc:'Focused Fighting blast. 195% ATK magic.',
   tags:['magic','fighting'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'fighting');
     if(rand(100)<28) addStatus(e,{id:'stun',name:'Stun',type:'debuff',icon:'💫',duration:1,onTurn:(en)=>{}});
-    return isCrit?`Fighting Burst CRITS for ${dmg}!`:`Fighting Burst hits for ${dmg}.`;
+    return isCrit?`Fighting Blast CRITS for ${dmg}!`:`Fighting Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.fighting_fighting_weaken = {
-  id:'fighting_fighting_weaken', name:'Fighting Fighting Crush', icon:'👊',
+  id:'fighting_fighting_weaken', name:'Fighting Crush', icon:'👊',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#c03028', element:'fighting',
-  desc:'Fighting Fighting combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Fighting force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','fighting','fighting'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'fighting');
-    addStatus(e,{id:'dot_fighting_fighting_weaken',name:'Fighting Fighting Crush',type:'debuff',icon:'👊',duration:4,
+    addStatus(e,{id:'dot_fighting_fighting_weaken',name:'Fighting Crush',type:'debuff',icon:'👊',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'fighting');}});
-    return isCrit?`Fighting Fighting Crush CRITS for ${dmg}! DoT applied.`:`Fighting Fighting Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Fighting Crush CRITS for ${dmg}! DoT applied.`:`Fighting Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -11996,28 +11996,28 @@ ABILITIES.fighting_fighting_drain = {
 };
 
 ABILITIES.fighting_fighting_surge = {
-  id:'fighting_fighting_surge', name:'Fighting Fighting Surge', icon:'👊',
+  id:'fighting_fighting_surge', name:'Fighting Surge', icon:'👊',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#c03028', element:'fighting',
-  desc:'Fighting and Fighting surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Fighting. 310% ATK magic. Piercing.',
   tags:['magic','fighting','fighting'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'fighting');
-    return isCrit?`Fighting Fighting Surge CRITS for ${dmg}!`:`Fighting Fighting Surge hits for ${dmg}.`;
+    return isCrit?`Fighting Surge CRITS for ${dmg}!`:`Fighting Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.fighting_fighting_final = {
-  id:'fighting_fighting_final', name:'Fighting Fighting Finale', icon:'👊',
+  id:'fighting_fighting_final', name:'Fighting Finale', icon:'👊',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#c03028', element:'fighting',
-  desc:'Final Fighting-Fighting combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Fighting technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','fighting','fighting'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'fighting');
-    return `Fighting Fighting Finale strikes for ${dmg}!`;
+    return `Fighting Finale strikes for ${dmg}!`;
   }
 };
 
@@ -15512,7 +15512,7 @@ ABILITIES.fighting_magnet_final = {
 ABILITIES.poison_poison_strike = {
   id:'poison_poison_strike', name:'Venom Strike', icon:'☠️',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#a040a0', element:'poison',
-  desc:'Poison-infused Poison strike. 155% ATK physical.',
+  desc:'Poison-infused strike. 155% ATK physical.',
   tags:['physical','poison'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -15524,57 +15524,57 @@ ABILITIES.poison_poison_strike = {
 };
 
 ABILITIES.poison_poison_dot_strike = {
-  id:'poison_poison_dot_strike', name:'Poison Poison Wave', icon:'☠️',
+  id:'poison_poison_dot_strike', name:'Poison Wave', icon:'☠️',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#a040a0', element:'poison',
-  desc:'Poison and Poison energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Poison energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','poison','poison'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'poison');
-    addStatus(e,{id:'dot_poison_poison_dot_strike',name:'Poison Poison Wave',type:'debuff',icon:'☠️',duration:4,
+    addStatus(e,{id:'dot_poison_poison_dot_strike',name:'Poison Wave',type:'debuff',icon:'☠️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'poison');}});
-    return isCrit?`Poison Poison Wave CRITS for ${dmg}! DoT applied.`:`Poison Poison Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Poison Wave CRITS for ${dmg}! DoT applied.`:`Poison Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.poison_poison_stance = {
-  id:'poison_poison_stance', name:'Poison Poison Stance', icon:'☠️',
+  id:'poison_poison_stance', name:'Poison Stance', icon:'☠️',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#a040a0', element:'poison',
-  desc:'Combine Poison and Poison into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Poison into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','poison','poison'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_poison_poison_stance',name:'Poison Poison Stance',type:'buff',icon:'☠️',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Poison Poison Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_poison_poison_stance',name:'Poison Stance',type:'buff',icon:'☠️',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Poison Stance active.`;
   }
 };
 
 ABILITIES.poison_poison_blast = {
-  id:'poison_poison_blast', name:'Poison Burst', icon:'☠️',
+  id:'poison_poison_blast', name:'Poison Blast', icon:'☠️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#a040a0', element:'poison',
-  desc:'Focused Poison burst. 195% ATK magic.',
+  desc:'Focused Poison blast. 195% ATK magic.',
   tags:['magic','poison'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'poison');
     if(rand(100)<40) addStatus(e,{id:'poison',name:'Poison',type:'debuff',icon:'☠️',duration:3,stacks:1,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.3));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Poison Burst CRITS for ${dmg}!`:`Poison Burst hits for ${dmg}.`;
+    return isCrit?`Poison Blast CRITS for ${dmg}!`:`Poison Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.poison_poison_weaken = {
-  id:'poison_poison_weaken', name:'Poison Poison Crush', icon:'☠️',
+  id:'poison_poison_weaken', name:'Poison Crush', icon:'☠️',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#a040a0', element:'poison',
-  desc:'Poison Poison combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Poison force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','poison','poison'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'poison');
-    addStatus(e,{id:'dot_poison_poison_weaken',name:'Poison Poison Crush',type:'debuff',icon:'☠️',duration:4,
+    addStatus(e,{id:'dot_poison_poison_weaken',name:'Poison Crush',type:'debuff',icon:'☠️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'poison');}});
-    return isCrit?`Poison Poison Crush CRITS for ${dmg}! DoT applied.`:`Poison Poison Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Poison Crush CRITS for ${dmg}! DoT applied.`:`Poison Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -15593,28 +15593,28 @@ ABILITIES.poison_poison_drain = {
 };
 
 ABILITIES.poison_poison_surge = {
-  id:'poison_poison_surge', name:'Poison Poison Surge', icon:'☠️',
+  id:'poison_poison_surge', name:'Poison Surge', icon:'☠️',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#a040a0', element:'poison',
-  desc:'Poison and Poison surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Poison. 310% ATK magic. Piercing.',
   tags:['magic','poison','poison'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'poison');
-    return isCrit?`Poison Poison Surge CRITS for ${dmg}!`:`Poison Poison Surge hits for ${dmg}.`;
+    return isCrit?`Poison Surge CRITS for ${dmg}!`:`Poison Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.poison_poison_final = {
-  id:'poison_poison_final', name:'Poison Poison Finale', icon:'☠️',
+  id:'poison_poison_final', name:'Poison Finale', icon:'☠️',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#a040a0', element:'poison',
-  desc:'Final Poison-Poison combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Poison technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','poison','poison'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'poison');
-    return `Poison Poison Finale strikes for ${dmg}!`;
+    return `Poison Finale strikes for ${dmg}!`;
   }
 };
 
@@ -19000,7 +19000,7 @@ ABILITIES.poison_magnet_final = {
 ABILITIES.ground_ground_strike = {
   id:'ground_ground_strike', name:'Seismic Strike', icon:'🌍',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#e0c068', element:'ground',
-  desc:'Ground-infused Ground strike. 155% ATK physical.',
+  desc:'Ground-infused strike. 155% ATK physical.',
   tags:['physical','ground'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -19012,57 +19012,57 @@ ABILITIES.ground_ground_strike = {
 };
 
 ABILITIES.ground_ground_dot_strike = {
-  id:'ground_ground_dot_strike', name:'Ground Ground Wave', icon:'🌍',
+  id:'ground_ground_dot_strike', name:'Ground Wave', icon:'🌍',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#e0c068', element:'ground',
-  desc:'Ground and Ground energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Ground energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','ground','ground'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'ground');
-    addStatus(e,{id:'dot_ground_ground_dot_strike',name:'Ground Ground Wave',type:'debuff',icon:'🌍',duration:4,
+    addStatus(e,{id:'dot_ground_ground_dot_strike',name:'Ground Wave',type:'debuff',icon:'🌍',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'ground');}});
-    return isCrit?`Ground Ground Wave CRITS for ${dmg}! DoT applied.`:`Ground Ground Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Ground Wave CRITS for ${dmg}! DoT applied.`:`Ground Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.ground_ground_stance = {
-  id:'ground_ground_stance', name:'Ground Ground Stance', icon:'🌍',
+  id:'ground_ground_stance', name:'Ground Stance', icon:'🌍',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#e0c068', element:'ground',
-  desc:'Combine Ground and Ground into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Ground into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','ground','ground'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_ground_ground_stance',name:'Ground Ground Stance',type:'buff',icon:'🌍',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Ground Ground Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_ground_ground_stance',name:'Ground Stance',type:'buff',icon:'🌍',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Ground Stance active.`;
   }
 };
 
 ABILITIES.ground_ground_blast = {
-  id:'ground_ground_blast', name:'Ground Burst', icon:'🌍',
+  id:'ground_ground_blast', name:'Ground Blast', icon:'🌍',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#e0c068', element:'ground',
-  desc:'Focused Ground burst. 195% ATK magic.',
+  desc:'Focused Ground blast. 195% ATK magic.',
   tags:['magic','ground'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'ground');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Ground Burst CRITS for ${dmg}!`:`Ground Burst hits for ${dmg}.`;
+    return isCrit?`Ground Blast CRITS for ${dmg}!`:`Ground Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.ground_ground_weaken = {
-  id:'ground_ground_weaken', name:'Ground Ground Crush', icon:'🌍',
+  id:'ground_ground_weaken', name:'Ground Crush', icon:'🌍',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#e0c068', element:'ground',
-  desc:'Ground Ground combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Ground force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','ground','ground'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'ground');
-    addStatus(e,{id:'dot_ground_ground_weaken',name:'Ground Ground Crush',type:'debuff',icon:'🌍',duration:4,
+    addStatus(e,{id:'dot_ground_ground_weaken',name:'Ground Crush',type:'debuff',icon:'🌍',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'ground');}});
-    return isCrit?`Ground Ground Crush CRITS for ${dmg}! DoT applied.`:`Ground Ground Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Ground Crush CRITS for ${dmg}! DoT applied.`:`Ground Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -19081,28 +19081,28 @@ ABILITIES.ground_ground_drain = {
 };
 
 ABILITIES.ground_ground_surge = {
-  id:'ground_ground_surge', name:'Ground Ground Surge', icon:'🌍',
+  id:'ground_ground_surge', name:'Ground Surge', icon:'🌍',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#e0c068', element:'ground',
-  desc:'Ground and Ground surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Ground. 310% ATK magic. Piercing.',
   tags:['magic','ground','ground'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'ground');
-    return isCrit?`Ground Ground Surge CRITS for ${dmg}!`:`Ground Ground Surge hits for ${dmg}.`;
+    return isCrit?`Ground Surge CRITS for ${dmg}!`:`Ground Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.ground_ground_final = {
-  id:'ground_ground_final', name:'Ground Ground Finale', icon:'🌍',
+  id:'ground_ground_final', name:'Ground Finale', icon:'🌍',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#e0c068', element:'ground',
-  desc:'Final Ground-Ground combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Ground technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','ground','ground'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'ground');
-    return `Ground Ground Finale strikes for ${dmg}!`;
+    return `Ground Finale strikes for ${dmg}!`;
   }
 };
 
@@ -22379,7 +22379,7 @@ ABILITIES.ground_magnet_final = {
 ABILITIES.flying_flying_strike = {
   id:'flying_flying_strike', name:'Wind Strike', icon:'🦅',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#a890f0', element:'flying',
-  desc:'Flying-infused Flying strike. 155% ATK physical.',
+  desc:'Flying-infused strike. 155% ATK physical.',
   tags:['physical','flying'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -22391,57 +22391,57 @@ ABILITIES.flying_flying_strike = {
 };
 
 ABILITIES.flying_flying_dot_strike = {
-  id:'flying_flying_dot_strike', name:'Flying Flying Wave', icon:'🦅',
+  id:'flying_flying_dot_strike', name:'Flying Wave', icon:'🦅',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#a890f0', element:'flying',
-  desc:'Flying and Flying energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Flying energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','flying','flying'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'flying');
-    addStatus(e,{id:'dot_flying_flying_dot_strike',name:'Flying Flying Wave',type:'debuff',icon:'🦅',duration:4,
+    addStatus(e,{id:'dot_flying_flying_dot_strike',name:'Flying Wave',type:'debuff',icon:'🦅',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'flying');}});
-    return isCrit?`Flying Flying Wave CRITS for ${dmg}! DoT applied.`:`Flying Flying Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Flying Wave CRITS for ${dmg}! DoT applied.`:`Flying Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.flying_flying_stance = {
-  id:'flying_flying_stance', name:'Flying Flying Stance', icon:'🦅',
+  id:'flying_flying_stance', name:'Flying Stance', icon:'🦅',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#a890f0', element:'flying',
-  desc:'Combine Flying and Flying into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Flying into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','flying','flying'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_flying_flying_stance',name:'Flying Flying Stance',type:'buff',icon:'🦅',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Flying Flying Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_flying_flying_stance',name:'Flying Stance',type:'buff',icon:'🦅',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Flying Stance active.`;
   }
 };
 
 ABILITIES.flying_flying_blast = {
-  id:'flying_flying_blast', name:'Flying Burst', icon:'🦅',
+  id:'flying_flying_blast', name:'Flying Blast', icon:'🦅',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#a890f0', element:'flying',
-  desc:'Focused Flying burst. 195% ATK magic.',
+  desc:'Focused Flying blast. 195% ATK magic.',
   tags:['magic','flying'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'flying');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Flying Burst CRITS for ${dmg}!`:`Flying Burst hits for ${dmg}.`;
+    return isCrit?`Flying Blast CRITS for ${dmg}!`:`Flying Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.flying_flying_weaken = {
-  id:'flying_flying_weaken', name:'Flying Flying Crush', icon:'🦅',
+  id:'flying_flying_weaken', name:'Flying Crush', icon:'🦅',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#a890f0', element:'flying',
-  desc:'Flying Flying combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Flying force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','flying','flying'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'flying');
-    addStatus(e,{id:'dot_flying_flying_weaken',name:'Flying Flying Crush',type:'debuff',icon:'🦅',duration:4,
+    addStatus(e,{id:'dot_flying_flying_weaken',name:'Flying Crush',type:'debuff',icon:'🦅',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'flying');}});
-    return isCrit?`Flying Flying Crush CRITS for ${dmg}! DoT applied.`:`Flying Flying Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Flying Crush CRITS for ${dmg}! DoT applied.`:`Flying Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -22460,28 +22460,28 @@ ABILITIES.flying_flying_drain = {
 };
 
 ABILITIES.flying_flying_surge = {
-  id:'flying_flying_surge', name:'Flying Flying Surge', icon:'🦅',
+  id:'flying_flying_surge', name:'Flying Surge', icon:'🦅',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#a890f0', element:'flying',
-  desc:'Flying and Flying surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Flying. 310% ATK magic. Piercing.',
   tags:['magic','flying','flying'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'flying');
-    return isCrit?`Flying Flying Surge CRITS for ${dmg}!`:`Flying Flying Surge hits for ${dmg}.`;
+    return isCrit?`Flying Surge CRITS for ${dmg}!`:`Flying Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.flying_flying_final = {
-  id:'flying_flying_final', name:'Flying Flying Finale', icon:'🦅',
+  id:'flying_flying_final', name:'Flying Finale', icon:'🦅',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#a890f0', element:'flying',
-  desc:'Final Flying-Flying combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Flying technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','flying','flying'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'flying');
-    return `Flying Flying Finale strikes for ${dmg}!`;
+    return `Flying Finale strikes for ${dmg}!`;
   }
 };
 
@@ -25649,7 +25649,7 @@ ABILITIES.flying_magnet_final = {
 ABILITIES.psychic_psychic_strike = {
   id:'psychic_psychic_strike', name:'Mind Strike', icon:'🔮',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#f85888', element:'psychic',
-  desc:'Psychic-infused Psychic strike. 155% ATK physical.',
+  desc:'Psychic-infused strike. 155% ATK physical.',
   tags:['physical','psychic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -25661,57 +25661,57 @@ ABILITIES.psychic_psychic_strike = {
 };
 
 ABILITIES.psychic_psychic_dot_strike = {
-  id:'psychic_psychic_dot_strike', name:'Psychic Psychic Wave', icon:'🔮',
+  id:'psychic_psychic_dot_strike', name:'Psychic Wave', icon:'🔮',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#f85888', element:'psychic',
-  desc:'Psychic and Psychic energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Psychic energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','psychic','psychic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'psychic');
-    addStatus(e,{id:'dot_psychic_psychic_dot_strike',name:'Psychic Psychic Wave',type:'debuff',icon:'🔮',duration:4,
+    addStatus(e,{id:'dot_psychic_psychic_dot_strike',name:'Psychic Wave',type:'debuff',icon:'🔮',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'psychic');}});
-    return isCrit?`Psychic Psychic Wave CRITS for ${dmg}! DoT applied.`:`Psychic Psychic Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Psychic Wave CRITS for ${dmg}! DoT applied.`:`Psychic Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.psychic_psychic_stance = {
-  id:'psychic_psychic_stance', name:'Psychic Psychic Stance', icon:'🔮',
+  id:'psychic_psychic_stance', name:'Psychic Stance', icon:'🔮',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#f85888', element:'psychic',
-  desc:'Combine Psychic and Psychic into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Psychic into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','psychic','psychic'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_psychic_psychic_stance',name:'Psychic Psychic Stance',type:'buff',icon:'🔮',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Psychic Psychic Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_psychic_psychic_stance',name:'Psychic Stance',type:'buff',icon:'🔮',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Psychic Stance active.`;
   }
 };
 
 ABILITIES.psychic_psychic_blast = {
-  id:'psychic_psychic_blast', name:'Psychic Burst', icon:'🔮',
+  id:'psychic_psychic_blast', name:'Psychic Blast', icon:'🔮',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#f85888', element:'psychic',
-  desc:'Focused Psychic burst. 195% ATK magic.',
+  desc:'Focused Psychic blast. 195% ATK magic.',
   tags:['magic','psychic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'psychic');
     if(rand(100)<28) addStatus(e,{id:'stun',name:'Stun',type:'debuff',icon:'💫',duration:1,onTurn:(en)=>{}});
-    return isCrit?`Psychic Burst CRITS for ${dmg}!`:`Psychic Burst hits for ${dmg}.`;
+    return isCrit?`Psychic Blast CRITS for ${dmg}!`:`Psychic Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.psychic_psychic_weaken = {
-  id:'psychic_psychic_weaken', name:'Psychic Psychic Crush', icon:'🔮',
+  id:'psychic_psychic_weaken', name:'Psychic Crush', icon:'🔮',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#f85888', element:'psychic',
-  desc:'Psychic Psychic combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Psychic force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','psychic','psychic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'psychic');
-    addStatus(e,{id:'dot_psychic_psychic_weaken',name:'Psychic Psychic Crush',type:'debuff',icon:'🔮',duration:4,
+    addStatus(e,{id:'dot_psychic_psychic_weaken',name:'Psychic Crush',type:'debuff',icon:'🔮',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'psychic');}});
-    return isCrit?`Psychic Psychic Crush CRITS for ${dmg}! DoT applied.`:`Psychic Psychic Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Psychic Crush CRITS for ${dmg}! DoT applied.`:`Psychic Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -25730,28 +25730,28 @@ ABILITIES.psychic_psychic_drain = {
 };
 
 ABILITIES.psychic_psychic_surge = {
-  id:'psychic_psychic_surge', name:'Psychic Psychic Surge', icon:'🔮',
+  id:'psychic_psychic_surge', name:'Psychic Surge', icon:'🔮',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#f85888', element:'psychic',
-  desc:'Psychic and Psychic surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Psychic. 310% ATK magic. Piercing.',
   tags:['magic','psychic','psychic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'psychic');
-    return isCrit?`Psychic Psychic Surge CRITS for ${dmg}!`:`Psychic Psychic Surge hits for ${dmg}.`;
+    return isCrit?`Psychic Surge CRITS for ${dmg}!`:`Psychic Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.psychic_psychic_final = {
-  id:'psychic_psychic_final', name:'Psychic Psychic Finale', icon:'🔮',
+  id:'psychic_psychic_final', name:'Psychic Finale', icon:'🔮',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#f85888', element:'psychic',
-  desc:'Final Psychic-Psychic combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Psychic technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','psychic','psychic'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'psychic');
-    return `Psychic Psychic Finale strikes for ${dmg}!`;
+    return `Psychic Finale strikes for ${dmg}!`;
   }
 };
 
@@ -28810,7 +28810,7 @@ ABILITIES.psychic_magnet_final = {
 ABILITIES.bug_bug_strike = {
   id:'bug_bug_strike', name:'Swarm Strike', icon:'🐛',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#a8b820', element:'bug',
-  desc:'Bug-infused Bug strike. 155% ATK physical.',
+  desc:'Bug-infused strike. 155% ATK physical.',
   tags:['physical','bug'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -28822,57 +28822,57 @@ ABILITIES.bug_bug_strike = {
 };
 
 ABILITIES.bug_bug_dot_strike = {
-  id:'bug_bug_dot_strike', name:'Bug Bug Wave', icon:'🐛',
+  id:'bug_bug_dot_strike', name:'Bug Wave', icon:'🐛',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#a8b820', element:'bug',
-  desc:'Bug and Bug energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Bug energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','bug','bug'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'bug');
-    addStatus(e,{id:'dot_bug_bug_dot_strike',name:'Bug Bug Wave',type:'debuff',icon:'🐛',duration:4,
+    addStatus(e,{id:'dot_bug_bug_dot_strike',name:'Bug Wave',type:'debuff',icon:'🐛',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'bug');}});
-    return isCrit?`Bug Bug Wave CRITS for ${dmg}! DoT applied.`:`Bug Bug Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Bug Wave CRITS for ${dmg}! DoT applied.`:`Bug Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.bug_bug_stance = {
-  id:'bug_bug_stance', name:'Bug Bug Stance', icon:'🐛',
+  id:'bug_bug_stance', name:'Bug Stance', icon:'🐛',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#a8b820', element:'bug',
-  desc:'Combine Bug and Bug into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Bug into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','bug','bug'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_bug_bug_stance',name:'Bug Bug Stance',type:'buff',icon:'🐛',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Bug Bug Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_bug_bug_stance',name:'Bug Stance',type:'buff',icon:'🐛',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Bug Stance active.`;
   }
 };
 
 ABILITIES.bug_bug_blast = {
-  id:'bug_bug_blast', name:'Bug Burst', icon:'🐛',
+  id:'bug_bug_blast', name:'Bug Blast', icon:'🐛',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#a8b820', element:'bug',
-  desc:'Focused Bug burst. 195% ATK magic.',
+  desc:'Focused Bug blast. 195% ATK magic.',
   tags:['magic','bug'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'bug');
     if(rand(100)<30) addStatus(e,{id:'infest',name:'Infested',type:'debuff',icon:'🐛',duration:3,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.25));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Bug Burst CRITS for ${dmg}!`:`Bug Burst hits for ${dmg}.`;
+    return isCrit?`Bug Blast CRITS for ${dmg}!`:`Bug Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.bug_bug_weaken = {
-  id:'bug_bug_weaken', name:'Bug Bug Crush', icon:'🐛',
+  id:'bug_bug_weaken', name:'Bug Crush', icon:'🐛',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#a8b820', element:'bug',
-  desc:'Bug Bug combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Bug force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','bug','bug'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'bug');
-    addStatus(e,{id:'dot_bug_bug_weaken',name:'Bug Bug Crush',type:'debuff',icon:'🐛',duration:4,
+    addStatus(e,{id:'dot_bug_bug_weaken',name:'Bug Crush',type:'debuff',icon:'🐛',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'bug');}});
-    return isCrit?`Bug Bug Crush CRITS for ${dmg}! DoT applied.`:`Bug Bug Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Bug Crush CRITS for ${dmg}! DoT applied.`:`Bug Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -28891,28 +28891,28 @@ ABILITIES.bug_bug_drain = {
 };
 
 ABILITIES.bug_bug_surge = {
-  id:'bug_bug_surge', name:'Bug Bug Surge', icon:'🐛',
+  id:'bug_bug_surge', name:'Bug Surge', icon:'🐛',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#a8b820', element:'bug',
-  desc:'Bug and Bug surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Bug. 310% ATK magic. Piercing.',
   tags:['magic','bug','bug'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'bug');
-    return isCrit?`Bug Bug Surge CRITS for ${dmg}!`:`Bug Bug Surge hits for ${dmg}.`;
+    return isCrit?`Bug Surge CRITS for ${dmg}!`:`Bug Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.bug_bug_final = {
-  id:'bug_bug_final', name:'Bug Bug Finale', icon:'🐛',
+  id:'bug_bug_final', name:'Bug Finale', icon:'🐛',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#a8b820', element:'bug',
-  desc:'Final Bug-Bug combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Bug technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','bug','bug'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'bug');
-    return `Bug Bug Finale strikes for ${dmg}!`;
+    return `Bug Finale strikes for ${dmg}!`;
   }
 };
 
@@ -31862,7 +31862,7 @@ ABILITIES.bug_magnet_final = {
 ABILITIES.rock_rock_strike = {
   id:'rock_rock_strike', name:'Boulder Strike', icon:'🪨',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#b8a038', element:'rock',
-  desc:'Rock-infused Rock strike. 155% ATK physical.',
+  desc:'Rock-infused strike. 155% ATK physical.',
   tags:['physical','rock'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -31874,57 +31874,57 @@ ABILITIES.rock_rock_strike = {
 };
 
 ABILITIES.rock_rock_dot_strike = {
-  id:'rock_rock_dot_strike', name:'Rock Rock Wave', icon:'🪨',
+  id:'rock_rock_dot_strike', name:'Rock Wave', icon:'🪨',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#b8a038', element:'rock',
-  desc:'Rock and Rock energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Rock energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','rock','rock'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'rock');
-    addStatus(e,{id:'dot_rock_rock_dot_strike',name:'Rock Rock Wave',type:'debuff',icon:'🪨',duration:4,
+    addStatus(e,{id:'dot_rock_rock_dot_strike',name:'Rock Wave',type:'debuff',icon:'🪨',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'rock');}});
-    return isCrit?`Rock Rock Wave CRITS for ${dmg}! DoT applied.`:`Rock Rock Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Rock Wave CRITS for ${dmg}! DoT applied.`:`Rock Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.rock_rock_stance = {
-  id:'rock_rock_stance', name:'Rock Rock Stance', icon:'🪨',
+  id:'rock_rock_stance', name:'Rock Stance', icon:'🪨',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#b8a038', element:'rock',
-  desc:'Combine Rock and Rock into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Rock into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','rock','rock'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_rock_rock_stance',name:'Rock Rock Stance',type:'buff',icon:'🪨',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Rock Rock Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_rock_rock_stance',name:'Rock Stance',type:'buff',icon:'🪨',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Rock Stance active.`;
   }
 };
 
 ABILITIES.rock_rock_blast = {
-  id:'rock_rock_blast', name:'Rock Burst', icon:'🪨',
+  id:'rock_rock_blast', name:'Rock Blast', icon:'🪨',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#b8a038', element:'rock',
-  desc:'Focused Rock burst. 195% ATK magic.',
+  desc:'Focused Rock blast. 195% ATK magic.',
   tags:['magic','rock'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'rock');
     if(rand(100)<28) addStatus(e,{id:'stun',name:'Stun',type:'debuff',icon:'💫',duration:1,onTurn:(en)=>{}});
-    return isCrit?`Rock Burst CRITS for ${dmg}!`:`Rock Burst hits for ${dmg}.`;
+    return isCrit?`Rock Blast CRITS for ${dmg}!`:`Rock Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.rock_rock_weaken = {
-  id:'rock_rock_weaken', name:'Rock Rock Crush', icon:'🪨',
+  id:'rock_rock_weaken', name:'Rock Crush', icon:'🪨',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#b8a038', element:'rock',
-  desc:'Rock Rock combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Rock force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','rock','rock'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'rock');
-    addStatus(e,{id:'dot_rock_rock_weaken',name:'Rock Rock Crush',type:'debuff',icon:'🪨',duration:4,
+    addStatus(e,{id:'dot_rock_rock_weaken',name:'Rock Crush',type:'debuff',icon:'🪨',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'rock');}});
-    return isCrit?`Rock Rock Crush CRITS for ${dmg}! DoT applied.`:`Rock Rock Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Rock Crush CRITS for ${dmg}! DoT applied.`:`Rock Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -31943,28 +31943,28 @@ ABILITIES.rock_rock_drain = {
 };
 
 ABILITIES.rock_rock_surge = {
-  id:'rock_rock_surge', name:'Rock Rock Surge', icon:'🪨',
+  id:'rock_rock_surge', name:'Rock Surge', icon:'🪨',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#b8a038', element:'rock',
-  desc:'Rock and Rock surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Rock. 310% ATK magic. Piercing.',
   tags:['magic','rock','rock'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'rock');
-    return isCrit?`Rock Rock Surge CRITS for ${dmg}!`:`Rock Rock Surge hits for ${dmg}.`;
+    return isCrit?`Rock Surge CRITS for ${dmg}!`:`Rock Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.rock_rock_final = {
-  id:'rock_rock_final', name:'Rock Rock Finale', icon:'🪨',
+  id:'rock_rock_final', name:'Rock Finale', icon:'🪨',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#b8a038', element:'rock',
-  desc:'Final Rock-Rock combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Rock technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','rock','rock'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'rock');
-    return `Rock Rock Finale strikes for ${dmg}!`;
+    return `Rock Finale strikes for ${dmg}!`;
   }
 };
 
@@ -34805,7 +34805,7 @@ ABILITIES.rock_magnet_final = {
 ABILITIES.ghost_ghost_strike = {
   id:'ghost_ghost_strike', name:'Phantom Strike', icon:'👻',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#705898', element:'ghost',
-  desc:'Ghost-infused Ghost strike. 155% ATK physical.',
+  desc:'Ghost-infused strike. 155% ATK physical.',
   tags:['physical','ghost'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -34817,57 +34817,57 @@ ABILITIES.ghost_ghost_strike = {
 };
 
 ABILITIES.ghost_ghost_dot_strike = {
-  id:'ghost_ghost_dot_strike', name:'Ghost Ghost Wave', icon:'👻',
+  id:'ghost_ghost_dot_strike', name:'Ghost Wave', icon:'👻',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#705898', element:'ghost',
-  desc:'Ghost and Ghost energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Ghost energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','ghost','ghost'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'ghost');
-    addStatus(e,{id:'dot_ghost_ghost_dot_strike',name:'Ghost Ghost Wave',type:'debuff',icon:'👻',duration:4,
+    addStatus(e,{id:'dot_ghost_ghost_dot_strike',name:'Ghost Wave',type:'debuff',icon:'👻',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'ghost');}});
-    return isCrit?`Ghost Ghost Wave CRITS for ${dmg}! DoT applied.`:`Ghost Ghost Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Ghost Wave CRITS for ${dmg}! DoT applied.`:`Ghost Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.ghost_ghost_stance = {
-  id:'ghost_ghost_stance', name:'Ghost Ghost Stance', icon:'👻',
+  id:'ghost_ghost_stance', name:'Ghost Stance', icon:'👻',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#705898', element:'ghost',
-  desc:'Combine Ghost and Ghost into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Ghost into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','ghost','ghost'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_ghost_ghost_stance',name:'Ghost Ghost Stance',type:'buff',icon:'👻',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Ghost Ghost Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_ghost_ghost_stance',name:'Ghost Stance',type:'buff',icon:'👻',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Ghost Stance active.`;
   }
 };
 
 ABILITIES.ghost_ghost_blast = {
-  id:'ghost_ghost_blast', name:'Ghost Burst', icon:'👻',
+  id:'ghost_ghost_blast', name:'Ghost Blast', icon:'👻',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#705898', element:'ghost',
-  desc:'Focused Ghost burst. 195% ATK magic.',
+  desc:'Focused Ghost blast. 195% ATK magic.',
   tags:['magic','ghost'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'ghost');
     const _defPen=Math.round(e.def*0.25);e.def=Math.max(0,e.def-_defPen);addStatus(e,{id:'def_down',name:'Def Down',type:'debuff',icon:'🛡️',duration:3,defPen:_defPen});
-    return isCrit?`Ghost Burst CRITS for ${dmg}!`:`Ghost Burst hits for ${dmg}.`;
+    return isCrit?`Ghost Blast CRITS for ${dmg}!`:`Ghost Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.ghost_ghost_weaken = {
-  id:'ghost_ghost_weaken', name:'Ghost Ghost Crush', icon:'👻',
+  id:'ghost_ghost_weaken', name:'Ghost Crush', icon:'👻',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#705898', element:'ghost',
-  desc:'Ghost Ghost combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Ghost force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','ghost','ghost'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'ghost');
-    addStatus(e,{id:'dot_ghost_ghost_weaken',name:'Ghost Ghost Crush',type:'debuff',icon:'👻',duration:4,
+    addStatus(e,{id:'dot_ghost_ghost_weaken',name:'Ghost Crush',type:'debuff',icon:'👻',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'ghost');}});
-    return isCrit?`Ghost Ghost Crush CRITS for ${dmg}! DoT applied.`:`Ghost Ghost Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Ghost Crush CRITS for ${dmg}! DoT applied.`:`Ghost Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -34886,28 +34886,28 @@ ABILITIES.ghost_ghost_drain = {
 };
 
 ABILITIES.ghost_ghost_surge = {
-  id:'ghost_ghost_surge', name:'Ghost Ghost Surge', icon:'👻',
+  id:'ghost_ghost_surge', name:'Ghost Surge', icon:'👻',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#705898', element:'ghost',
-  desc:'Ghost and Ghost surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Ghost. 310% ATK magic. Piercing.',
   tags:['magic','ghost','ghost'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'ghost');
-    return isCrit?`Ghost Ghost Surge CRITS for ${dmg}!`:`Ghost Ghost Surge hits for ${dmg}.`;
+    return isCrit?`Ghost Surge CRITS for ${dmg}!`:`Ghost Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.ghost_ghost_final = {
-  id:'ghost_ghost_final', name:'Ghost Ghost Finale', icon:'👻',
+  id:'ghost_ghost_final', name:'Ghost Finale', icon:'👻',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#705898', element:'ghost',
-  desc:'Final Ghost-Ghost combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Ghost technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','ghost','ghost'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'ghost');
-    return `Ghost Ghost Finale strikes for ${dmg}!`;
+    return `Ghost Finale strikes for ${dmg}!`;
   }
 };
 
@@ -37639,7 +37639,7 @@ ABILITIES.ghost_magnet_final = {
 ABILITIES.dragon_dragon_strike = {
   id:'dragon_dragon_strike', name:'Dragon Strike', icon:'🐉',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#7038f8', element:'dragon',
-  desc:'Dragon-infused Dragon strike. 155% ATK physical.',
+  desc:'Dragon-infused strike. 155% ATK physical.',
   tags:['physical','dragon'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -37651,57 +37651,57 @@ ABILITIES.dragon_dragon_strike = {
 };
 
 ABILITIES.dragon_dragon_dot_strike = {
-  id:'dragon_dragon_dot_strike', name:'Dragon Dragon Wave', icon:'🐉',
+  id:'dragon_dragon_dot_strike', name:'Dragon Wave', icon:'🐉',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#7038f8', element:'dragon',
-  desc:'Dragon and Dragon energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Dragon energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','dragon','dragon'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'dragon');
-    addStatus(e,{id:'dot_dragon_dragon_dot_strike',name:'Dragon Dragon Wave',type:'debuff',icon:'🐉',duration:4,
+    addStatus(e,{id:'dot_dragon_dragon_dot_strike',name:'Dragon Wave',type:'debuff',icon:'🐉',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'dragon');}});
-    return isCrit?`Dragon Dragon Wave CRITS for ${dmg}! DoT applied.`:`Dragon Dragon Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Dragon Wave CRITS for ${dmg}! DoT applied.`:`Dragon Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.dragon_dragon_stance = {
-  id:'dragon_dragon_stance', name:'Dragon Dragon Stance', icon:'🐉',
+  id:'dragon_dragon_stance', name:'Dragon Stance', icon:'🐉',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#7038f8', element:'dragon',
-  desc:'Combine Dragon and Dragon into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Dragon into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','dragon','dragon'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_dragon_dragon_stance',name:'Dragon Dragon Stance',type:'buff',icon:'🐉',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Dragon Dragon Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_dragon_dragon_stance',name:'Dragon Stance',type:'buff',icon:'🐉',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Dragon Stance active.`;
   }
 };
 
 ABILITIES.dragon_dragon_blast = {
-  id:'dragon_dragon_blast', name:'Dragon Burst', icon:'🐉',
+  id:'dragon_dragon_blast', name:'Dragon Blast', icon:'🐉',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#7038f8', element:'dragon',
-  desc:'Focused Dragon burst. 195% ATK magic.',
+  desc:'Focused Dragon blast. 195% ATK magic.',
   tags:['magic','dragon'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'dragon');
     if(rand(100)<35) addStatus(e,{id:'burn',name:'Burn',type:'debuff',icon:'🔥',duration:3,stacks:1,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.3));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Dragon Burst CRITS for ${dmg}!`:`Dragon Burst hits for ${dmg}.`;
+    return isCrit?`Dragon Blast CRITS for ${dmg}!`:`Dragon Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.dragon_dragon_weaken = {
-  id:'dragon_dragon_weaken', name:'Dragon Dragon Crush', icon:'🐉',
+  id:'dragon_dragon_weaken', name:'Dragon Crush', icon:'🐉',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#7038f8', element:'dragon',
-  desc:'Dragon Dragon combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Dragon force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','dragon','dragon'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'dragon');
-    addStatus(e,{id:'dot_dragon_dragon_weaken',name:'Dragon Dragon Crush',type:'debuff',icon:'🐉',duration:4,
+    addStatus(e,{id:'dot_dragon_dragon_weaken',name:'Dragon Crush',type:'debuff',icon:'🐉',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'dragon');}});
-    return isCrit?`Dragon Dragon Crush CRITS for ${dmg}! DoT applied.`:`Dragon Dragon Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Dragon Crush CRITS for ${dmg}! DoT applied.`:`Dragon Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -37720,28 +37720,28 @@ ABILITIES.dragon_dragon_drain = {
 };
 
 ABILITIES.dragon_dragon_surge = {
-  id:'dragon_dragon_surge', name:'Dragon Dragon Surge', icon:'🐉',
+  id:'dragon_dragon_surge', name:'Dragon Surge', icon:'🐉',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#7038f8', element:'dragon',
-  desc:'Dragon and Dragon surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Dragon. 310% ATK magic. Piercing.',
   tags:['magic','dragon','dragon'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'dragon');
-    return isCrit?`Dragon Dragon Surge CRITS for ${dmg}!`:`Dragon Dragon Surge hits for ${dmg}.`;
+    return isCrit?`Dragon Surge CRITS for ${dmg}!`:`Dragon Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.dragon_dragon_final = {
-  id:'dragon_dragon_final', name:'Dragon Dragon Finale', icon:'🐉',
+  id:'dragon_dragon_final', name:'Dragon Finale', icon:'🐉',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#7038f8', element:'dragon',
-  desc:'Final Dragon-Dragon combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Dragon technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','dragon','dragon'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'dragon');
-    return `Dragon Dragon Finale strikes for ${dmg}!`;
+    return `Dragon Finale strikes for ${dmg}!`;
   }
 };
 
@@ -40364,7 +40364,7 @@ ABILITIES.dragon_magnet_final = {
 ABILITIES.dark_dark_strike = {
   id:'dark_dark_strike', name:'Shadow Strike', icon:'🌑',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#705848', element:'dark',
-  desc:'Dark-infused Dark strike. 155% ATK physical.',
+  desc:'Dark-infused strike. 155% ATK physical.',
   tags:['physical','dark'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -40376,57 +40376,57 @@ ABILITIES.dark_dark_strike = {
 };
 
 ABILITIES.dark_dark_dot_strike = {
-  id:'dark_dark_dot_strike', name:'Dark Dark Wave', icon:'🌑',
+  id:'dark_dark_dot_strike', name:'Dark Wave', icon:'🌑',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#705848', element:'dark',
-  desc:'Dark and Dark energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Dark energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','dark','dark'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'dark');
-    addStatus(e,{id:'dot_dark_dark_dot_strike',name:'Dark Dark Wave',type:'debuff',icon:'🌑',duration:4,
+    addStatus(e,{id:'dot_dark_dark_dot_strike',name:'Dark Wave',type:'debuff',icon:'🌑',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'dark');}});
-    return isCrit?`Dark Dark Wave CRITS for ${dmg}! DoT applied.`:`Dark Dark Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Dark Wave CRITS for ${dmg}! DoT applied.`:`Dark Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.dark_dark_stance = {
-  id:'dark_dark_stance', name:'Dark Dark Stance', icon:'🌑',
+  id:'dark_dark_stance', name:'Dark Stance', icon:'🌑',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#705848', element:'dark',
-  desc:'Combine Dark and Dark into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Dark into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','dark','dark'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_dark_dark_stance',name:'Dark Dark Stance',type:'buff',icon:'🌑',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Dark Dark Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_dark_dark_stance',name:'Dark Stance',type:'buff',icon:'🌑',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Dark Stance active.`;
   }
 };
 
 ABILITIES.dark_dark_blast = {
-  id:'dark_dark_blast', name:'Dark Burst', icon:'🌑',
+  id:'dark_dark_blast', name:'Dark Blast', icon:'🌑',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#705848', element:'dark',
-  desc:'Focused Dark burst. 195% ATK magic.',
+  desc:'Focused Dark blast. 195% ATK magic.',
   tags:['magic','dark'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'dark');
     const _defPen=Math.round(e.def*0.25);e.def=Math.max(0,e.def-_defPen);addStatus(e,{id:'def_down',name:'Def Down',type:'debuff',icon:'🛡️',duration:3,defPen:_defPen});
-    return isCrit?`Dark Burst CRITS for ${dmg}!`:`Dark Burst hits for ${dmg}.`;
+    return isCrit?`Dark Blast CRITS for ${dmg}!`:`Dark Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.dark_dark_weaken = {
-  id:'dark_dark_weaken', name:'Dark Dark Crush', icon:'🌑',
+  id:'dark_dark_weaken', name:'Dark Crush', icon:'🌑',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#705848', element:'dark',
-  desc:'Dark Dark combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Dark force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','dark','dark'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'dark');
-    addStatus(e,{id:'dot_dark_dark_weaken',name:'Dark Dark Crush',type:'debuff',icon:'🌑',duration:4,
+    addStatus(e,{id:'dot_dark_dark_weaken',name:'Dark Crush',type:'debuff',icon:'🌑',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'dark');}});
-    return isCrit?`Dark Dark Crush CRITS for ${dmg}! DoT applied.`:`Dark Dark Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Dark Crush CRITS for ${dmg}! DoT applied.`:`Dark Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -40445,28 +40445,28 @@ ABILITIES.dark_dark_drain = {
 };
 
 ABILITIES.dark_dark_surge = {
-  id:'dark_dark_surge', name:'Dark Dark Surge', icon:'🌑',
+  id:'dark_dark_surge', name:'Dark Surge', icon:'🌑',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#705848', element:'dark',
-  desc:'Dark and Dark surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Dark. 310% ATK magic. Piercing.',
   tags:['magic','dark','dark'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'dark');
-    return isCrit?`Dark Dark Surge CRITS for ${dmg}!`:`Dark Dark Surge hits for ${dmg}.`;
+    return isCrit?`Dark Surge CRITS for ${dmg}!`:`Dark Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.dark_dark_final = {
-  id:'dark_dark_final', name:'Dark Dark Finale', icon:'🌑',
+  id:'dark_dark_final', name:'Dark Finale', icon:'🌑',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#705848', element:'dark',
-  desc:'Final Dark-Dark combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Dark technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','dark','dark'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'dark');
-    return `Dark Dark Finale strikes for ${dmg}!`;
+    return `Dark Finale strikes for ${dmg}!`;
   }
 };
 
@@ -42980,7 +42980,7 @@ ABILITIES.dark_magnet_final = {
 ABILITIES.steel_steel_strike = {
   id:'steel_steel_strike', name:'Steel Strike', icon:'⚙️',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#b8b8d0', element:'steel',
-  desc:'Steel-infused Steel strike. 155% ATK physical.',
+  desc:'Steel-infused strike. 155% ATK physical.',
   tags:['physical','steel'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -42992,57 +42992,57 @@ ABILITIES.steel_steel_strike = {
 };
 
 ABILITIES.steel_steel_dot_strike = {
-  id:'steel_steel_dot_strike', name:'Steel Steel Wave', icon:'⚙️',
+  id:'steel_steel_dot_strike', name:'Steel Wave', icon:'⚙️',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#b8b8d0', element:'steel',
-  desc:'Steel and Steel energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Steel energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','steel','steel'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'steel');
-    addStatus(e,{id:'dot_steel_steel_dot_strike',name:'Steel Steel Wave',type:'debuff',icon:'⚙️',duration:4,
+    addStatus(e,{id:'dot_steel_steel_dot_strike',name:'Steel Wave',type:'debuff',icon:'⚙️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'steel');}});
-    return isCrit?`Steel Steel Wave CRITS for ${dmg}! DoT applied.`:`Steel Steel Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Steel Wave CRITS for ${dmg}! DoT applied.`:`Steel Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.steel_steel_stance = {
-  id:'steel_steel_stance', name:'Steel Steel Stance', icon:'⚙️',
+  id:'steel_steel_stance', name:'Steel Stance', icon:'⚙️',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#b8b8d0', element:'steel',
-  desc:'Combine Steel and Steel into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Steel into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','steel','steel'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_steel_steel_stance',name:'Steel Steel Stance',type:'buff',icon:'⚙️',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Steel Steel Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_steel_steel_stance',name:'Steel Stance',type:'buff',icon:'⚙️',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Steel Stance active.`;
   }
 };
 
 ABILITIES.steel_steel_blast = {
-  id:'steel_steel_blast', name:'Steel Burst', icon:'⚙️',
+  id:'steel_steel_blast', name:'Steel Blast', icon:'⚙️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#b8b8d0', element:'steel',
-  desc:'Focused Steel burst. 195% ATK magic.',
+  desc:'Focused Steel blast. 195% ATK magic.',
   tags:['magic','steel'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'steel');
     const _defPen=Math.round(e.def*0.25);e.def=Math.max(0,e.def-_defPen);addStatus(e,{id:'def_down',name:'Def Down',type:'debuff',icon:'🛡️',duration:3,defPen:_defPen});
-    return isCrit?`Steel Burst CRITS for ${dmg}!`:`Steel Burst hits for ${dmg}.`;
+    return isCrit?`Steel Blast CRITS for ${dmg}!`:`Steel Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.steel_steel_weaken = {
-  id:'steel_steel_weaken', name:'Steel Steel Crush', icon:'⚙️',
+  id:'steel_steel_weaken', name:'Steel Crush', icon:'⚙️',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#b8b8d0', element:'steel',
-  desc:'Steel Steel combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Steel force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','steel','steel'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'steel');
-    addStatus(e,{id:'dot_steel_steel_weaken',name:'Steel Steel Crush',type:'debuff',icon:'⚙️',duration:4,
+    addStatus(e,{id:'dot_steel_steel_weaken',name:'Steel Crush',type:'debuff',icon:'⚙️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'steel');}});
-    return isCrit?`Steel Steel Crush CRITS for ${dmg}! DoT applied.`:`Steel Steel Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Steel Crush CRITS for ${dmg}! DoT applied.`:`Steel Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -43061,28 +43061,28 @@ ABILITIES.steel_steel_drain = {
 };
 
 ABILITIES.steel_steel_surge = {
-  id:'steel_steel_surge', name:'Steel Steel Surge', icon:'⚙️',
+  id:'steel_steel_surge', name:'Steel Surge', icon:'⚙️',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#b8b8d0', element:'steel',
-  desc:'Steel and Steel surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Steel. 310% ATK magic. Piercing.',
   tags:['magic','steel','steel'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'steel');
-    return isCrit?`Steel Steel Surge CRITS for ${dmg}!`:`Steel Steel Surge hits for ${dmg}.`;
+    return isCrit?`Steel Surge CRITS for ${dmg}!`:`Steel Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.steel_steel_final = {
-  id:'steel_steel_final', name:'Steel Steel Finale', icon:'⚙️',
+  id:'steel_steel_final', name:'Steel Finale', icon:'⚙️',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#b8b8d0', element:'steel',
-  desc:'Final Steel-Steel combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Steel technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','steel','steel'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'steel');
-    return `Steel Steel Finale strikes for ${dmg}!`;
+    return `Steel Finale strikes for ${dmg}!`;
   }
 };
 
@@ -45487,7 +45487,7 @@ ABILITIES.steel_magnet_final = {
 ABILITIES.fairy_fairy_strike = {
   id:'fairy_fairy_strike', name:'Fairy Strike', icon:'✨',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ee99ac', element:'fairy',
-  desc:'Fairy-infused Fairy strike. 155% ATK physical.',
+  desc:'Fairy-infused strike. 155% ATK physical.',
   tags:['physical','fairy'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -45499,57 +45499,57 @@ ABILITIES.fairy_fairy_strike = {
 };
 
 ABILITIES.fairy_fairy_dot_strike = {
-  id:'fairy_fairy_dot_strike', name:'Fairy Fairy Wave', icon:'✨',
+  id:'fairy_fairy_dot_strike', name:'Fairy Wave', icon:'✨',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ee99ac', element:'fairy',
-  desc:'Fairy and Fairy energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Fairy energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','fairy','fairy'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'fairy');
-    addStatus(e,{id:'dot_fairy_fairy_dot_strike',name:'Fairy Fairy Wave',type:'debuff',icon:'✨',duration:4,
+    addStatus(e,{id:'dot_fairy_fairy_dot_strike',name:'Fairy Wave',type:'debuff',icon:'✨',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'fairy');}});
-    return isCrit?`Fairy Fairy Wave CRITS for ${dmg}! DoT applied.`:`Fairy Fairy Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Fairy Wave CRITS for ${dmg}! DoT applied.`:`Fairy Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.fairy_fairy_stance = {
-  id:'fairy_fairy_stance', name:'Fairy Fairy Stance', icon:'✨',
+  id:'fairy_fairy_stance', name:'Fairy Stance', icon:'✨',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ee99ac', element:'fairy',
-  desc:'Combine Fairy and Fairy into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Fairy into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','fairy','fairy'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_fairy_fairy_stance',name:'Fairy Fairy Stance',type:'buff',icon:'✨',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Fairy Fairy Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_fairy_fairy_stance',name:'Fairy Stance',type:'buff',icon:'✨',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Fairy Stance active.`;
   }
 };
 
 ABILITIES.fairy_fairy_blast = {
-  id:'fairy_fairy_blast', name:'Fairy Burst', icon:'✨',
+  id:'fairy_fairy_blast', name:'Fairy Blast', icon:'✨',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ee99ac', element:'fairy',
-  desc:'Focused Fairy burst. 195% ATK magic.',
+  desc:'Focused Fairy blast. 195% ATK magic.',
   tags:['magic','fairy'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'fairy');
     if(rand(100)<28) addStatus(e,{id:'charm',name:'Charm',type:'debuff',icon:'💕',duration:2,onTurn:(en)=>{}});
-    return isCrit?`Fairy Burst CRITS for ${dmg}!`:`Fairy Burst hits for ${dmg}.`;
+    return isCrit?`Fairy Blast CRITS for ${dmg}!`:`Fairy Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.fairy_fairy_weaken = {
-  id:'fairy_fairy_weaken', name:'Fairy Fairy Crush', icon:'✨',
+  id:'fairy_fairy_weaken', name:'Fairy Crush', icon:'✨',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ee99ac', element:'fairy',
-  desc:'Fairy Fairy combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Fairy force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','fairy','fairy'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'fairy');
-    addStatus(e,{id:'dot_fairy_fairy_weaken',name:'Fairy Fairy Crush',type:'debuff',icon:'✨',duration:4,
+    addStatus(e,{id:'dot_fairy_fairy_weaken',name:'Fairy Crush',type:'debuff',icon:'✨',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'fairy');}});
-    return isCrit?`Fairy Fairy Crush CRITS for ${dmg}! DoT applied.`:`Fairy Fairy Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Fairy Crush CRITS for ${dmg}! DoT applied.`:`Fairy Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -45568,28 +45568,28 @@ ABILITIES.fairy_fairy_drain = {
 };
 
 ABILITIES.fairy_fairy_surge = {
-  id:'fairy_fairy_surge', name:'Fairy Fairy Surge', icon:'✨',
+  id:'fairy_fairy_surge', name:'Fairy Surge', icon:'✨',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ee99ac', element:'fairy',
-  desc:'Fairy and Fairy surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Fairy. 310% ATK magic. Piercing.',
   tags:['magic','fairy','fairy'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'fairy');
-    return isCrit?`Fairy Fairy Surge CRITS for ${dmg}!`:`Fairy Fairy Surge hits for ${dmg}.`;
+    return isCrit?`Fairy Surge CRITS for ${dmg}!`:`Fairy Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.fairy_fairy_final = {
-  id:'fairy_fairy_final', name:'Fairy Fairy Finale', icon:'✨',
+  id:'fairy_fairy_final', name:'Fairy Finale', icon:'✨',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ee99ac', element:'fairy',
-  desc:'Final Fairy-Fairy combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Fairy technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','fairy','fairy'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'fairy');
-    return `Fairy Fairy Finale strikes for ${dmg}!`;
+    return `Fairy Finale strikes for ${dmg}!`;
   }
 };
 
@@ -47885,7 +47885,7 @@ ABILITIES.fairy_magnet_final = {
 ABILITIES.wind_wind_strike = {
   id:'wind_wind_strike', name:'Gale Strike', icon:'🌪️',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#99ddff', element:'wind',
-  desc:'Wind-infused Wind strike. 155% ATK physical.',
+  desc:'Wind-infused strike. 155% ATK physical.',
   tags:['physical','wind'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -47897,57 +47897,57 @@ ABILITIES.wind_wind_strike = {
 };
 
 ABILITIES.wind_wind_dot_strike = {
-  id:'wind_wind_dot_strike', name:'Wind Wind Wave', icon:'🌪️',
+  id:'wind_wind_dot_strike', name:'Wind Wave', icon:'🌪️',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#99ddff', element:'wind',
-  desc:'Wind and Wind energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Wind energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','wind','wind'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'wind');
-    addStatus(e,{id:'dot_wind_wind_dot_strike',name:'Wind Wind Wave',type:'debuff',icon:'🌪️',duration:4,
+    addStatus(e,{id:'dot_wind_wind_dot_strike',name:'Wind Wave',type:'debuff',icon:'🌪️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'wind');}});
-    return isCrit?`Wind Wind Wave CRITS for ${dmg}! DoT applied.`:`Wind Wind Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Wind Wave CRITS for ${dmg}! DoT applied.`:`Wind Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.wind_wind_stance = {
-  id:'wind_wind_stance', name:'Wind Wind Stance', icon:'🌪️',
+  id:'wind_wind_stance', name:'Wind Stance', icon:'🌪️',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#99ddff', element:'wind',
-  desc:'Combine Wind and Wind into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Wind into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','wind','wind'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_wind_wind_stance',name:'Wind Wind Stance',type:'buff',icon:'🌪️',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Wind Wind Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_wind_wind_stance',name:'Wind Stance',type:'buff',icon:'🌪️',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Wind Stance active.`;
   }
 };
 
 ABILITIES.wind_wind_blast = {
-  id:'wind_wind_blast', name:'Wind Burst', icon:'🌪️',
+  id:'wind_wind_blast', name:'Wind Blast', icon:'🌪️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#99ddff', element:'wind',
-  desc:'Focused Wind burst. 195% ATK magic.',
+  desc:'Focused Wind blast. 195% ATK magic.',
   tags:['magic','wind'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'wind');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Wind Burst CRITS for ${dmg}!`:`Wind Burst hits for ${dmg}.`;
+    return isCrit?`Wind Blast CRITS for ${dmg}!`:`Wind Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.wind_wind_weaken = {
-  id:'wind_wind_weaken', name:'Wind Wind Crush', icon:'🌪️',
+  id:'wind_wind_weaken', name:'Wind Crush', icon:'🌪️',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#99ddff', element:'wind',
-  desc:'Wind Wind combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Wind force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','wind','wind'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'wind');
-    addStatus(e,{id:'dot_wind_wind_weaken',name:'Wind Wind Crush',type:'debuff',icon:'🌪️',duration:4,
+    addStatus(e,{id:'dot_wind_wind_weaken',name:'Wind Crush',type:'debuff',icon:'🌪️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'wind');}});
-    return isCrit?`Wind Wind Crush CRITS for ${dmg}! DoT applied.`:`Wind Wind Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Wind Crush CRITS for ${dmg}! DoT applied.`:`Wind Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -47966,28 +47966,28 @@ ABILITIES.wind_wind_drain = {
 };
 
 ABILITIES.wind_wind_surge = {
-  id:'wind_wind_surge', name:'Wind Wind Surge', icon:'🌪️',
+  id:'wind_wind_surge', name:'Wind Surge', icon:'🌪️',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#99ddff', element:'wind',
-  desc:'Wind and Wind surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Wind. 310% ATK magic. Piercing.',
   tags:['magic','wind','wind'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'wind');
-    return isCrit?`Wind Wind Surge CRITS for ${dmg}!`:`Wind Wind Surge hits for ${dmg}.`;
+    return isCrit?`Wind Surge CRITS for ${dmg}!`:`Wind Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.wind_wind_final = {
-  id:'wind_wind_final', name:'Wind Wind Finale', icon:'🌪️',
+  id:'wind_wind_final', name:'Wind Finale', icon:'🌪️',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#99ddff', element:'wind',
-  desc:'Final Wind-Wind combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Wind technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','wind','wind'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'wind');
-    return `Wind Wind Finale strikes for ${dmg}!`;
+    return `Wind Finale strikes for ${dmg}!`;
   }
 };
 
@@ -50174,7 +50174,7 @@ ABILITIES.wind_magnet_final = {
 ABILITIES.sound_sound_strike = {
   id:'sound_sound_strike', name:'Sonic Strike', icon:'🔊',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ffbb55', element:'sound',
-  desc:'Sound-infused Sound strike. 155% ATK physical.',
+  desc:'Sound-infused strike. 155% ATK physical.',
   tags:['physical','sound'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -50186,57 +50186,57 @@ ABILITIES.sound_sound_strike = {
 };
 
 ABILITIES.sound_sound_dot_strike = {
-  id:'sound_sound_dot_strike', name:'Sound Sound Wave', icon:'🔊',
+  id:'sound_sound_dot_strike', name:'Sound Wave', icon:'🔊',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ffbb55', element:'sound',
-  desc:'Sound and Sound energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Sound energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','sound','sound'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'sound');
-    addStatus(e,{id:'dot_sound_sound_dot_strike',name:'Sound Sound Wave',type:'debuff',icon:'🔊',duration:4,
+    addStatus(e,{id:'dot_sound_sound_dot_strike',name:'Sound Wave',type:'debuff',icon:'🔊',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'sound');}});
-    return isCrit?`Sound Sound Wave CRITS for ${dmg}! DoT applied.`:`Sound Sound Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Sound Wave CRITS for ${dmg}! DoT applied.`:`Sound Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.sound_sound_stance = {
-  id:'sound_sound_stance', name:'Sound Sound Stance', icon:'🔊',
+  id:'sound_sound_stance', name:'Sound Stance', icon:'🔊',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ffbb55', element:'sound',
-  desc:'Combine Sound and Sound into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Sound into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','sound','sound'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_sound_sound_stance',name:'Sound Sound Stance',type:'buff',icon:'🔊',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Sound Sound Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_sound_sound_stance',name:'Sound Stance',type:'buff',icon:'🔊',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Sound Stance active.`;
   }
 };
 
 ABILITIES.sound_sound_blast = {
-  id:'sound_sound_blast', name:'Sound Burst', icon:'🔊',
+  id:'sound_sound_blast', name:'Sound Blast', icon:'🔊',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ffbb55', element:'sound',
-  desc:'Focused Sound burst. 195% ATK magic.',
+  desc:'Focused Sound blast. 195% ATK magic.',
   tags:['magic','sound'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'sound');
     if(rand(100)<30) addStatus(e,{id:'deafen',name:'Deafen',type:'debuff',icon:'🔇',duration:2,onTurn:(en)=>{}});
-    return isCrit?`Sound Burst CRITS for ${dmg}!`:`Sound Burst hits for ${dmg}.`;
+    return isCrit?`Sound Blast CRITS for ${dmg}!`:`Sound Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.sound_sound_weaken = {
-  id:'sound_sound_weaken', name:'Sound Sound Crush', icon:'🔊',
+  id:'sound_sound_weaken', name:'Sound Crush', icon:'🔊',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ffbb55', element:'sound',
-  desc:'Sound Sound combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Sound force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','sound','sound'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'sound');
-    addStatus(e,{id:'dot_sound_sound_weaken',name:'Sound Sound Crush',type:'debuff',icon:'🔊',duration:4,
+    addStatus(e,{id:'dot_sound_sound_weaken',name:'Sound Crush',type:'debuff',icon:'🔊',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'sound');}});
-    return isCrit?`Sound Sound Crush CRITS for ${dmg}! DoT applied.`:`Sound Sound Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Sound Crush CRITS for ${dmg}! DoT applied.`:`Sound Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -50255,28 +50255,28 @@ ABILITIES.sound_sound_drain = {
 };
 
 ABILITIES.sound_sound_surge = {
-  id:'sound_sound_surge', name:'Sound Sound Surge', icon:'🔊',
+  id:'sound_sound_surge', name:'Sound Surge', icon:'🔊',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ffbb55', element:'sound',
-  desc:'Sound and Sound surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Sound. 310% ATK magic. Piercing.',
   tags:['magic','sound','sound'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'sound');
-    return isCrit?`Sound Sound Surge CRITS for ${dmg}!`:`Sound Sound Surge hits for ${dmg}.`;
+    return isCrit?`Sound Surge CRITS for ${dmg}!`:`Sound Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.sound_sound_final = {
-  id:'sound_sound_final', name:'Sound Sound Finale', icon:'🔊',
+  id:'sound_sound_final', name:'Sound Finale', icon:'🔊',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ffbb55', element:'sound',
-  desc:'Final Sound-Sound combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Sound technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','sound','sound'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'sound');
-    return `Sound Sound Finale strikes for ${dmg}!`;
+    return `Sound Finale strikes for ${dmg}!`;
   }
 };
 
@@ -52354,7 +52354,7 @@ ABILITIES.sound_magnet_final = {
 ABILITIES.light_light_strike = {
   id:'light_light_strike', name:'Radiant Strike', icon:'💡',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ffffaa', element:'light',
-  desc:'Light-infused Light strike. 155% ATK physical.',
+  desc:'Light-infused strike. 155% ATK physical.',
   tags:['physical','light'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -52366,57 +52366,57 @@ ABILITIES.light_light_strike = {
 };
 
 ABILITIES.light_light_dot_strike = {
-  id:'light_light_dot_strike', name:'Light Light Wave', icon:'💡',
+  id:'light_light_dot_strike', name:'Light Wave', icon:'💡',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ffffaa', element:'light',
-  desc:'Light and Light energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Light energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','light','light'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'light');
-    addStatus(e,{id:'dot_light_light_dot_strike',name:'Light Light Wave',type:'debuff',icon:'💡',duration:4,
+    addStatus(e,{id:'dot_light_light_dot_strike',name:'Light Wave',type:'debuff',icon:'💡',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'light');}});
-    return isCrit?`Light Light Wave CRITS for ${dmg}! DoT applied.`:`Light Light Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Light Wave CRITS for ${dmg}! DoT applied.`:`Light Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.light_light_stance = {
-  id:'light_light_stance', name:'Light Light Stance', icon:'💡',
+  id:'light_light_stance', name:'Light Stance', icon:'💡',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ffffaa', element:'light',
-  desc:'Combine Light and Light into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Light into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','light','light'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_light_light_stance',name:'Light Light Stance',type:'buff',icon:'💡',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Light Light Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_light_light_stance',name:'Light Stance',type:'buff',icon:'💡',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Light Stance active.`;
   }
 };
 
 ABILITIES.light_light_blast = {
-  id:'light_light_blast', name:'Light Burst', icon:'💡',
+  id:'light_light_blast', name:'Light Blast', icon:'💡',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ffffaa', element:'light',
-  desc:'Focused Light burst. 195% ATK magic.',
+  desc:'Focused Light blast. 195% ATK magic.',
   tags:['magic','light'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'light');
     if(rand(100)<30) addStatus(e,{id:'blind',name:'Blind',type:'debuff',icon:'👁️',duration:2,onTurn:(en)=>{en.stats.crit=Math.max(0,en.stats.crit-20);}});
-    return isCrit?`Light Burst CRITS for ${dmg}!`:`Light Burst hits for ${dmg}.`;
+    return isCrit?`Light Blast CRITS for ${dmg}!`:`Light Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.light_light_weaken = {
-  id:'light_light_weaken', name:'Light Light Crush', icon:'💡',
+  id:'light_light_weaken', name:'Light Crush', icon:'💡',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ffffaa', element:'light',
-  desc:'Light Light combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Light force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','light','light'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'light');
-    addStatus(e,{id:'dot_light_light_weaken',name:'Light Light Crush',type:'debuff',icon:'💡',duration:4,
+    addStatus(e,{id:'dot_light_light_weaken',name:'Light Crush',type:'debuff',icon:'💡',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'light');}});
-    return isCrit?`Light Light Crush CRITS for ${dmg}! DoT applied.`:`Light Light Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Light Crush CRITS for ${dmg}! DoT applied.`:`Light Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -52435,28 +52435,28 @@ ABILITIES.light_light_drain = {
 };
 
 ABILITIES.light_light_surge = {
-  id:'light_light_surge', name:'Light Light Surge', icon:'💡',
+  id:'light_light_surge', name:'Light Surge', icon:'💡',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ffffaa', element:'light',
-  desc:'Light and Light surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Light. 310% ATK magic. Piercing.',
   tags:['magic','light','light'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'light');
-    return isCrit?`Light Light Surge CRITS for ${dmg}!`:`Light Light Surge hits for ${dmg}.`;
+    return isCrit?`Light Surge CRITS for ${dmg}!`:`Light Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.light_light_final = {
-  id:'light_light_final', name:'Light Light Finale', icon:'💡',
+  id:'light_light_final', name:'Light Finale', icon:'💡',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ffffaa', element:'light',
-  desc:'Final Light-Light combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Light technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','light','light'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'light');
-    return `Light Light Finale strikes for ${dmg}!`;
+    return `Light Finale strikes for ${dmg}!`;
   }
 };
 
@@ -54425,7 +54425,7 @@ ABILITIES.light_magnet_final = {
 ABILITIES.cosmic_cosmic_strike = {
   id:'cosmic_cosmic_strike', name:'Cosmic Strike', icon:'🌌',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#5533cc', element:'cosmic',
-  desc:'Cosmic-infused Cosmic strike. 155% ATK physical.',
+  desc:'Cosmic-infused strike. 155% ATK physical.',
   tags:['physical','cosmic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -54437,57 +54437,57 @@ ABILITIES.cosmic_cosmic_strike = {
 };
 
 ABILITIES.cosmic_cosmic_dot_strike = {
-  id:'cosmic_cosmic_dot_strike', name:'Cosmic Cosmic Wave', icon:'🌌',
+  id:'cosmic_cosmic_dot_strike', name:'Cosmic Wave', icon:'🌌',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#5533cc', element:'cosmic',
-  desc:'Cosmic and Cosmic energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Cosmic energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','cosmic','cosmic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'cosmic');
-    addStatus(e,{id:'dot_cosmic_cosmic_dot_strike',name:'Cosmic Cosmic Wave',type:'debuff',icon:'🌌',duration:4,
+    addStatus(e,{id:'dot_cosmic_cosmic_dot_strike',name:'Cosmic Wave',type:'debuff',icon:'🌌',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'cosmic');}});
-    return isCrit?`Cosmic Cosmic Wave CRITS for ${dmg}! DoT applied.`:`Cosmic Cosmic Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Cosmic Wave CRITS for ${dmg}! DoT applied.`:`Cosmic Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.cosmic_cosmic_stance = {
-  id:'cosmic_cosmic_stance', name:'Cosmic Cosmic Stance', icon:'🌌',
+  id:'cosmic_cosmic_stance', name:'Cosmic Stance', icon:'🌌',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#5533cc', element:'cosmic',
-  desc:'Combine Cosmic and Cosmic into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Cosmic into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','cosmic','cosmic'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_cosmic_cosmic_stance',name:'Cosmic Cosmic Stance',type:'buff',icon:'🌌',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Cosmic Cosmic Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_cosmic_cosmic_stance',name:'Cosmic Stance',type:'buff',icon:'🌌',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Cosmic Stance active.`;
   }
 };
 
 ABILITIES.cosmic_cosmic_blast = {
-  id:'cosmic_cosmic_blast', name:'Cosmic Burst', icon:'🌌',
+  id:'cosmic_cosmic_blast', name:'Cosmic Blast', icon:'🌌',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#5533cc', element:'cosmic',
-  desc:'Focused Cosmic burst. 195% ATK magic.',
+  desc:'Focused Cosmic blast. 195% ATK magic.',
   tags:['magic','cosmic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'cosmic');
     addStatus(e,{id:'weaken',name:'Weaken',type:'debuff',icon:'💔',duration:3,onTurn:(en)=>{en.stats.atk=Math.round(en.stats.atk*0.8);en.stats.def=Math.round(en.stats.def*0.8);}});
-    return isCrit?`Cosmic Burst CRITS for ${dmg}!`:`Cosmic Burst hits for ${dmg}.`;
+    return isCrit?`Cosmic Blast CRITS for ${dmg}!`:`Cosmic Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.cosmic_cosmic_weaken = {
-  id:'cosmic_cosmic_weaken', name:'Cosmic Cosmic Crush', icon:'🌌',
+  id:'cosmic_cosmic_weaken', name:'Cosmic Crush', icon:'🌌',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#5533cc', element:'cosmic',
-  desc:'Cosmic Cosmic combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Cosmic force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','cosmic','cosmic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'cosmic');
-    addStatus(e,{id:'dot_cosmic_cosmic_weaken',name:'Cosmic Cosmic Crush',type:'debuff',icon:'🌌',duration:4,
+    addStatus(e,{id:'dot_cosmic_cosmic_weaken',name:'Cosmic Crush',type:'debuff',icon:'🌌',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'cosmic');}});
-    return isCrit?`Cosmic Cosmic Crush CRITS for ${dmg}! DoT applied.`:`Cosmic Cosmic Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Cosmic Crush CRITS for ${dmg}! DoT applied.`:`Cosmic Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -54506,28 +54506,28 @@ ABILITIES.cosmic_cosmic_drain = {
 };
 
 ABILITIES.cosmic_cosmic_surge = {
-  id:'cosmic_cosmic_surge', name:'Cosmic Cosmic Surge', icon:'🌌',
+  id:'cosmic_cosmic_surge', name:'Cosmic Surge', icon:'🌌',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#5533cc', element:'cosmic',
-  desc:'Cosmic and Cosmic surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Cosmic. 310% ATK magic. Piercing.',
   tags:['magic','cosmic','cosmic'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'cosmic');
-    return isCrit?`Cosmic Cosmic Surge CRITS for ${dmg}!`:`Cosmic Cosmic Surge hits for ${dmg}.`;
+    return isCrit?`Cosmic Surge CRITS for ${dmg}!`:`Cosmic Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.cosmic_cosmic_final = {
-  id:'cosmic_cosmic_final', name:'Cosmic Cosmic Finale', icon:'🌌',
+  id:'cosmic_cosmic_final', name:'Cosmic Finale', icon:'🌌',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#5533cc', element:'cosmic',
-  desc:'Final Cosmic-Cosmic combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Cosmic technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','cosmic','cosmic'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'cosmic');
-    return `Cosmic Cosmic Finale strikes for ${dmg}!`;
+    return `Cosmic Finale strikes for ${dmg}!`;
   }
 };
 
@@ -56387,7 +56387,7 @@ ABILITIES.cosmic_magnet_final = {
 ABILITIES.crystal_crystal_strike = {
   id:'crystal_crystal_strike', name:'Crystal Strike', icon:'💎',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#aaddff', element:'crystal',
-  desc:'Crystal-infused Crystal strike. 155% ATK physical.',
+  desc:'Crystal-infused strike. 155% ATK physical.',
   tags:['physical','crystal'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -56399,57 +56399,57 @@ ABILITIES.crystal_crystal_strike = {
 };
 
 ABILITIES.crystal_crystal_dot_strike = {
-  id:'crystal_crystal_dot_strike', name:'Crystal Crystal Wave', icon:'💎',
+  id:'crystal_crystal_dot_strike', name:'Crystal Wave', icon:'💎',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#aaddff', element:'crystal',
-  desc:'Crystal and Crystal energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Crystal energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','crystal','crystal'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'crystal');
-    addStatus(e,{id:'dot_crystal_crystal_dot_strike',name:'Crystal Crystal Wave',type:'debuff',icon:'💎',duration:4,
+    addStatus(e,{id:'dot_crystal_crystal_dot_strike',name:'Crystal Wave',type:'debuff',icon:'💎',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'crystal');}});
-    return isCrit?`Crystal Crystal Wave CRITS for ${dmg}! DoT applied.`:`Crystal Crystal Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Crystal Wave CRITS for ${dmg}! DoT applied.`:`Crystal Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.crystal_crystal_stance = {
-  id:'crystal_crystal_stance', name:'Crystal Crystal Stance', icon:'💎',
+  id:'crystal_crystal_stance', name:'Crystal Stance', icon:'💎',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#aaddff', element:'crystal',
-  desc:'Combine Crystal and Crystal into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Crystal into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','crystal','crystal'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_crystal_crystal_stance',name:'Crystal Crystal Stance',type:'buff',icon:'💎',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Crystal Crystal Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_crystal_crystal_stance',name:'Crystal Stance',type:'buff',icon:'💎',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Crystal Stance active.`;
   }
 };
 
 ABILITIES.crystal_crystal_blast = {
-  id:'crystal_crystal_blast', name:'Crystal Burst', icon:'💎',
+  id:'crystal_crystal_blast', name:'Crystal Blast', icon:'💎',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#aaddff', element:'crystal',
-  desc:'Focused Crystal burst. 195% ATK magic.',
+  desc:'Focused Crystal blast. 195% ATK magic.',
   tags:['magic','crystal'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'crystal');
     if(rand(100)<35) addStatus(e,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.25));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Crystal Burst CRITS for ${dmg}!`:`Crystal Burst hits for ${dmg}.`;
+    return isCrit?`Crystal Blast CRITS for ${dmg}!`:`Crystal Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.crystal_crystal_weaken = {
-  id:'crystal_crystal_weaken', name:'Crystal Crystal Crush', icon:'💎',
+  id:'crystal_crystal_weaken', name:'Crystal Crush', icon:'💎',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#aaddff', element:'crystal',
-  desc:'Crystal Crystal combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Crystal force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','crystal','crystal'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'crystal');
-    addStatus(e,{id:'dot_crystal_crystal_weaken',name:'Crystal Crystal Crush',type:'debuff',icon:'💎',duration:4,
+    addStatus(e,{id:'dot_crystal_crystal_weaken',name:'Crystal Crush',type:'debuff',icon:'💎',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'crystal');}});
-    return isCrit?`Crystal Crystal Crush CRITS for ${dmg}! DoT applied.`:`Crystal Crystal Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Crystal Crush CRITS for ${dmg}! DoT applied.`:`Crystal Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -56468,28 +56468,28 @@ ABILITIES.crystal_crystal_drain = {
 };
 
 ABILITIES.crystal_crystal_surge = {
-  id:'crystal_crystal_surge', name:'Crystal Crystal Surge', icon:'💎',
+  id:'crystal_crystal_surge', name:'Crystal Surge', icon:'💎',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#aaddff', element:'crystal',
-  desc:'Crystal and Crystal surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Crystal. 310% ATK magic. Piercing.',
   tags:['magic','crystal','crystal'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'crystal');
-    return isCrit?`Crystal Crystal Surge CRITS for ${dmg}!`:`Crystal Crystal Surge hits for ${dmg}.`;
+    return isCrit?`Crystal Surge CRITS for ${dmg}!`:`Crystal Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.crystal_crystal_final = {
-  id:'crystal_crystal_final', name:'Crystal Crystal Finale', icon:'💎',
+  id:'crystal_crystal_final', name:'Crystal Finale', icon:'💎',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#aaddff', element:'crystal',
-  desc:'Final Crystal-Crystal combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Crystal technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','crystal','crystal'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'crystal');
-    return `Crystal Crystal Finale strikes for ${dmg}!`;
+    return `Crystal Finale strikes for ${dmg}!`;
   }
 };
 
@@ -58240,7 +58240,7 @@ ABILITIES.crystal_magnet_final = {
 ABILITIES.nuclear_nuclear_strike = {
   id:'nuclear_nuclear_strike', name:'Atomic Strike', icon:'☢️',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#aaff33', element:'nuclear',
-  desc:'Nuclear-infused Nuclear strike. 155% ATK physical.',
+  desc:'Nuclear-infused strike. 155% ATK physical.',
   tags:['physical','nuclear'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -58252,57 +58252,57 @@ ABILITIES.nuclear_nuclear_strike = {
 };
 
 ABILITIES.nuclear_nuclear_dot_strike = {
-  id:'nuclear_nuclear_dot_strike', name:'Nuclear Nuclear Wave', icon:'☢️',
+  id:'nuclear_nuclear_dot_strike', name:'Nuclear Wave', icon:'☢️',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#aaff33', element:'nuclear',
-  desc:'Nuclear and Nuclear energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Nuclear energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','nuclear','nuclear'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'nuclear');
-    addStatus(e,{id:'dot_nuclear_nuclear_dot_strike',name:'Nuclear Nuclear Wave',type:'debuff',icon:'☢️',duration:4,
+    addStatus(e,{id:'dot_nuclear_nuclear_dot_strike',name:'Nuclear Wave',type:'debuff',icon:'☢️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'nuclear');}});
-    return isCrit?`Nuclear Nuclear Wave CRITS for ${dmg}! DoT applied.`:`Nuclear Nuclear Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Nuclear Wave CRITS for ${dmg}! DoT applied.`:`Nuclear Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.nuclear_nuclear_stance = {
-  id:'nuclear_nuclear_stance', name:'Nuclear Nuclear Stance', icon:'☢️',
+  id:'nuclear_nuclear_stance', name:'Nuclear Stance', icon:'☢️',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#aaff33', element:'nuclear',
-  desc:'Combine Nuclear and Nuclear into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Nuclear into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','nuclear','nuclear'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_nuclear_nuclear_stance',name:'Nuclear Nuclear Stance',type:'buff',icon:'☢️',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Nuclear Nuclear Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_nuclear_nuclear_stance',name:'Nuclear Stance',type:'buff',icon:'☢️',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Nuclear Stance active.`;
   }
 };
 
 ABILITIES.nuclear_nuclear_blast = {
-  id:'nuclear_nuclear_blast', name:'Nuclear Burst', icon:'☢️',
+  id:'nuclear_nuclear_blast', name:'Nuclear Blast', icon:'☢️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#aaff33', element:'nuclear',
-  desc:'Focused Nuclear burst. 195% ATK magic.',
+  desc:'Focused Nuclear blast. 195% ATK magic.',
   tags:['magic','nuclear'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'nuclear');
     if(rand(100)<30) addStatus(e,{id:'irradiate',name:'Irradiated',type:'debuff',icon:'☢️',duration:4,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.2));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Nuclear Burst CRITS for ${dmg}!`:`Nuclear Burst hits for ${dmg}.`;
+    return isCrit?`Nuclear Blast CRITS for ${dmg}!`:`Nuclear Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.nuclear_nuclear_weaken = {
-  id:'nuclear_nuclear_weaken', name:'Nuclear Nuclear Crush', icon:'☢️',
+  id:'nuclear_nuclear_weaken', name:'Nuclear Crush', icon:'☢️',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#aaff33', element:'nuclear',
-  desc:'Nuclear Nuclear combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Nuclear force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','nuclear','nuclear'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'nuclear');
-    addStatus(e,{id:'dot_nuclear_nuclear_weaken',name:'Nuclear Nuclear Crush',type:'debuff',icon:'☢️',duration:4,
+    addStatus(e,{id:'dot_nuclear_nuclear_weaken',name:'Nuclear Crush',type:'debuff',icon:'☢️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'nuclear');}});
-    return isCrit?`Nuclear Nuclear Crush CRITS for ${dmg}! DoT applied.`:`Nuclear Nuclear Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Nuclear Crush CRITS for ${dmg}! DoT applied.`:`Nuclear Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -58321,28 +58321,28 @@ ABILITIES.nuclear_nuclear_drain = {
 };
 
 ABILITIES.nuclear_nuclear_surge = {
-  id:'nuclear_nuclear_surge', name:'Nuclear Nuclear Surge', icon:'☢️',
+  id:'nuclear_nuclear_surge', name:'Nuclear Surge', icon:'☢️',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#aaff33', element:'nuclear',
-  desc:'Nuclear and Nuclear surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Nuclear. 310% ATK magic. Piercing.',
   tags:['magic','nuclear','nuclear'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'nuclear');
-    return isCrit?`Nuclear Nuclear Surge CRITS for ${dmg}!`:`Nuclear Nuclear Surge hits for ${dmg}.`;
+    return isCrit?`Nuclear Surge CRITS for ${dmg}!`:`Nuclear Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.nuclear_nuclear_final = {
-  id:'nuclear_nuclear_final', name:'Nuclear Nuclear Finale', icon:'☢️',
+  id:'nuclear_nuclear_final', name:'Nuclear Finale', icon:'☢️',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#aaff33', element:'nuclear',
-  desc:'Final Nuclear-Nuclear combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Nuclear technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','nuclear','nuclear'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'nuclear');
-    return `Nuclear Nuclear Finale strikes for ${dmg}!`;
+    return `Nuclear Finale strikes for ${dmg}!`;
   }
 };
 
@@ -59984,7 +59984,7 @@ ABILITIES.nuclear_magnet_final = {
 ABILITIES.tech_tech_strike = {
   id:'tech_tech_strike', name:'Tech Strike', icon:'🤖',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#44ccff', element:'tech',
-  desc:'Tech-infused Tech strike. 155% ATK physical.',
+  desc:'Tech-infused strike. 155% ATK physical.',
   tags:['physical','tech'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -59996,57 +59996,57 @@ ABILITIES.tech_tech_strike = {
 };
 
 ABILITIES.tech_tech_dot_strike = {
-  id:'tech_tech_dot_strike', name:'Tech Tech Wave', icon:'🤖',
+  id:'tech_tech_dot_strike', name:'Tech Wave', icon:'🤖',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#44ccff', element:'tech',
-  desc:'Tech and Tech energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Tech energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','tech','tech'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'tech');
-    addStatus(e,{id:'dot_tech_tech_dot_strike',name:'Tech Tech Wave',type:'debuff',icon:'🤖',duration:4,
+    addStatus(e,{id:'dot_tech_tech_dot_strike',name:'Tech Wave',type:'debuff',icon:'🤖',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'tech');}});
-    return isCrit?`Tech Tech Wave CRITS for ${dmg}! DoT applied.`:`Tech Tech Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Tech Wave CRITS for ${dmg}! DoT applied.`:`Tech Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.tech_tech_stance = {
-  id:'tech_tech_stance', name:'Tech Tech Stance', icon:'🤖',
+  id:'tech_tech_stance', name:'Tech Stance', icon:'🤖',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#44ccff', element:'tech',
-  desc:'Combine Tech and Tech into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Tech into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','tech','tech'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_tech_tech_stance',name:'Tech Tech Stance',type:'buff',icon:'🤖',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Tech Tech Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_tech_tech_stance',name:'Tech Stance',type:'buff',icon:'🤖',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Tech Stance active.`;
   }
 };
 
 ABILITIES.tech_tech_blast = {
-  id:'tech_tech_blast', name:'Tech Burst', icon:'🤖',
+  id:'tech_tech_blast', name:'Tech Blast', icon:'🤖',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#44ccff', element:'tech',
-  desc:'Focused Tech burst. 195% ATK magic.',
+  desc:'Focused Tech blast. 195% ATK magic.',
   tags:['magic','tech'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'tech');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Tech Burst CRITS for ${dmg}!`:`Tech Burst hits for ${dmg}.`;
+    return isCrit?`Tech Blast CRITS for ${dmg}!`:`Tech Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.tech_tech_weaken = {
-  id:'tech_tech_weaken', name:'Tech Tech Crush', icon:'🤖',
+  id:'tech_tech_weaken', name:'Tech Crush', icon:'🤖',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#44ccff', element:'tech',
-  desc:'Tech Tech combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Tech force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','tech','tech'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'tech');
-    addStatus(e,{id:'dot_tech_tech_weaken',name:'Tech Tech Crush',type:'debuff',icon:'🤖',duration:4,
+    addStatus(e,{id:'dot_tech_tech_weaken',name:'Tech Crush',type:'debuff',icon:'🤖',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'tech');}});
-    return isCrit?`Tech Tech Crush CRITS for ${dmg}! DoT applied.`:`Tech Tech Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Tech Crush CRITS for ${dmg}! DoT applied.`:`Tech Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -60065,28 +60065,28 @@ ABILITIES.tech_tech_drain = {
 };
 
 ABILITIES.tech_tech_surge = {
-  id:'tech_tech_surge', name:'Tech Tech Surge', icon:'🤖',
+  id:'tech_tech_surge', name:'Tech Surge', icon:'🤖',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#44ccff', element:'tech',
-  desc:'Tech and Tech surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Tech. 310% ATK magic. Piercing.',
   tags:['magic','tech','tech'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'tech');
-    return isCrit?`Tech Tech Surge CRITS for ${dmg}!`:`Tech Tech Surge hits for ${dmg}.`;
+    return isCrit?`Tech Surge CRITS for ${dmg}!`:`Tech Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.tech_tech_final = {
-  id:'tech_tech_final', name:'Tech Tech Finale', icon:'🤖',
+  id:'tech_tech_final', name:'Tech Finale', icon:'🤖',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#44ccff', element:'tech',
-  desc:'Final Tech-Tech combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Tech technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','tech','tech'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'tech');
-    return `Tech Tech Finale strikes for ${dmg}!`;
+    return `Tech Finale strikes for ${dmg}!`;
   }
 };
 
@@ -61619,7 +61619,7 @@ ABILITIES.tech_magnet_final = {
 ABILITIES.spirit_spirit_strike = {
   id:'spirit_spirit_strike', name:'Spirit Strike', icon:'👼',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#eeddff', element:'spirit',
-  desc:'Spirit-infused Spirit strike. 155% ATK physical.',
+  desc:'Spirit-infused strike. 155% ATK physical.',
   tags:['physical','spirit'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -61631,57 +61631,57 @@ ABILITIES.spirit_spirit_strike = {
 };
 
 ABILITIES.spirit_spirit_dot_strike = {
-  id:'spirit_spirit_dot_strike', name:'Spirit Spirit Wave', icon:'👼',
+  id:'spirit_spirit_dot_strike', name:'Spirit Wave', icon:'👼',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#eeddff', element:'spirit',
-  desc:'Spirit and Spirit energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Spirit energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','spirit','spirit'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'spirit');
-    addStatus(e,{id:'dot_spirit_spirit_dot_strike',name:'Spirit Spirit Wave',type:'debuff',icon:'👼',duration:4,
+    addStatus(e,{id:'dot_spirit_spirit_dot_strike',name:'Spirit Wave',type:'debuff',icon:'👼',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'spirit');}});
-    return isCrit?`Spirit Spirit Wave CRITS for ${dmg}! DoT applied.`:`Spirit Spirit Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Spirit Wave CRITS for ${dmg}! DoT applied.`:`Spirit Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.spirit_spirit_stance = {
-  id:'spirit_spirit_stance', name:'Spirit Spirit Stance', icon:'👼',
+  id:'spirit_spirit_stance', name:'Spirit Stance', icon:'👼',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#eeddff', element:'spirit',
-  desc:'Combine Spirit and Spirit into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Spirit into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','spirit','spirit'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_spirit_spirit_stance',name:'Spirit Spirit Stance',type:'buff',icon:'👼',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Spirit Spirit Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_spirit_spirit_stance',name:'Spirit Stance',type:'buff',icon:'👼',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Spirit Stance active.`;
   }
 };
 
 ABILITIES.spirit_spirit_blast = {
-  id:'spirit_spirit_blast', name:'Spirit Burst', icon:'👼',
+  id:'spirit_spirit_blast', name:'Spirit Blast', icon:'👼',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#eeddff', element:'spirit',
-  desc:'Focused Spirit burst. 195% ATK magic.',
+  desc:'Focused Spirit blast. 195% ATK magic.',
   tags:['magic','spirit'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'spirit');
     const _defPen=Math.round(e.def*0.25);e.def=Math.max(0,e.def-_defPen);addStatus(e,{id:'def_down',name:'Def Down',type:'debuff',icon:'🛡️',duration:3,defPen:_defPen});
-    return isCrit?`Spirit Burst CRITS for ${dmg}!`:`Spirit Burst hits for ${dmg}.`;
+    return isCrit?`Spirit Blast CRITS for ${dmg}!`:`Spirit Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.spirit_spirit_weaken = {
-  id:'spirit_spirit_weaken', name:'Spirit Spirit Crush', icon:'👼',
+  id:'spirit_spirit_weaken', name:'Spirit Crush', icon:'👼',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#eeddff', element:'spirit',
-  desc:'Spirit Spirit combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Spirit force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','spirit','spirit'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'spirit');
-    addStatus(e,{id:'dot_spirit_spirit_weaken',name:'Spirit Spirit Crush',type:'debuff',icon:'👼',duration:4,
+    addStatus(e,{id:'dot_spirit_spirit_weaken',name:'Spirit Crush',type:'debuff',icon:'👼',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'spirit');}});
-    return isCrit?`Spirit Spirit Crush CRITS for ${dmg}! DoT applied.`:`Spirit Spirit Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Spirit Crush CRITS for ${dmg}! DoT applied.`:`Spirit Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -61700,28 +61700,28 @@ ABILITIES.spirit_spirit_drain = {
 };
 
 ABILITIES.spirit_spirit_surge = {
-  id:'spirit_spirit_surge', name:'Spirit Spirit Surge', icon:'👼',
+  id:'spirit_spirit_surge', name:'Spirit Surge', icon:'👼',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#eeddff', element:'spirit',
-  desc:'Spirit and Spirit surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Spirit. 310% ATK magic. Piercing.',
   tags:['magic','spirit','spirit'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'spirit');
-    return isCrit?`Spirit Spirit Surge CRITS for ${dmg}!`:`Spirit Spirit Surge hits for ${dmg}.`;
+    return isCrit?`Spirit Surge CRITS for ${dmg}!`:`Spirit Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.spirit_spirit_final = {
-  id:'spirit_spirit_final', name:'Spirit Spirit Finale', icon:'👼',
+  id:'spirit_spirit_final', name:'Spirit Finale', icon:'👼',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#eeddff', element:'spirit',
-  desc:'Final Spirit-Spirit combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Spirit technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','spirit','spirit'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'spirit');
-    return `Spirit Spirit Finale strikes for ${dmg}!`;
+    return `Spirit Finale strikes for ${dmg}!`;
   }
 };
 
@@ -63145,7 +63145,7 @@ ABILITIES.spirit_magnet_final = {
 ABILITIES.magma_magma_strike = {
   id:'magma_magma_strike', name:'Magma Strike', icon:'🌋',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ff6600', element:'magma',
-  desc:'Magma-infused Magma strike. 155% ATK physical.',
+  desc:'Magma-infused strike. 155% ATK physical.',
   tags:['physical','magma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -63157,57 +63157,57 @@ ABILITIES.magma_magma_strike = {
 };
 
 ABILITIES.magma_magma_dot_strike = {
-  id:'magma_magma_dot_strike', name:'Magma Magma Wave', icon:'🌋',
+  id:'magma_magma_dot_strike', name:'Magma Wave', icon:'🌋',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ff6600', element:'magma',
-  desc:'Magma and Magma energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Magma energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','magma','magma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'magma');
-    addStatus(e,{id:'dot_magma_magma_dot_strike',name:'Magma Magma Wave',type:'debuff',icon:'🌋',duration:4,
+    addStatus(e,{id:'dot_magma_magma_dot_strike',name:'Magma Wave',type:'debuff',icon:'🌋',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'magma');}});
-    return isCrit?`Magma Magma Wave CRITS for ${dmg}! DoT applied.`:`Magma Magma Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Magma Wave CRITS for ${dmg}! DoT applied.`:`Magma Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.magma_magma_stance = {
-  id:'magma_magma_stance', name:'Magma Magma Stance', icon:'🌋',
+  id:'magma_magma_stance', name:'Magma Stance', icon:'🌋',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ff6600', element:'magma',
-  desc:'Combine Magma and Magma into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Magma into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','magma','magma'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_magma_magma_stance',name:'Magma Magma Stance',type:'buff',icon:'🌋',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Magma Magma Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_magma_magma_stance',name:'Magma Stance',type:'buff',icon:'🌋',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Magma Stance active.`;
   }
 };
 
 ABILITIES.magma_magma_blast = {
-  id:'magma_magma_blast', name:'Magma Burst', icon:'🌋',
+  id:'magma_magma_blast', name:'Magma Blast', icon:'🌋',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ff6600', element:'magma',
-  desc:'Focused Magma burst. 195% ATK magic.',
+  desc:'Focused Magma blast. 195% ATK magic.',
   tags:['magic','magma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'magma');
     if(rand(100)<35) addStatus(e,{id:'burn',name:'Burn',type:'debuff',icon:'🔥',duration:3,stacks:1,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.3));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Magma Burst CRITS for ${dmg}!`:`Magma Burst hits for ${dmg}.`;
+    return isCrit?`Magma Blast CRITS for ${dmg}!`:`Magma Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.magma_magma_weaken = {
-  id:'magma_magma_weaken', name:'Magma Magma Crush', icon:'🌋',
+  id:'magma_magma_weaken', name:'Magma Crush', icon:'🌋',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ff6600', element:'magma',
-  desc:'Magma Magma combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Magma force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','magma','magma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'magma');
-    addStatus(e,{id:'dot_magma_magma_weaken',name:'Magma Magma Crush',type:'debuff',icon:'🌋',duration:4,
+    addStatus(e,{id:'dot_magma_magma_weaken',name:'Magma Crush',type:'debuff',icon:'🌋',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'magma');}});
-    return isCrit?`Magma Magma Crush CRITS for ${dmg}! DoT applied.`:`Magma Magma Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Magma Crush CRITS for ${dmg}! DoT applied.`:`Magma Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -63226,28 +63226,28 @@ ABILITIES.magma_magma_drain = {
 };
 
 ABILITIES.magma_magma_surge = {
-  id:'magma_magma_surge', name:'Magma Magma Surge', icon:'🌋',
+  id:'magma_magma_surge', name:'Magma Surge', icon:'🌋',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ff6600', element:'magma',
-  desc:'Magma and Magma surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Magma. 310% ATK magic. Piercing.',
   tags:['magic','magma','magma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'magma');
-    return isCrit?`Magma Magma Surge CRITS for ${dmg}!`:`Magma Magma Surge hits for ${dmg}.`;
+    return isCrit?`Magma Surge CRITS for ${dmg}!`:`Magma Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.magma_magma_final = {
-  id:'magma_magma_final', name:'Magma Magma Finale', icon:'🌋',
+  id:'magma_magma_final', name:'Magma Finale', icon:'🌋',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ff6600', element:'magma',
-  desc:'Final Magma-Magma combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Magma technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','magma','magma'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'magma');
-    return `Magma Magma Finale strikes for ${dmg}!`;
+    return `Magma Finale strikes for ${dmg}!`;
   }
 };
 
@@ -64562,7 +64562,7 @@ ABILITIES.magma_magnet_final = {
 ABILITIES.storm_storm_strike = {
   id:'storm_storm_strike', name:'Thunder Strike', icon:'⛈️',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#334488', element:'storm',
-  desc:'Storm-infused Storm strike. 155% ATK physical.',
+  desc:'Storm-infused strike. 155% ATK physical.',
   tags:['physical','storm'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -64574,57 +64574,57 @@ ABILITIES.storm_storm_strike = {
 };
 
 ABILITIES.storm_storm_dot_strike = {
-  id:'storm_storm_dot_strike', name:'Storm Storm Wave', icon:'⛈️',
+  id:'storm_storm_dot_strike', name:'Storm Wave', icon:'⛈️',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#334488', element:'storm',
-  desc:'Storm and Storm energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Storm energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','storm','storm'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'storm');
-    addStatus(e,{id:'dot_storm_storm_dot_strike',name:'Storm Storm Wave',type:'debuff',icon:'⛈️',duration:4,
+    addStatus(e,{id:'dot_storm_storm_dot_strike',name:'Storm Wave',type:'debuff',icon:'⛈️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'storm');}});
-    return isCrit?`Storm Storm Wave CRITS for ${dmg}! DoT applied.`:`Storm Storm Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Storm Wave CRITS for ${dmg}! DoT applied.`:`Storm Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.storm_storm_stance = {
-  id:'storm_storm_stance', name:'Storm Storm Stance', icon:'⛈️',
+  id:'storm_storm_stance', name:'Storm Stance', icon:'⛈️',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#334488', element:'storm',
-  desc:'Combine Storm and Storm into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Storm into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','storm','storm'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_storm_storm_stance',name:'Storm Storm Stance',type:'buff',icon:'⛈️',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Storm Storm Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_storm_storm_stance',name:'Storm Stance',type:'buff',icon:'⛈️',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Storm Stance active.`;
   }
 };
 
 ABILITIES.storm_storm_blast = {
-  id:'storm_storm_blast', name:'Storm Burst', icon:'⛈️',
+  id:'storm_storm_blast', name:'Storm Blast', icon:'⛈️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#334488', element:'storm',
-  desc:'Focused Storm burst. 195% ATK magic.',
+  desc:'Focused Storm blast. 195% ATK magic.',
   tags:['magic','storm'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'storm');
     if(rand(100)<30) addStatus(e,{id:'shock',name:'Shock',type:'debuff',icon:'⚡',duration:2,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.2));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Storm Burst CRITS for ${dmg}!`:`Storm Burst hits for ${dmg}.`;
+    return isCrit?`Storm Blast CRITS for ${dmg}!`:`Storm Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.storm_storm_weaken = {
-  id:'storm_storm_weaken', name:'Storm Storm Crush', icon:'⛈️',
+  id:'storm_storm_weaken', name:'Storm Crush', icon:'⛈️',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#334488', element:'storm',
-  desc:'Storm Storm combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Storm force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','storm','storm'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'storm');
-    addStatus(e,{id:'dot_storm_storm_weaken',name:'Storm Storm Crush',type:'debuff',icon:'⛈️',duration:4,
+    addStatus(e,{id:'dot_storm_storm_weaken',name:'Storm Crush',type:'debuff',icon:'⛈️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'storm');}});
-    return isCrit?`Storm Storm Crush CRITS for ${dmg}! DoT applied.`:`Storm Storm Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Storm Crush CRITS for ${dmg}! DoT applied.`:`Storm Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -64643,28 +64643,28 @@ ABILITIES.storm_storm_drain = {
 };
 
 ABILITIES.storm_storm_surge = {
-  id:'storm_storm_surge', name:'Storm Storm Surge', icon:'⛈️',
+  id:'storm_storm_surge', name:'Storm Surge', icon:'⛈️',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#334488', element:'storm',
-  desc:'Storm and Storm surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Storm. 310% ATK magic. Piercing.',
   tags:['magic','storm','storm'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'storm');
-    return isCrit?`Storm Storm Surge CRITS for ${dmg}!`:`Storm Storm Surge hits for ${dmg}.`;
+    return isCrit?`Storm Surge CRITS for ${dmg}!`:`Storm Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.storm_storm_final = {
-  id:'storm_storm_final', name:'Storm Storm Finale', icon:'⛈️',
+  id:'storm_storm_final', name:'Storm Finale', icon:'⛈️',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#334488', element:'storm',
-  desc:'Final Storm-Storm combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Storm technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','storm','storm'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'storm');
-    return `Storm Storm Finale strikes for ${dmg}!`;
+    return `Storm Finale strikes for ${dmg}!`;
   }
 };
 
@@ -65870,7 +65870,7 @@ ABILITIES.storm_magnet_final = {
 ABILITIES.time_time_strike = {
   id:'time_time_strike', name:'Chrono Strike', icon:'⏳',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ddcc88', element:'time',
-  desc:'Time-infused Time strike. 155% ATK physical.',
+  desc:'Time-infused strike. 155% ATK physical.',
   tags:['physical','time'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -65882,57 +65882,57 @@ ABILITIES.time_time_strike = {
 };
 
 ABILITIES.time_time_dot_strike = {
-  id:'time_time_dot_strike', name:'Time Time Wave', icon:'⏳',
+  id:'time_time_dot_strike', name:'Time Wave', icon:'⏳',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ddcc88', element:'time',
-  desc:'Time and Time energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Time energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','time','time'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'time');
-    addStatus(e,{id:'dot_time_time_dot_strike',name:'Time Time Wave',type:'debuff',icon:'⏳',duration:4,
+    addStatus(e,{id:'dot_time_time_dot_strike',name:'Time Wave',type:'debuff',icon:'⏳',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'time');}});
-    return isCrit?`Time Time Wave CRITS for ${dmg}! DoT applied.`:`Time Time Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Time Wave CRITS for ${dmg}! DoT applied.`:`Time Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.time_time_stance = {
-  id:'time_time_stance', name:'Time Time Stance', icon:'⏳',
+  id:'time_time_stance', name:'Time Stance', icon:'⏳',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ddcc88', element:'time',
-  desc:'Combine Time and Time into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Time into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','time','time'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_time_time_stance',name:'Time Time Stance',type:'buff',icon:'⏳',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Time Time Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_time_time_stance',name:'Time Stance',type:'buff',icon:'⏳',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Time Stance active.`;
   }
 };
 
 ABILITIES.time_time_blast = {
-  id:'time_time_blast', name:'Time Burst', icon:'⏳',
+  id:'time_time_blast', name:'Time Blast', icon:'⏳',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ddcc88', element:'time',
-  desc:'Focused Time burst. 195% ATK magic.',
+  desc:'Focused Time blast. 195% ATK magic.',
   tags:['magic','time'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'time');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Time Burst CRITS for ${dmg}!`:`Time Burst hits for ${dmg}.`;
+    return isCrit?`Time Blast CRITS for ${dmg}!`:`Time Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.time_time_weaken = {
-  id:'time_time_weaken', name:'Time Time Crush', icon:'⏳',
+  id:'time_time_weaken', name:'Time Crush', icon:'⏳',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ddcc88', element:'time',
-  desc:'Time Time combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Time force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','time','time'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'time');
-    addStatus(e,{id:'dot_time_time_weaken',name:'Time Time Crush',type:'debuff',icon:'⏳',duration:4,
+    addStatus(e,{id:'dot_time_time_weaken',name:'Time Crush',type:'debuff',icon:'⏳',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'time');}});
-    return isCrit?`Time Time Crush CRITS for ${dmg}! DoT applied.`:`Time Time Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Time Crush CRITS for ${dmg}! DoT applied.`:`Time Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -65951,28 +65951,28 @@ ABILITIES.time_time_drain = {
 };
 
 ABILITIES.time_time_surge = {
-  id:'time_time_surge', name:'Time Time Surge', icon:'⏳',
+  id:'time_time_surge', name:'Time Surge', icon:'⏳',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ddcc88', element:'time',
-  desc:'Time and Time surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Time. 310% ATK magic. Piercing.',
   tags:['magic','time','time'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'time');
-    return isCrit?`Time Time Surge CRITS for ${dmg}!`:`Time Time Surge hits for ${dmg}.`;
+    return isCrit?`Time Surge CRITS for ${dmg}!`:`Time Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.time_time_final = {
-  id:'time_time_final', name:'Time Time Finale', icon:'⏳',
+  id:'time_time_final', name:'Time Finale', icon:'⏳',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ddcc88', element:'time',
-  desc:'Final Time-Time combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Time technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','time','time'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'time');
-    return `Time Time Finale strikes for ${dmg}!`;
+    return `Time Finale strikes for ${dmg}!`;
   }
 };
 
@@ -67069,7 +67069,7 @@ ABILITIES.time_magnet_final = {
 ABILITIES.space_space_strike = {
   id:'space_space_strike', name:'Void Strike', icon:'🌠',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#110033', element:'space',
-  desc:'Space-infused Space strike. 155% ATK physical.',
+  desc:'Space-infused strike. 155% ATK physical.',
   tags:['physical','space'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -67081,57 +67081,57 @@ ABILITIES.space_space_strike = {
 };
 
 ABILITIES.space_space_dot_strike = {
-  id:'space_space_dot_strike', name:'Space Space Wave', icon:'🌠',
+  id:'space_space_dot_strike', name:'Space Wave', icon:'🌠',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#110033', element:'space',
-  desc:'Space and Space energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Space energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','space','space'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'space');
-    addStatus(e,{id:'dot_space_space_dot_strike',name:'Space Space Wave',type:'debuff',icon:'🌠',duration:4,
+    addStatus(e,{id:'dot_space_space_dot_strike',name:'Space Wave',type:'debuff',icon:'🌠',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'space');}});
-    return isCrit?`Space Space Wave CRITS for ${dmg}! DoT applied.`:`Space Space Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Space Wave CRITS for ${dmg}! DoT applied.`:`Space Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.space_space_stance = {
-  id:'space_space_stance', name:'Space Space Stance', icon:'🌠',
+  id:'space_space_stance', name:'Space Stance', icon:'🌠',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#110033', element:'space',
-  desc:'Combine Space and Space into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Space into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','space','space'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_space_space_stance',name:'Space Space Stance',type:'buff',icon:'🌠',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Space Space Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_space_space_stance',name:'Space Stance',type:'buff',icon:'🌠',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Space Stance active.`;
   }
 };
 
 ABILITIES.space_space_blast = {
-  id:'space_space_blast', name:'Space Burst', icon:'🌠',
+  id:'space_space_blast', name:'Space Blast', icon:'🌠',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#110033', element:'space',
-  desc:'Focused Space burst. 195% ATK magic.',
+  desc:'Focused Space blast. 195% ATK magic.',
   tags:['magic','space'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'space');
     const _defPen=Math.round(e.def*0.25);e.def=Math.max(0,e.def-_defPen);addStatus(e,{id:'def_down',name:'Def Down',type:'debuff',icon:'🛡️',duration:3,defPen:_defPen});
-    return isCrit?`Space Burst CRITS for ${dmg}!`:`Space Burst hits for ${dmg}.`;
+    return isCrit?`Space Blast CRITS for ${dmg}!`:`Space Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.space_space_weaken = {
-  id:'space_space_weaken', name:'Space Space Crush', icon:'🌠',
+  id:'space_space_weaken', name:'Space Crush', icon:'🌠',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#110033', element:'space',
-  desc:'Space Space combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Space force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','space','space'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'space');
-    addStatus(e,{id:'dot_space_space_weaken',name:'Space Space Crush',type:'debuff',icon:'🌠',duration:4,
+    addStatus(e,{id:'dot_space_space_weaken',name:'Space Crush',type:'debuff',icon:'🌠',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'space');}});
-    return isCrit?`Space Space Crush CRITS for ${dmg}! DoT applied.`:`Space Space Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Space Crush CRITS for ${dmg}! DoT applied.`:`Space Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -67150,28 +67150,28 @@ ABILITIES.space_space_drain = {
 };
 
 ABILITIES.space_space_surge = {
-  id:'space_space_surge', name:'Space Space Surge', icon:'🌠',
+  id:'space_space_surge', name:'Space Surge', icon:'🌠',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#110033', element:'space',
-  desc:'Space and Space surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Space. 310% ATK magic. Piercing.',
   tags:['magic','space','space'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'space');
-    return isCrit?`Space Space Surge CRITS for ${dmg}!`:`Space Space Surge hits for ${dmg}.`;
+    return isCrit?`Space Surge CRITS for ${dmg}!`:`Space Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.space_space_final = {
-  id:'space_space_final', name:'Space Space Finale', icon:'🌠',
+  id:'space_space_final', name:'Space Finale', icon:'🌠',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#110033', element:'space',
-  desc:'Final Space-Space combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Space technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','space','space'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'space');
-    return `Space Space Finale strikes for ${dmg}!`;
+    return `Space Finale strikes for ${dmg}!`;
   }
 };
 
@@ -68159,7 +68159,7 @@ ABILITIES.space_magnet_final = {
 ABILITIES.gravity_gravity_strike = {
   id:'gravity_gravity_strike', name:'Gravity Strike', icon:'🌀',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#445566', element:'gravity',
-  desc:'Gravity-infused Gravity strike. 155% ATK physical.',
+  desc:'Gravity-infused strike. 155% ATK physical.',
   tags:['physical','gravity'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -68171,57 +68171,57 @@ ABILITIES.gravity_gravity_strike = {
 };
 
 ABILITIES.gravity_gravity_dot_strike = {
-  id:'gravity_gravity_dot_strike', name:'Gravity Gravity Wave', icon:'🌀',
+  id:'gravity_gravity_dot_strike', name:'Gravity Wave', icon:'🌀',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#445566', element:'gravity',
-  desc:'Gravity and Gravity energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Gravity energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','gravity','gravity'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'gravity');
-    addStatus(e,{id:'dot_gravity_gravity_dot_strike',name:'Gravity Gravity Wave',type:'debuff',icon:'🌀',duration:4,
+    addStatus(e,{id:'dot_gravity_gravity_dot_strike',name:'Gravity Wave',type:'debuff',icon:'🌀',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'gravity');}});
-    return isCrit?`Gravity Gravity Wave CRITS for ${dmg}! DoT applied.`:`Gravity Gravity Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Gravity Wave CRITS for ${dmg}! DoT applied.`:`Gravity Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.gravity_gravity_stance = {
-  id:'gravity_gravity_stance', name:'Gravity Gravity Stance', icon:'🌀',
+  id:'gravity_gravity_stance', name:'Gravity Stance', icon:'🌀',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#445566', element:'gravity',
-  desc:'Combine Gravity and Gravity into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Gravity into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','gravity','gravity'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_gravity_gravity_stance',name:'Gravity Gravity Stance',type:'buff',icon:'🌀',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Gravity Gravity Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_gravity_gravity_stance',name:'Gravity Stance',type:'buff',icon:'🌀',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Gravity Stance active.`;
   }
 };
 
 ABILITIES.gravity_gravity_blast = {
-  id:'gravity_gravity_blast', name:'Gravity Burst', icon:'🌀',
+  id:'gravity_gravity_blast', name:'Gravity Blast', icon:'🌀',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#445566', element:'gravity',
-  desc:'Focused Gravity burst. 195% ATK magic.',
+  desc:'Focused Gravity blast. 195% ATK magic.',
   tags:['magic','gravity'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'gravity');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Gravity Burst CRITS for ${dmg}!`:`Gravity Burst hits for ${dmg}.`;
+    return isCrit?`Gravity Blast CRITS for ${dmg}!`:`Gravity Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.gravity_gravity_weaken = {
-  id:'gravity_gravity_weaken', name:'Gravity Gravity Crush', icon:'🌀',
+  id:'gravity_gravity_weaken', name:'Gravity Crush', icon:'🌀',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#445566', element:'gravity',
-  desc:'Gravity Gravity combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Gravity force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','gravity','gravity'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'gravity');
-    addStatus(e,{id:'dot_gravity_gravity_weaken',name:'Gravity Gravity Crush',type:'debuff',icon:'🌀',duration:4,
+    addStatus(e,{id:'dot_gravity_gravity_weaken',name:'Gravity Crush',type:'debuff',icon:'🌀',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'gravity');}});
-    return isCrit?`Gravity Gravity Crush CRITS for ${dmg}! DoT applied.`:`Gravity Gravity Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Gravity Crush CRITS for ${dmg}! DoT applied.`:`Gravity Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -68240,28 +68240,28 @@ ABILITIES.gravity_gravity_drain = {
 };
 
 ABILITIES.gravity_gravity_surge = {
-  id:'gravity_gravity_surge', name:'Gravity Gravity Surge', icon:'🌀',
+  id:'gravity_gravity_surge', name:'Gravity Surge', icon:'🌀',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#445566', element:'gravity',
-  desc:'Gravity and Gravity surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Gravity. 310% ATK magic. Piercing.',
   tags:['magic','gravity','gravity'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'gravity');
-    return isCrit?`Gravity Gravity Surge CRITS for ${dmg}!`:`Gravity Gravity Surge hits for ${dmg}.`;
+    return isCrit?`Gravity Surge CRITS for ${dmg}!`:`Gravity Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.gravity_gravity_final = {
-  id:'gravity_gravity_final', name:'Gravity Gravity Finale', icon:'🌀',
+  id:'gravity_gravity_final', name:'Gravity Finale', icon:'🌀',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#445566', element:'gravity',
-  desc:'Final Gravity-Gravity combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Gravity technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','gravity','gravity'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'gravity');
-    return `Gravity Gravity Finale strikes for ${dmg}!`;
+    return `Gravity Finale strikes for ${dmg}!`;
   }
 };
 
@@ -69140,7 +69140,7 @@ ABILITIES.gravity_magnet_final = {
 ABILITIES.plasma_plasma_strike = {
   id:'plasma_plasma_strike', name:'Plasma Strike', icon:'🔆',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ff44ff', element:'plasma',
-  desc:'Plasma-infused Plasma strike. 155% ATK physical.',
+  desc:'Plasma-infused strike. 155% ATK physical.',
   tags:['physical','plasma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -69152,57 +69152,57 @@ ABILITIES.plasma_plasma_strike = {
 };
 
 ABILITIES.plasma_plasma_dot_strike = {
-  id:'plasma_plasma_dot_strike', name:'Plasma Plasma Wave', icon:'🔆',
+  id:'plasma_plasma_dot_strike', name:'Plasma Wave', icon:'🔆',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ff44ff', element:'plasma',
-  desc:'Plasma and Plasma energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Plasma energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','plasma','plasma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'plasma');
-    addStatus(e,{id:'dot_plasma_plasma_dot_strike',name:'Plasma Plasma Wave',type:'debuff',icon:'🔆',duration:4,
+    addStatus(e,{id:'dot_plasma_plasma_dot_strike',name:'Plasma Wave',type:'debuff',icon:'🔆',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'plasma');}});
-    return isCrit?`Plasma Plasma Wave CRITS for ${dmg}! DoT applied.`:`Plasma Plasma Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Plasma Wave CRITS for ${dmg}! DoT applied.`:`Plasma Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.plasma_plasma_stance = {
-  id:'plasma_plasma_stance', name:'Plasma Plasma Stance', icon:'🔆',
+  id:'plasma_plasma_stance', name:'Plasma Stance', icon:'🔆',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ff44ff', element:'plasma',
-  desc:'Combine Plasma and Plasma into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Plasma into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','plasma','plasma'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_plasma_plasma_stance',name:'Plasma Plasma Stance',type:'buff',icon:'🔆',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Plasma Plasma Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_plasma_plasma_stance',name:'Plasma Stance',type:'buff',icon:'🔆',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Plasma Stance active.`;
   }
 };
 
 ABILITIES.plasma_plasma_blast = {
-  id:'plasma_plasma_blast', name:'Plasma Burst', icon:'🔆',
+  id:'plasma_plasma_blast', name:'Plasma Blast', icon:'🔆',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ff44ff', element:'plasma',
-  desc:'Focused Plasma burst. 195% ATK magic.',
+  desc:'Focused Plasma blast. 195% ATK magic.',
   tags:['magic','plasma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'plasma');
     if(rand(100)<35) addStatus(e,{id:'burn',name:'Burn',type:'debuff',icon:'🔥',duration:3,stacks:1,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.3));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Plasma Burst CRITS for ${dmg}!`:`Plasma Burst hits for ${dmg}.`;
+    return isCrit?`Plasma Blast CRITS for ${dmg}!`:`Plasma Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.plasma_plasma_weaken = {
-  id:'plasma_plasma_weaken', name:'Plasma Plasma Crush', icon:'🔆',
+  id:'plasma_plasma_weaken', name:'Plasma Crush', icon:'🔆',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ff44ff', element:'plasma',
-  desc:'Plasma Plasma combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Plasma force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','plasma','plasma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'plasma');
-    addStatus(e,{id:'dot_plasma_plasma_weaken',name:'Plasma Plasma Crush',type:'debuff',icon:'🔆',duration:4,
+    addStatus(e,{id:'dot_plasma_plasma_weaken',name:'Plasma Crush',type:'debuff',icon:'🔆',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'plasma');}});
-    return isCrit?`Plasma Plasma Crush CRITS for ${dmg}! DoT applied.`:`Plasma Plasma Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Plasma Crush CRITS for ${dmg}! DoT applied.`:`Plasma Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -69221,28 +69221,28 @@ ABILITIES.plasma_plasma_drain = {
 };
 
 ABILITIES.plasma_plasma_surge = {
-  id:'plasma_plasma_surge', name:'Plasma Plasma Surge', icon:'🔆',
+  id:'plasma_plasma_surge', name:'Plasma Surge', icon:'🔆',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ff44ff', element:'plasma',
-  desc:'Plasma and Plasma surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Plasma. 310% ATK magic. Piercing.',
   tags:['magic','plasma','plasma'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'plasma');
-    return isCrit?`Plasma Plasma Surge CRITS for ${dmg}!`:`Plasma Plasma Surge hits for ${dmg}.`;
+    return isCrit?`Plasma Surge CRITS for ${dmg}!`:`Plasma Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.plasma_plasma_final = {
-  id:'plasma_plasma_final', name:'Plasma Plasma Finale', icon:'🔆',
+  id:'plasma_plasma_final', name:'Plasma Finale', icon:'🔆',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ff44ff', element:'plasma',
-  desc:'Final Plasma-Plasma combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Plasma technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','plasma','plasma'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'plasma');
-    return `Plasma Plasma Finale strikes for ${dmg}!`;
+    return `Plasma Finale strikes for ${dmg}!`;
   }
 };
 
@@ -70012,7 +70012,7 @@ ABILITIES.plasma_magnet_final = {
 ABILITIES.void_void_strike = {
   id:'void_void_strike', name:'Null Strike', icon:'🕳️',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#110011', element:'void',
-  desc:'Void-infused Void strike. 155% ATK physical.',
+  desc:'Void-infused strike. 155% ATK physical.',
   tags:['physical','void'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -70024,57 +70024,57 @@ ABILITIES.void_void_strike = {
 };
 
 ABILITIES.void_void_dot_strike = {
-  id:'void_void_dot_strike', name:'Void Void Wave', icon:'🕳️',
+  id:'void_void_dot_strike', name:'Void Wave', icon:'🕳️',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#110011', element:'void',
-  desc:'Void and Void energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Void energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','void','void'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'void');
-    addStatus(e,{id:'dot_void_void_dot_strike',name:'Void Void Wave',type:'debuff',icon:'🕳️',duration:4,
+    addStatus(e,{id:'dot_void_void_dot_strike',name:'Void Wave',type:'debuff',icon:'🕳️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'void');}});
-    return isCrit?`Void Void Wave CRITS for ${dmg}! DoT applied.`:`Void Void Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Void Wave CRITS for ${dmg}! DoT applied.`:`Void Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.void_void_stance = {
-  id:'void_void_stance', name:'Void Void Stance', icon:'🕳️',
+  id:'void_void_stance', name:'Void Stance', icon:'🕳️',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#110011', element:'void',
-  desc:'Combine Void and Void into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Void into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','void','void'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_void_void_stance',name:'Void Void Stance',type:'buff',icon:'🕳️',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Void Void Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_void_void_stance',name:'Void Stance',type:'buff',icon:'🕳️',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Void Stance active.`;
   }
 };
 
 ABILITIES.void_void_blast = {
-  id:'void_void_blast', name:'Void Burst', icon:'🕳️',
+  id:'void_void_blast', name:'Void Blast', icon:'🕳️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#110011', element:'void',
-  desc:'Focused Void burst. 195% ATK magic.',
+  desc:'Focused Void blast. 195% ATK magic.',
   tags:['magic','void'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'void');
     const _defPen=Math.round(e.def*0.25);e.def=Math.max(0,e.def-_defPen);addStatus(e,{id:'def_down',name:'Def Down',type:'debuff',icon:'🛡️',duration:3,defPen:_defPen});
-    return isCrit?`Void Burst CRITS for ${dmg}!`:`Void Burst hits for ${dmg}.`;
+    return isCrit?`Void Blast CRITS for ${dmg}!`:`Void Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.void_void_weaken = {
-  id:'void_void_weaken', name:'Void Void Crush', icon:'🕳️',
+  id:'void_void_weaken', name:'Void Crush', icon:'🕳️',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#110011', element:'void',
-  desc:'Void Void combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Void force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','void','void'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'void');
-    addStatus(e,{id:'dot_void_void_weaken',name:'Void Void Crush',type:'debuff',icon:'🕳️',duration:4,
+    addStatus(e,{id:'dot_void_void_weaken',name:'Void Crush',type:'debuff',icon:'🕳️',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'void');}});
-    return isCrit?`Void Void Crush CRITS for ${dmg}! DoT applied.`:`Void Void Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Void Crush CRITS for ${dmg}! DoT applied.`:`Void Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -70093,28 +70093,28 @@ ABILITIES.void_void_drain = {
 };
 
 ABILITIES.void_void_surge = {
-  id:'void_void_surge', name:'Void Void Surge', icon:'🕳️',
+  id:'void_void_surge', name:'Void Surge', icon:'🕳️',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#110011', element:'void',
-  desc:'Void and Void surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Void. 310% ATK magic. Piercing.',
   tags:['magic','void','void'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'void');
-    return isCrit?`Void Void Surge CRITS for ${dmg}!`:`Void Void Surge hits for ${dmg}.`;
+    return isCrit?`Void Surge CRITS for ${dmg}!`:`Void Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.void_void_final = {
-  id:'void_void_final', name:'Void Void Finale', icon:'🕳️',
+  id:'void_void_final', name:'Void Finale', icon:'🕳️',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#110011', element:'void',
-  desc:'Final Void-Void combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Void technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','void','void'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'void');
-    return `Void Void Finale strikes for ${dmg}!`;
+    return `Void Finale strikes for ${dmg}!`;
   }
 };
 
@@ -70775,7 +70775,7 @@ ABILITIES.void_magnet_final = {
 ABILITIES.blood_blood_strike = {
   id:'blood_blood_strike', name:'Blood Strike', icon:'🩸',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#880000', element:'blood',
-  desc:'Blood-infused Blood strike. 155% ATK physical.',
+  desc:'Blood-infused strike. 155% ATK physical.',
   tags:['physical','blood'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -70787,57 +70787,57 @@ ABILITIES.blood_blood_strike = {
 };
 
 ABILITIES.blood_blood_dot_strike = {
-  id:'blood_blood_dot_strike', name:'Blood Blood Wave', icon:'🩸',
+  id:'blood_blood_dot_strike', name:'Blood Wave', icon:'🩸',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#880000', element:'blood',
-  desc:'Blood and Blood energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Blood energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','blood','blood'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'blood');
-    addStatus(e,{id:'dot_blood_blood_dot_strike',name:'Blood Blood Wave',type:'debuff',icon:'🩸',duration:4,
+    addStatus(e,{id:'dot_blood_blood_dot_strike',name:'Blood Wave',type:'debuff',icon:'🩸',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'blood');}});
-    return isCrit?`Blood Blood Wave CRITS for ${dmg}! DoT applied.`:`Blood Blood Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Blood Wave CRITS for ${dmg}! DoT applied.`:`Blood Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.blood_blood_stance = {
-  id:'blood_blood_stance', name:'Blood Blood Stance', icon:'🩸',
+  id:'blood_blood_stance', name:'Blood Stance', icon:'🩸',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#880000', element:'blood',
-  desc:'Combine Blood and Blood into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Blood into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','blood','blood'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_blood_blood_stance',name:'Blood Blood Stance',type:'buff',icon:'🩸',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Blood Blood Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_blood_blood_stance',name:'Blood Stance',type:'buff',icon:'🩸',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Blood Stance active.`;
   }
 };
 
 ABILITIES.blood_blood_blast = {
-  id:'blood_blood_blast', name:'Blood Burst', icon:'🩸',
+  id:'blood_blood_blast', name:'Blood Blast', icon:'🩸',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#880000', element:'blood',
-  desc:'Focused Blood burst. 195% ATK magic.',
+  desc:'Focused Blood blast. 195% ATK magic.',
   tags:['magic','blood'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'blood');
     if(rand(100)<35) addStatus(e,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.25));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Blood Burst CRITS for ${dmg}!`:`Blood Burst hits for ${dmg}.`;
+    return isCrit?`Blood Blast CRITS for ${dmg}!`:`Blood Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.blood_blood_weaken = {
-  id:'blood_blood_weaken', name:'Blood Blood Crush', icon:'🩸',
+  id:'blood_blood_weaken', name:'Blood Crush', icon:'🩸',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#880000', element:'blood',
-  desc:'Blood Blood combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Blood force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','blood','blood'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'blood');
-    addStatus(e,{id:'dot_blood_blood_weaken',name:'Blood Blood Crush',type:'debuff',icon:'🩸',duration:4,
+    addStatus(e,{id:'dot_blood_blood_weaken',name:'Blood Crush',type:'debuff',icon:'🩸',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'blood');}});
-    return isCrit?`Blood Blood Crush CRITS for ${dmg}! DoT applied.`:`Blood Blood Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Blood Crush CRITS for ${dmg}! DoT applied.`:`Blood Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -70856,28 +70856,28 @@ ABILITIES.blood_blood_drain = {
 };
 
 ABILITIES.blood_blood_surge = {
-  id:'blood_blood_surge', name:'Blood Blood Surge', icon:'🩸',
+  id:'blood_blood_surge', name:'Blood Surge', icon:'🩸',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#880000', element:'blood',
-  desc:'Blood and Blood surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Blood. 310% ATK magic. Piercing.',
   tags:['magic','blood','blood'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'blood');
-    return isCrit?`Blood Blood Surge CRITS for ${dmg}!`:`Blood Blood Surge hits for ${dmg}.`;
+    return isCrit?`Blood Surge CRITS for ${dmg}!`:`Blood Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.blood_blood_final = {
-  id:'blood_blood_final', name:'Blood Blood Finale', icon:'🩸',
+  id:'blood_blood_final', name:'Blood Finale', icon:'🩸',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#880000', element:'blood',
-  desc:'Final Blood-Blood combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Blood technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','blood','blood'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'blood');
-    return `Blood Blood Finale strikes for ${dmg}!`;
+    return `Blood Finale strikes for ${dmg}!`;
   }
 };
 
@@ -71429,7 +71429,7 @@ ABILITIES.blood_magnet_final = {
 ABILITIES.rune_rune_strike = {
   id:'rune_rune_strike', name:'Rune Strike', icon:'🔱',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#cc9900', element:'rune',
-  desc:'Rune-infused Rune strike. 155% ATK physical.',
+  desc:'Rune-infused strike. 155% ATK physical.',
   tags:['physical','rune'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -71441,57 +71441,57 @@ ABILITIES.rune_rune_strike = {
 };
 
 ABILITIES.rune_rune_dot_strike = {
-  id:'rune_rune_dot_strike', name:'Rune Rune Wave', icon:'🔱',
+  id:'rune_rune_dot_strike', name:'Rune Wave', icon:'🔱',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#cc9900', element:'rune',
-  desc:'Rune and Rune energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Rune energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','rune','rune'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'rune');
-    addStatus(e,{id:'dot_rune_rune_dot_strike',name:'Rune Rune Wave',type:'debuff',icon:'🔱',duration:4,
+    addStatus(e,{id:'dot_rune_rune_dot_strike',name:'Rune Wave',type:'debuff',icon:'🔱',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'rune');}});
-    return isCrit?`Rune Rune Wave CRITS for ${dmg}! DoT applied.`:`Rune Rune Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Rune Wave CRITS for ${dmg}! DoT applied.`:`Rune Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.rune_rune_stance = {
-  id:'rune_rune_stance', name:'Rune Rune Stance', icon:'🔱',
+  id:'rune_rune_stance', name:'Rune Stance', icon:'🔱',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#cc9900', element:'rune',
-  desc:'Combine Rune and Rune into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Rune into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','rune','rune'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_rune_rune_stance',name:'Rune Rune Stance',type:'buff',icon:'🔱',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Rune Rune Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_rune_rune_stance',name:'Rune Stance',type:'buff',icon:'🔱',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Rune Stance active.`;
   }
 };
 
 ABILITIES.rune_rune_blast = {
-  id:'rune_rune_blast', name:'Rune Burst', icon:'🔱',
+  id:'rune_rune_blast', name:'Rune Blast', icon:'🔱',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#cc9900', element:'rune',
-  desc:'Focused Rune burst. 195% ATK magic.',
+  desc:'Focused Rune blast. 195% ATK magic.',
   tags:['magic','rune'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'rune');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Rune Burst CRITS for ${dmg}!`:`Rune Burst hits for ${dmg}.`;
+    return isCrit?`Rune Blast CRITS for ${dmg}!`:`Rune Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.rune_rune_weaken = {
-  id:'rune_rune_weaken', name:'Rune Rune Crush', icon:'🔱',
+  id:'rune_rune_weaken', name:'Rune Crush', icon:'🔱',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#cc9900', element:'rune',
-  desc:'Rune Rune combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Rune force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','rune','rune'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'rune');
-    addStatus(e,{id:'dot_rune_rune_weaken',name:'Rune Rune Crush',type:'debuff',icon:'🔱',duration:4,
+    addStatus(e,{id:'dot_rune_rune_weaken',name:'Rune Crush',type:'debuff',icon:'🔱',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'rune');}});
-    return isCrit?`Rune Rune Crush CRITS for ${dmg}! DoT applied.`:`Rune Rune Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Rune Crush CRITS for ${dmg}! DoT applied.`:`Rune Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -71510,28 +71510,28 @@ ABILITIES.rune_rune_drain = {
 };
 
 ABILITIES.rune_rune_surge = {
-  id:'rune_rune_surge', name:'Rune Rune Surge', icon:'🔱',
+  id:'rune_rune_surge', name:'Rune Surge', icon:'🔱',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#cc9900', element:'rune',
-  desc:'Rune and Rune surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Rune. 310% ATK magic. Piercing.',
   tags:['magic','rune','rune'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'rune');
-    return isCrit?`Rune Rune Surge CRITS for ${dmg}!`:`Rune Rune Surge hits for ${dmg}.`;
+    return isCrit?`Rune Surge CRITS for ${dmg}!`:`Rune Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.rune_rune_final = {
-  id:'rune_rune_final', name:'Rune Rune Finale', icon:'🔱',
+  id:'rune_rune_final', name:'Rune Finale', icon:'🔱',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#cc9900', element:'rune',
-  desc:'Final Rune-Rune combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Rune technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','rune','rune'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'rune');
-    return `Rune Rune Finale strikes for ${dmg}!`;
+    return `Rune Finale strikes for ${dmg}!`;
   }
 };
 
@@ -71974,7 +71974,7 @@ ABILITIES.rune_magnet_final = {
 ABILITIES.glass_glass_strike = {
   id:'glass_glass_strike', name:'Glass Strike', icon:'🔍',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#ccffff', element:'glass',
-  desc:'Glass-infused Glass strike. 155% ATK physical.',
+  desc:'Glass-infused strike. 155% ATK physical.',
   tags:['physical','glass'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -71986,57 +71986,57 @@ ABILITIES.glass_glass_strike = {
 };
 
 ABILITIES.glass_glass_dot_strike = {
-  id:'glass_glass_dot_strike', name:'Glass Glass Wave', icon:'🔍',
+  id:'glass_glass_dot_strike', name:'Glass Wave', icon:'🔍',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#ccffff', element:'glass',
-  desc:'Glass and Glass energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Glass energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','glass','glass'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'glass');
-    addStatus(e,{id:'dot_glass_glass_dot_strike',name:'Glass Glass Wave',type:'debuff',icon:'🔍',duration:4,
+    addStatus(e,{id:'dot_glass_glass_dot_strike',name:'Glass Wave',type:'debuff',icon:'🔍',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'glass');}});
-    return isCrit?`Glass Glass Wave CRITS for ${dmg}! DoT applied.`:`Glass Glass Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Glass Wave CRITS for ${dmg}! DoT applied.`:`Glass Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.glass_glass_stance = {
-  id:'glass_glass_stance', name:'Glass Glass Stance', icon:'🔍',
+  id:'glass_glass_stance', name:'Glass Stance', icon:'🔍',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#ccffff', element:'glass',
-  desc:'Combine Glass and Glass into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Glass into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','glass','glass'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_glass_glass_stance',name:'Glass Glass Stance',type:'buff',icon:'🔍',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Glass Glass Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_glass_glass_stance',name:'Glass Stance',type:'buff',icon:'🔍',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Glass Stance active.`;
   }
 };
 
 ABILITIES.glass_glass_blast = {
-  id:'glass_glass_blast', name:'Glass Burst', icon:'🔍',
+  id:'glass_glass_blast', name:'Glass Blast', icon:'🔍',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#ccffff', element:'glass',
-  desc:'Focused Glass burst. 195% ATK magic.',
+  desc:'Focused Glass blast. 195% ATK magic.',
   tags:['magic','glass'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'glass');
     if(rand(100)<35) addStatus(e,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.25));dealDmgToEnemy(en,d,false,true);}});
-    return isCrit?`Glass Burst CRITS for ${dmg}!`:`Glass Burst hits for ${dmg}.`;
+    return isCrit?`Glass Blast CRITS for ${dmg}!`:`Glass Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.glass_glass_weaken = {
-  id:'glass_glass_weaken', name:'Glass Glass Crush', icon:'🔍',
+  id:'glass_glass_weaken', name:'Glass Crush', icon:'🔍',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#ccffff', element:'glass',
-  desc:'Glass Glass combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Glass force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','glass','glass'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'glass');
-    addStatus(e,{id:'dot_glass_glass_weaken',name:'Glass Glass Crush',type:'debuff',icon:'🔍',duration:4,
+    addStatus(e,{id:'dot_glass_glass_weaken',name:'Glass Crush',type:'debuff',icon:'🔍',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'glass');}});
-    return isCrit?`Glass Glass Crush CRITS for ${dmg}! DoT applied.`:`Glass Glass Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Glass Crush CRITS for ${dmg}! DoT applied.`:`Glass Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -72055,28 +72055,28 @@ ABILITIES.glass_glass_drain = {
 };
 
 ABILITIES.glass_glass_surge = {
-  id:'glass_glass_surge', name:'Glass Glass Surge', icon:'🔍',
+  id:'glass_glass_surge', name:'Glass Surge', icon:'🔍',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#ccffff', element:'glass',
-  desc:'Glass and Glass surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Glass. 310% ATK magic. Piercing.',
   tags:['magic','glass','glass'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'glass');
-    return isCrit?`Glass Glass Surge CRITS for ${dmg}!`:`Glass Glass Surge hits for ${dmg}.`;
+    return isCrit?`Glass Surge CRITS for ${dmg}!`:`Glass Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.glass_glass_final = {
-  id:'glass_glass_final', name:'Glass Glass Finale', icon:'🔍',
+  id:'glass_glass_final', name:'Glass Finale', icon:'🔍',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#ccffff', element:'glass',
-  desc:'Final Glass-Glass combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Glass technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','glass','glass'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'glass');
-    return `Glass Glass Finale strikes for ${dmg}!`;
+    return `Glass Finale strikes for ${dmg}!`;
   }
 };
 
@@ -72410,7 +72410,7 @@ ABILITIES.glass_magnet_final = {
 ABILITIES.slime_slime_strike = {
   id:'slime_slime_strike', name:'Slime Strike', icon:'🟢',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#55cc44', element:'slime',
-  desc:'Slime-infused Slime strike. 155% ATK physical.',
+  desc:'Slime-infused strike. 155% ATK physical.',
   tags:['physical','slime'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -72422,57 +72422,57 @@ ABILITIES.slime_slime_strike = {
 };
 
 ABILITIES.slime_slime_dot_strike = {
-  id:'slime_slime_dot_strike', name:'Slime Slime Wave', icon:'🟢',
+  id:'slime_slime_dot_strike', name:'Slime Wave', icon:'🟢',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#55cc44', element:'slime',
-  desc:'Slime and Slime energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Slime energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','slime','slime'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'slime');
-    addStatus(e,{id:'dot_slime_slime_dot_strike',name:'Slime Slime Wave',type:'debuff',icon:'🟢',duration:4,
+    addStatus(e,{id:'dot_slime_slime_dot_strike',name:'Slime Wave',type:'debuff',icon:'🟢',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'slime');}});
-    return isCrit?`Slime Slime Wave CRITS for ${dmg}! DoT applied.`:`Slime Slime Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Slime Wave CRITS for ${dmg}! DoT applied.`:`Slime Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.slime_slime_stance = {
-  id:'slime_slime_stance', name:'Slime Slime Stance', icon:'🟢',
+  id:'slime_slime_stance', name:'Slime Stance', icon:'🟢',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#55cc44', element:'slime',
-  desc:'Combine Slime and Slime into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Slime into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','slime','slime'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_slime_slime_stance',name:'Slime Slime Stance',type:'buff',icon:'🟢',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Slime Slime Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_slime_slime_stance',name:'Slime Stance',type:'buff',icon:'🟢',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Slime Stance active.`;
   }
 };
 
 ABILITIES.slime_slime_blast = {
-  id:'slime_slime_blast', name:'Slime Burst', icon:'🟢',
+  id:'slime_slime_blast', name:'Slime Blast', icon:'🟢',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#55cc44', element:'slime',
-  desc:'Focused Slime burst. 195% ATK magic.',
+  desc:'Focused Slime blast. 195% ATK magic.',
   tags:['magic','slime'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'slime');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Slime Burst CRITS for ${dmg}!`:`Slime Burst hits for ${dmg}.`;
+    return isCrit?`Slime Blast CRITS for ${dmg}!`:`Slime Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.slime_slime_weaken = {
-  id:'slime_slime_weaken', name:'Slime Slime Crush', icon:'🟢',
+  id:'slime_slime_weaken', name:'Slime Crush', icon:'🟢',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#55cc44', element:'slime',
-  desc:'Slime Slime combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Slime force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','slime','slime'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'slime');
-    addStatus(e,{id:'dot_slime_slime_weaken',name:'Slime Slime Crush',type:'debuff',icon:'🟢',duration:4,
+    addStatus(e,{id:'dot_slime_slime_weaken',name:'Slime Crush',type:'debuff',icon:'🟢',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'slime');}});
-    return isCrit?`Slime Slime Crush CRITS for ${dmg}! DoT applied.`:`Slime Slime Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Slime Crush CRITS for ${dmg}! DoT applied.`:`Slime Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -72491,28 +72491,28 @@ ABILITIES.slime_slime_drain = {
 };
 
 ABILITIES.slime_slime_surge = {
-  id:'slime_slime_surge', name:'Slime Slime Surge', icon:'🟢',
+  id:'slime_slime_surge', name:'Slime Surge', icon:'🟢',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#55cc44', element:'slime',
-  desc:'Slime and Slime surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Slime. 310% ATK magic. Piercing.',
   tags:['magic','slime','slime'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'slime');
-    return isCrit?`Slime Slime Surge CRITS for ${dmg}!`:`Slime Slime Surge hits for ${dmg}.`;
+    return isCrit?`Slime Surge CRITS for ${dmg}!`:`Slime Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.slime_slime_final = {
-  id:'slime_slime_final', name:'Slime Slime Finale', icon:'🟢',
+  id:'slime_slime_final', name:'Slime Finale', icon:'🟢',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#55cc44', element:'slime',
-  desc:'Final Slime-Slime combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Slime technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','slime','slime'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'slime');
-    return `Slime Slime Finale strikes for ${dmg}!`;
+    return `Slime Finale strikes for ${dmg}!`;
   }
 };
 
@@ -72737,7 +72737,7 @@ ABILITIES.slime_magnet_final = {
 ABILITIES.cyber_cyber_strike = {
   id:'cyber_cyber_strike', name:'Cyber Strike', icon:'💻',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#00ffcc', element:'cyber',
-  desc:'Cyber-infused Cyber strike. 155% ATK physical.',
+  desc:'Cyber-infused strike. 155% ATK physical.',
   tags:['physical','cyber'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -72749,57 +72749,57 @@ ABILITIES.cyber_cyber_strike = {
 };
 
 ABILITIES.cyber_cyber_dot_strike = {
-  id:'cyber_cyber_dot_strike', name:'Cyber Cyber Wave', icon:'💻',
+  id:'cyber_cyber_dot_strike', name:'Cyber Wave', icon:'💻',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#00ffcc', element:'cyber',
-  desc:'Cyber and Cyber energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Cyber energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','cyber','cyber'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'cyber');
-    addStatus(e,{id:'dot_cyber_cyber_dot_strike',name:'Cyber Cyber Wave',type:'debuff',icon:'💻',duration:4,
+    addStatus(e,{id:'dot_cyber_cyber_dot_strike',name:'Cyber Wave',type:'debuff',icon:'💻',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'cyber');}});
-    return isCrit?`Cyber Cyber Wave CRITS for ${dmg}! DoT applied.`:`Cyber Cyber Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Cyber Wave CRITS for ${dmg}! DoT applied.`:`Cyber Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.cyber_cyber_stance = {
-  id:'cyber_cyber_stance', name:'Cyber Cyber Stance', icon:'💻',
+  id:'cyber_cyber_stance', name:'Cyber Stance', icon:'💻',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#00ffcc', element:'cyber',
-  desc:'Combine Cyber and Cyber into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Cyber into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','cyber','cyber'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_cyber_cyber_stance',name:'Cyber Cyber Stance',type:'buff',icon:'💻',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Cyber Cyber Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_cyber_cyber_stance',name:'Cyber Stance',type:'buff',icon:'💻',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Cyber Stance active.`;
   }
 };
 
 ABILITIES.cyber_cyber_blast = {
-  id:'cyber_cyber_blast', name:'Cyber Burst', icon:'💻',
+  id:'cyber_cyber_blast', name:'Cyber Blast', icon:'💻',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#00ffcc', element:'cyber',
-  desc:'Focused Cyber burst. 195% ATK magic.',
+  desc:'Focused Cyber blast. 195% ATK magic.',
   tags:['magic','cyber'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'cyber');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Cyber Burst CRITS for ${dmg}!`:`Cyber Burst hits for ${dmg}.`;
+    return isCrit?`Cyber Blast CRITS for ${dmg}!`:`Cyber Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.cyber_cyber_weaken = {
-  id:'cyber_cyber_weaken', name:'Cyber Cyber Crush', icon:'💻',
+  id:'cyber_cyber_weaken', name:'Cyber Crush', icon:'💻',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#00ffcc', element:'cyber',
-  desc:'Cyber Cyber combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Cyber force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','cyber','cyber'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'cyber');
-    addStatus(e,{id:'dot_cyber_cyber_weaken',name:'Cyber Cyber Crush',type:'debuff',icon:'💻',duration:4,
+    addStatus(e,{id:'dot_cyber_cyber_weaken',name:'Cyber Crush',type:'debuff',icon:'💻',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'cyber');}});
-    return isCrit?`Cyber Cyber Crush CRITS for ${dmg}! DoT applied.`:`Cyber Cyber Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Cyber Crush CRITS for ${dmg}! DoT applied.`:`Cyber Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -72818,28 +72818,28 @@ ABILITIES.cyber_cyber_drain = {
 };
 
 ABILITIES.cyber_cyber_surge = {
-  id:'cyber_cyber_surge', name:'Cyber Cyber Surge', icon:'💻',
+  id:'cyber_cyber_surge', name:'Cyber Surge', icon:'💻',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#00ffcc', element:'cyber',
-  desc:'Cyber and Cyber surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Cyber. 310% ATK magic. Piercing.',
   tags:['magic','cyber','cyber'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'cyber');
-    return isCrit?`Cyber Cyber Surge CRITS for ${dmg}!`:`Cyber Cyber Surge hits for ${dmg}.`;
+    return isCrit?`Cyber Surge CRITS for ${dmg}!`:`Cyber Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.cyber_cyber_final = {
-  id:'cyber_cyber_final', name:'Cyber Cyber Finale', icon:'💻',
+  id:'cyber_cyber_final', name:'Cyber Finale', icon:'💻',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#00ffcc', element:'cyber',
-  desc:'Final Cyber-Cyber combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Cyber technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','cyber','cyber'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'cyber');
-    return `Cyber Cyber Finale strikes for ${dmg}!`;
+    return `Cyber Finale strikes for ${dmg}!`;
   }
 };
 
@@ -72955,7 +72955,7 @@ ABILITIES.cyber_magnet_final = {
 ABILITIES.magnet_magnet_strike = {
   id:'magnet_magnet_strike', name:'Magnet Strike', icon:'🧲',
   cost:13, costType:'mp', cooldown:0, maxCooldown:0, color:'#cc4444', element:'magnet',
-  desc:'Magnet-infused Magnet strike. 155% ATK physical.',
+  desc:'Magnet-infused strike. 155% ATK physical.',
   tags:['physical','magnet'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
@@ -72967,57 +72967,57 @@ ABILITIES.magnet_magnet_strike = {
 };
 
 ABILITIES.magnet_magnet_dot_strike = {
-  id:'magnet_magnet_dot_strike', name:'Magnet Magnet Wave', icon:'🧲',
+  id:'magnet_magnet_dot_strike', name:'Magnet Wave', icon:'🧲',
   cost:18, costType:'mp', cooldown:0, maxCooldown:0, color:'#cc4444', element:'magnet',
-  desc:'Magnet and Magnet energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
+  desc:'Magnet energy wave. 175% ATK magic. DoT 32% ATK for 4 turns.',
   tags:['magic','magnet','magnet'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.75,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'magnet');
-    addStatus(e,{id:'dot_magnet_magnet_dot_strike',name:'Magnet Magnet Wave',type:'debuff',icon:'🧲',duration:4,
+    addStatus(e,{id:'dot_magnet_magnet_dot_strike',name:'Magnet Wave',type:'debuff',icon:'🧲',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.32));dealDmgToEnemy(en,d,false,true,false,'magnet');}});
-    return isCrit?`Magnet Magnet Wave CRITS for ${dmg}! DoT applied.`:`Magnet Magnet Wave hits for ${dmg}. DoT applied.`;
+    return isCrit?`Magnet Wave CRITS for ${dmg}! DoT applied.`:`Magnet Wave hits for ${dmg}. DoT applied.`;
   }
 };
 
 ABILITIES.magnet_magnet_stance = {
-  id:'magnet_magnet_stance', name:'Magnet Magnet Stance', icon:'🧲',
+  id:'magnet_magnet_stance', name:'Magnet Stance', icon:'🧲',
   cost:22, costType:'mp', cooldown:0, maxCooldown:2, color:'#cc4444', element:'magnet',
-  desc:'Combine Magnet and Magnet into combat stance. +20% ATK, +15% DEF for 3 turns.',
+  desc:'Channel Magnet into a combat stance. +20% ATK, +15% DEF for 3 turns.',
   tags:['buff','magnet','magnet'],
   use:(p,e)=>{
-        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_magnet_magnet_stance',name:'Magnet Magnet Stance',type:'buff',icon:'🧲',duration:3,atkBonus:_atkB,defBonus:_defB});
-    return `Magnet Magnet Stance active.`;
+        const _atkB=Math.round(p.stats.atk*0.20);p.stats.atk+=_atkB;const _defB=Math.round(p.stats.def*0.15);p.stats.def+=_defB;addStatus(p,{id:'buff_magnet_magnet_stance',name:'Magnet Stance',type:'buff',icon:'🧲',duration:3,atkBonus:_atkB,defBonus:_defB});
+    return `Magnet Stance active.`;
   }
 };
 
 ABILITIES.magnet_magnet_blast = {
-  id:'magnet_magnet_blast', name:'Magnet Burst', icon:'🧲',
+  id:'magnet_magnet_blast', name:'Magnet Blast', icon:'🧲',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#cc4444', element:'magnet',
-  desc:'Focused Magnet burst. 195% ATK magic.',
+  desc:'Focused Magnet blast. 195% ATK magic.',
   tags:['magic','magnet'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*1.95,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'magnet');
     if(rand(100)<35) addStatus(e,{id:'slow',name:'Slow',type:'debuff',icon:'🐢',duration:3,onTurn:(en)=>{en.stats.spd=Math.round(en.stats.spd*0.75);}});
-    return isCrit?`Magnet Burst CRITS for ${dmg}!`:`Magnet Burst hits for ${dmg}.`;
+    return isCrit?`Magnet Blast CRITS for ${dmg}!`:`Magnet Blast hits for ${dmg}.`;
   }
 };
 
 ABILITIES.magnet_magnet_weaken = {
-  id:'magnet_magnet_weaken', name:'Magnet Magnet Crush', icon:'🧲',
+  id:'magnet_magnet_weaken', name:'Magnet Crush', icon:'🧲',
   cost:28, costType:'mp', cooldown:0, maxCooldown:2, color:'#cc4444', element:'magnet',
-  desc:'Magnet Magnet combination weakens enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
+  desc:'Magnet force weakens the enemy. 200% ATK magic. DoT 38% ATK for 4 turns. Reduces DEF.',
   tags:['magic','magnet','magnet'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'magnet');
-    addStatus(e,{id:'dot_magnet_magnet_weaken',name:'Magnet Magnet Crush',type:'debuff',icon:'🧲',duration:4,
+    addStatus(e,{id:'dot_magnet_magnet_weaken',name:'Magnet Crush',type:'debuff',icon:'🧲',duration:4,
       onTurn:(en)=>{const d=Math.max(1,Math.round(p.stats.atk*0.38));dealDmgToEnemy(en,d,false,true,false,'magnet');}});
-    return isCrit?`Magnet Magnet Crush CRITS for ${dmg}! DoT applied.`:`Magnet Magnet Crush hits for ${dmg}. DoT applied.`;
+    return isCrit?`Magnet Crush CRITS for ${dmg}! DoT applied.`:`Magnet Crush hits for ${dmg}. DoT applied.`;
   }
 };
 
@@ -73036,28 +73036,28 @@ ABILITIES.magnet_magnet_drain = {
 };
 
 ABILITIES.magnet_magnet_surge = {
-  id:'magnet_magnet_surge', name:'Magnet Magnet Surge', icon:'🧲',
+  id:'magnet_magnet_surge', name:'Magnet Surge', icon:'🧲',
   cost:34, costType:'mp', cooldown:0, maxCooldown:4, color:'#cc4444', element:'magnet',
-  desc:'Magnet and Magnet surge together. 310% ATK magic. Piercing.',
+  desc:'A surge of pure Magnet. 310% ATK magic. Piercing.',
   tags:['magic','magnet','magnet'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*3.1,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,true,'magnet');
-    return isCrit?`Magnet Magnet Surge CRITS for ${dmg}!`:`Magnet Magnet Surge hits for ${dmg}.`;
+    return isCrit?`Magnet Surge CRITS for ${dmg}!`:`Magnet Surge hits for ${dmg}.`;
   }
 };
 
 ABILITIES.magnet_magnet_final = {
-  id:'magnet_magnet_final', name:'Magnet Magnet Finale', icon:'🧲',
+  id:'magnet_magnet_final', name:'Magnet Finale', icon:'🧲',
   cost:42, costType:'mp', cooldown:0, maxCooldown:5, color:'#cc4444', element:'magnet',
-  desc:'Final Magnet-Magnet combination. 430% ATK magic. Guaranteed crit.',
+  desc:'The ultimate Magnet technique. 430% ATK magic. Guaranteed crit.',
   tags:['magic','magnet','magnet'],
   use:(p,e)=>{
     const critMult=2.0+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*4.3,e.def*0.3)*critMult);
     dealDmgToEnemy(e,dmg,true,false,true,'magnet');
-    return `Magnet Magnet Finale strikes for ${dmg}!`;
+    return `Magnet Finale strikes for ${dmg}!`;
   }
 };
 
@@ -75943,7 +75943,7 @@ ABILITIES.shadow_void_final = {
 // ── MISSING NORMAL_* ABILITY DEFINITIONS ───────────────────
 
 ABILITIES.normal_normal_weaken = {
-  id:'normal_normal_weaken', name:'Weaken', icon:'⚔️',
+  id:'normal_normal_weaken', name:'Crippling Blow', icon:'⚔️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:2, color:'#a8a878', element:'normal',
   desc:'Weakening strike. 155% ATK. ATK/DEF down 3 turns.',
   tags:['physical','normal'],
@@ -75952,7 +75952,7 @@ ABILITIES.normal_normal_weaken = {
     const dmg=Math.round(calcDmg(p.stats.atk*1.55,e.def)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'normal');
     addStatus(e,{id:'weaken',name:'Weaken',type:'debuff',icon:'💀',duration:3,onTurn:(en)=>{en.stats.atk=Math.round(en.stats.atk*0.93);en.stats.def=Math.round(en.stats.def*0.93);}});
-    return isCrit?`Weaken CRITS for ${dmg}!`:`Weaken hits for ${dmg}.`;
+    return isCrit?`Crippling Blow CRITS for ${dmg}!`:`Crippling Blow hits for ${dmg}.`;
   }
 };
 
@@ -75971,16 +75971,16 @@ ABILITIES.normal_normal_decay = {
 };
 
 ABILITIES.normal_normal_drain = {
-  id:'normal_normal_drain', name:'Drain', icon:'⚔️',
+  id:'normal_normal_drain', name:'Vital Drain', icon:'⚔️',
   cost:20, costType:'mp', cooldown:0, maxCooldown:0, color:'#a8a878', element:'normal',
-  desc:'Powerful strike.',
+  desc:'Draining strike. 200% ATK, ignores 50% DEF. Heal 42% of damage dealt.',
   tags:['physical','normal'],
   use:(p,e)=>{
     const isCrit=rand(100)<p.stats.crit; const critMult=1.8+((p.stats.critDmg||0)/100);
     const dmg=Math.round(calcDmg(p.stats.atk*2,e.def*0.5)*(isCrit?critMult:1));
     dealDmgToEnemy(e,dmg,isCrit,false,false,'normal');
     const heal=Math.round(dmg*0.42); p.stats.hp=Math.min(p.stats.maxHp,p.stats.hp+heal);
-    return isCrit?`Drain CRITS for ${dmg}! Healed ${heal}.`:`Drain drains ${dmg}. Healed ${heal}.`;
+    return isCrit?`Vital Drain CRITS for ${dmg}! Healed ${heal}.`:`Vital Drain drains ${dmg}. Healed ${heal}.`;
   }
 };
 

@@ -1,5 +1,40 @@
 # Changelog
 
+## 2.2.0
+
+### Fixed
+- Re-casting a buff or debuff refreshes it instead of compounding it
+  ("-25% DEF" cast three times was -58%). Effects that are meant to stack
+  (Frenzy, Bleed, Dominion, Cleaved…) still stack, up to 10 times.
+- Enemies you flee from no longer keep that fight's buffs and debuffs.
+- Chronomancer and Soundbreaker could cast their Burst every turn for free
+  from the ability bar.
+- Spectral Haunt's dodge bonus did nothing.
+- Cleaved counted its DEF loss twice.
+- Removed 4,650 duplicate ability definitions (the ability file is 40% smaller,
+  so the game loads faster).
+
+### Balance
+- 26 classes had padded kits that repeated the same 2–7 abilities. Every
+  class now has 8 different abilities, filled from its element's ability set.
+- Nullbringer's Sunders now also deal damage, and an already-applied Sunder
+  can't be cast again by mistake.
+- Weaker classes got more ATK/HP (Phantom, Frostweaver, Ironclad, Sentinel,
+  Nullbringer, Magnetist and others); Abyssal Tyrant's control and
+  Soulrender's lifesteal were toned down. In simulated fights every shop
+  class now wins 60–88% of the time (was 45–90%).
+- Class unlocks cost half as many Soul Shards (about 4,000 for all classes,
+  was 8,085). Bosses pay 5 + floor shards (was 5 + half the floor), and every
+  new depth record pays 2 shards per floor.
+
+### New
+- Run seeds: every run has a seed (shown in the pause menu, or enter one in
+  World Settings). The same seed and settings build the same floors, and
+  reloading a save can't re-roll chests, drops or flee attempts.
+
+### Developer
+- `tools/class_balance.js` simulates fights for every class and prints win rates.
+
 ## 2.1.0
 
 A large bug-fix and polish release. Old run saves from 2.0 can't be continued

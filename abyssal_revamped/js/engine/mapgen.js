@@ -711,7 +711,17 @@ function nextFloor() {
   p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + Math.round(p.stats.maxHp*0.2));
   p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + Math.round(p.stats.maxMp*0.3));
 
-  if (G.floor > G.meta.maxFloor) G.meta.maxFloor = G.floor;
+  // New depth record: pays a few Soul Shards, so pushing deeper is rewarded
+  // more than repeating shallow runs.
+  if (G.floor > G.meta.maxFloor) {
+    const bonus = 2 * (G.floor - G.meta.maxFloor);
+    G.meta.maxFloor = G.floor;
+    if (G.floor > 1) {
+      G.meta.soulShards += bonus;
+      if (G.player) G.player._runShards = (G.player._runShards || 0) + bonus;
+      logEntry('reward', `✦ New depth record! +${bonus} Soul Shards.`);
+    }
+  }
   saveMeta();
   G._biomeProcs = 0;   // biome hazard budget is per floor (biomes.js)
   G._biomeMoves = 0;
