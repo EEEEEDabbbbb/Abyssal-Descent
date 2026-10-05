@@ -124,8 +124,8 @@ function startRun() {
     G.map = generateMap(G.floor);
     applyBiomeTheme(G.floor);
 
-    if (G.meta.ngPlus > 0) {
-      logEntry('system', `▶ NG+ Cycle ${G.meta.ngPlus} — Enemies are ${Math.round(getNgPlusMult()*100)}% as strong as normal.`);
+    if (runNgPlus() > 0) {
+      logEntry('system', `▶ NG+ Cycle ${runNgPlus()} — Enemies are ${Math.round(getNgPlusMult()*100)}% as strong as normal.`);
     }
     const biome = getBiomeForFloor(G.floor);
     logEntry('system', `══ Abyssal Descent: Floor ${G.floor} ══`);

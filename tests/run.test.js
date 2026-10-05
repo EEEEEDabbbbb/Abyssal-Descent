@@ -306,6 +306,23 @@ test('a full pack never eats gold or loot', async () => {
   assert.equal(r.chest, 'treasure');
 });
 
+test('nothing a merchant sells can be sold back for a profit, on any floor', async () => {
+  const bad = await run(() => {
+    __startTestRun('shadowblade', 1);
+    const out = [];
+    for (const floor of [1, 10, 25, 40, 50]) {
+      G.floor = floor;
+      for (let i = 0; i < 40; i++) {
+        for (const it of _generateShopItems()) {
+          if (getSellPrice(it) >= it.shopPrice) out.push(`${it.name} (${it.rarity}) f${floor}: buy ${it.shopPrice}, sell ${getSellPrice(it)}`);
+        }
+      }
+    }
+    return out.slice(0, 5);
+  });
+  assert.deepEqual(bad, []);
+});
+
 test('damage-over-time hurts enemies', async () => {
   const r = await run(() => {
     __startTestRun('pyromancer', 5);

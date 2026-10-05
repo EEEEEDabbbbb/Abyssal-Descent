@@ -38,8 +38,8 @@ function updateUI() {
   document.getElementById('gold-display').textContent = p.gold;
 
   const ngEl = document.getElementById('ng-badge');
-  if (ngEl) ngEl.style.display = G.meta.ngPlus > 0 ? '' : 'none';
-  if (ngEl && G.meta.ngPlus > 0) ngEl.textContent = `NG+${G.meta.ngPlus}`;
+  if (ngEl) ngEl.style.display = runNgPlus() > 0 ? '' : 'none';
+  if (ngEl && runNgPlus() > 0) ngEl.textContent = `NG+${runNgPlus()}`;
 
   document.getElementById('char-portrait').textContent = getClassData(p.classId)?.icon || '⚔';
   document.getElementById('char-name').textContent     = p.name;

@@ -181,6 +181,23 @@ test('Daily Descent: same seed for everyone today, standard settings, best floor
   assert.match(r.btn, /best floor 7/);
 });
 
+test('Daily Descent ignores New Game+: same floors and enemy strength for everyone', async () => {
+  const r = await run(async () => {
+    const play = async ngPlus => {
+      G.meta = defaultMeta(); G.meta.ngPlus = ngPlus; G._gameOverShown = false;
+      startDailyDescent();
+      G.selectedClass = 'shadowblade';
+      G.player = null; startRun();
+      await new Promise(res => { const t = setInterval(() => { if (G.player) { clearInterval(t); res(); } }, 20); });
+      const layout = G.map.map(row => row.map(c => c.type[0] + (c.content || '-')[0]).join('')).join('|');
+      return { layout, mult: getNgPlusMult(), badge: document.getElementById('ng-badge').style.display };
+    };
+    const a = await play(0), b = await play(3);
+    return { same: a.layout === b.layout, multA: a.mult, multB: b.mult, badge: b.badge };
+  });
+  assert.deepEqual(r, { same: true, multA: 1, multB: 1, badge: 'none' });
+});
+
 test('harder world settings pay more Soul Shards (achievements stay fixed)', async () => {
   const r = await run(() => {
     G.meta = defaultMeta(); G._gameOverShown = false;

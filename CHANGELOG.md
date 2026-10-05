@@ -43,7 +43,9 @@
   plus a consumable rolled with the floor's loot odds (they only ever sold
   floor-1 potions before). HP-regen gear restores 2% max HP per turn
   instead of a flat 5. Selling pays a quarter of the merchant's price at
-  your depth (a mythical item sold for 60 gold on any floor).
+  your depth (a mythical item sold for 60 gold on any floor). Consumables
+  sell for a quarter of a consumable's price, so nothing a merchant sells can
+  be sold back for a profit.
 - Armour can block at most 85% of a hit (high-DEF builds took a flat 1
   damage from anything weaker than them).
 - Life Drain heals the enemy for half the damage dealt (was all of it).
@@ -75,8 +77,9 @@
   you (≈45), so you can decide when to defend or heal. The estimate is read
   from the move's own formula, your DEF and the element matchup.
 - Daily Descent (title screen): everyone gets the same floors each day, with
-  standard settings and any class. Your best floor for the day is shown on
-  the button and in Records.
+  standard settings and any class (always at NG+0, so New Game+ players get
+  the same floors). Your best floor for the day is shown on the button and in
+  Records.
 - Minimap in the corner of the map (toggle with M or in Settings); click it
   to walk somewhere you have already seen.
 - Auto-explore (X, or the 🧭 button on the map): walks to the nearest chest,

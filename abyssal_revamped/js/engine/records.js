@@ -82,7 +82,7 @@ function recordRunEnd(outcome) {
   const entry = {
     at: Date.now(), outcome,
     classId: p.classId, className: cls ? cls.name : p.classId, icon: cls ? cls.icon : '⚔',
-    floor: G.floor, level: p.level, seed: G.seed || null, ngPlus: G.meta.ngPlus || 0, daily: G.daily || null,
+    floor: G.floor, level: p.level, seed: G.seed || null, ngPlus: runNgPlus(), daily: G.daily || null,
     killedBy: outcome === 'died' ? (p._lastHitBy || 'the Abyss') : null,
     kills: s.kills, bosses: s.bosses, shards: s.shards, playMs: s.playMs, bestHit: s.bestHit,
   };

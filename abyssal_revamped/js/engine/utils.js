@@ -83,12 +83,16 @@ function seedRun(seed) {
   G.seed = normaliseSeed(seed) || newRunSeed();
   G.rngState = hashSeed(G.seed + ':run');
 }
+// runNgPlus — the NG+ cycle this run plays at. Daily Descent is always NG+0
+// so everyone gets the same floors and enemies.
+function runNgPlus() { return G.daily ? 0 : (G.meta && G.meta.ngPlus) || 0; }
+
 // withFloorSeed — runs fn with a generator seeded from (run seed, floor), so
 // a floor's layout never depends on what happened earlier in the run.
 function withFloorSeed(floor, fn) {
   if (!G.seed) return fn();
   const saved = G.rngState;
-  G.rngState = hashSeed(`${G.seed}:${G.meta ? G.meta.ngPlus || 0 : 0}:floor${floor}`);
+  G.rngState = hashSeed(`${G.seed}:${runNgPlus()}:floor${floor}`);
   try { return fn(); } finally { G.rngState = saved; }
 }
 function randRange(a, b)  { return a + rand(b - a + 1); }

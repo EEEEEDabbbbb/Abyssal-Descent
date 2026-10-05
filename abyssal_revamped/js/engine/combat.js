@@ -392,10 +392,7 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
     }
   }
 
-  if (dmg <= 0) {
-    if (attacker && hasEquipEffect(p, 'thorns')) reflectDamage(attacker, Math.max(1, Math.round(landed * 0.2)));
-    return landed;
-  }
+  if (dmg <= 0) { thornsBack(p, attacker, landed); return landed; }
 
   // Lethal hit: Undying talent (once per run), then lethal-save passives (once per fight)
   if (p.stats.hp - dmg <= 0) {
@@ -419,11 +416,7 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   trackStat('dmgTaken', dmg);
   const hitter = attacker || G.enemy;
   if (hitter && hitter.name) p._lastHitBy = hitter.name;
-  // Gear: Thorns — attackers take 20% of the damage they deal back
-  if (attacker && hasEquipEffect(p, 'thorns')) {
-    const back = reflectDamage(attacker, Math.max(1, Math.round(landed * 0.2)));
-    if (back > 0) logEntry('player-action', `🌹 Thorns: ${attacker.name} takes ${back} back.`);
-  }
+  thornsBack(p, attacker, landed);
   spawnFloat(dmg.toString(),'damage','char-portrait');
   sfx('hurt');
   if (dmg >= p.stats.maxHp * 0.2) screenShake(2);
@@ -449,6 +442,14 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   resetCombo(p);
 
   return landed;
+}
+
+// Gear: Thorns — attackers take 20% of the damage they deal back (shielded
+// hits included)
+function thornsBack(p, attacker, landed) {
+  if (!attacker || !hasEquipEffect(p, 'thorns')) return;
+  const back = reflectDamage(attacker, Math.max(1, Math.round(landed * 0.2)));
+  if (back > 0) logEntry('player-action', `🌹 Thorns: ${attacker.name} takes ${back} back.`);
 }
 
 // dealEnvironmentDamage — hazards outside combat (biomes). Can't be dodged,

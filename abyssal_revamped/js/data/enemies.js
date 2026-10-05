@@ -1445,7 +1445,7 @@ const ELITE_CHANCE    = 12;
 const ELITE_STAT_MULT = 1.4;
 
 // New Game+: each cycle makes every enemy 30% stronger (HP and ATK)
-function getNgPlusMult() { return 1 + (G.meta.ngPlus || 0) * 0.3; }
+function getNgPlusMult() { return 1 + runNgPlus() * 0.3; }
 
 // ── Enemy scaling ─────────────────────────────────────────────
 // Every stat follows ONE smooth curve, fitted to how a player who wins their

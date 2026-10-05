@@ -220,10 +220,11 @@ function renderItemComparison(item) {
   return `<div style="font-size:0.68rem;margin-bottom:0.6rem">vs ${cur ? cur.name : 'empty slot'}: ${rows}</div>`;
 }
 
-// getSellPrice — merchants pay a quarter of what they'd charge for the item
-// on this floor (so selling stays worthwhile deeper down)
+// getSellPrice — merchants pay a quarter of what they'd typically charge for
+// the item on this floor (so selling stays worthwhile deeper down, and never
+// pays more than the cheapest buy price)
 function getSellPrice(item) {
-  return Math.max(1, Math.floor(gearShopPrice(item.rarity) * 0.25));
+  return Math.max(1, Math.floor(typicalShopPrice(item) * 0.25));
 }
 
 function dropItem(idx) {

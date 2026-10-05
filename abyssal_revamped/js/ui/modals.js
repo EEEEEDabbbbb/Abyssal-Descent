@@ -92,6 +92,13 @@ const RARITY_PRICE_MULT = {
 };
 // Typical merchant price for a piece of gear on this floor (before the random part)
 function gearShopPrice(rarity, floor = G.floor) { return (30 + floor * 4) * (RARITY_PRICE_MULT[rarity] || 1); }
+// Consumables cost (12–21) × rarity × depth; typicalShopPrice uses the middle
+function consumableShopPrice(rarity, floor = G.floor, roll = 4.5) {
+  return Math.floor((12 + roll) * (RARITY_PRICE_MULT[rarity] || 1) * (1 + floor * 0.04));
+}
+function typicalShopPrice(item, floor = G.floor) {
+  return item.type === 'consumable' ? consumableShopPrice(item.rarity, floor) : gearShopPrice(item.rarity, floor);
+}
 
 function _generateShopItems() {
   const floor = G.floor;
@@ -106,7 +113,7 @@ function _generateShopItems() {
   // Consumables: a healing potion that is still worth drinking at this
   // depth, plus one more rolled with the floor's loot odds (flat-value
   // potions from floor 1 are useless by floor 20).
-  const consPrice = it => Math.floor((12 + rand(10)) * (RARITY_PRICE_MULT[it.rarity] || 1) * (1 + floor * 0.04));
+  const consPrice = it => consumableShopPrice(it.rarity, floor, rand(10));
   const healId = floor >= 25 ? 'abyssal_elixir_l' : floor >= 15 ? 'grand_elixir' : floor >= 7 ? 'heavy_elixir' : 'health_potion';
   const heal = ITEM_POOL.find(it => it.id === healId);
   if (heal) items.push({ ...cloneItem(heal), shopPrice: consPrice(heal) });
@@ -448,6 +455,7 @@ function showNGPlusModal(onConfirm) {
 }
 
 function startNGPlus() {
+  G._dailyMode = false;
   G.meta.ngPlus++;
   saveMeta();
   checkAchievements();
