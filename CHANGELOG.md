@@ -65,6 +65,14 @@
 - 15 new items with 7 new gear effects: Thorns, Executioner, First Strike,
   Mana Siphon, Last Stand, Scholar and Midas.
 
+### Phones
+- Your HP and MP stay visible in the top bar while you scroll, which matters
+  in fights, since the character panel sits below the action bar on phones.
+- Fixed on phones: the Fusion Lab was cut off on both sides, class select
+  used half the screen, dialog buttons spilled past the dialog edge, the
+  Collection footer hid its Back button, and screen shake could make the
+  page scroll sideways.
+
 ### Accessibility
 - Tooltips work without a mouse: they open on keyboard focus and on a long
   press on touch screens (the press doesn't also trigger the button).

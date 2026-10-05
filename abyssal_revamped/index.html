@@ -73,6 +73,11 @@
   <!-- HUD row -->
   <div id="hud-row">
     <div id="floor-badge">FLOOR 1</div>
+    <!-- Phone only: your vitals stay in view while the page scrolls -->
+    <div id="hud-vitals" aria-hidden="true">
+      <div class="hv-bar"><div class="hv-fill hv-hp" id="hv-hp"></div><span id="hv-hp-val">0</span></div>
+      <div class="hv-bar"><div class="hv-fill hv-mp" id="hv-mp"></div><span id="hv-mp-val">0</span></div>
+    </div>
     <div class="hud-right">
       <span id="ng-badge" class="title-ng-badge" style="display:none"></span>
       <span style="color:var(--accent-violet-bright)">⚗ <span id="soul-shards-display">0</span></span>

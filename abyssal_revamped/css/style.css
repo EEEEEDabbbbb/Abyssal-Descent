@@ -2474,7 +2474,9 @@
    selector, so a plain #game-screen rule never wins. Map first, then the
    action bar, character, and log; the page scrolls. */
 @media (max-width:700px) {
-  body { overflow:auto; }
+  /* clip, not hidden: screen shake must never make the page scroll sideways,
+     and clip doesn't create a scroll container (keeps the HUD sticky) */
+  body { overflow-y:auto; overflow-x:hidden; overflow-x:clip; }
   #game-screen.active {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
@@ -2645,3 +2647,48 @@ body.reduce-motion .toast { animation: none; transition: none; }
   transition: color 0.2s;
 }
 .search-clear-btn:hover, .search-clear-btn:focus-visible { color: var(--text-bright); }
+
+/* Phone HUD vitals (render.js) — hidden on wide screens, where the
+   character panel is always visible */
+#hud-vitals { display: none; }
+@media (max-width:700px) {
+  #hud-vitals { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; max-width: 170px; }
+  .hv-bar { position: relative; height: 13px; background: var(--bg-deep); border: 1px solid var(--border-dim); border-radius: 2px; overflow: hidden; }
+  .hv-fill { position: absolute; inset: 0 auto 0 0; transition: width 0.2s; }
+  .hv-hp { background: var(--hp-color, #cc2233); }
+  .hv-mp { background: var(--mp-color, #3355cc); }
+  .hv-bar span { position: relative; display: block; font-size: 0.6rem; line-height: 13px; padding-left: 4px; color: var(--text-bright); text-shadow: 0 0 2px #000, 0 0 2px #000; white-space: nowrap; }
+  #hud-row { gap: 0.5rem; padding: 0.35rem 0.5rem; }
+  #hud-row .hud-right { gap: 0.5rem; }
+  #floor-badge { flex-shrink: 0; }
+}
+
+/* Buttons inside dialogs fit the dialog: .title-btn's fixed 340px width is
+   for the title screen and pushed modal buttons past the edge on phones */
+#overlay-content .title-btn { min-width: 0; max-width: 100%; box-sizing: border-box; }
+@media (max-width:700px) {
+  #overlay-content .title-btn { padding-left: 0.8rem; padding-right: 0.8rem; letter-spacing: 0.08em; white-space: normal; }
+}
+
+/* Fusion Lab on phones: three 140px slots don't fit 390px, and the centred
+   column then grew past the screen and clipped both sides */
+#fusion-lab-body { width: 100%; box-sizing: border-box; }
+@media (max-width:700px) {
+  #fusion-lab-body { padding: 0.5rem !important; }
+  #fusion-lab-body > div:first-child { gap: 0.4rem !important; }
+  #fusion-lab-body > div:first-child > div:not(.fusion-slot) { font-size: 1.2rem !important; }
+  .fusion-slot { width: 96px; min-height: 130px; }
+  .fusion-slot .slot-icon { font-size: 1.5rem; }
+  #fusion-class-roster { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important; }
+}
+
+/* Class select / collection footers and class grid on phones */
+@media (max-width:700px) {
+  .cs-footer { flex-wrap: wrap; padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+  .cs-footer > div:first-child { flex: 1 1 100% !important; min-height: 0 !important; }
+  .cs-footer > div:last-child { flex: 1 1 100%; }
+  .cs-footer .title-btn { min-width: 0; max-width: 100%; width: 100%; padding-left: 0.8rem; padding-right: 0.8rem; }
+  .cs-footer > div:last-child { display: flex; gap: 0.4rem; }
+  .cs-footer > div:last-child .title-btn { flex: 1; }
+  #class-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 0.5rem !important; }
+}

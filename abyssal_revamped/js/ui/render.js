@@ -54,6 +54,15 @@ function updateUI() {
   document.getElementById('mp-bar').style.width = mpPct+'%';
   document.getElementById('mp-val').textContent = `${p.stats.mp}/${p.stats.maxMp}`;
 
+  // Phone HUD copy (index.html #hud-vitals)
+  const hvHp = document.getElementById('hv-hp');
+  if (hvHp) {
+    hvHp.style.width = hpPct + '%';
+    document.getElementById('hv-hp-val').textContent = `♥ ${p.stats.hp}/${p.stats.maxHp}${p.shield > 0 ? ` +${p.shield}🛡` : ''}`;
+    document.getElementById('hv-mp').style.width = mpPct + '%';
+    document.getElementById('hv-mp-val').textContent = `✦ ${p.stats.mp}/${p.stats.maxMp}`;
+  }
+
   if (p.shield > 0) {
     document.getElementById('shield-bar-container').style.display='';
     document.getElementById('shield-val').textContent = ''+p.shield;
