@@ -2715,6 +2715,11 @@ body.reduce-motion .toast { animation: none; transition: none; }
   background: rgba(255,90,90,0.10); white-space: nowrap; font-variant-numeric: tabular-nums;
 }
 
+/* Element matchup under an enemy's name (render.js matchupHtml) */
+.matchup { font-size: 0.66rem; margin-top: 2px; color: var(--text-dim); letter-spacing: 0.02em; }
+.matchup.good { color: #7fd99a; }
+.matchup.bad  { color: #ff8a8a; }
+
 /* Number-key hints on dialog choices (main.js handleKeyDown) */
 .key-hint {
   display: inline-block; min-width: 1.35em; margin-right: 0.5em; padding: 0 0.3em;

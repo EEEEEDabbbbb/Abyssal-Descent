@@ -10,6 +10,9 @@
 //                                      # upgrade bought (purges/pacts too)
 //   GOD=1 node tools/honest_run.js    # can't die: prints the player's stats on
 //                                      # arrival at each floor (growth curve)
+//   FLEE=1 node tools/honest_run.js   # flee hard counters and lost causes
+//                                      # (never guardians or bosses), like a person
+//   PRE="…" node tools/honest_run.js  # run code in the page first (try a change)
 //
 // Use it to check the difficulty curve after balance changes. Needs the dev
 // dependencies (npm install).
@@ -30,6 +33,9 @@ const MAX_FLOOR = Number(process.env.MAX_FLOOR) || 50;
     G._enemyTurnDelay = 0;
   });
   await ctx.page.addScriptTag({ content: BOT_SOURCE });
+  if (process.env.FLEE) await ctx.page.evaluate(() => { window.__FLEE = true; });
+  // PRE="…": run code in the page first, to try a change without editing data
+  if (process.env.PRE) await ctx.page.evaluate(process.env.PRE);
   // FUSIONS=n: run n random fusion classes instead
   if (process.env.FUSIONS) {
     CLASSES = await ctx.page.evaluate(n => {
@@ -142,7 +148,21 @@ const BOT_SOURCE = `
     return s;
   }
 
+  // FLEE=1: run from ordinary fights a person would give up on — a hard
+  // element counter at the start, or losing badly — instead of fighting on
+  function wantsToFlee(p) {
+    if (!window.__FLEE) return false;
+    const foes = (G.enemies || []).filter(e => e.hp > 0);
+    if (!foes.length || foes.some(e => e.isBoss || e.isGuardian || e.isSecretBoss)) return false;
+    const myEl = (getClassData(p.classId) || {}).element;
+    const lead = foes[0];
+    const counter = getElementMult(myEl, lead.element) < 1 && getElementMult(lead.element, myEl) > 1;
+    if (counter && G.combatRound <= 1) return true;
+    return p.stats.hp < p.stats.maxHp * 0.3 && lead.hp > lead.maxHp * 0.4;
+  }
+
   function combatTurn(p) {
+    if (wantsToFlee(p)) { playerAction('flee'); return; }
     const heal = p.inventory.findIndex(isHeal);
     if (p.stats.hp < p.stats.maxHp * 0.3 && heal >= 0) { useItemInCombat(heal); return; }
     if ((p.burstCharge || 0) >= BURST_THRESHOLD && ABILITIES[p.burstAbility]) { playerAction('burst'); return; }

@@ -84,6 +84,9 @@
 - Run seeds: every run has a seed (shown in the pause menu, or enter one in
   World Settings). The same seed and settings build the same floors, and
   reloading a save can't re-roll chests, drops or flee attempts.
+- Enemy cards show the element matchup when it isn't neutral ("You deal
+  ×0.25 · You take ×2", red when it's against you), so a hard counter is
+  obvious before you sink turns into it, and you can flee.
 - The enemy's "Next:" move now shows roughly how much damage it will do to
   you (≈45 dmg), so you can decide when to defend or heal. The estimate is read
   from the move's own formula, your DEF and the element matchup.

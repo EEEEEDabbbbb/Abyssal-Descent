@@ -185,6 +185,26 @@ test('the "Next:" telegraph estimates the damage a move will do', async () => {
   assert.match(String(r.shown), /^≈\d+ dmg$/);
 });
 
+test('the enemy card shows a non-neutral element matchup, and nothing for a neutral one', async () => {
+  const r = await run(async () => {
+    await ensureClassLoaded('windwalker');
+    __startTestRun('windwalker', 1);
+    const crab = deepCopy(ENEMY_POOL.thunder_crab); crab.status = []; crab.patternIndex = 0;
+    startCombat(crab); updateUI(); renderCenterPanel();
+    const bad = document.querySelector('#enemy-display .matchup');
+    const out = { bad: bad && bad.textContent, badTone: bad && bad.classList.contains('bad') };
+    endCombat(false); G.phase = 'explore';
+    const neutral = deepCopy(ENEMY_POOL.skeleton); neutral.element = 'normal'; neutral.status = []; neutral.patternIndex = 0;
+    startCombat(neutral); updateUI(); renderCenterPanel();
+    out.neutral = !!document.querySelector('#enemy-display .matchup');
+    endCombat(false); G.phase = 'explore';
+    return out;
+  });
+  assert.equal(r.bad, 'You deal ×0.25 · You take ×2');
+  assert.equal(r.badTone, true);
+  assert.equal(r.neutral, false);
+});
+
 test('a low-HP boss never drains twice in a row', async () => {
   const r = await run(() => {
     __startTestRun('shadowblade', 30);

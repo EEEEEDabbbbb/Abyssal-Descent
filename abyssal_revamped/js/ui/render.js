@@ -377,6 +377,23 @@ function renderCenterPanel() {
 }
 
 // ── Combat view ───────────────────────────────────────────────
+// matchupHtml — "You deal ×0.5 · You take ×2" under an enemy's name when your
+// class element and its element aren't a neutral match, so a hard counter is
+// obvious before you commit to the fight (and you can flee it)
+function matchupHtml(e, compact = false) {
+  const p = G.player;
+  const myEl = p && (getClassData(p.classId) || {}).element;
+  if (!myEl || !e.element) return '';
+  const deal = getElementMult(myEl, e.element), take = getElementMult(e.element, myEl);
+  if (deal === 1 && take === 1) return '';
+  const edge = deal / take;
+  const tone = edge > 1 ? 'good' : edge < 1 ? 'bad' : '';
+  const fmt = m => `×${+m.toFixed(2)}`;
+  const name = el => (ELEMENTS[el] && ELEMENTS[el].name) || el;
+  return `<div class="matchup ${tone}" title="Element matchup: your ${name(myEl)} against its ${name(e.element)}">`
+    + (compact ? `⚔${fmt(deal)} · 🛡${fmt(take)}` : `You deal ${fmt(deal)} · You take ${fmt(take)}`) + `</div>`;
+}
+
 function renderCombatView(view) {
   // MULTI-ENEMY: packs get their own simpler layout (see mapgen.js —
   // packs are guaranteed regular-enemy-only, so no boss phase bar/enrage
@@ -414,6 +431,7 @@ function renderCombatView(view) {
           ${isElite?`<span style="color:#9955dd;font-size:0.7rem;margin-left:4px">[ELITE]</span>`:''}
         </div>
         <div class="enemy-title" style="font-style:italic;color:var(--text-dim);font-size:0.68rem">"${e.title||''}"</div>
+        ${matchupHtml(e)}
         <div class="enemy-next-move" style="font-size:0.72rem;color:var(--text-dim);margin-top:3px;display:flex;align-items:center;justify-content:center;gap:5px">
           <span style="opacity:0.65">Next:</span>
           <span style="color:${isBoss?'var(--accent-crimson-bright)':'var(--text-main,#ddd)'};font-weight:600">${nextMove.icon} ${nextMove.label}</span>${nextMove.est ? `<span class="next-est" title="Estimated damage to you (before shield)">≈${nextMove.est} dmg</span>` : ''}
@@ -462,6 +480,7 @@ function renderPackCombatView(view, enemies) {
           ${elObj?`<span class="element-badge" style="background:${elObj.color}22;border:1px solid ${elObj.color};color:${elObj.color};border-radius:4px;padding:0 4px;font-size:0.6rem;margin-left:3px">${elObj.icon}</span>`:''}
           ${isTargeted?`<span style="color:var(--accent-crimson-bright);font-size:0.65rem;margin-left:3px">🎯</span>`:''}
         </div>
+        ${alive ? matchupHtml(e, true) : ''}
         ${alive?`
         <div class="enemy-next-move" style="font-size:0.65rem;color:var(--text-dim);margin-top:2px;display:flex;align-items:center;justify-content:center;gap:4px">
           <span style="opacity:0.65">Next:</span>
