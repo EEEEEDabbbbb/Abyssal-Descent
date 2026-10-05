@@ -307,7 +307,7 @@ function gameOver() {
   document.getElementById('game-over-floor').textContent  = floorReached;
   document.getElementById('game-over-level').textContent  = p?.level || 1;
   document.getElementById('game-over-shards').textContent = record ? record.shards : shards;
-  document.getElementById('game-over-best').textContent   = G.meta.maxFloor;
+  document.getElementById('game-over-best').textContent   = Math.max(G.meta.maxFloor || 0, floorReached || 0); // floor 1 never sets maxFloor
 
   // ── Class identity block ──────────────────────────────────
   const classId  = p.classId;
@@ -375,10 +375,12 @@ function gameOver() {
   if (atMax) {
     hintEl.innerHTML = `<button class="title-btn fusion-lab-btn" style="margin-top:0.4rem;width:100%" onclick="openFusionModal()">⚗ Fuse Now</button>`;
   } else {
-    // Estimate from what this run actually earned
-    const perRun  = Math.max(1, p._classXpGained || (10 + G.floor * 2));
-    const runsEst = Math.max(1, Math.ceil((xpNeeded - classXP) / perRun));
-    hintEl.textContent = `+${p._classXpGained || 0} class XP this run · ~${runsEst} more run${runsEst > 1 ? 's' : ''} like this to reach level ${classLevel + 1}`;
+    // Estimate from what this run actually earned (class XP comes from won fights)
+    const gained  = p._classXpGained || 0;
+    const runsEst = Math.max(1, Math.ceil((xpNeeded - classXP) / Math.max(1, gained)));
+    hintEl.textContent = gained
+      ? `+${gained} class XP this run · ~${runsEst} more run${runsEst > 1 ? 's' : ''} like this to reach level ${classLevel + 1}`
+      : 'No class XP this run. Every fight you win earns some.';
     hintEl.style.color = 'var(--text-dim)';
   }
 

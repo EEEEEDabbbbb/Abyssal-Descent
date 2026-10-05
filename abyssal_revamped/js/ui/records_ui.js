@@ -61,7 +61,7 @@ function showRecords(tab = 'overview') {
   let body = '';
   if (tab === 'overview') {
     const tiles = [
-      ['Deepest floor', _fmt(m.maxFloor)], ['Runs', _fmt(L.runs)], ['Conquests', _fmt(L.conquests)],
+      ['Deepest floor', _fmt(Math.max(m.maxFloor || 0, ...(m.runHistory || []).map(r => r.floor || 0)))], ['Runs', _fmt(L.runs)], ['Conquests', _fmt(L.conquests)],
       ['Enemies slain', _fmt(L.kills)], ['Bosses & guardians', _fmt(L.bosses)], ['Biggest hit', _fmt(L.bestHit)],
       ['Damage dealt', _fmt(L.dmgDealt)], ['Shards earned', _fmt(L.shards)], ['Play time', formatPlayTime(L.playMs)],
       ['Classes unlocked', _fmt((m.unlockedClasses || []).length)], ['New Game+', _fmt(m.ngPlus)], ['Achievements', `${earned}/${ACHIEVEMENTS.length}`],

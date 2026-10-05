@@ -158,6 +158,21 @@ test('the Records screen renders every tab', async () => {
   assert.ok(r.history >= 1);
 });
 
+test('dying on floor 1 of a first run shows floor 1 as your best, not 0', async () => {
+  const r = await run(() => {
+    G.meta = defaultMeta(); G._gameOverShown = false;
+    __startTestRun('shadowblade', 1);
+    gameOver();
+    const best = document.getElementById('game-over-best').textContent;
+    const hint = document.getElementById('death-clvl-hint').textContent;
+    showRecords('overview'); const overview = document.getElementById('overlay-content').textContent; closeModal();
+    return { best, hint, deepest: /1\s*Deepest floor/.test(overview) };
+  });
+  assert.equal(r.best, '1');
+  assert.match(r.hint, /No class XP this run/);
+  assert.equal(r.deepest, true);
+});
+
 test('Daily Descent: same seed for everyone today, standard settings, best floor kept', async () => {
   const r = await run(async () => {
     G.meta = defaultMeta(); G._gameOverShown = false;

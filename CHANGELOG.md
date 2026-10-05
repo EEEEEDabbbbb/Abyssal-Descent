@@ -111,6 +111,13 @@
 - 15 new items with 7 new gear effects: Thorns, Executioner, First Strike,
   Mana Siphon, Last Stand, Scholar and Midas.
 
+### Death screen
+- The buttons were narrower than the panels above them on wider screens.
+- Dying on floor 1 of your first run showed a personal best (and a deepest
+  floor in Records) of 0.
+- A run that won no fights said "+0 class XP · ~7 more runs like this"; it
+  now says class XP comes from won fights.
+
 ### Phones
 - Your HP and MP stay visible in the top bar while you scroll, which matters
   in fights, since the character panel sits below the action bar on phones.

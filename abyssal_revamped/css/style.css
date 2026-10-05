@@ -1881,6 +1881,8 @@
   width: 100%;
   animation: deathFadeIn 0.6s 0.6s ease both;
 }
+/* Full width of the panels above (.title-btn is a fixed 340px elsewhere) */
+.death-actions .title-btn { min-width: 0; max-width: 100%; width: 100%; box-sizing: border-box; }
 
 @keyframes deathFadeIn {
   from { opacity: 0; transform: translateY(8px); }
