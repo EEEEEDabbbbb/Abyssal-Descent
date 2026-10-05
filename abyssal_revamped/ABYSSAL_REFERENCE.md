@@ -8,8 +8,9 @@
 
 ABYSSAL is a browser-based roguelike dungeon crawler where you descend a procedurally generated dungeon floor by floor, fighting enemies in turn-based combat, collecting loot, levelling up, and pushing toward Floor 50 to face the Abyssal God. Each run is distinct due to BSP map generation, randomised item drops, and a floor-scaling difficulty system.
 
-- **Difficulty Tiers:** Normal → Hard → Brutal → Abyssal — each tier scales enemy ATK, DEF, and HP significantly (×1.0 / ×1.25 / ×1.6 / ×2.0 base stat multiplier).
-- **Bosses & Milestones:** Every 5th floor is a boss floor with a phase-based boss fight. Milestone floors (10, 20, 25, 30, 40, 50) apply an additional ×1.5 stat multiplier. Other floors lock their exit behind a Guardian.
+- **Difficulty Tiers:** Normal → Hard → Brutal → Abyssal — each tier brings a new set of enemies with nastier moves. Their strength comes from one smooth depth curve, so a new tier never makes enemies jump in power overnight (new-tier enemies phase in over 4 floors, from floors 8 and 21).
+- **Bosses & Milestones:** Every 5th floor is a boss floor with a phase-based boss fight. On milestone floors (10, 20, 25, 30, 40, 50) regular enemies are 20% stronger. Other floors lock their exit behind a Guardian.
+- **Recovery:** each level-up restores 25% of your max HP and MP, and descending restores 20% HP / 30% MP.
 - **World settings:** Difficulty (Normal ×1.0 / Hard ×1.3 / Nightmare ×1.7 enemy HP & ATK), room count, enemy density, treasure rate and map size are chosen per run. New Game+ adds +30% enemy HP & ATK per cycle.
 - **Win Condition:** Defeat THE ABYSSAL GOD on Floor 50. Doing so unlocks The Abyssal One class and grants the Crown of the Abyss relic permanently.
 
@@ -151,7 +152,19 @@ Created in the Fusion Lab by combining any two unlocked base or secret classes, 
 
 ### Regular Enemies
 
-All enemies scale with floor depth: base stats are multiplied by floor tier (×1.0/×1.25/×1.6/×2.0), an additional per-floor scale factor (+18% per floor), and the player's selected difficulty multiplier.
+All enemies follow one depth curve (`ENEMY_CURVE` in enemies.js), fitted to how a player who wins their fights actually grows. Each tier's pool is normalised to the same average, so a tougher-than-average enemy stays tougher than average at any depth. Then the difficulty (Normal ×1, Hard ×1.3, Nightmare ×1.7) and New Game+ (+30% per cycle) multipliers apply to HP and ATK.
+
+| Floor | Avg HP | Avg ATK | Avg DEF |
+|---|---|---|---|
+| 1 | 35 | 11 | 3 |
+| 7 | 100 | 30 | 8 |
+| 14 | 340 | 88 | 17 |
+| 20 | 560 | 135 | 25 |
+| 30 | 900 | 190 | 37 |
+| 40 | 1,250 | 245 | 47 |
+| 50 | 1,650 | 300 | 57 |
+
+Guardians are ×2.6 HP / ×1.2 ATK of the floor's average enemy; floor bosses and secret bosses ×3.5 HP / ×1.15 ATK (boss phase ATK boosts scale with the boss). Armour can block at most 85% of any hit.
 
 **Tier 1 — Floors 1–7 (21 enemies)**
 💀 Restless Skeleton · 👻 Hollow Wraith · 👺 Abyssal Goblin · ⚔️ Cursed Armor · 🪱 Grave Worm · 😈 Shadow Imp · 🗡️ Hollow Knight · 🕷️ Giant Cave Spider · ❄️ Frost Sprite · 🐢 Mud Crawler · 🦇 Rabid Bat · 🧹 Bog Witch · 🪨 Stone Sprite · 🌱 Vine Horror · 🗿 Cracked Golem · 🔵 Ice Wisp · 🐀 Crypt Rat · 💨 Wind Sprite · 🔥 Ember Imp · 🐺 Dire Wolf · 🦀 Thunder Crab
@@ -179,7 +192,7 @@ The first 14:
 | `poison_spit` | Damage + apply poison DoT |
 | `charge` | Skip turn to boost ATK, then heavy attack |
 | `stun_strike` | Damage + stun player for 1 turn |
-| `life_drain` | Damage + heal self from absorbed HP |
+| `life_drain` | Damage + heals itself for half the damage dealt |
 | `shadow_slash` | Shadow element heavy hit |
 | `infernal_breath` | Fire element hit + Scorched debuff |
 | `void_tear` | Shield-piercing void attack |

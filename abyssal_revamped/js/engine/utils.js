@@ -102,8 +102,11 @@ function getClassData(classId) {
          null;
 }
 
+// calcDmg — ATK minus DEF, but armour can block at most 85% of a hit, so a
+// high-DEF build is never fully immune and stat gaps never make damage drop
+// to a flat 1.
 function calcDmg(atk, def) {
-  const base     = Math.max(1, atk - def);
+  const base     = Math.max(1, atk - def, atk * 0.15);
   const variance = Math.round(base * 0.15);
   return Math.max(1, Math.round(base + randRange(-variance, variance)));
 }
@@ -377,6 +380,9 @@ function gainXP(amount) {
     p.level++;
     const g = getLevelUpGains(p);
     applyPermanentBonuses(p, g, 1); // maxHp/maxMp gains also restore that much HP/MP
+    // A level-up is also a breather: restore a quarter of max HP and MP
+    p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + Math.round(p.stats.maxHp * 0.25));
+    p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + Math.round(p.stats.maxMp * 0.25));
     p.talentPoints += 2;
     sfx('levelup');
     logEntry('reward', `★ Level up! Now level ${p.level}. (+${g.maxHp} HP, +${g.maxMp} MP, +${g.atk} ATK, +${g.def} DEF, +${g.spd} SPD)`);

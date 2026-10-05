@@ -45,5 +45,8 @@ Other tools:
   fixes fusion element/id problems. Run it after editing fusion data.
 - `node tools/class_balance.js [classId…]` simulates fights for each class on
   several floors and prints win rates, which is handy after changing a class.
+- `node tools/honest_run.js [classId…]` plays whole runs with a bot that
+  doesn't cheat and reports how deep they get and what killed them. Use it
+  after changing the difficulty curve.
 - Opening `index.html?dev=1` loads the developer console (backtick or F2), the
   in-browser self test (`devtest()`), and a call logger.

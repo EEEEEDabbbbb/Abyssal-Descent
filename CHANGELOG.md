@@ -19,6 +19,20 @@
   so the game loads faster).
 
 ### Balance
+- **Difficulty curve rebuilt.** Enemy strength came from per-tier stat
+  multipliers and per-tier base stats, so enemies got ~3× stronger
+  overnight on floor 8 and again on floor 21, while floors 1–7 were
+  harmless. A bot playing honestly never got past floor 8. Every stat now
+  follows one smooth curve fitted to measured player growth, new enemy
+  tiers phase in over four floors, and milestone floors add +20% (was +50%).
+  The same bot now dies anywhere from floor 6 to 25 (median 10–18 depending
+  on class), and a fully upgraded account reaches floors 12–30.
+- Guardians, bosses and secret bosses follow the same curve. Secret bosses
+  used fixed stats: deadly on floor 5, trivial on floor 30.
+- Each level-up restores 25% HP and MP.
+- Armour can block at most 85% of a hit (high-DEF builds took a flat 1
+  damage from anything weaker than them).
+- Life Drain heals the enemy for half the damage dealt (was all of it).
 - 26 classes had padded kits that repeated the same 2–7 abilities. Every
   class now has 8 different abilities, filled from its element's ability set.
 - Nullbringer's Sunders now also deal damage, and an already-applied Sunder
@@ -60,6 +74,9 @@
 
 ### Developer
 - `tools/class_balance.js` simulates fights for every class and prints win rates.
+- `tools/honest_run.js` plays whole runs with no cheats and reports how deep
+  they get and what killed them (`GOD=1` prints the player growth curve,
+  `META=max` simulates a fully upgraded account).
 - The bundled fonts now ship with their SIL Open Font License files
   (`abyssal_revamped/css/fonts/`).
 - New tests: run records, rival bosses and gear effects, tooltip

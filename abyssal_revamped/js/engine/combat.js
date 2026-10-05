@@ -1094,7 +1094,11 @@ function checkBossPhase(e) {
   while (e.currentPhase < e.phases.length && e.hp / e.maxHp <= e.phases[e.currentPhase].threshold) {
     const phase = e.phases[e.currentPhase];
     e.currentPhase++;
-    e.atk += phase.atkBoost || 0;
+    // ATK boosts are authored for the boss's base stats, so they scale like the
+    // boss. DEF boosts stay flat: with subtractive damage a scaled DEF jump
+    // would halve the player's damage late in the game.
+    const ps = e._phaseScale || {};
+    e.atk += Math.round((phase.atkBoost || 0) * (ps.atk || 1));
     e.def += phase.defBoost || 0;
     if (phase.newPatterns) e.patterns = phase.newPatterns;
     e.patternIndex = 0;

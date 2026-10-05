@@ -81,7 +81,7 @@ const ENEMY_ABILITIES = {
   life_drain:(e,p)=>{
     let dmg=Math.max(1,calcDmg(e.atk*1.4,p.stats.def*0.4));
     const taken=dealDmgToPlayer(dmg);
-    const healed=healEnemy(e,taken);
+    const healed=healEnemy(e,Math.round(taken*0.5)); // half: a full-value drain can out-heal the player
     logEntry('enemy-action',`${e.name} drains your life for ${taken}!${healed>0?` Heals ${healed}.`:''}`);
   },
   shadow_slash:(e,p)=>{
@@ -1416,41 +1416,114 @@ const ELITE_STAT_MULT = 1.4;
 // New Game+: each cycle makes every enemy 30% stronger (HP and ATK)
 function getNgPlusMult() { return 1 + (G.meta.ngPlus || 0) * 0.3; }
 
-function getFloorStatMult(floor) {
-  const tier = getFloorTier(floor);
-  let base = { normal:1.0, hard:1.25, brutal:1.6, abyssal:2.0 }[tier];
-  if (MILESTONE_FLOORS.includes(floor)) base *= 1.5;
-  return base;
+// ── Enemy scaling ─────────────────────────────────────────────
+// Every stat follows ONE smooth curve, fitted to how a player who wins their
+// fights actually grows (measure it with `GOD=1 node tools/honest_run.js`).
+// Each tier's enemy pool is normalised to the same average first, so a new
+// tier changes WHICH enemies you meet, not how strong they are. (The old tier
+// multipliers and per-tier base stats made enemies ~3× stronger overnight on
+// floors 8 and 21.) Milestone floors add a smaller +20% bump.
+//            floor   hp  atk  def    xp  gold   — average regular enemy, Normal
+const ENEMY_CURVE = [
+  [ 1,   35,  11,   3,   16,   7],
+  [ 4,   58,  18,   5,   26,   7],
+  [ 7,  100,  30,   8,   40,   9],
+  [ 8,  122,  36,   9,   55,  11],
+  [10,  175,  52,  12,  100,  14],
+  [14,  340,  88,  17,  160,  18],
+  [20,  560, 135,  25,  340,  28],
+  [25,  730, 160,  31,  650,  36],
+  [30,  900, 190,  37, 1000,  44],
+  [40, 1250, 245,  47, 1700,  50],
+  [50, 1650, 300,  57, 2500,  55],
+];
+const MILESTONE_MULT = 1.2;
+// Bosses relative to a regular enemy on the same floor
+const BOSS_MULT     = { hp:3.5, atk:1.15, def:1.4 };
+const GUARDIAN_MULT = { hp:2.6, atk:1.2,  def:1.2, xp:2.5 };
+const SECRET_BOSS_MULT = 1.0;  // on top of BOSS_MULT (secret bosses can't be avoided)
+
+const ENEMY_POOLS = {
+  normal: ['skeleton','wraith','goblin','cursed_armor','grave_worm','shadow_imp','hollow_knight','giant_spider','frost_sprite','mud_crawler','rabid_bat','bog_witch','stone_sprite','vine_horror','cracked_golem','ice_wisp','crypt_rat','wind_sprite','ember_imp','dire_wolf','thunder_crab'],
+  hard:   ['vampire','lich','ghoul','soul_eater','plague_swarm','void_stalker','abyssal_serpent','tide_crawler','wind_wraith','swamp_horror','frost_revenant','thunder_hawk','deep_lurker','fungal_shaman','desert_scorpion','iron_golem','sea_witch','storm_elemental','bog_troll','harpy','cursed_knight','coral_beast','lava_crawler','void_shade'],
+  deep:   ['demon','banshee','golem','dread_knight','chaos_elemental','abyssal_horror','elder_lich','stone_golem','sky_predator','glacier_titan','void_witch','storm_giant','plague_knight','abyssal_hydra','flame_archon','iron_colossus','death_specter','verdant_colossus','crimson_revenant','abyssal_djinn','tempest_wyrm','deep_tyrant','null_knight','abyssal_phoenix','runic_colossus'],
+};
+const GUARDIAN_POOLS = {
+  normal: ['hollow_knight','cursed_armor','stone_sprite','vine_horror','cracked_golem'],
+  hard:   ['void_stalker','soul_eater','iron_golem','storm_elemental','bog_troll','cursed_knight','coral_beast'],
+  deep:   ['dread_knight','elder_lich','abyssal_horror','iron_colossus','glacier_titan','storm_giant','death_specter','verdant_colossus','null_knight','runic_colossus'],
+};
+function enemyPoolKey(floor) { return floor <= 7 ? 'normal' : floor <= 20 ? 'hard' : 'deep'; }
+// Regular enemies from the next tier phase in over 4 floors (20% → 80%), so
+// their nastier move sets don't all arrive on the same floor.
+const POOL_BLEND = [ { from: 8, prev: 'normal', next: 'hard' }, { from: 21, prev: 'hard', next: 'deep' } ];
+function rollEnemyPoolKey(floor) {
+  for (const b of POOL_BLEND) {
+    const step = floor - b.from + 1;
+    if (step >= 1 && step <= 4) return rand(100) < step * 20 ? b.next : b.prev;
+  }
+  return enemyPoolKey(floor);
 }
+
+// enemyCurve(floor) — the average regular enemy's stats on that floor.
+// noMilestone: bosses already ARE the floor's spike, so they skip the bump.
+function enemyCurve(floor, noMilestone = false) {
+  const f = clamp(floor, 1, 50);
+  let i = 0;
+  while (i < ENEMY_CURVE.length - 2 && f > ENEMY_CURVE[i + 1][0]) i++;
+  const a = ENEMY_CURVE[i], b = ENEMY_CURVE[i + 1];
+  const t = (f - a[0]) / (b[0] - a[0]);
+  const lerp = k => a[k] + (b[k] - a[k]) * t;
+  const m = !noMilestone && MILESTONE_FLOORS.includes(floor) ? MILESTONE_MULT : 1;
+  return { hp: lerp(1) * m, atk: lerp(2) * m, def: lerp(3), xp: lerp(4) * m, gold: lerp(5) };
+}
+
+// Average base stats of a pool (cached) — used to normalise it
+const _poolAvgCache = {};
+function poolAverage(ids) {
+  const key = ids.join();
+  if (!_poolAvgCache[key]) {
+    const avg = k => ids.reduce((s, id) => s + (k === 'gold' ? (ENEMY_POOL[id].gold[0] + ENEMY_POOL[id].gold[1]) / 2 : ENEMY_POOL[id][k]), 0) / ids.length;
+    _poolAvgCache[key] = { hp: avg('hp'), atk: avg('atk'), def: avg('def'), xp: avg('xp'), gold: avg('gold') };
+  }
+  return _poolAvgCache[key];
+}
+
+// scaleEnemyToFloor — sets e's stats from the curve, keeping how strong e is
+// relative to the rest of its pool. mult: extra multipliers (elite, guardian…)
+function scaleEnemyToFloor(e, floor, poolAvg, mult = {}) {
+  const c = enemyCurve(floor);
+  const diff = getDifficultyMult() * getNgPlusMult();
+  const rel = k => (e[k] || 0) / (poolAvg[k] || 1);
+  e.hp    = Math.max(1, Math.round(rel('hp')  * c.hp  * (mult.hp  || 1) * diff));
+  e.maxHp = e.hp;
+  e.atk   = Math.max(1, Math.round(rel('atk') * c.atk * (mult.atk || 1) * diff));
+  e.def   = Math.max(0, Math.round(rel('def') * c.def * (mult.def || 1)));
+  e.xp    = Math.round(rel('xp') * c.xp * (mult.xp || 1));
+  const g = (e.gold[0] + e.gold[1]) / 2;
+  const goldScale = c.gold * (mult.gold || 1) / (poolAvg.gold || g || 1);
+  e.gold  = e.gold.map(v => Math.max(1, Math.round(v * goldScale)));
+  return e;
+}
+
+// getFloorStatMult — kept for anything that wants "how much stronger than
+// floor 1" (e.g. mods); enemies use enemyCurve() directly.
+function getFloorStatMult(floor) { return enemyCurve(floor).hp / ENEMY_CURVE[0][1]; }
 
 // getRandomEnemy(floor, allowElite=true) — allowElite=false is used by
 // getRandomEnemyPack() below so pack members never roll Elite too (keeps
 // the two difficulty-spike systems from compounding unpredictably).
 function getRandomEnemy(floor, allowElite=true) {
-  let pool;
-  if (floor <= 7)       pool = ['skeleton','wraith','goblin','cursed_armor','grave_worm','shadow_imp','hollow_knight','giant_spider','frost_sprite','mud_crawler','rabid_bat','bog_witch','stone_sprite','vine_horror','cracked_golem','ice_wisp','crypt_rat','wind_sprite','ember_imp','dire_wolf','thunder_crab'];
-  else if (floor <= 20) pool = ['vampire','lich','ghoul','soul_eater','plague_swarm','void_stalker','abyssal_serpent','tide_crawler','wind_wraith','swamp_horror','frost_revenant','thunder_hawk','deep_lurker','fungal_shaman','desert_scorpion','iron_golem','sea_witch','storm_elemental','bog_troll','harpy','cursed_knight','coral_beast','lava_crawler','void_shade'];
-  else                  pool = ['demon','banshee','golem','dread_knight','chaos_elemental','abyssal_horror','elder_lich','stone_golem','sky_predator','glacier_titan','void_witch','storm_giant','plague_knight','abyssal_hydra','flame_archon','iron_colossus','death_specter','verdant_colossus','crimson_revenant','abyssal_djinn','tempest_wyrm','deep_tyrant','null_knight','abyssal_phoenix','runic_colossus'];
-
+  const pool = ENEMY_POOLS[rollEnemyPoolKey(floor)];
   const base = deepCopy(ENEMY_POOL[pool[rand(pool.length)]]);
-  const mult = getFloorStatMult(floor);
-  const floorScale = 1 + (floor - 1) * 0.18;
-  const diffMult = getDifficultyMult();
-  const totalScale = mult * floorScale * diffMult * getNgPlusMult();
 
   // ELITE VARIANTS: cheap content multiplier — reuses every existing
   // regular enemy with buffed stats + better loot instead of hand-authoring
   // new enemy data. Floor 3+ only (too rough any earlier). See
-  // ELITE_CHANCE / ELITE_STAT_MULT below for tuning.
+  // ELITE_CHANCE / ELITE_STAT_MULT above for tuning.
   const isElite = allowElite && floor >= 3 && rand(100) < ELITE_CHANCE;
-  const eliteMult = isElite ? ELITE_STAT_MULT : 1;
-
-  base.hp       = Math.round(base.hp * totalScale * eliteMult);
-  base.maxHp    = base.hp;
-  base.atk      = Math.round(base.atk * totalScale * eliteMult);
-  base.def      = Math.round((base.def + (floor - 1) * 0.8 * diffMult) * (isElite ? 1.15 : 1));
-  base.xp       = Math.round(base.xp * totalScale * (isElite ? 1.6 : 1));
-  base.gold     = isElite ? [Math.round(base.gold[0]*2), Math.round(base.gold[1]*2)] : base.gold;
+  const em = isElite ? ELITE_STAT_MULT : 1;
+  scaleEnemyToFloor(base, floor, poolAverage(pool), { hp: em, atk: em, def: isElite ? 1.15 : 1, xp: isElite ? 1.6 : 1, gold: isElite ? 2 : 1 });
   base.loot     = isElite ? Math.min(1, (base.loot||0) + 0.35) : base.loot;
   base.status   = [];
   base.patternIndex = 0;
@@ -1485,28 +1558,17 @@ function getRandomEnemyPack(floor) {
 }
 
 // getBossForFloor(floor, bossId?) — bossId forces a specific boss (tests, dev)
+// Bosses are scaled to BOSS_MULT × the floor's regular enemy, relative to the
+// floor's usual boss, so a rival keeps its own strengths and weaknesses.
 function getBossForFloor(floor, forceId) {
   const bossId = forceId || (BOSS_RIVALS[floor] && rand(2) === 1 ? BOSS_RIVALS[floor] : BOSS_BY_FLOOR[floor]);
   if (!bossId || !ENEMY_POOL[bossId]) return null;
   const b = deepCopy(ENEMY_POOL[bossId]);
-  const mult = getFloorStatMult(floor);
-  const diffMult = getDifficultyMult() * getNgPlusMult();
+  const ref = ENEMY_POOL[BOSS_BY_FLOOR[floor]] || ENEMY_POOL[bossId];
+  scaleBoss(b, floor, ref, 1);
   // Rewards scale with depth like everything else
-  b.xp = Math.round(b.xp * mult * (1 + (floor - 1) * 0.12));
+  b.xp = Math.round(b.xp * (1 + (floor - 1) * 0.12));
   b.gold = (b.gold || [20, 40]).map(g => Math.round(g * (1 + (floor - 1) * 0.1)));
-  // Bosses scale harder on high floors
-  if (floor > 10) {
-    const extraScale = 1 + (floor - 10) * 0.15;
-    b.hp = Math.round(b.hp * extraScale * mult * diffMult);
-    b.maxHp = b.hp;
-    b.atk = Math.round(b.atk * extraScale * mult * diffMult);
-    b.def = Math.round(b.def + floor * 0.5 * diffMult);
-  } else {
-    b.hp = Math.round(b.hp * mult * diffMult);
-    b.maxHp = b.hp;
-    b.atk = Math.round(b.atk * mult * diffMult);
-    b.def = Math.round(b.def + floor * 0.5 * diffMult);
-  }
   b.status = [];
   b.patternIndex = 0;
   b.currentPhase = 0;
@@ -1514,23 +1576,29 @@ function getBossForFloor(floor, forceId) {
   return b;
 }
 
+// scaleBoss — boss (or secret boss) stats for this floor. ref is the boss
+// whose base stats define "1×". Phase boosts (authored as flat numbers for
+// the base stats) scale by the same factor via e._phaseScale.
+function scaleBoss(b, floor, ref, extra = 1) {
+  const c = enemyCurve(floor, true);
+  const diff = getDifficultyMult() * getNgPlusMult();
+  const kHp  = c.hp  * BOSS_MULT.hp  * extra / ref.hp;
+  const kAtk = c.atk * BOSS_MULT.atk * extra / ref.atk;
+  const kDef = c.def * BOSS_MULT.def / Math.max(1, ref.def);
+  b.hp    = Math.round(b.hp * kHp * diff);
+  b.maxHp = b.hp;
+  b.atk   = Math.round(b.atk * kAtk * diff);
+  b.def   = Math.round(b.def * kDef);
+  Object.defineProperty(b, '_phaseScale', { value: { atk: kAtk * diff, def: kDef }, enumerable: true, writable: true, configurable: true });
+  return b;
+}
+
 // Guardian (non-boss-floor strong enemy that locks the exit)
 function getGuardianForFloor(floor) {
-  let pool;
-  if (floor <= 7)       pool = ['hollow_knight','cursed_armor','stone_sprite','vine_horror','cracked_golem'];
-  else if (floor <= 20) pool = ['void_stalker','soul_eater','iron_golem','storm_elemental','bog_troll','cursed_knight','coral_beast'];
-  else                  pool = ['dread_knight','elder_lich','abyssal_horror','iron_colossus','glacier_titan','storm_giant','death_specter','verdant_colossus','null_knight','runic_colossus'];
-
+  const pool = GUARDIAN_POOLS[enemyPoolKey(floor)];
   const base = deepCopy(ENEMY_POOL[pool[rand(pool.length)]]);
-  const mult = getFloorStatMult(floor) * 1.4;
-  const floorScale = 1 + (floor - 1) * 0.18;
-  const diffMult = getDifficultyMult() * getNgPlusMult();
-  base.hp    = Math.round(base.hp * floorScale * mult * diffMult);
-  base.maxHp = base.hp;
-  base.atk   = Math.round(base.atk * floorScale * mult * diffMult);
-  base.def   = Math.round(base.def + floor * 0.6 * diffMult);
-  base.xp    = Math.round(base.xp * floorScale * 1.5);
-  base.gold  = base.gold.map(g => Math.round(g * (1 + (floor - 1) * 0.1) * 1.5));
+  // Normalised against the regular pool of the same tier, then made sturdier
+  scaleEnemyToFloor(base, floor, poolAverage(ENEMY_POOLS[enemyPoolKey(floor)]), { ...GUARDIAN_MULT, gold: 1.5 * (1 + (floor - 1) * 0.04) });
   base.isGuardian = true;
   base.status = [];
   base.patternIndex = 0;

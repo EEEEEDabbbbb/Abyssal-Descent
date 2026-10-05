@@ -52,7 +52,7 @@ test('every rival boss can be fought to the end through all its phases, without 
       // turn) and hit for ~1/15 of the boss's HP. Keep HP realistic — drains
       // heal the boss by the damage they deal.
       addPermanentStat(p, 'maxHp', boss.atk * 12 - p.base.maxHp);
-      addPermanentStat(p, 'atk', Math.round(boss.maxHp / 15 + boss.def) - p.base.atk);
+      addPermanentStat(p, 'atk', Math.round(boss.maxHp / 12 + boss.def * 1.5) - p.base.atk);
       G._gameOverShown = true; // a lucky boss crit mustn't end the test run
       G._statusErrors = [];
       const used = new Set();
