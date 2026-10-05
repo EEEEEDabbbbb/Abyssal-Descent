@@ -243,3 +243,25 @@ test('stepping on the exit asks first only if you\'re leaving chests or events b
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('in a fight, R then a number key uses that item; Esc cancels', async () => {
+  const { page, errors } = await gamePage();
+  await page.evaluate(() => {
+    G._enemyTurnDelay = 0;
+    const p = G.player; p.inventory = [cloneItem(ITEM_POOL.find(i => i.id === 'health_potion')), cloneItem(ITEM_POOL.find(i => i.id === 'health_potion'))];
+    const e = getRandomEnemy(1, false); e.hp = e.maxHp = 999; e.atk = 1;
+    startCombat(e); G.turn = 'player'; p.stats.hp = 10; updateUI();
+  });
+  await page.keyboard.press('r');
+  assert.equal(await page.evaluate(() => isModalOpen()), true);
+  await page.keyboard.press('Escape');
+  assert.deepEqual(await page.evaluate(() => ({ open: isModalOpen(), items: G.player.inventory.length })), { open: false, items: 2 });
+  await page.keyboard.press('r');
+  await page.keyboard.press('2');
+  const r = await page.evaluate(() => ({ open: isModalOpen(), items: G.player.inventory.length, hp: G.player.stats.hp }));
+  assert.equal(r.open, false);
+  assert.equal(r.items, 1);
+  assert.ok(r.hp > 10, JSON.stringify(r));
+  assert.deepEqual(errors, []);
+  await page.close();
+});

@@ -100,8 +100,9 @@
 - Stepping on the exit asks first if you've seen chests, events or loot you
   haven't taken ("You're leaving 2 chests behind"). Enter descends; with
   nothing left behind you go straight down as before.
-- Number keys pick choices in events and boss rewards, and Enter continues
-  after an event, so a keyboard player never needs the mouse.
+- Number keys pick choices in events, boss rewards and the in-fight item
+  menu (R), Esc cancels the item menu, and Enter continues after an event,
+  so a keyboard player never needs the mouse.
 - Run statistics: kills, damage, biggest hit, chests, steps, play time and
   more. They're shown on the death screen and in the pause menu (📊 Run Stats).
 - Records screen (🏆 on the title screen): lifetime totals, your last 20

@@ -295,10 +295,11 @@ function openInventoryUse() {
   let html = `<div class="modal-title">🎒 Use Item</div>
     <div style="display:flex;flex-direction:column;gap:0.4rem">`;
   p.inventory.forEach((item,i)=>{
-    html+=`<button class="title-btn" style="text-align:left" onclick="useItemInCombat(${i})">${item.icon} ${item.name} — ${item.desc}</button>`;
+    const key = i < 9 ? i + 1 : null; // number keys pick the first nine
+    html+=`<button class="title-btn choice-btn" ${key ? `data-key="${key}"` : ''} style="text-align:left" onclick="useItemInCombat(${i})">${key ? `<span class="key-hint">${key}</span>` : ''}${item.icon} ${item.name} — ${item.desc}</button>`;
   });
   html+=`</div><button class="title-btn danger" style="width:100%;margin-top:0.5rem" onclick="closeModal()">Cancel</button>`;
-  showModal(html, false);
+  showModal(html); // Esc cancels
 }
 
 // useItemInCombat — using or equipping an item mid-fight takes your turn.
