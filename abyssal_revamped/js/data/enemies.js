@@ -1661,9 +1661,22 @@ function scaleBoss(b, floor, ref, extra = 1) {
 }
 
 // Guardian (non-boss-floor strong enemy that locks the exit)
+// isHardCounter — the element matchup swings 4× or more against the player
+// (e.g. you deal ×0.25 and take ×1, or deal ×0.5 and take ×2)
+function isHardCounter(enemyEl, playerEl) {
+  if (!enemyEl || !playerEl) return false;
+  return getElementMult(playerEl, enemyEl) / getElementMult(enemyEl, playerEl) <= 0.25;
+}
+
 function getGuardianForFloor(floor) {
   const pool = GUARDIAN_POOLS[enemyPoolKey(floor)];
-  const base = deepCopy(ENEMY_POOL[pool[rand(pool.length)]]);
+  let idx = rand(pool.length);
+  // You can't flee a guardian, so it is never a hard counter for your class:
+  // take the next one in the pool instead. No extra dice are rolled, so the
+  // floor itself is the same for every class (Daily Descent, shared seeds).
+  const myEl = G.player && (getClassData(G.player.classId) || {}).element;
+  for (let i = 0; i < pool.length && isHardCounter(ENEMY_POOL[pool[idx]].element, myEl); i++) idx = (idx + 1) % pool.length;
+  const base = deepCopy(ENEMY_POOL[pool[idx]]);
   // Normalised against the regular pool of the same tier, then made sturdier
   scaleEnemyToFloor(base, floor, poolAverage(ENEMY_POOLS[enemyPoolKey(floor)]), { ...guardianMult(floor), gold: 1.5 * (1 + (floor - 1) * 0.04) });
   base.isGuardian = true;

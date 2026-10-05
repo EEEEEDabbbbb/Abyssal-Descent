@@ -207,6 +207,32 @@ test('the enemy card shows a non-neutral element matchup, and nothing for a neut
   assert.equal(r.neutral, false);
 });
 
+test('a floor guardian is never a hard counter for your class, and the floor is the same for every class', async () => {
+  const r = await run(async () => {
+    const bad = [], layouts = {};
+    const ids = Object.keys(CLASSES);
+    for (const id of ids) await ensureClassLoaded(id);
+    for (const id of ids) {
+      const el = CLASSES[id].element;
+      for (const floor of [2, 6, 9, 13, 17, 22, 28, 33]) {
+        G.player = createPlayer(id);
+        for (let i = 0; i < 6; i++) {
+          const g = getGuardianForFloor(floor);
+          const pool = GUARDIAN_POOLS[enemyPoolKey(floor)];
+          if (isHardCounter(g.element, el) && !pool.every(gid => isHardCounter(ENEMY_POOL[gid].element, el))) bad.push(`${id} f${floor}: ${g.name}`);
+        }
+      }
+    }
+    for (const id of ['arcanist', 'warlord', 'plagueborn']) {
+      __startTestRun(id, 4, 'SAMEFLOOR');
+      layouts[id] = G.map.map(row => row.map(c => c.type[0] + (c.content || '-')[0]).join('')).join('|');
+    }
+    return { bad: bad.slice(0, 5), same: layouts.arcanist === layouts.warlord && layouts.warlord === layouts.plagueborn };
+  });
+  assert.deepEqual(r.bad, []);
+  assert.equal(r.same, true);
+});
+
 test('a low-HP boss never drains twice in a row', async () => {
   const r = await run(() => {
     __startTestRun('shadowblade', 30);

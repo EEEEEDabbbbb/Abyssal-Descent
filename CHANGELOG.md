@@ -45,6 +45,11 @@
 - Initiative and flee chance compare SPD as a ratio and enemy SPD grows
   with depth. Player SPD grows several-fold over a run, and the old flat
   difference meant you acted first 90% of the time from about floor 8.
+- A floor guardian is never a hard counter for your class (a matchup that
+  swings 4× or more against you, like an Arcanist's psychic attacks against
+  a dark Hollow Knight): you can't flee a guardian, and those fights were
+  close to unwinnable. The floor is otherwise unchanged, so a Daily Descent
+  is the same for every class.
 - Floor guardians ramp up over floors 1–10. On floor 1 they could kill a
   level-1 character who met one before any other fight.
 - Each level-up restores 25% HP and MP.
@@ -159,7 +164,10 @@
 - `tools/class_balance.js` simulates fights for every class and prints win rates.
 - `tools/honest_run.js` plays whole runs with no cheats and reports how deep
   they get and what killed them (`GOD=1` prints the player growth curve,
-  `META=max` simulates a fully upgraded account).
+  `META=max` simulates a fully upgraded account, `FLEE=1` flees hard
+  counters like a person, `PRE="…"` tries a change without editing data).
+- `tools/measure_moves.js` measures each enemy move's real damage (DoTs
+  included) against the power the stat normalisation credits it with.
 - The bundled fonts now ship with their SIL Open Font License files
   (`abyssal_revamped/css/fonts/`).
 - New tests: run records, rival bosses and gear effects, tooltip

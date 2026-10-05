@@ -583,7 +583,11 @@ Buffs and debuffs last the number of turns shown (counted on their owner's turns
 
 ## 🌐 Element System — 40 Total
 
-A full effectiveness table governs elemental interactions: Super Effective, Effective, Neutral, Weak, and Super Weak. Elements affect damage multipliers and determine which Weapon Arts unlock when equipping off-class weapons.
+A full effectiveness table governs elemental interactions: ×4, ×2, ×1, ×0.5 and ×0.25. Elements affect damage multipliers and determine which Weapon Arts unlock when equipping off-class weapons.
+
+- Your class's element is used for your attacks and for the hits you take, so a matchup can swing a long way (a Windwalker deals ×0.25 to an Electric enemy and takes ×2 from it).
+- Enemy cards show the matchup whenever it isn't neutral ("You deal ×0.25 · You take ×2", red when it's against you); class select lists each class's strengths and weaknesses.
+- Ordinary enemies can be fled. Floor guardians can't, so a guardian is never a **hard counter** for your class (a swing of 4× or more against you); the next guardian in the pool takes its place, and the floor is otherwise identical.
 
 **Core Elements (20)**
 Normal · Fire · Water · Electric · Grass · Ice · Fighting · Poison · Ground · Flying · Psychic · Bug · Rock · Ghost · Dragon · Dark · Steel · Fairy · Wind · Shadow
