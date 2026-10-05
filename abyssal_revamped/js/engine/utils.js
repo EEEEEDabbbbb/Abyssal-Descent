@@ -87,14 +87,17 @@ function seedRun(seed) {
 // so everyone gets the same floors and enemies.
 function runNgPlus() { return G.daily ? 0 : (G.meta && G.meta.ngPlus) || 0; }
 
-// withFloorSeed — runs fn with a generator seeded from (run seed, floor), so
-// a floor's layout never depends on what happened earlier in the run.
-function withFloorSeed(floor, fn) {
+// withSeedKey — runs fn with a generator seeded from (run seed, key), so a
+// result tied to a place can't be re-rolled by reloading and doing things in
+// a different order. The run's main generator is left untouched.
+function withSeedKey(key, fn) {
   if (!G.seed) return fn();
   const saved = G.rngState;
-  G.rngState = hashSeed(`${G.seed}:${runNgPlus()}:floor${floor}`);
+  G.rngState = hashSeed(`${G.seed}:${runNgPlus()}:${key}`);
   try { return fn(); } finally { G.rngState = saved; }
 }
+// withFloorSeed — a floor's layout never depends on what happened earlier
+function withFloorSeed(floor, fn) { return withSeedKey(`floor${floor}`, fn); }
 function randRange(a, b)  { return a + rand(b - a + 1); }
 function clamp(v, mn, mx) { return Math.min(mx, Math.max(mn, v)); }
 function deepCopy(obj)    { return JSON.parse(JSON.stringify(obj)); }

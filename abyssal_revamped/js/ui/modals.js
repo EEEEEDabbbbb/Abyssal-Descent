@@ -65,7 +65,9 @@ function resolveEvent(idx) {
   const event = G._currentEvent;
   const cell  = G._currentEventCell;
   if (!event) { closeModal(); return; }
-  const result = event.choices[idx].effect(G.player);
+  // Seeded by the event's place: reloading can't re-roll a wager
+  const pos = G._currentEventPos || { x: 0, y: 0 };
+  const result = withSeedKey(`event:${G.floor}:${pos.x},${pos.y}`, () => event.choices[idx].effect(G.player));
   if (cell) { cell.content='visited'; cell.event=null; }
   document.querySelector('#overlay-content .modal-body').innerHTML = `
     <div class="modal-title">${event.icon} ${event.name}</div>
@@ -82,7 +84,7 @@ function showShop(cell, cx, cy) {
   G._shopCell = cell;
   G._shopPos  = {x:cx,y:cy};
   // Persist shop stock to the cell — only generate once per merchant visit
-  if (!cell._shopItems) cell._shopItems = _generateShopItems();
+  if (!cell._shopItems) cell._shopItems = withSeedKey(`shop:${G.floor}:${cx},${cy}`, _generateShopItems);
   G._shopItems = cell._shopItems;
   renderShop();
 }

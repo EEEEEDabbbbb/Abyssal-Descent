@@ -20,6 +20,10 @@
   were losing to. The game now saves as each fight starts, and Continue puts
   you back at the start of that fight with the same dice. An unclaimed boss
   reward is still waiting after a reload (it used to restart the boss fight).
+- Event outcomes (wagers, mimics, collapsing racks) and a merchant's stock
+  are fixed by where they are on the floor, so reloading and taking a
+  different route can't re-roll them. In a Daily Descent everyone gets the
+  same merchants and the same luck.
 - Removed 4,650 duplicate ability definitions (the ability file is 40% smaller,
   so the game loads faster).
 

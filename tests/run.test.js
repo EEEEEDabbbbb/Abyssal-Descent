@@ -329,6 +329,26 @@ test('an unclaimed boss reward is still waiting after a reload', async () => {
   assert.equal(r.claimed, true);
 });
 
+test('reloading can\'t re-roll an event wager or a merchant\'s stock', async () => {
+  const r = await run(() => {
+    __startTestRun('shadowblade', 6, 'REROLL');
+    const ev = EVENTS.find(e => e.id === 'bone_gambler');
+    const outcomes = new Set(), stocks = new Set();
+    for (let i = 0; i < 12; i++) {
+      G.rngState = 1000 + i * 7919;          // a different path through the floor each time
+      G.player.gold = 500;
+      G.phase = 'event'; showEvent(ev, { content: 'event', event: ev }, 4, 5);
+      resolveEvent(0); closeModal();
+      outcomes.add(G.player.gold);
+      const shop = { content: 'shop' };
+      G.phase = 'shop'; showShop(shop, 7, 3); closeModal();
+      stocks.add(shop._shopItems.map(it => it.id + it.shopPrice).join());
+    }
+    return { outcomes: outcomes.size, stocks: stocks.size };
+  });
+  assert.deepEqual(r, { outcomes: 1, stocks: 1 });
+});
+
 test('abandoning a run deletes its save (no repeat shard payouts)', async () => {
   await fresh();
   const r = await run(() => {
