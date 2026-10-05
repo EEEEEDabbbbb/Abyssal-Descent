@@ -2708,3 +2708,8 @@ body.reduce-motion .toast { animation: none; transition: none; }
 
 /* Estimated damage next to the enemy's "Next:" move (render.js) */
 .next-est { color: #ff7a7a; font-weight: 600; font-size: 0.95em; }
+
+/* First-visit hint on the How To Play button (screens.js renderTitleScreen) */
+.title-btn.first-visit-hint { border-color: var(--accent-gold); color: var(--accent-gold); animation: hintGlow 2.4s ease-in-out infinite; }
+@keyframes hintGlow { 0%,100% { box-shadow: 0 0 0 rgba(201,168,76,0); } 50% { box-shadow: 0 0 14px rgba(201,168,76,0.45); } }
+body.reduce-motion .title-btn.first-visit-hint { animation: none; }

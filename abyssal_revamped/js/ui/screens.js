@@ -89,6 +89,9 @@ function renderTitleScreen() {
 
   // Continue: any saved run. New Game+: unlocked by beating floor 50.
   _updateContinueBtn();
+  // First visit (no runs yet): draw the eye to How To Play without blocking anything
+  const howto = document.getElementById('howto-btn');
+  if (howto) howto.classList.toggle('first-visit-hint', !m.maxFloor && !((m.lifetime || {}).runs));
   const ngBtn = document.getElementById('ngplus-btn');
   if (ngBtn) {
     ngBtn.style.display = m.conquestRewards?.ngPlusUnlocked ? '' : 'none';
