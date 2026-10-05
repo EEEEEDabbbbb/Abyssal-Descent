@@ -277,15 +277,16 @@ test('a full pack never eats gold or loot', async () => {
     p.gold = 1000;
     const shopCell = { content: 'shop' };
     G.phase = 'shop'; showShop(shopCell, 0, 0);
+    const stock0 = shopCell._shopItems.length;
     buyShopItem(0);
     const chest = { type: 'floor', content: 'treasure', item: cloneItem(ITEM_POOL[1]) };
     G.phase = 'explore';
     handleCellContent(chest, 0, 0);
     closeModal();
-    return { gold: p.gold, stock: shopCell._shopItems.length, chest: chest.content };
+    return { gold: p.gold, stock: shopCell._shopItems.length, stock0, chest: chest.content };
   });
   assert.equal(r.gold, 1000);
-  assert.equal(r.stock, 4);
+  assert.equal(r.stock, r.stock0); // nothing was sold to a full pack
   assert.equal(r.chest, 'treasure');
 });
 
