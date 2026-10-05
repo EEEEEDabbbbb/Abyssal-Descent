@@ -47,6 +47,12 @@ Other tools:
   several floors and prints win rates, which is handy after changing a class.
 - `node tools/honest_run.js [classId…]` plays whole runs with a bot that
   doesn't cheat and reports how deep they get and what killed them. Use it
-  after changing the difficulty curve.
+  after changing the difficulty curve. `FLEE=1` makes the bot flee hard
+  counters like a person would; `PRE="…"` runs code in the page first, to try
+  a balance change without editing data.
+- `node tools/measure_moves.js` measures each enemy move's real damage
+  (damage over time included) against the power the stat normalisation
+  credits it with, to spot moves that hit harder than their enemy's stats
+  suggest.
 - Opening `index.html?dev=1` loads the developer console (backtick or F2), the
   in-browser self test (`devtest()`), and a call logger.
