@@ -461,9 +461,9 @@ function openHowToPlay() {
     <div class="modal-title">? How to Play</div>
     <div style="font-size:0.78rem;line-height:1.9;color:var(--text-mid)">
       <b style="color:var(--accent-gold)">Exploration</b><br>
-      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼.<br><br>
+      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼. The minimap (M) shows everything you've uncovered; click it to walk there. Each level-up restores a quarter of your HP and MP, and descending restores some too.<br><br>
       <b style="color:var(--accent-gold)">Combat</b><br>
-      Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do.<br><br>
+      Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do and roughly how hard it will hit you (≈45) — Defend before the big ones.<br><br>
       <b style="color:var(--accent-gold)">Buffs & Debuffs</b><br>
       Effects last the number of turns shown and end with the fight — nothing temporary carries over. Bosses resist executes and shake off stuns quickly.<br><br>
       <b style="color:var(--accent-gold)">Elements</b><br>
@@ -473,7 +473,9 @@ function openHowToPlay() {
       <b style="color:var(--accent-gold)">Progression</b><br>
       Leveling up in a run grants stats (based on your class) and Talent Points, spent in the Talent Tree for this run only. Soul Shards are earned from bosses, events and every death; spend them in the Shard Emporium on permanent upgrades, class unlocks and loadouts. Each class also earns Class XP — master two classes (level 20) to fuse them in the Fusion Lab.<br><br>
       <b style="color:var(--accent-gold)">Saving</b><br>
-      Runs auto-save on every floor and after each fight (up to 3 runs at once). Use 💾 Save or <i>Save & Quit</i> from the pause menu (Esc) any time outside combat.<br><br>
+      Runs auto-save on every floor and after each fight (up to 3 runs at once). Use 💾 Save or <i>Save & Quit</i> from the pause menu (Esc) any time outside combat. Every run has a seed (shown in the pause menu); enter one in World Settings to replay the same floors.<br><br>
+      <b style="color:var(--accent-gold)">Records</b><br>
+      The 🏆 Records screen keeps your lifetime totals, your last 20 runs and 20 achievements, each worth Soul Shards the first time.<br><br>
       <b style="color:var(--accent-gold)">Floor 50</b><br>
       Defeat the Abyssal God to conquer the Abyss and unlock New Game+, where every cycle makes enemies 30% stronger.
     </div>`;
