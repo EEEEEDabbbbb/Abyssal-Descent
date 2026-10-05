@@ -516,7 +516,7 @@ function renderExploreView(view) {
 
   let html = `<div class="explore-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;padding:0 0.25rem;width:100%">
     <span style="font-size:0.7rem;color:var(--text-dim)">${biome.name} — Floor ${G.floor}</span>
-    <span class="explore-hint" style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / arrows, or tap a tile</span>
+    <span class="explore-hint" style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / arrows, or tap a tile · M: minimap</span>
     <span style="font-size:0.7rem;color:var(--text-dim)">${getFloorTier(G.floor).toUpperCase()}</span>
   </div>`;
 
@@ -558,7 +558,9 @@ function renderExploreView(view) {
       html+=`<div class="${cls}" data-x="${x}" data-y="${y}" title="${title}" style="position:absolute;${pos};${bg};font-size:${fontSize}px;display:flex;align-items:center;justify-content:center">${inner}</div>`;
     }
   }
-  html+='</div></div>';
+  html+='</div>';
+  if (S.minimap) html+=`<canvas id="minimap" class="minimap" role="img" aria-label="Minimap of floor ${G.floor}" title="Minimap: click to walk there (M to hide)"></canvas>`;
+  html+='</div>';
   html+=`<div class="dpad" aria-label="Movement">
     <button class="dpad-btn dpad-up"    aria-label="Move up"    onclick="cancelWalk();movePlayer(0,-1)">▲</button>
     <button class="dpad-btn dpad-left"  aria-label="Move left"  onclick="cancelWalk();movePlayer(-1,0)">◀</button>
@@ -572,6 +574,63 @@ function renderExploreView(view) {
     const tile = ev.target.closest('.mc[data-x]');
     if (tile) walkTo(+tile.dataset.x, +tile.dataset.y);
   };
+  drawMinimap(view.querySelector('#minimap'));
+}
+
+// ── Minimap ───────────────────────────────────────────────────
+// The whole floor in the corner of the map view: only what you have
+// revealed, with hidden secret rooms drawn as wall. Click it to walk to a
+// spot; M (or Settings) toggles it.
+const MINIMAP_COLORS = {
+  wall:'#2b2540', floor:'#4b4266', visited:'#6c5d8f', corridor:'#3f3758',
+  player:'#ffd166', exit:'#44ff88', locked:'#cc3344', boss:'#ff2a55', enemy:'#e0705f',
+  treasure:'#ffcc33', shop:'#38d0e0', event:'#b388ff', items:'#c8a060',
+};
+const MINIMAP_CONTENT = {
+  enemy:'enemy', boss:'boss', boss_active:'boss', treasure:'treasure', shop:'shop', event:'event',
+  exit:'exit', exit_locked:'locked', boss_exit:'locked',
+};
+
+function drawMinimap(canvas) {
+  if (!canvas || !G.map) return;
+  const scale = Math.max(2, Math.min(5, Math.floor(150 / Math.max(G.mapW, G.mapH))));
+  canvas.width = G.mapW * scale;
+  canvas.height = G.mapH * scale;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let y = 0; y < G.mapH; y++) {
+    for (let x = 0; x < G.mapW; x++) {
+      const c = G.map[y][x];
+      if (!c.revealed) continue;
+      const hidden = c.secret && !c.secretRevealed;
+      let col;
+      if (c.type === 'wall' || hidden) col = MINIMAP_COLORS.wall;
+      else {
+        const marker = MINIMAP_CONTENT[c.content];
+        col = marker ? MINIMAP_COLORS[marker]
+            : (c.droppedItems && c.droppedItems.length) ? MINIMAP_COLORS.items
+            : c.visited ? MINIMAP_COLORS.visited
+            : c.isCorridor ? MINIMAP_COLORS.corridor : MINIMAP_COLORS.floor;
+      }
+      ctx.fillStyle = col;
+      ctx.fillRect(x * scale, y * scale, scale, scale);
+    }
+  }
+  const { x: px, y: py } = G.playerPos;
+  ctx.fillStyle = MINIMAP_COLORS.player;
+  ctx.fillRect(px * scale - 1, py * scale - 1, scale + 2, scale + 2);
+  canvas.onclick = ev => {
+    ev.stopPropagation();
+    const r = canvas.getBoundingClientRect();
+    const x = Math.floor((ev.clientX - r.left) / r.width * G.mapW);
+    const y = Math.floor((ev.clientY - r.top) / r.height * G.mapH);
+    if (G.map[y] && G.map[y][x] && G.map[y][x].revealed) walkTo(x, y);
+  };
+}
+
+function toggleMinimap() {
+  applySetting('minimap', !S.minimap);
 }
 
 // ── Click-to-move ─────────────────────────────────────────────

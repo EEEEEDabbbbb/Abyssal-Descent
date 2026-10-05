@@ -181,8 +181,18 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
     }
   }
 
+  const hpBefore = e.hp;
   e.hp = Math.max(0, e.hp - finalDmg);
   if (direct) G._directHitsThisAction = (G._directHitsThisAction || 0) + 1;
+  // Run stats & achievements (records.js)
+  trackStat('dmgDealt', hpBefore - e.hp);
+  if (direct) {
+    trackBest('bestHit', finalDmg);
+    if (isCrit) trackStat('crits');
+    if (finalDmg >= 1000) unlockAchievement('heavy_hitter');
+  } else if (isDot && e.hp <= 0) {
+    unlockAchievement('slow_burn');
+  }
 
   if (direct) {
     // Lifesteal: gear 15%, Soulrender +45% below 30% HP, buffs
@@ -392,6 +402,9 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
 
   p.stats.hp = Math.max(0, p.stats.hp - dmg);
   p.damageTakenCombat = (p.damageTakenCombat||0) + dmg;
+  trackStat('dmgTaken', dmg);
+  const hitter = attacker || G.enemy;
+  if (hitter && hitter.name) p._lastHitBy = hitter.name;
   spawnFloat(dmg.toString(),'damage','char-portrait');
   sfx('hurt');
   if (dmg >= p.stats.maxHp * 0.2) screenShake(2);
@@ -869,6 +882,7 @@ function playerAction(type, abilityId=null) {
     const chance = clamp(40 + p.stats.spd - (fastestEnemy()?.spd ?? 8), 10, 90);
     if (rand(100) < chance) {
       logEntry('system','You flee from combat!');
+      trackStat('fled');
       resetCombo(p);
       // The enemies stay where they were: still wounded, but with this
       // fight's statuses and stat changes gone
@@ -1150,9 +1164,20 @@ function winCombat() {
   G.player._classXpGained = (G.player._classXpGained || 0) + classXpGain;
   G.player.gold += goldGain;
 
+  // Run stats & achievements (records.js)
+  trackStat('kills', allEnemies.length);
+  unlockAchievement('first_blood');
+  if (allEnemies.length > 1) { trackStat('packs'); unlockAchievement('pack_hunter'); }
+  if (e.isBoss || e.isGuardian || e.isSecretBoss) trackStat('bosses');
+  if (e.isBoss) {
+    unlockAchievement('boss_slayer');
+    if (!G.player.damageTakenCombat) unlockAchievement('flawless');
+  }
+  if (G.player.stats.hp > 0 && G.player.stats.hp < G.player.stats.maxHp * 0.05) unlockAchievement('close_call');
+
   if (e.isBoss) {
     const shardBonus = Math.round(5 + G.floor);
-    G.meta.soulShards += shardBonus;
+    awardShards(shardBonus);
     G.killedBoss = true;
     logEntry('reward', `★ Boss slain! +${shardBonus} Soul Shards.`);
   }
@@ -1217,6 +1242,7 @@ function winCombat() {
     G.phase = 'victory';
     clearActiveRunSave();
     triggerConquestReward();
+    recordRunEnd('conquered');
     return;
   }
 
@@ -1232,6 +1258,7 @@ function winCombat() {
   endCombat(true);
   G.phase = 'explore';
   G.map[G.playerPos.y][G.playerPos.x].content = 'visited';
+  checkAchievements();
   if (typeof autoSaveRun === 'function') autoSaveRun();
   updateUI();
 }
@@ -1308,7 +1335,7 @@ function triggerConquestReward() {
     m.conquestRewards.permanentGear = 'abyssal_crown';
     m.conquestRewards.ngPlusUnlocked = true;
     if (!m.conquestRewards.shardDumpClaimed) {
-      m.soulShards += 150;
+      awardShards(150);
       m.conquestRewards.shardDumpClaimed = true;
     }
     if (!m.unlockedClasses.includes('abyssal_one')) {
@@ -1320,6 +1347,7 @@ function triggerConquestReward() {
     }
     saveMeta();
   }
+  checkAchievements();
   showConquestModal(firstTime);
 }
 

@@ -43,6 +43,7 @@
 │   │   ├── mapgen.js           — BSP map generation, movement, floor transitions
 │   │   ├── passives.js         — PASSIVE_INFO (names/descriptions) + passive hooks
 │   │   ├── player.js           — createPlayer(), inventory, equipment
+│   │   ├── records.js          — run stats, run history, achievements, toasts
 │   │   ├── run_save.js         — localStorage save slots (3 slots)
 │   │   ├── state.js            — G object, defaultMeta(), GAME_VERSION
 │   │   ├── stats.js            — permanent vs temporary stats, enemy stats view
@@ -52,7 +53,8 @@
 │   │   ├── continue_modal.js   — Continue / save-slot dialogs
 │   │   ├── fusion_modal.js     — Fusion Lab screen + Class Collection screen
 │   │   ├── modals.js           — shop, events, rewards, inventory modals
-│   │   ├── render.js           — updateUI() and all sub-renderers, click-to-move
+│   │   ├── records_ui.js       — Records screen, run summary, Run Stats dialog
+│   │   ├── render.js           — updateUI() and all sub-renderers, click-to-move, minimap
 │   │   ├── screens.js          — showScreen(), renderClassSelect(), game over
 │   │   ├── settings.js         — settings (S), applied at boot
 │   │   └── sfx.js              — synthesized sound effects (Web Audio)
@@ -144,7 +146,23 @@ G.meta.classXP              // { classId: xp }
 G.meta.defeatedSecretBosses // secret boss IDs beaten across all runs
 G.meta.soulShards           // currency for shard shop
 G.meta.maxFloor             // highest floor ever reached
+G.meta.achievements         // { achievementId: timestamp } (records.js)
+G.meta.runHistory           // last 20 finished runs, newest first
+G.meta.lifetime             // totals across all runs (kills, shards, play time…)
 ```
+
+Shards earned **during a run** should go through `awardShards(n)` (records.js)
+so they also count toward the run's total on the death screen. Run statistics
+live on `G.player.runStats`; bump them with `trackStat('kills')` or
+`trackBest('bestHit', dmg)`.
+
+### Adding an Achievement
+
+Add an entry to `ACHIEVEMENTS` in `js/engine/records.js`
+(`{ id, icon, name, desc, shards }`), then either call
+`unlockAchievement('my_id')` where it happens, or, if it depends only on
+saved state (depth, gold, unlocks…), add a check to `checkAchievements()`.
+Achievements pay their shards once and show a toast.
 
 ### Always Use getClassData()
 
@@ -194,14 +212,19 @@ my_class: {
 
 ### Register the Unlock Cost
 
-If your class requires shards to unlock, add an entry in `CLASS_UNLOCK_COSTS` in `js/ui/screens.js`:
+If your class requires shards to unlock, add an entry in `CLASS_UNLOCK_COSTS` in `js/data/classes.js`:
 
 ```javascript
 const CLASS_UNLOCK_COSTS = {
   // existing entries...
-  my_class: { shards: 50 },
+  my_class: { shardCost: 50, floor: 8 },  // shards, and the floor you must have reached
 };
 ```
+
+A class needs **8 different abilities** (tests/data.test.js checks this), and
+its Burst goes in `burstAbility`, never in `abilities`. To see how a new
+class compares, run `node tools/class_balance.js my_class`: it simulates
+fights and prints the win rate next to the other classes (most land at 60–88%).
 
 ### Register the Rarity
 
@@ -228,13 +251,16 @@ my_ability: {
   name:       'My Ability',
   icon:       '💫',
   cost:       25,              // resource cost
-  costType:   'mp',            // 'mp' or 'hp'
+  costType:   'mp',            // 'mp' or 'hp' ('burst' only for burstAbility)
   cooldown:   0,               // current cooldown (always 0 in definition)
   maxCooldown:2,               // turns before ability can be used again (0 = no cooldown)
   color:      '#aa44cc',       // button colour in UI
   element:    'shadow',        // element for damage calculation and type effectiveness
   desc:       'What this ability does.',
   tags:       ['physical'],    // see Tags below
+  // optional: return a reason string when the ability can't be used right now
+  // (the button greys out and shows it), e.g. an effect already on the enemy
+  unusable: (p, e) => e._marked ? 'Already marked.' : null,
   use: (p, e) => {
     // p = player object, e = enemy object
     // Return a string — shown in the combat log

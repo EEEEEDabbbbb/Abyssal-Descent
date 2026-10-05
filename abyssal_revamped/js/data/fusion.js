@@ -341,6 +341,8 @@ async function performFusion(classIds) {
     G.meta.unlockedClasses.push(check.result);
   }
   saveMeta();
+  unlockAchievement('fusionist');
+  checkAchievements();
   return { ok:true, result:check.result };
 }
 
@@ -430,6 +432,7 @@ function onSecretBossDefeated(bossId) {
   }
 
   saveMeta();
+  unlockAchievement('secret_boss');
   logEntry('reward', `★ Secret Boss defeated! Unlocked: ${CLASSES[fusionClassId]?.name || FUSION_CLASSES[fusionClassId]?.name || fusionClassId}`);
   logEntry('reward', `✦ A new class has been added to your roster.`);
 }

@@ -189,6 +189,7 @@ function saveRun(slotIndex) {
   if (slotIndex === undefined || slotIndex === null) return false;
   slotIndex = Math.max(0, Math.min(RUN_SLOT_COUNT - 1, slotIndex));
 
+  if (_playClockStart) flushPlayClock();  // bank play time into runStats
   const data = _serialiseRun();
   if (!data) return false;
   try {
@@ -238,6 +239,7 @@ async function loadRun(slotIndex) {
     const ok = await _deserialiseRun(JSON.parse(raw));
     if (!ok) return false;
     G._runSaveSlot = slotIndex;
+    startPlayClock();
     return true;
   } catch(e) {
     console.warn('[save] run load failed', e);

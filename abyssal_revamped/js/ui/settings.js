@@ -17,6 +17,7 @@ const S = {
   reduceMotion:false,
   screenShake: true,
   masterVol:   80,
+  minimap:     true,
 };
 
 const FONT_SIZE_LABELS = ['Tiny','Small','Normal','Large','Huge'];
@@ -42,11 +43,11 @@ function _applyEffect(key) {
 function applySetting(key, value) {
   switch (key) {
     case 'fontSize': case 'mapSize': case 'masterVol': S[key] = +value; break;
-    case 'dmgNumbers': case 'reduceMotion': case 'screenShake': S[key] = !!value; break;
+    case 'dmgNumbers': case 'reduceMotion': case 'screenShake': case 'minimap': S[key] = !!value; break;
     default: S[key] = value;
   }
   _applyEffect(key);
-  if (key === 'mapSize' && G.player && document.getElementById('game-screen').classList.contains('active')) renderCenterPanel();
+  if ((key === 'mapSize' || key === 'minimap') && G.player && document.getElementById('game-screen').classList.contains('active')) renderCenterPanel();
   syncSettingsUI();
   saveSettings();
 }
@@ -89,6 +90,7 @@ function syncSettingsUI() {
   set('s-dmg-numbers',    el => { el.checked = S.dmgNumbers; });
   set('s-reduce-motion',  el => { el.checked = S.reduceMotion; });
   set('s-screenshake',    el => { el.checked = S.screenShake; });
+  set('s-minimap',        el => { el.checked = S.minimap; });
   set('s-master-vol',     el => { el.value = S.masterVol; });
   set('s-master-vol-val', el => { el.textContent = S.masterVol + '%'; });
   document.querySelectorAll('#s-log-size .seg-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === S.logSize));

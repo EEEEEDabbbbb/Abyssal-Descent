@@ -327,6 +327,7 @@ function equipItem(item, idx) {
   }
 
   logEntry('reward', `Equipped: ${item.name}.`);
+  if (item.rarity === 'divine') unlockAchievement('divine_gear');
   updateUI();
 }
 

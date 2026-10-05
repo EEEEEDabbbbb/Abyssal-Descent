@@ -57,6 +57,10 @@ function defaultMeta() {
     unlockedFusions:      [],   // fusion class IDs permanently unlocked
     knownFusionRecipes:   [],   // canonical '+'-joined keys of revealed recipes
     defeatedSecretBosses: [],   // secret boss IDs defeated at least once
+    // ── Records (records.js) ──
+    achievements: {},           // { achievementId: timestamp earned }
+    runHistory:   [],           // last 20 finished runs, newest first
+    lifetime: { runs:0, deaths:0, conquests:0, kills:0, bosses:0, shards:0, playMs:0, dmgDealt:0, bestHit:0 },
   };
 }
 

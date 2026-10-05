@@ -28,6 +28,7 @@
     <button class="title-btn" onclick="showScreen('collection-screen')">📖 Class Collection</button>
     <button class="title-btn" onclick="showLoadoutSelect()">🎒 Choose Loadout</button>
     <button class="title-btn" onclick="showTalentTree()">✦ Talent Tree</button>
+    <button class="title-btn" onclick="showRecords()">🏆 Records</button>
     <button class="title-btn" onclick="showHowToPlay()">? How To Play</button>
     <button class="title-btn" onclick="openSettings()">⚙ Settings</button>
   </div>
@@ -235,6 +236,9 @@
       </div>
     </div>
 
+    <!-- This run in numbers (records_ui.js) -->
+    <div id="game-over-run-stats" class="death-run-stats"></div>
+
     <!-- Class level progress -->
     <div class="death-class-progress" id="death-class-progress">
       <div class="death-clvl-header">
@@ -300,6 +304,10 @@
       <div class="settings-row">
         <span class="settings-label">Screen Shake</span>
         <input type="checkbox" id="s-screenshake" checked onchange="applySetting('screenShake',this.checked)">
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Minimap <span style="color:var(--text-dim)">(M)</span></span>
+        <input type="checkbox" id="s-minimap" checked onchange="applySetting('minimap',this.checked)">
       </div>
     </div>
 
@@ -499,6 +507,7 @@
 <script src="js/engine/combat.js"></script>
 <script src="js/engine/mapgen.js"></script>
 <script src="js/engine/run_save.js"></script>
+<script src="js/engine/records.js"></script>
 
 <!-- UI layer -->
 <script src="js/ui/settings.js"></script>
@@ -508,6 +517,7 @@
 <script src="js/ui/fusion_modal.js"></script>
 <script src="js/ui/continue_modal.js"></script>
 <script src="js/ui/screens.js"></script>
+<script src="js/ui/records_ui.js"></script>
 
 <!-- Main -->
 <script src="js/main.js"></script>

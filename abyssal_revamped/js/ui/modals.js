@@ -442,6 +442,7 @@ function showNGPlusModal(onConfirm) {
 function startNGPlus() {
   G.meta.ngPlus++;
   saveMeta();
+  checkAchievements();
   closeModal();
   document.getElementById('overlay').classList.remove('active');
   showScreen('class-select-screen');

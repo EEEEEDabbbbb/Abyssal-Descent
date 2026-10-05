@@ -22,6 +22,7 @@
 //   Q / E / R / F — attack / defend / item / flee
 //   Space        — burst
 //   Arrows/WASD  — movement (exploration only)
+//   M            — toggle the minimap
 //   Escape       — close a closeable dialog, otherwise open the pause menu
 // ══════════════════════════════════════════════════════════════
 
@@ -42,7 +43,10 @@ function init() {
   // Save on tab close / hide so progress since the last fight isn't lost
   const flushSave = () => { if (G.player && !G.inCombat) autoSaveRun(); };
   window.addEventListener('pagehide', flushSave);
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushSave(); });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') { flushSave(); flushPlayClock(false); } // the play clock pauses while hidden
+    else if (G.player && isScreenActive('game-screen') && !G._gameOverShown) startPlayClock();
+  });
 }
 
 function isScreenActive(id) {
@@ -78,6 +82,7 @@ function resetRunState() {
   G._biomeMoves = 0;
   G.seed       = null;
   G.rngState   = null; // outside a run, rand() uses Math.random
+  _playClockStart = null;
 }
 
 function startRun() {
@@ -118,6 +123,7 @@ function startRun() {
     logEntry('system', `🗺 Entering ${biome.name}.`);
 
     showScreen('game-screen');
+    startPlayClock();
     autoSaveRun();
     updateUI();
   });
@@ -163,6 +169,8 @@ function handleKeyDown(e) {
     if (actions[key]) { e.preventDefault(); playerAction(actions[key]); }
     return;
   }
+
+  if (key === 'm') { e.preventDefault(); toggleMinimap(); return; }
 
   if (G.phase === 'explore' && MOVE_KEYS[key]) {
     e.preventDefault();

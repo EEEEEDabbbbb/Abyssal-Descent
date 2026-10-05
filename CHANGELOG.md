@@ -31,6 +31,14 @@
 - Run seeds: every run has a seed (shown in the pause menu, or enter one in
   World Settings). The same seed and settings build the same floors, and
   reloading a save can't re-roll chests, drops or flee attempts.
+- Minimap in the corner of the map (toggle with M or in Settings); click it
+  to walk somewhere you have already seen.
+- Run statistics: kills, damage, biggest hit, chests, steps, play time and
+  more. They're shown on the death screen and in the pause menu (📊 Run Stats).
+- Records screen (🏆 on the title screen): lifetime totals, your last 20
+  runs, and 20 achievements that each pay Soul Shards once.
+- The death screen counts every shard the run earned (bosses, records,
+  events), not just the death payout.
 
 ### Developer
 - `tools/class_balance.js` simulates fights for every class and prints win rates.

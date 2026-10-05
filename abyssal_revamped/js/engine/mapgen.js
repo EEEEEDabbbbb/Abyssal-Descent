@@ -615,6 +615,7 @@ function movePlayer(dx, dy) {
     return;
   }
   G.map[G.playerPos.y][G.playerPos.x].visited=true;
+  trackStat('steps');
   G._prevPlayerPos = { ...G.playerPos };
   G.playerPos={x:nx,y:ny};
   revealAround(G.map, nx, ny);
@@ -623,6 +624,7 @@ function movePlayer(dx, dy) {
   if (cell.secret && !cell.secretRevealed) {
     markSecretRoomRevealed(cell.room);
     logEntry('system','✦ You discover a secret room!');
+    unlockAchievement('secret_room');
   }
 
   // Items left on the ground (dropped, or overflow from a full pack)
@@ -675,13 +677,14 @@ function handleCellContent(cell, x, y) {
         const foundItem=cell.item;
         logEntry('reward',`◆ Chest opened: ${foundItem.name}!`);
         sfx('chest');
+        trackStat('chests');
         addToInventory(cloneItem(foundItem));
         cell.content='visited';cell.item=null;
         showItemPopup(foundItem);
       }
       break;
     case 'event':
-      if(cell.event){G.phase='event';showEvent(cell.event,cell,x,y);}
+      if(cell.event){G.phase='event';trackStat('events');showEvent(cell.event,cell,x,y);}
       break;
     case 'shop':
       G.phase='shop';
@@ -717,12 +720,12 @@ function nextFloor() {
     const bonus = 2 * (G.floor - G.meta.maxFloor);
     G.meta.maxFloor = G.floor;
     if (G.floor > 1) {
-      G.meta.soulShards += bonus;
-      if (G.player) G.player._runShards = (G.player._runShards || 0) + bonus;
+      awardShards(bonus);
       logEntry('reward', `✦ New depth record! +${bonus} Soul Shards.`);
     }
   }
   saveMeta();
+  checkAchievements();
   G._biomeProcs = 0;   // biome hazard budget is per floor (biomes.js)
   G._biomeMoves = 0;
 

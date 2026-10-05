@@ -260,6 +260,7 @@ function unlockClass(id, event) {
   G.meta.soulShards -= info.shardCost;
   G.meta.unlockedClasses.push(id);
   saveMeta();
+  checkAchievements();
   renderClassSelect();
 }
 
@@ -285,13 +286,15 @@ function gameOver() {
   const floorReached = G.floor;
   sfx('death');
   const shards = Math.max(1, Math.round(floorReached * 1.5 + (p.level - 1) * 2));
-  G.meta.soulShards += shards;
+  awardShards(shards);
   saveMeta();
+  const record = recordRunEnd('died');
+  renderRunSummary('game-over-run-stats', record);
 
   // ── Basic stats ───────────────────────────────────────────
   document.getElementById('game-over-floor').textContent  = floorReached;
   document.getElementById('game-over-level').textContent  = p?.level || 1;
-  document.getElementById('game-over-shards').textContent = shards;
+  document.getElementById('game-over-shards').textContent = record ? record.shards : shards;
   document.getElementById('game-over-best').textContent   = G.meta.maxFloor;
 
   // ── Class identity block ──────────────────────────────────
@@ -382,6 +385,7 @@ function showPauseMenu() {
     <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.5rem">
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal()">Resume</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();showTalentTree()">🌟 Talents${G.player?.talentPoints?` (${G.player.talentPoints})`:''}</button>
+      <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();showRunStats()">📊 Run Stats</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();openSettings()">⚙ Settings</button>
       ${G.inCombat ? '' : `<button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();saveAndQuit()">💾 Save &amp; Quit to Title</button>`}
       <button class="title-btn danger" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();confirmAbandon()">↩ Abandon Run</button>
@@ -402,8 +406,9 @@ function confirmAbandon() {
 function abandonRun() {
   if (G.player && !G._gameOverShown) {
     const shards = Math.max(0, Math.round(G.floor * 1.5));
-    G.meta.soulShards += shards;
+    awardShards(shards);
     saveMeta();
+    recordRunEnd('abandoned');
   }
   // An abandoned run is over: its save must not stay continuable
   clearActiveRunSave();
