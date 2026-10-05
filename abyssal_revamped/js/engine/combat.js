@@ -1213,6 +1213,8 @@ function winCombat() {
   trackStat('kills', allEnemies.length);
   unlockAchievement('first_blood');
   if (allEnemies.length > 1) { trackStat('packs'); unlockAchievement('pack_hunter'); }
+  const myEl = (getClassData(G.player.classId) || {}).element;
+  if (allEnemies.some(en => isHardCounter(en.element, myEl))) unlockAchievement('against_grain');
   if (e.isBoss || e.isGuardian || e.isSecretBoss) trackStat('bosses');
   if (e.isBoss) {
     unlockAchievement('boss_slayer');

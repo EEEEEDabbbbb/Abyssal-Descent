@@ -126,6 +126,8 @@ const ACHIEVEMENTS = [
   { id:'divine_gear',   icon:'🌟', name:'Touched by Divinity', shards:25, desc:'Equip a Divine item.' },
   { id:'collector',     icon:'📖', name:'Collector',          shards:20,  desc:'Unlock 10 classes.' },
   { id:'fusionist',     icon:'⚗️', name:'Fusionist',          shards:20,  desc:'Create your first fusion class.' },
+  { id:'against_grain', icon:'🌊', name:'Against the Grain',  shards:15,  desc:'Defeat an enemy that hard-counters your class.' },
+  { id:'daily_grind',   icon:'📅', name:'Daily Grind',        shards:15,  desc:'Reach floor 5 in a Daily Descent.' },
 ];
 const ACHIEVEMENT_BY_ID = Object.fromEntries(ACHIEVEMENTS.map(a => [a.id, a]));
 
@@ -155,11 +157,10 @@ function checkAchievements() {
     if (p.gold >= 1000) unlockAchievement('hoarder');
     if (Object.values(p.equipment || {}).some(it => it && it.rarity === 'divine')) unlockAchievement('divine_gear');
     if ((runStats().kills || 0) >= 100) unlockAchievement('slaughter');
+    if (G.daily && G.floor >= 5) unlockAchievement('daily_grind');
   }
 }
 
-// ── Toasts ─────────────────────────────────────────────────────
-// Small notices in the corner that never block play.
 // ── First-run tips ─────────────────────────────────────────────
 // One-time hints for a new player, shown as a toast the first time something
 // comes up during their first three runs. Each takes (touch) → text.
@@ -181,6 +182,8 @@ function showTip(id) {
   showToast(`<span class="toast-icon">💡</span><span>${TIPS[id](touch)}</span>`, 8000);
 }
 
+// ── Toasts ─────────────────────────────────────────────────────
+// Small notices in the corner that never block play.
 function showToast(html, ms = 3800) {
   let box = document.getElementById('toast-container');
   if (!box) {

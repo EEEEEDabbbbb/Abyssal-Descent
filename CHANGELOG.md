@@ -67,6 +67,8 @@
   flee a counter, spending talent points, healing up). Each shows once;
   tap a toast to dismiss it. On phones toasts sit below the top bar so
   HP and MP stay visible.
+- Two new achievements: Against the Grain (beat an enemy that hard-counters
+  your class) and Daily Grind (reach floor 5 in a Daily Descent).
 - Class select shows which elements the selected class is strong against
   and weak to.
 - Enemy cards show the element matchup when it isn't neutral ("You deal

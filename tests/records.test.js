@@ -194,6 +194,24 @@ test('first-run tips show once each, and stop after three runs', async () => {
   assert.equal(r.veteran, 0);
 });
 
+test('Against the Grain and Daily Grind unlock when earned', async () => {
+  const r = await run(async () => {
+    G.meta = defaultMeta(); G._gameOverShown = false; G._enemyTurnDelay = 0;
+    await ensureClassLoaded('windwalker');
+    __startTestRun('windwalker', 3);
+    const neutral = getRandomEnemy(3, false); neutral.element = 'normal'; startCombat(neutral); neutral.hp = 0; winCombat();
+    const afterNeutral = hasAchievement('against_grain');
+    const crab = deepCopy(ENEMY_POOL.thunder_crab); crab.status = []; crab.patternIndex = 0;
+    startCombat(crab); crab.hp = 0; winCombat();
+    const afterCounter = hasAchievement('against_grain');
+    G.daily = null; G.floor = 6; checkAchievements(); const notDaily = hasAchievement('daily_grind');
+    G.daily = todayKey(); checkAchievements(); const daily = hasAchievement('daily_grind');
+    G.daily = null;
+    return { afterNeutral, afterCounter, notDaily, daily };
+  });
+  assert.deepEqual(r, { afterNeutral: false, afterCounter: true, notDaily: false, daily: true });
+});
+
 test('Daily Descent: same seed for everyone today, standard settings, best floor kept', async () => {
   const r = await run(async () => {
     G.meta = defaultMeta(); G._gameOverShown = false;
