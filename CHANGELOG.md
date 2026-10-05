@@ -30,6 +30,10 @@
 - Guardians, bosses and secret bosses follow the same curve. Secret bosses
   used fixed stats: deadly on floor 5, trivial on floor 30.
 - Each level-up restores 25% HP and MP.
+- Merchants always sell a healing potion that keeps up with your depth,
+  plus a consumable rolled with the floor's loot odds (they only ever sold
+  floor-1 potions before). HP-regen gear restores 2% max HP per turn
+  instead of a flat 5.
 - Armour can block at most 85% of a hit (high-DEF builds took a flat 1
   damage from anything weaker than them).
 - Life Drain heals the enemy for half the damage dealt (was all of it).

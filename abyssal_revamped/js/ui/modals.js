@@ -93,21 +93,25 @@ function _generateShopItems() {
     common: 1, uncommon: 1.5, rare: 2.5,
     epic: 4, legendary: 7, mythical: 12, divine: 20
   };
-  // 3 items + 1 consumable
+  // 3 items + 2 consumables
   for (let i=0;i<3;i++) {
     const item = getRandomItemByFloor(floor);
     const mult = RARITY_PRICE_MULT[item.rarity] || 1;
     const shopPrice = Math.floor((20 + floor*4 + rand(20)) * mult);
     items.push({...item, shopPrice});
   }
-  const consIds = [
-    'health_potion','mana_crystal','elixir','iron_skin_salve','strength_draught',
-    'spring_water','verdant_tonic','earthen_ward','wind_draught','mind_shard',
-    'berserker_brew','shadow_dust'
-  ];
-  const consId = consIds[rand(consIds.length)]; // pick once (not inside find)
-  const cons = ITEM_POOL.find(it=>it.id===consId);
-  if (cons) items.push({...cloneItem(cons), shopPrice:12+rand(10)});
+  // Consumables: a healing potion that is still worth drinking at this
+  // depth, plus one more rolled with the floor's loot odds (flat-value
+  // potions from floor 1 are useless by floor 20).
+  const consPrice = it => Math.floor((12 + rand(10)) * (RARITY_PRICE_MULT[it.rarity] || 1) * (1 + floor * 0.04));
+  const healId = floor >= 25 ? 'abyssal_elixir_l' : floor >= 15 ? 'grand_elixir' : floor >= 7 ? 'heavy_elixir' : 'health_potion';
+  const heal = ITEM_POOL.find(it => it.id === healId);
+  if (heal) items.push({ ...cloneItem(heal), shopPrice: consPrice(heal) });
+  const w = getLootWeights(floor);
+  let roll = randFloat() * w.reduce((s, v) => s + v, 0), rarity = 'common';
+  for (let k = 0; k < w.length; k++) { roll -= w[k]; if (roll < 0) { rarity = LOOT_RARITIES[k]; break; } }
+  const pool = ITEM_POOL.filter(it => it.type === 'consumable' && it.rarity === rarity && it.id !== healId);
+  if (pool.length) { const c = pool[rand(pool.length)]; items.push({ ...cloneItem(c), shopPrice: consPrice(c) }); }
   return items;
 }
 

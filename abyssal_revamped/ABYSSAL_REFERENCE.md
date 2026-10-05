@@ -475,7 +475,9 @@ Maps are procedurally generated using BSP (Binary Space Partitioning), creating 
 | Secret | Hidden rooms discoverable during exploration; contain bonus loot; nearby walls show faint visual hints |
 | Exit | Staircase to the next floor; guarded until boss/guardian is defeated |
 
-The map is fog-of-war; tiles reveal as you walk within range. Secret rooms look like solid wall until you step inside; walls nearby sometimes give a hint. The full map can be revealed via the Dark Altar event (spend MP). Move with WASD/arrows, the on-screen pad, or by tapping a revealed tile.
+The map is fog-of-war; tiles reveal as you walk within range. Secret rooms look like solid wall until you step inside; walls nearby sometimes give a hint. The full map can be revealed via the Dark Altar event (spend MP). Move with WASD/arrows, the on-screen pad, or by tapping a revealed tile. The minimap (M) shows everything you have revealed.
+
+**Merchants** (one per floor) sell 3 pieces of gear rolled with the floor's loot odds, a healing potion that keeps up with your depth (Blood Flask → Heavy Elixir from floor 7 → Grand Elixir from 15 → Abyssal Tincture from 25), and one more consumable rolled with the floor's loot odds. Stock can be rerolled for gold, and you can sell items there.
 
 ---
 
