@@ -2,6 +2,7 @@
 *Drafted from a direct read of the current codebase (combat.js, enemies.js, classes.js, MODDING_GUIDE.md, ABYSSAL_REFERENCE.md) — not assumptions.*
 
 ## Progress
+- ✅ **Bug-fix & polish pass (v2.1): DONE.** Stat/status engine rebuilt, saves rewritten, all passives implemented, many combat fixes — see `CHANGELOG.md` at the repo root. (The `frost_bite` slow mentioned below is fixed: debuff stat losses now always wear off.)
 - ✅ **Phase 1 — Combat core: DONE.**
   - Initiative queue: `state.js` (`G._pendingSecondActor`), `combat.js` (`determineFirstActor`, `resolveNextRoundInitiative`, wired into `startCombat`/`endPlayerTurn`/`enemyTurn`). SPD now decides who acts first each round (clamped 10–90%, never a lock).
   - Telegraphing: `enemies.js` (`ENEMY_ABILITY_INFO`, `getEnemyNextMove`), `render.js` (combat view shows "Next: [icon] [label]" for every enemy).

@@ -1,15 +1,14 @@
 // ══════════════════════════════════════════════════════════════
 // FUSION LAB + CLASS COLLECTION  (js/ui/fusion_modal.js)
 //
-// ⚠️  THIS FILE owns BOTH the Fusion Lab screen AND the Class
-//     Collection screen.  modals.js has a dead stub of
-//     showClassCollection() — ignore it, this file's
-//     renderCollection() is the real one.
+// THIS FILE owns BOTH the Fusion Lab screen AND the Class Collection
+// screen (renderCollection()).
 //
 // FUSION LAB:
 //   renderFusionLab()     — entry point, called by showScreen('fusion-lab-screen')
 //   _renderRoster()       — left panel: all unlocked non-fusion classes
 //   fusionDragStart/Drop  — drag handlers (ondragstart/ondrop in HTML)
+//   fusionPick(id)        — tap/click/keyboard alternative to dragging
 //   _renderSlot(slot)     — updates slot A or B display ('a'|'b')
 //   _renderResultSlot()   — preview panel showing fused class
 //   _updateFuseBtn()      — enables/disables the Fuse button
@@ -95,12 +94,12 @@ function _renderRoster() {
     const color  = cls.color || '#888';
     const rarity = (typeof CLASS_RARITY !== 'undefined' ? CLASS_RARITY[id] : null) || cls.rarity || 'common';
     const rData  = (typeof RARITY !== 'undefined' && RARITY[rarity]) || { color:'#aaa', name: rarity };
-    const drag   = ready ? 'draggable="true" ondragstart="fusionDragStart(event,\'' + id + '\')"' : '';
+    const drag   = ready ? 'draggable="true" ondragstart="fusionDragStart(event,\'' + id + '\')" onclick="fusionPick(\'' + id + '\')" role="button" tabindex="0"' : '';
 
     return '<div class="fusion-roster-card ' + (ready ? '' : 'not-ready') + '" '
       + 'style="--card-color:' + color + '" ' + drag + ' '
-      + 'title="' + (ready ? 'Drag to a slot' : 'Needs level ' + FUSION_MIN_LEVEL + ' (currently ' + level + ')') + '">'
-      + '<div style="position:absolute;top:4px;right:4px;font-size:0.55rem;'
+      + 'title="' + (ready ? 'Tap or drag to a slot' : 'Needs level ' + FUSION_MIN_LEVEL + ' (currently ' + level + ')') + '">'
+      + '<div style="position:absolute;top:4px;right:4px;font-size:0.6rem;'
       + 'color:' + rData.color + ';border:1px solid ' + rData.color + '88;'
       + 'background:rgba(0,0,0,0.7);padding:1px 4px;border-radius:2px;'
       + 'font-family:\'Cinzel\',serif;text-transform:uppercase">' + rData.name + '</div>'
@@ -123,6 +122,17 @@ function fusionDrop(event, slot) {
   event.preventDefault();
   const classId = event.dataTransfer.getData('classId');
   if (!classId) return;
+  _placeInFusionSlot(classId, slot);
+}
+
+// fusionPick — tap/click/keyboard alternative to dragging: fills the first
+// empty slot (or replaces slot B when both are full)
+function fusionPick(classId) {
+  if (_fusionSlots.a === classId || _fusionSlots.b === classId) return;
+  _placeInFusionSlot(classId, !_fusionSlots.a ? 'a' : 'b');
+}
+
+function _placeInFusionSlot(classId, slot) {
   const other = slot === 'a' ? 'b' : 'a';
   if (_fusionSlots[other] === classId) {
     const s = document.getElementById('fusion-status');
@@ -455,7 +465,7 @@ function _renderCollectionGrid() {
 
 function _rarityStars(count, color) {
   let s = '';
-  for (let i = 0; i < count; i++) s += '<span style="color:' + color + ';font-size:0.55rem">\u2605</span>';
+  for (let i = 0; i < count; i++) s += '<span style="color:' + color + ';font-size:0.6rem">\u2605</span>';
   return s;
 }
 
@@ -486,7 +496,7 @@ function _buildCollCard(entry) {
   }
 
   const statBars = Object.entries(entry.statDisplay).map(([k,v]) =>
-    '<div style="display:flex;align-items:center;gap:4px;font-size:0.58rem;margin-bottom:2px">'
+    '<div style="display:flex;align-items:center;gap:4px;font-size:0.6rem;margin-bottom:2px">'
     + '<span style="width:24px;color:var(--text-dim);flex-shrink:0">' + k + '</span>'
     + '<div style="flex:1;height:3px;background:var(--border);border-radius:2px;min-width:0">'
     + '<div style="width:' + Math.min(100,v*10) + '%;height:3px;background:' + color + ';border-radius:2px"></div>'

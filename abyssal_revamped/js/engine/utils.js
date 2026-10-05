@@ -36,7 +36,7 @@
 //   updateComboUI() — refreshes combo display and burst button state
 //
 // XP / LEVELING:
-//   xpForLevel(lvl)       — run XP needed for next level (50 * 1.4^(lvl-1))
+//   xpForLevel(lvl)       — run XP needed for next level (×1.4 per level to 10, then ×1.15)
 //   classXpForLevel(n)    — class XP needed for next class level (100 * n * 1.4)
 //   gainXP(amount)        — adds run XP, levels up player stats (+8HP, +5MP, +2ATK, +1DEF/SPD, +1TP)
 //   gainClassXP(id, amt)  — persists class XP in G.meta, levels up class, saves
@@ -269,7 +269,12 @@ function logEntry(type, msg) {
   G._logVersion = (G._logVersion || 0) + 1; // render.js redraws the log when this changes
 }
 
-function xpForLevel(lvl) { return Math.round(50 * Math.pow(1.4, lvl - 1)); }
+// Run XP needed for the next level: +40% per level up to 10, then +15% per
+// level so late levels stay reachable while enemies keep scaling.
+function xpForLevel(lvl) {
+  if (lvl <= 10) return Math.round(50 * Math.pow(1.4, lvl - 1));
+  return Math.round(50 * Math.pow(1.4, 9) * Math.pow(1.15, lvl - 10));
+}
 
 // Class leveling — separate from run XP, persists in G.meta
 const CLASS_MAX_LEVEL = 20;

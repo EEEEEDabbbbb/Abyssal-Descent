@@ -114,3 +114,54 @@ function confirmResetAllSaveData() {
       <button class="title-btn danger" style="flex:1;min-width:0" onclick="resetAllSaveData()">Delete everything</button>
     </div>`, true);
 }
+
+// ── Export / import ───────────────────────────────────────────
+// A save file holds every 'abyssal_*' localStorage key: meta progress,
+// settings and run slots.
+function exportSaveData() {
+  const data = {};
+  Object.keys(localStorage).filter(k => k.startsWith('abyssal_')).forEach(k => { data[k] = localStorage.getItem(k); });
+  const payload = JSON.stringify({ game:'abyssal-descent', version:GAME_VERSION, exportedAt:new Date().toISOString(), data });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([payload], { type:'application/json' }));
+  a.download = `abyssal-descent-save-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function importSaveData(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    let parsed;
+    try {
+      parsed = JSON.parse(reader.result);
+      if (parsed.game !== 'abyssal-descent' || !parsed.data || typeof parsed.data !== 'object') throw new Error('not a save file');
+    } catch (e) {
+      showModal(`<div class="modal-title" style="color:var(--accent-crimson)">Import failed</div>
+        <div style="text-align:center;color:var(--text-mid);margin:1rem 0">That file isn't an Abyssal Descent save.</div>
+        <button class="title-btn" style="width:100%" onclick="closeModal()">OK</button>`);
+      return;
+    }
+    G._pendingImport = parsed.data;
+    showModal(`<div class="modal-title">Import save?</div>
+      <div style="text-align:center;color:var(--text-mid);margin:1rem 0;line-height:1.6">
+        This replaces ALL current progress with the save from ${(parsed.exportedAt || '').slice(0,10) || 'the file'}.
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="title-btn" style="flex:1;min-width:0" onclick="G._pendingImport=null;closeModal()">Cancel</button>
+        <button class="title-btn primary" style="flex:1;min-width:0" onclick="applyImportedSave()">Replace & reload</button>
+      </div>`, true);
+  };
+  reader.readAsText(file);
+}
+
+function applyImportedSave() {
+  const data = G._pendingImport;
+  if (!data) return;
+  Object.keys(localStorage).filter(k => k.startsWith('abyssal_')).forEach(k => localStorage.removeItem(k));
+  Object.entries(data).forEach(([k, v]) => { if (k.startsWith('abyssal_') && typeof v === 'string') localStorage.setItem(k, v); });
+  location.reload();
+}

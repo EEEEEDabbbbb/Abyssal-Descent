@@ -14,6 +14,7 @@ async function playFloors(classId, targetFloor, maxSteps = 6000) {
   await page.evaluate(() => { localStorage.clear(); });
   await page.reload();
   await page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
+  await page.evaluate(() => ensureAbilitiesLoaded());
   await page.evaluate(async (cid) => {
     await ensureClassLoaded(cid);
     if (!G.meta.unlockedClasses.includes(cid)) G.meta.unlockedClasses.push(cid);

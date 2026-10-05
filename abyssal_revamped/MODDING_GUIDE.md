@@ -27,26 +27,35 @@
 ## 1. Project Structure
 
 ```
-abyssal/
+(repo root)
+├── package.json / tests/       — dev-only automated tests (npm install && npm test)
+├── tools/
+│   └── build_fusion_index.js   — regenerates fusion indexes after editing fusion data
+└── abyssal_revamped/
 ├── index.html                  — entry point, screen HTML, script loader order
 ├── js/
-│   ├── main.js                 — game init, G state object
-│   ├── dev_console.js          — in-game dev console (~ key)
-│   ├── devtest.js              — automated test suite
+│   ├── main.js                 — init(), startRun(), keyboard input
+│   ├── dev_console.js          — dev console (backtick / F2) — loads only with ?dev=1
+│   ├── devtest.js              — in-browser self-test — loads only with ?dev=1
+│   ├── debug_logger.js         — logs every core function call — loads only with ?dev=1
 │   ├── engine/
-│   │   ├── combat.js           — all fight logic, passive flags, win/lose
-│   │   ├── mapgen.js           — BSP map generation, room content placement
-│   │   ├── player.js           — createPlayer(), stat application
+│   │   ├── combat.js           — all fight logic, damage pipeline, win/lose
+│   │   ├── mapgen.js           — BSP map generation, movement, floor transitions
+│   │   ├── passives.js         — PASSIVE_INFO (names/descriptions) + passive hooks
+│   │   ├── player.js           — createPlayer(), inventory, equipment
 │   │   ├── run_save.js         — localStorage save slots (3 slots)
-│   │   ├── state.js            — G object definition and defaults
-│   │   ├── status.js           — addStatus(), tickStatus()
+│   │   ├── state.js            — G object, defaultMeta(), GAME_VERSION
+│   │   ├── stats.js            — permanent vs temporary stats, enemy stats view
+│   │   ├── status.js           — addStatus(), tickStatus(), removeStatuses()
 │   │   └── utils.js            — damage math, XP, status helpers, saveMeta()
 │   ├── ui/
+│   │   ├── continue_modal.js   — Continue / save-slot dialogs
 │   │   ├── fusion_modal.js     — Fusion Lab screen + Class Collection screen
 │   │   ├── modals.js           — shop, events, rewards, inventory modals
-│   │   ├── render.js           — updateUI() and all sub-renderers
-│   │   ├── screens.js          — showScreen(), renderClassSelect(), renderCollection()
-│   │   └── settings.js         — settings screen
+│   │   ├── render.js           — updateUI() and all sub-renderers, click-to-move
+│   │   ├── screens.js          — showScreen(), renderClassSelect(), game over
+│   │   ├── settings.js         — settings (S), applied at boot
+│   │   └── sfx.js              — synthesized sound effects (Web Audio)
 │   └── data/
 │       ├── abilities.js        — ABILITIES{}, WEAPON_ELEMENT_ABILITIES, HYBRID_WEAPON_ARTS
 │       ├── classes.js          — CLASSES{} — 10 base classes
@@ -54,9 +63,10 @@ abyssal/
 │       ├── enemies.js          — ENEMY_ABILITIES, ENEMIES[], boss definitions
 │       ├── events.js           — EVENTS[] — random room events
 │       ├── fusion.js           — rarity tiers, CLASS_RARITY, fusion loader, secret bosses
-│       ├── fusion_lookup.js    — recipe key → file number map (do not hand-edit)
+│       ├── fusion_lookup.js    — recipe key → file, and class id → file (generated)
 │       ├── items.js            — ITEM_POOL[], equipment definitions
-│       ├── meta.js             — TALENT_TREE, SHARD_SHOP_ITEMS
+│       ├── biomes.js           — BIOMES (floor ranges, flavor, hazards)
+│       ├── meta.js             — TALENT_TREE, SHARD_SHOP_ITEMS, LOADOUTS
 │       └── fusions/
 │           ├── fusion_data_1.js  — lazy-loaded fusion class definitions
 │           ├── fusion_data_2.js
@@ -81,7 +91,8 @@ G.floor         // current floor number
 G.phase         // 'explore' | 'combat' | 'event' | 'shop'
 G.inCombat      // boolean
 G.turn          // 'player' | 'enemy'
-G.combatRound   // increments each time enemy finishes a turn
+G.enemies       // every enemy in the current fight (G.enemy = the targeted one)
+G.combatRound   // completed rounds this fight (changes only in advanceRound())
 G.meta          // persistent meta-progress (saved to localStorage)
 G.log           // combat log array
 ```
@@ -90,7 +101,8 @@ G.log           // combat log array
 
 ```javascript
 p.classId           // string id of current class
-p.stats             // { hp, maxHp, mp, maxMp, atk, def, spd, crit, critDmg }
+p.stats             // LIVE values: { hp, maxHp, mp, maxMp, atk, def, spd, crit, critDmg }
+p.base              // PERMANENT values: { maxHp, maxMp, atk, def, spd, crit, critDmg }
 p.shield            // flat damage absorber (combat-only)
 p.status            // active status effects []
 p.abilities         // array of ability ID strings — NOT objects
@@ -103,9 +115,26 @@ p.burstCharge       // 0–5, burst fires at 5
 p.cooldowns         // { abilityId: turnsRemaining }
 ```
 
+### Permanent vs Temporary Stats (stats.js)
+
+`p.stats` is what combat reads; anything may change it during a fight. When a
+fight ends (won or fled) and on every floor change, `resetTemporaryStats(p)`
+snaps `p.stats` back to `p.base`. So:
+
+```javascript
+p.stats.atk += 10;               // lasts until the end of this fight
+addPermanentStat(p, 'atk', 10);  // lasts the whole run (level-ups, events, gear…)
+applyPermanentBonuses(p, { atk:5, maxHp:20 }, 1);   // -1 removes them again
+```
+
+HP and MP are resources, not stats: they're never reset, only clamped to max.
+Enemies keep flat stats (`e.atk`, `e.def`, …); `prepareEnemy(e)` also gives them
+an `e.stats` view onto the same values so shared code can use `entity.stats`.
+
 ### G.meta — Persistent Progress
 
 `G.meta` is saved to `localStorage` via `saveMeta()`. Always call `saveMeta()` after modifying it.
+New fields go in `defaultMeta()` (state.js) — `loadMeta()` merges old saves over those defaults.
 
 ```javascript
 G.meta.unlockedClasses      // base + secret + abyssal class IDs
@@ -238,8 +267,15 @@ dealDmgToEnemy(e, dmg, isCrit, isDot, isMagic, atkElement);
 // Magic damage to enemy
 dealDmgToEnemy(e, dmg, isCrit, false, true, 'shadow');
 
-// Damage to player (from abilities that cost HP or rebound effects)
+// Damage to player. While an enemy acts, G._actingEnemy is the attacker
+// (reflects, misses and its element apply to it). DoT ticks have no attacker.
 dealDmgToPlayer(dmg);
+
+// Enemy healing — always use this so "no healing" effects are respected
+healEnemy(e, amount);
+
+// Instant kill — bosses/guardians lose 25% max HP instead
+executeEnemy(e, 'My Ability');
 
 // Base damage formula with ±15% variance
 calcDmg(atk, def);  // max(1, atk - def) ± 15%
@@ -253,22 +289,42 @@ const critMult = getCritMult(p); // 1.5 + critDmg/100
 
 ```javascript
 // Apply a status to player or enemy via addStatus()
+p.stats.atk += 5;              // ← YOU change the stat…
 addStatus(target, {
   id:       'my_buff',
   name:     'My Buff',
   type:     'buff',           // 'buff' or 'debuff'
   icon:     '✨',
-  duration: 3,                // turns remaining
-  // optional stat modifiers (add on apply, restore on expiry)
-  atkBonus: 5,
-  defBonus: 0,
-  // optional per-turn callback
+  duration: 3,                // ticks: lasts 3 of the owner's turns
+  atkBonus: 5,                // …and record it so expiry undoes it
+  // optional per-turn callback (damage-over-time, regen…)
   onTurn: (target) => {
-    const dmg = 10;
-    dealDmgToEnemy(target, dmg, false, true);
+    dealDmgToEnemy(target, 10, false, true);
   }
 });
 ```
+
+How statuses behave (status.js):
+
+- **Timing** — a status ticks at the end of its owner's turn: `onTurn` runs,
+  then duration drops by 1. A status applied during its owner's own turn
+  skips that first tick, so "for 3 turns" means the next 3 turns.
+- **Record fields** — `atkBonus/defBonus/spdBonus/critBonus` are subtracted on
+  expiry; `atkPen/defPen/spdPen` (and `atkLoss/defLoss/spdLoss`) are added back.
+  Re-applying an active status adds the new amounts to the old ones.
+- **onApply / onTurn stat changes** — if `onApply` or `onTurn` changes stats,
+  the engine applies it **once** (not every turn) and undoes it on expiry
+  unless your `onExpire` already does. Prefer the record fields above.
+- **Hooks** — `onApply`, `onTurn`, `onExpire`, `onRemove` (cleanse), plus
+  combat hooks `onHit(p, attacker)`, `onDamage(p, dmg, attacker)`.
+- **Mechanics fields** the engine understands: `dmgReduce` (fraction off
+  incoming), `dodgeChance`/`dodgeBonus`, `dodgesRemaining`, `reflectPct`,
+  `counterOnHit`, `echoOnHit`, `lifestealBonus`, `fullLifesteal`, `immuneStun`,
+  `dmgMult` (player), and on enemies `incomingDmgMult`, `dmgAmpIn`, `noHeal`,
+  `hpCapPct`, `atkMult`, `dmgReduction`, `missNext`.
+- **Cleansing** — use `removeStatuses(entity, s => s.type === 'debuff')`, which
+  undoes stat changes. Don't just filter `entity.status`.
+- Whatever happens, every temporary stat change is reset when the fight ends.
 
 ### Built-in Status Helpers
 
@@ -304,7 +360,7 @@ Fusion classes are lazy-loaded from numbered files in `js/data/fusions/`. There 
 
 ### Step 2 — Add the Recipe and Class to a fusion_data_N.js File
 
-Pick an existing file with space or create `fusion_data_18.js` (and add a `<script>` tag for it in `index.html`).
+Pick an existing file with space or create `fusion_data_18.js` (files are loaded on demand by `loadFusionFile(n)` — no `<script>` tag needed; bump `FILE_COUNT` in `tools/build_fusion_index.js` and the `17` in `tests/helpers.js`).
 
 ```javascript
 // In FUSION_RECIPES_N at the top of the file:
@@ -317,7 +373,8 @@ my_fusion_id: {
   icon:       '⚔️',
   tagline:    'Two halves of one catastrophe.',
   color:      '#7755aa',
-  element:    'shadow',
+  element:    'shadow',         // must be a key of ELEMENTS (matchups, badges, affinity)
+  elementFlavor: 'duskblade',   // optional display-only flavor name
   rarity:     'rare',           // see Rarity Tiers
   fusedFrom:  ['my_class', 'shadowblade'],
   stats:      { hp:90, maxHp:90, mp:70, maxMp:70, atk:13, def:7, spd:13, crit:15 },
@@ -339,15 +396,17 @@ Add to `CLASS_RARITY` in `fusion.js`:
 my_fusion_id: 'rare',
 ```
 
-### Step 4 — Register Fusion Level Requirement
+### Step 4 — Rebuild the fusion indexes
 
-Fusion requires both parent classes to be at a minimum level. This is set in `FUSION_LEVEL_REQ` in `fusion.js`:
-
-```javascript
-const FUSION_LEVEL_REQ = 10; // default minimum level for both classes
+```bash
+node tools/build_fusion_index.js
 ```
 
-If your fusion has a higher requirement, you can add a per-recipe override in `getFusionClass()` if needed.
+This regenerates `FUSION_CLASS_FILE` (class id → file, used to load a saved
+fusion run after a page refresh), gives any class with a made-up element a
+real one (keeping the old name as `elementFlavor`), and renames a class id if
+two recipes produce the same id. Both parent classes must reach
+`FUSION_MIN_LEVEL` (20, in fusion.js) before the fusion can be made.
 
 ```
 
@@ -355,40 +414,36 @@ If your fusion has a higher requirement, you can add a per-recipe override in `g
 
 ## 6. Implementing Passives
 
-Passives are declared in the class definition but **must be manually wired into the combat engine**. A passive ID in `p.passives` does nothing on its own.
+A passive ID in `p.passives` does nothing unless it has an implementation.
+New passives go in **`js/engine/passives.js`**:
 
-### Where to Hook Passives
-
-Most passive logic lives in `combat.js`. The pattern used throughout is:
+1. Add a name and an accurate description to `PASSIVE_INFO` (the stats-panel
+   tooltip reads it — keep the text matching what the code does).
+2. Add hooks to `PASSIVE_HOOKS`:
 
 ```javascript
-// In startCombat() — set a flag when entering combat
-if (p.passives && p.passives.includes('my_passive')) {
-  G._myPassiveActive = true;
-}
-
-// In endCombat() — ALWAYS clean up flags here
-G._myPassiveActive = false;
-
-// Where the effect applies — e.g. in dealDmgToEnemy() or endPlayerTurn()
-if (G._myPassiveActive) {
-  dmg = Math.round(dmg * 1.25);
-}
+PASSIVE_HOOKS.my_passive = {
+  onCombatStart(p, enemies, st) { /* once per fight; st = per-fight scratch state */ },
+  damageMult(p, e, ctx, st) {     /* outgoing multiplier; ctx: {direct, isDot, magic, kind, element} */
+    return ctx.element === 'fire' ? 1.2 : 1;
+  },
+  onIncoming(p, dmg, attacker, st) { return dmg; },   // before shields/HP
+  onDamaged(p, dmg, attacker, st) {},                 // after HP was lost
+  onLethal(p, dmg, attacker, st) { return false; },   // true = survive the hit
+  onAbilityCast(p, abilityId, st) {},
+  onActionEnd(p, ctx, st) {},                         // ctx: {kind, directHits}
+  onEnemyTurnEnd(p, st) {},
+  opening(p, enemies, st) { return 'player'; },       // force first move in round 1
+};
 ```
 
-### Per-Combat Passive Flags Reference
+The data test `every passive has a name, a description and an implementation`
+fails if a class uses a passive missing from either table.
 
-These already exist in `combat.js` — don't duplicate them:
-
-| Flag | Class | Effect location |
-|---|---|---|
-| `G._combustionActive` | Pyromancer | `dealDmgToEnemy()` — +25% dmg when enemy has Burn |
-| `G._voidMasteryActive` | Voidreaper/Convergence | `dealDmgToEnemy()` — +20% void/shadow/dark dmg |
-| `G._plagueLordActive` | Plagueborn | `endPlayerTurn()` — diseases tick extra |
-| `G._stormMasteryActive` | Stormlord | ability use — +1 storm charge |
-| `G._phaseActive` | The Unnamed | `dealDmgToEnemy()` — 25% DEF bypass chance |
-| `G._soulrenderActive` | Soulrender | `dealDmgToEnemy()` — HP-threshold scaling |
-| `G._nullSunderActive` | Nullbringer | `dealDmgToEnemy()` — sunder damage amp |
+Older passives (iron_skin, combustion, phase, gust, …) are still handled
+inline in `startCombat()` / `dealDmgToEnemy()` in combat.js via `G._…Active`
+flags (listed in `LEGACY_PASSIVES`); any new flag must be cleared in
+`endCombat()`.
 
 ### dmgMult Status Buff
 
@@ -401,17 +456,6 @@ addStatus(p, {
   dmgMult: 1.5   // ← getDmgMult() multiplies by this
 });
 ```
-
-### Passives That Aren't Yet Implemented
-
-Many fusion class passives are declared but not wired. To find them:
-
-```javascript
-// In dev console (~):
-diagcollection
-```
-
-Or search `combat.js` for `// TODO` comments near passive checks.
 
 ---
 
@@ -618,6 +662,11 @@ Items go in the `ITEM_POOL` array in `js/data/items.js`.
 },
 ```
 
+Item `id`s must be unique and stable: saves store items as JSON (functions are
+dropped) and `rehydrateItem()` rebuilds `use` from `ITEM_POOL` by id on load.
+Damage items should just lower the enemy's HP — `useItemInCombat()` calls
+`checkCombatEnd()`; never call `winCombat()` from an item.
+
 ### Equipment Shape
 
 Equipment uses `effect` tokens that `hasEquipEffect()` checks. Compound effects use `_` as a separator:
@@ -632,7 +681,8 @@ Equipment uses `effect` tokens that `hasEquipEffect()` checks. Compound effects 
   element: 'fire',
   desc:    'Burns with purpose.',
   effect:  'burnboost_lifesteal',   // checked via hasEquipEffect(p, 'burnboost') etc.
-  stats:   { atk: 8, crit: 5 },    // applied on equip, removed on unequip
+  bonuses: { atk: 8, crit: 5 },    // permanent stats while equipped (any key of p.base)
+  grantAbilities: ['my_ability'],  // optional: weapons can add abilities to the bar
 }
 ```
 
@@ -653,7 +703,9 @@ Equipment uses `effect` tokens that `hasEquipEffect()` checks. Compound effects 
 
 ### Floor-Tiered Loot
 
-Items drop based on floor tier. If your item should only drop on later floors, add it to the appropriate tier bucket in `getRandomItemByFloor()` and `getBossLootByFloor()` in `items.js`.
+Drops pick a rarity from `LOOT_ANCHORS` in `items.js` (weights at anchor
+floors, interpolated between them, so quality only rises with depth), then a
+random item of that rarity. Boss loot uses `getBossLootByFloor()`.
 
 ---
 
@@ -669,13 +721,13 @@ Events go in the `EVENTS` array in `js/data/events.js`.
   desc: 'Descriptive room flavour text.',
   choices: [
     {
-      text:   'Choice A label',
+      // text can be a string or (p) => string so costs can scale with depth
+      text:   () => `Offer ${evScale(20)} HP for power (+5 ATK)`,
       effect: (p) => {
-        // p = player object
-        // Must return a string (shown as outcome text)
-        if (p.stats.hp > 30) {
-          p.stats.hp -= 20;
-          p.stats.atk += 5;
+        // p = player object. Must return a string (shown as outcome text)
+        if (p.stats.hp > evScale(20) + 10) {
+          p.stats.hp -= evScale(20);
+          addPermanentStat(p, 'atk', 5);   // NOT p.stats.atk += 5 — that ends with the next fight
           return 'Power gained. Blood spent.';
         }
         return 'You lack the resolve.';
@@ -695,6 +747,10 @@ Events go in the `EVENTS` array in `js/data/events.js`.
   ]
 },
 ```
+
+Helpers: `evScale(n)` scales a number with the floor; `addFloorEffect(p, {name, stat, amount, floors})`
+applies a stat change that reverts after that many floors; `inventoryFull(p)` before giving items.
+The data test `every event choice resolves cleanly at any depth` runs every choice.
 
 **Important:** Event `effect` functions cannot be serialised to JSON. The save system stores only `eventIndex` (the index in the `EVENTS` array). This means:
 - Never reorder `EVENTS` entries without considering existing save files
@@ -759,7 +815,16 @@ Rarities are defined in `RARITY_TIERS` in `fusion.js`. From lowest to highest:
 
 ## 14. The Dev Console
 
-Open with the **`~`** key during gameplay.
+Developer tools only load when the page URL ends with **`?dev=1`**
+(e.g. `index.html?dev=1`). Then open the console with the **backtick (`)** or
+**F2** key. `?dev=1` also loads `devtest.js` (run `devtest()` in the browser
+console) and `debug_logger.js` (logs every core call; see `window.__abyssalDebugLog`).
+
+### Automated tests
+
+From the repository root: `npm install` once, then `npm test`. The suite boots
+the real game in headless Chromium and checks data integrity, fuzzes every
+ability, covers past bugs, and has a bot play several floors through the UI.
 
 | Command | Effect |
 |---|---|
@@ -797,7 +862,7 @@ The class is in both `CLASSES` and is also being pushed from `unlockedFusions`. 
 
 ### Passive does nothing
 
-Passives are strings only — they have no effect unless you wire them into `combat.js`. Every passive needs an explicit `if (p.passives.includes('my_passive'))` check somewhere in the combat flow. Add a per-combat flag in `startCombat()` and clean it up in `endCombat()`.
+Passives are strings only — they need an entry in `PASSIVE_INFO` and `PASSIVE_HOOKS` (passives.js). See section 6. `npm test` flags any passive without an implementation.
 
 ### Exit tile spawns in a wall after secret boss
 
@@ -805,12 +870,23 @@ The secret boss arena is 28×28 with a room carved from (4,4) to (23,23). Any ex
 
 ### Status effect stat changes not reversing on expiry
 
-If you manually modify `p.stats.atk` (or any stat) when applying a status, you must store the penalty on the status object and reverse it on expiry. See how `clearEntropy()` and the `cursed` status in `enemies.js` handle this.
+If you change a stat when applying a status, record it with `atkBonus`/`atkPen`
+(etc.) on the status so expiry undoes it mid-fight. Even if you forget, every
+temporary change is reset when the fight ends. For a PERMANENT change use
+`addPermanentStat()` — a plain `p.stats.atk += n` does not survive the fight.
 
 ### Save file breaks after structural changes to G
 
-Existing save slots written before your change will load stale data. Either add migration logic to `_deserialiseRun()` in `run_save.js`, or tell players to delete their save slots from the continue modal. Always add new `G.meta` fields with a fallback default in `loadMeta()`.
+Run saves store the whole player and map (minus functions). Plain new fields on
+the player or map cells are saved automatically. If you change the meaning of
+existing fields, bump `RUN_SAVE_VERSION` in `run_save.js` (old saves then show
+"Couldn't load save" and can be deleted) or add migration in `_deserialiseRun()`.
+Run-level fields on `G` itself must be added to `_serialiseRun()`/`_deserialiseRun()`.
+New `G.meta` fields go in `defaultMeta()` in state.js.
 
 ### Abilities defined after line ~6124 in abilities.js
 
-Do not hand-edit the generated section (line 6124+). It is overwritten whenever abilities are regenerated. Add all hand-crafted abilities before line 680.
+That section was machine-generated, but the generator script is no longer part
+of the project, so hand edits there are now safe and permanent. Prefer adding
+new hand-crafted abilities near the top of the file with the class they belong
+to.

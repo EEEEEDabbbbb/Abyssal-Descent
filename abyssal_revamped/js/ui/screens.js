@@ -101,6 +101,9 @@ function renderTitleScreen() {
     flavor.innerHTML = '"Conqueror of the Abyss.<br>The darkness remembers your name."';
   }
 
+  const ver = document.getElementById('title-version');
+  if (ver) ver.textContent = `v${GAME_VERSION}`;
+
   // Spawn floating runes
   initTitleRunes();
 }
@@ -167,6 +170,10 @@ function renderClassSelect() {
     });
   }
 
+  // Playable classes first, then locked ones (stable within each group)
+  const playable = c => c._isFusion ? (unlockedFusions.includes(c.id) || unlockedClasses.includes(c.id)) : unlockedClasses.includes(c.id);
+  allClasses.sort((a, b) => Number(playable(b)) - Number(playable(a)));
+
   allClasses.forEach(cls=>{
     const isFusion    = !!cls._isFusion;
     const unlockInfo  = CLASS_UNLOCK_COSTS[cls.id];
@@ -186,6 +193,7 @@ function renderClassSelect() {
     card.style.position = 'relative';
     card.style.overflow = 'hidden';
     card.dataset.element = cls.element || '';
+    if (isUnlocked) { card.setAttribute('role', 'button'); card.tabIndex = 0; card.setAttribute('aria-label', `${cls.name} — ${cls.tagline || ''}`); }
 
     const statBars = Object.entries(cls.statDisplay||{}).map(([k,v])=>`
       <div style="display:flex;align-items:center;gap:4px;font-size:0.62rem;margin-bottom:2px">

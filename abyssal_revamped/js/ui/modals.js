@@ -23,7 +23,6 @@
 //   showWorldGenModal               — world settings before starting a run
 //   openHowToPlay                   — static info modal
 //   openLoadoutModal / pickLoadout  — loadout selection
-//   showClassCollection             — full class roster viewer
 //   showPauseMenu / confirmAbandon / abandonRun — pause/abandon flow
 //
 // ITEM RARITY IN MODALS:
@@ -37,7 +36,7 @@ function showModal(html, closeable=true) {
   const content = document.getElementById('overlay-content');
   overlay.classList.add('active');
   content.innerHTML = closeable
-    ? `<button class="modal-close-btn" onclick="closeModal()">✕</button><div class="modal-body">${html}</div>`
+    ? `<button class="modal-close-btn" onclick="closeModal()" aria-label="Close">✕</button><div class="modal-body">${html}</div>`
     : `<div class="modal-body">${html}</div>`;
 }
 
@@ -130,7 +129,7 @@ function renderShop() {
   });
   html+=`</div>
     <div style="display:flex;gap:0.4rem;margin-top:0.75rem">
-      <button class="title-btn" style="flex:1;min-width:0;padding:0.6rem 0.4rem;font-size:0.7rem;letter-spacing:0.08em" onclick="rerollShop()">🔄 Reroll (15g)</button>
+      <button class="title-btn" style="flex:1;min-width:0;padding:0.6rem 0.4rem;font-size:0.7rem;letter-spacing:0.08em" onclick="rerollShop()" ${p.gold < getRerollCost() ? 'disabled' : ''}>🔄 Reroll (${getRerollCost()}g)</button>
       <button class="title-btn" style="flex:1;min-width:0;padding:0.6rem 0.4rem;font-size:0.7rem;letter-spacing:0.08em;color:var(--accent-gold)" onclick="openSellMenu()">💰 Sell</button>
       <button class="title-btn danger" style="flex:1;min-width:0;padding:0.6rem 0.4rem;font-size:0.7rem;letter-spacing:0.08em" onclick="closeShopKeepAlive()">✕ Leave</button>
     </div>`;
@@ -165,7 +164,7 @@ function openSellMenu() {
     <div style="display:flex;flex-direction:column;gap:0.4rem">`;
   p.inventory.forEach((item, i) => {
     if (item.permanent) return;
-    const price = Math.max(1, Math.floor((item.shopPrice || estimateItemValue(item)) * 0.5));
+    const price = getSellPrice(item);
     const elObj = item.element ? ELEMENTS[item.element] : null;
     html += `<div class="shop-item">
       <div class="shop-item-info">
@@ -179,17 +178,32 @@ function openSellMenu() {
   showModal(html, false);
 }
 
-function sellItemFromMenu(idx) {
+function sellItemFromMenu(idx, confirmed = false) {
+  const item = G.player.inventory[idx];
+  if (!item) return;
+  // Valuable items get a confirmation step
+  if (!confirmed && ['epic','legendary','mythical','divine'].includes(item.rarity)) {
+    showModal(`<div class="modal-title">Sell ${item.icon} ${item.name}?</div>
+      <div style="text-align:center;color:var(--text-mid);margin:0.75rem 0">This <span class="item-rarity-badge ${item.rarity}">${item.rarity}</span> item sells for <strong style="color:var(--accent-gold)">${getSellPrice(item)}g</strong>.</div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="title-btn" style="flex:1;min-width:0" onclick="openSellMenu()">Keep it</button>
+        <button class="title-btn primary" style="flex:1;min-width:0" onclick="sellItemFromMenu(${idx}, true)">Sell</button>
+      </div>`, false);
+    return;
+  }
   sellItem(idx);
   openSellMenu(); // re-render the sell menu
 }
 
+function getRerollCost() { return 15 + G.floor * 3; }
+
 function rerollShop() {
-  if (G.player.gold < 15) { logEntry('system','Not enough gold to reroll!'); return; }
-  G.player.gold -= 15;
+  const cost = getRerollCost();
+  if (G.player.gold < cost) { logEntry('system','Not enough gold to reroll!'); return; }
+  G.player.gold -= cost;
   G._shopItems = _generateShopItems();
   if (G._shopCell) G._shopCell._shopItems = G._shopItems; // persist rerolled stock to cell
-  logEntry('system','Shop refreshed for 15g.');
+  logEntry('system',`Shop refreshed for ${cost}g.`);
   renderShop();
 }
 
@@ -213,7 +227,7 @@ function showFloorReward() {
     <div style="display:flex;flex-direction:column;gap:0.5rem">`;
   choices.forEach((item,i)=>{
     const elObj = item.element ? ELEMENTS[item.element] : null;
-    html+=`<div class="shop-item reward-item" onclick="claimReward(${i})" style="cursor:pointer">
+    html+=`<div class="shop-item reward-item" onclick="claimReward(${i})" role="button" tabindex="0" style="cursor:pointer">
       <div class="shop-item-info">
         <div class="item-name">${item.icon} ${item.name} <span class="item-rarity-badge ${item.rarity}">${item.rarity}</span>${elObj?` <span style="color:${elObj.color};font-size:0.65rem">${elObj.icon}</span>`:''}</div>
         <div style="font-size:0.68rem;color:var(--text-dim)">${item.desc}</div>
@@ -264,7 +278,17 @@ function useItemInCombat(idx) {
 // ── Talent Tree ───────────────────────────────────────────────
 function showTalentTree() {
   const p = G.player;
-  if (!p) { showModal('<div class="modal-title">🌟 Talent Tree</div><div style="color:var(--text-dim);text-align:center;padding:1rem">Start a run to use the Talent Tree.</div><button class="title-btn" style="width:100%;margin-top:0.75rem" onclick="closeModal()">Close</button>'); return; }
+  if (!p) {
+    // Read-only preview from the title screen
+    const rows = TALENT_TREE.map(t => `<div class="shop-item" style="cursor:default"><div class="shop-item-info">
+        <div class="item-name">${t.name} <span style="font-size:0.65rem;color:var(--text-dim)">max ${t.maxRank} · ${t.cost} pt${t.cost>1?'s':''}/rank</span></div>
+        <div style="font-size:0.68rem;color:var(--text-dim)">${t.desc}</div></div></div>`).join('');
+    showModal(`<div class="modal-title">🌟 Talent Tree</div>
+      <div style="font-size:0.7rem;color:var(--text-dim);text-align:center;margin-bottom:0.75rem;font-style:italic">You earn 2 Talent Points per level during a run and spend them here (pause menu → Talents). Talents reset when the run ends.</div>
+      <div style="display:flex;flex-direction:column;gap:0.4rem">${rows}</div>
+      <button class="title-btn" style="width:100%;margin-top:0.75rem" onclick="closeModal()">Close</button>`);
+    return;
+  }
   const pts = p.talentPoints||0;
   let html = `<div class="modal-title">🌟 Talent Tree</div>
     <div style="font-size:0.75rem;color:var(--accent-gold);text-align:center;margin-bottom:0.4rem">Points: <strong>${pts}</strong></div>
@@ -421,21 +445,23 @@ function startNGPlus() {
 function openHowToPlay() {
   const html = `
     <div class="modal-title">? How to Play</div>
-    <div style="font-size:0.78rem;line-height:2;color:var(--text-mid)">
+    <div style="font-size:0.78rem;line-height:1.9;color:var(--text-mid)">
       <b style="color:var(--accent-gold)">Exploration</b><br>
-      Move through the dungeon with arrow buttons or keyboard arrows. Fog of war hides unexplored areas. Each floor has multiple room types including shops, treasure rooms, events, and boss chambers.<br><br>
+      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼.<br><br>
       <b style="color:var(--accent-gold)">Combat</b><br>
-      Turn-based. You act, then the enemy acts. Use <b>Attack</b> for basic damage, <b>Defend</b> to gain shield + MP, or unleash <b>Abilities</b> for powerful effects. Build <b>Combo</b> to charge your Burst move. <b>Flee</b> based on your SPD vs enemy SPD.<br><br>
-      <b style="color:var(--accent-gold)">Abilities</b><br>
-      Each class has 5 unique abilities. They cost MP (or HP for advanced skills) and some have cooldowns. Keys 1–5 trigger ability slots in combat. Weapon element matching an ability's element grants +20% damage.<br><br>
+      Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do.<br><br>
+      <b style="color:var(--accent-gold)">Buffs & Debuffs</b><br>
+      Effects last the number of turns shown and end with the fight — nothing temporary carries over. Bosses resist executes and shake off stuns quickly.<br><br>
       <b style="color:var(--accent-gold)">Elements</b><br>
-      20 elements with a full effectiveness table. Deal bonus damage by exploiting weaknesses, or neutral/reduced if resisted. Check enemy element for strategic choices.<br><br>
+      40 elements with a full effectiveness table. Exploit weaknesses for up to 4× damage; enemies use their element against yours too. Gear whose element matches an ability gives +20% (Affinity).<br><br>
       <b style="color:var(--accent-gold)">Items</b><br>
-      Find gear in chests, drops, shops, and events. Consumables are used instantly. Equipment must be equipped from inventory. Rarity tiers: Common → Uncommon → Rare → Epic → Legendary → Mythical → Divine.<br><br>
-      <b style="color:var(--accent-gold)">Meta Progression</b><br>
-      Earn Soul Shards on death. Spend them in the Shard Emporium to unlock classes, loadouts, and permanent bonuses. Talent Points earned in-run persist for future runs.<br><br>
-      <b style="color:var(--accent-gold)">Boss Floors</b><br>
-      Bosses appear at milestone floors and have multiple phases. Defeating the Floor 50 Final Boss unlocks New Game+.
+      Find gear in chests, drops, shops and events; equip it from your pack (equipping mid-fight takes your turn). If your pack is full, loot is left on the ground — step back onto the tile to pick it up. Rarity: Common → Uncommon → Rare → Epic → Legendary → Mythical → Divine.<br><br>
+      <b style="color:var(--accent-gold)">Progression</b><br>
+      Leveling up in a run grants stats (based on your class) and Talent Points, spent in the Talent Tree for this run only. Soul Shards are earned from bosses, events and every death; spend them in the Shard Emporium on permanent upgrades, class unlocks and loadouts. Each class also earns Class XP — master two classes (level 20) to fuse them in the Fusion Lab.<br><br>
+      <b style="color:var(--accent-gold)">Saving</b><br>
+      Runs auto-save on every floor and after each fight (up to 3 runs at once). Use 💾 Save or <i>Save & Quit</i> from the pause menu (Esc) any time outside combat.<br><br>
+      <b style="color:var(--accent-gold)">Floor 50</b><br>
+      Defeat the Abyssal God to conquer the Abyss and unlock New Game+, where every cycle makes enemies 30% stronger.
     </div>`;
   showModal(html, true);
 }
@@ -472,167 +498,4 @@ function pickLoadout(id, cost) {
   G.meta.selectedLoadout = id;
   saveMeta();
   openLoadoutModal();
-}
-
-// ── Class Collection ──────────────────────────────────────────
-function showClassCollection() {
-  const unlocked = G.meta.unlockedClasses || [];
-  const fused    = G.meta.unlockedFusions || [];
-  const levels   = G.meta.classLevels    || {};
-
-  const RARITY_ORDER = ['abyssal','divine','mythical','legendary','epic','rare','uncommon','common'];
-
-  const baseEntries = Object.values(CLASSES).map(cls => ({
-    id:       cls.id,
-    name:     cls.name,
-    icon:     cls.icon,
-    color:    cls.color,
-    element:  cls.element,
-    tagline:  cls.tagline,
-    statDisplay: cls.statDisplay || {},
-    rarity:   (typeof CLASS_RARITY !== 'undefined' ? CLASS_RARITY[cls.id] : null) || 'common',
-    level:    levels[cls.id] || 0,
-    unlocked: unlocked.includes(cls.id),
-    isFusion: false,
-  }));
-
-  // Also include classes that live only in FUSION_CLASSES but were unlocked via unlockedClasses
-  // (e.g. abyssal_one added to unlockedClasses on conquest)
-  const fusionOnlyIds = Object.keys(typeof FUSION_CLASSES !== 'undefined' ? FUSION_CLASSES : {});
-  const extraFused = fusionOnlyIds.filter(id => unlocked.includes(id) && !fused.includes(id));
-  const allFusedIds = [...fused, ...extraFused];
-
-  const fusionEntries = allFusedIds.map(id => {
-    const cls = (typeof FUSION_CLASSES !== 'undefined' && FUSION_CLASSES[id]) || {};
-    const rarity = (typeof CLASS_RARITY !== 'undefined' ? CLASS_RARITY[id] : null)
-                || cls.rarity || 'rare';
-    return {
-      id,
-      name:        cls.name        || id,
-      icon:        cls.icon        || '⚗',
-      color:       cls.color       || '#cc00ff',
-      element:     cls.element     || '',
-      tagline:     cls.tagline     || '',
-      statDisplay: cls.statDisplay || {},
-      rarity,
-      level:       levels[id]      || 0,
-      unlocked:    true,
-      isFusion:    true,
-    };
-  });
-
-  // Locked base classes not yet unlocked — show as mystery cards
-  const allBase = Object.values(CLASSES);
-  const lockedEntries = allBase
-    .filter(cls => !unlocked.includes(cls.id))
-    .map(cls => ({
-      id:       cls.id,
-      name:     '???',
-      icon:     '?',
-      color:    '#555',
-      element:  '',
-      tagline:  '',
-      statDisplay: {},
-      rarity:   (typeof CLASS_RARITY !== 'undefined' ? CLASS_RARITY[cls.id] : null) || 'common',
-      level:    0,
-      unlocked: false,
-      isFusion: false,
-    }));
-
-  // Deduplicate: fusion entries that are already in CLASSES show up in baseEntries too — skip them
-  const baseIds = new Set(baseEntries.map(e => e.id));
-  const uniqueFusionEntries = fusionEntries.filter(e => !baseIds.has(e.id));
-
-  const allEntries = [
-    ...baseEntries.filter(e => e.unlocked),
-    ...uniqueFusionEntries,
-    ...lockedEntries,
-  ];
-
-  allEntries.sort((a, b) => {
-    if (!a.unlocked && b.unlocked) return 1;
-    if (a.unlocked && !b.unlocked) return -1;
-    const ri = RARITY_ORDER.indexOf(a.rarity);
-    const rj = RARITY_ORDER.indexOf(b.rarity);
-    if (ri !== rj) return ri - rj;
-    return a.name.localeCompare(b.name);
-  });
-
-  const totalUnlocked = allEntries.filter(e => e.unlocked).length;
-  const total         = allEntries.length;
-
-  // Build cards HTML matching the class-select style
-  const cardsHtml = allEntries.map(entry => {
-    const r     = (typeof RARITY !== 'undefined' && RARITY[entry.rarity]) || { color:'#aaaaaa', name: entry.rarity || 'Common' };
-    const elObj = (typeof ELEMENTS !== 'undefined' && entry.element) ? ELEMENTS[entry.element] : null;
-    const atMax = entry.level >= 20;
-
-    const statBars = Object.entries(entry.statDisplay).map(([k,v]) => `
-      <div style="display:flex;align-items:center;gap:4px;font-size:0.62rem;margin-bottom:2px">
-        <span style="width:26px;color:var(--text-dim);flex-shrink:0">${k}</span>
-        <div style="flex:1;height:4px;background:var(--border);border-radius:2px;min-width:0">
-          <div style="width:${Math.min(100,v*10)}%;height:4px;background:${entry.color};border-radius:2px"></div>
-        </div>
-      </div>`).join('');
-
-    // Rarity badge — top right corner
-    const rarityBadge = `<div style="position:absolute;top:0.5rem;right:0.5rem;
-        font-size:0.58rem;font-family:'Cinzel',serif;letter-spacing:0.05em;
-        color:${r.color};border:1px solid ${r.color}88;
-        background:rgba(0,0,0,0.6);padding:1px 5px;border-radius:2px;
-        text-transform:uppercase">${r.name}</div>`;
-
-    if (!entry.unlocked) {
-      return `<div class="class-card locked" style="--class-color:#555;position:relative;overflow:hidden;opacity:0.45">
-        ${rarityBadge}
-        <div class="class-icon" style="font-size:2.5rem;margin-bottom:0.8rem;filter:grayscale(1)">🔒</div>
-        <div class="class-name" style="color:var(--text-dim)">???</div>
-        <div style="font-size:0.65rem;color:var(--text-dim);font-style:italic;margin-bottom:6px">Not yet discovered</div>
-        <div class="class-stat-bars" style="margin-top:auto"></div>
-      </div>`;
-    }
-
-    const lvlBadge = entry.level > 0
-      ? `<div style="position:absolute;bottom:0.5rem;right:0.5rem;font-size:0.6rem;
-            color:${atMax?'#ffaa00':'var(--text-dim)'};font-family:'Cinzel',serif">
-            ${atMax ? 'Lv.'+entry.level+' ★' : 'Lv.'+entry.level}
-          </div>`
-      : '';
-
-    const fusionTag = entry.isFusion
-      ? `<div style="font-size:0.6rem;color:#cc00ff;margin-bottom:2px">⚗ Fusion</div>`
-      : '';
-
-    return `<div class="class-card" style="--class-color:${entry.color};position:relative;overflow:hidden;cursor:default">
-      ${rarityBadge}
-      ${lvlBadge}
-      <div class="class-icon" style="font-size:2.5rem;margin-bottom:0.8rem;text-shadow:0 0 12px ${entry.color}">${entry.icon}</div>
-      <div class="class-name" style="color:var(--text-bright)">${entry.name}</div>
-      ${elObj ? `<div style="color:${elObj.color};font-size:0.65rem;margin-bottom:2px">${elObj.icon} ${elObj.name}</div>` : ''}
-      ${fusionTag}
-      <div style="font-size:0.65rem;color:var(--text-mid);font-style:italic;margin-bottom:6px;line-height:1.3">${entry.tagline}</div>
-      <div class="class-stat-bars" style="margin-top:auto">${statBars}</div>
-    </div>`;
-  }).join('');
-
-  const html = `
-    <div class="modal-title">📖 Class Collection</div>
-    <div style="font-size:0.72rem;color:var(--text-dim);text-align:center;margin-bottom:0.85rem">
-      ${totalUnlocked} / ${total} discovered
-    </div>
-    <div id="collection-grid" style="
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-      gap:0.7rem;
-      max-height:55vh;
-      overflow-y:auto;
-      margin-bottom:0.85rem;
-      padding-right:2px;
-    ">${cardsHtml}</div>
-    <div style="display:flex;gap:0.5rem">
-      <button class="title-btn" style="flex:1;min-width:0;padding:0.6rem 0.4rem;font-size:0.75rem" onclick="closeModal();openFusionModal()">⚗ Fusion Lab</button>
-      <button class="title-btn" style="flex:1;min-width:0;padding:0.6rem 0.4rem;font-size:0.75rem" onclick="closeModal()">Close</button>
-    </div>`;
-
-  showModal(html, true);
 }

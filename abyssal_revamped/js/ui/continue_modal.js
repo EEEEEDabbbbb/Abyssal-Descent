@@ -22,7 +22,7 @@ function showContinue() {
       + ' ' + date.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit' });
     return `
       <div class="continue-slot filled">
-        <div class="continue-slot-main" onclick="continueRun(${i})">
+        <div class="continue-slot-main" onclick="continueRun(${i})" role="button" tabindex="0">
           <div class="continue-slot-icon">${slot.classIcon}</div>
           <div class="continue-slot-info">
             <div class="continue-slot-name">${slot.className}</div>
@@ -127,7 +127,7 @@ function saveRunWithFeedback() {
 function showSaveSlotPicker(quitAfter) {
   const rows = getRunSlots().map((slot, i) => `
     <div class="continue-slot ${slot ? 'filled' : 'empty'}">
-      <div class="continue-slot-main" onclick="saveIntoSlot(${i}, ${!!quitAfter})">
+      <div class="continue-slot-main" onclick="saveIntoSlot(${i}, ${!!quitAfter})" role="button" tabindex="0">
         <div class="continue-slot-icon">${slot ? slot.classIcon : '＋'}</div>
         <div class="continue-slot-info">
           <div class="continue-slot-name">${slot ? slot.className : `Empty Slot ${i + 1}`}</div>

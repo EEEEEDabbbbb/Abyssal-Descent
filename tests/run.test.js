@@ -10,6 +10,7 @@ async function fresh() {
   await ctx.page.evaluate(() => localStorage.clear());
   await ctx.page.reload();
   await ctx.page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
+  await ctx.page.evaluate(() => ensureAbilitiesLoaded());
   await prepare(ctx.page);
   await run(() => { G._enemyTurnDelay = 0; });
 }
@@ -109,6 +110,7 @@ test('a fusion run can be continued after a page reload', async () => {
   });
   await ctx.page.reload();
   await ctx.page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
+  await ctx.page.evaluate(() => ensureAbilitiesLoaded());
   await prepare(ctx.page);
   const r = await run(async () => {
     const slot = getRunSlots().findIndex(s => s && s.classId === 'darkguard');
@@ -223,6 +225,7 @@ test('settings apply on boot and NG+ unlock does not break the title screen', as
   });
   await ctx.page.reload();
   await ctx.page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
+  await ctx.page.evaluate(() => ensureAbilitiesLoaded());
   const r = await run(() => ({
     gold: document.documentElement.style.getPropertyValue('--accent-gold'),
     cell: document.documentElement.style.getPropertyValue('--map-cell-size'),
@@ -241,6 +244,21 @@ test('the Continue button appears on the title screen when a save exists', async
     return document.getElementById('continue-btn').style.display !== 'none';
   });
   assert.equal(visible, true);
+});
+
+test('save export → import restores all progress', async () => {
+  await fresh();
+  const [download] = await Promise.all([
+    ctx.page.waitForEvent('download'),
+    ctx.page.evaluate(() => { G.meta.soulShards = 1234; saveMeta(); __startTestRun('shadowblade', 4); assignRunSlot(); saveRun(); exportSaveData(); }),
+  ]);
+  const content = require('node:fs').readFileSync(await download.path(), 'utf8');
+  await ctx.page.evaluate(() => { localStorage.clear(); });
+  await ctx.page.evaluate(data => { G._pendingImport = JSON.parse(data).data; applyImportedSave(); }, content).catch(() => {});
+  await ctx.page.waitForLoadState('load');
+  await ctx.page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
+  const r = await run(() => ({ shards: G.meta.soulShards, runs: getRunSlots().filter(Boolean).length }));
+  assert.deepEqual(r, { shards: 1234, runs: 1 });
 });
 
 test('no page errors', () => {

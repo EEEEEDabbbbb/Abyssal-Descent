@@ -30,8 +30,15 @@ function init() {
   loadSettings();
   applyAllSettings();
   showScreen('title-screen');
+  // Load the big generated ability file in the background (abilities.js)
+  ensureAbilitiesLoaded().catch(err => console.warn(err));
   document.addEventListener('keydown', handleKeyDown);
   window.addEventListener('resize', () => { if (isScreenActive('game-screen')) renderCenterPanel(); });
+  // Tooltips open on hover; on touch screens there is no "hover out", so any
+  // tap or scroll closes them.
+  document.addEventListener('click', hideTooltip, true);
+  document.addEventListener('touchstart', hideTooltip, { capture:true, passive:true });
+  document.addEventListener('scroll', hideTooltip, true);
   // Save on tab close / hide so progress since the last fight isn't lost
   const flushSave = () => { if (G.player && !G.inCombat) autoSaveRun(); };
   window.addEventListener('pagehide', flushSave);
@@ -76,6 +83,11 @@ function startRun() {
     resetRunState();
     G.selectedClass = classId;
     try {
+      if (!window.ABILITIES_GENERATED_LOADED) {
+        showModal('<div class="modal-title">Preparing the descent…</div><div style="text-align:center;color:var(--text-dim)">Loading abilities</div>', false);
+        await ensureAbilitiesLoaded();
+        closeModal();
+      }
       await ensureClassLoaded(classId);
       G.player = createPlayer(classId);
     } catch (err) {
@@ -111,6 +123,12 @@ const MOVE_KEYS = {
 
 function handleKeyDown(e) {
   if (e.ctrlKey || e.altKey || e.metaKey) return;
+  // Keyboard activation for clickable cards (role="button" divs)
+  if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.getAttribute && e.target.getAttribute('role') === 'button' && e.target.tagName !== 'BUTTON') {
+    e.preventDefault();
+    e.target.click();
+    return;
+  }
   const tag = (e.target && e.target.tagName) || '';
   if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
   const key = e.key.length === 1 ? e.key.toLowerCase() : e.key.toLowerCase();
@@ -141,6 +159,7 @@ function handleKeyDown(e) {
 
   if (G.phase === 'explore' && MOVE_KEYS[key]) {
     e.preventDefault();
+    cancelWalk();
     movePlayer(MOVE_KEYS[key][0], MOVE_KEYS[key][1]);
   }
 }

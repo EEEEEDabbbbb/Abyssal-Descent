@@ -14,6 +14,7 @@ async function openGame({ query = '' } = {}) {
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(GAME_URL + query);
   await page.waitForFunction(() => typeof G !== 'undefined' && document.readyState === 'complete');
+  await page.evaluate(() => ensureAbilitiesLoaded());
   return { browser, page, errors };
 }
 

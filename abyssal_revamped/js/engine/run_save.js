@@ -139,6 +139,7 @@ async function ensureClassLoaded(classId) {
 async function _deserialiseRun(data) {
   if (!data || data.version !== RUN_SAVE_VERSION || !data.player) return false;
 
+  await ensureAbilitiesLoaded();
   await ensureClassLoaded(data.player.classId);
   if (!getClassData(data.player.classId)) return false;
 

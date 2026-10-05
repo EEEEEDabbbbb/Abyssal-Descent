@@ -40,7 +40,7 @@ const LOADOUTS = [
   { id:'warrior_kit',   name:"Warrior's Kit",     icon:'⚔️', desc:'Start with a Blood Flask and 20 gold.',    cost:3 },
   { id:'mage_kit',      name:"Arcanist's Satchel",icon:'🪄', desc:'Start with a Mana Crystal and Bone Staff.', cost:4 },
   { id:'survivor_kit',  name:"Survivor's Bundle", icon:'🧪', desc:'Start with 2× Blood Flask and 10 gold.',   cost:5 },
-  { id:'relic_cache',   name:'Relic Cache',        icon:'💜', desc:'Start with a random rare item.',           cost:8 },
+  { id:'relic_cache',   name:'Relic Cache',        icon:'💜', desc:'Start with a random epic item.',           cost:8 },
   { id:'blessed_arms',  name:'Blessed Arms',       icon:'🗡️', desc:'Start with Shadow Dagger equipped.',      cost:6 },
 ];
 

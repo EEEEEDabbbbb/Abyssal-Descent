@@ -26,12 +26,13 @@
 // CONTENT PLACEMENT ORDER (in generateMap):
 //   1. Exit room + guardian tile
 //   2. Boss room (floor % 5 === 0) or secret boss room (checkSecretBossTrigger)
-//   3. Secret room (15% chance per floor)
-//   4. Treasure, shop, event rooms distributed across remaining rooms
-//   5. Enemies filled into every room that has no other content (2-4 per room)
+//   3. Secret room (60% chance per floor, if the BSP produced a spare leaf)
+//   4. Enemies: a floor-wide quota spread over rooms (1-3 per room), then any
+//      still-empty content room gets 2-4
+//   5. Secret room loot, then 1-3 chests (× treasure setting), 2 events, 1 shop
 //
 // FLOOR PROGRESSION:
-//   nextFloor() — saves run, increments G.floor, generates new map, auto-saves
+//   nextFloor() — increments G.floor, resets temporary stats, generates the new map, then auto-saves
 //   Every 5th floor: boss encounter. Boss room uses larger ROOM_TYPES.boss dimensions.
 //
 // SECRET BOSS TRIGGER: checkSecretBossTrigger(floor) in fusion.js
@@ -162,8 +163,8 @@ function bfsReachable(map, sx, sy, tx, ty) {
   const visited=Array.from({length:H},()=>new Uint8Array(W));
   const queue=[[sx,sy]];
   visited[sy][sx]=1;
-  while (queue.length) {
-    const [cx,cy]=queue.shift();
+  for (let head=0; head<queue.length; head++) {
+    const [cx,cy]=queue[head];
     if (cx===tx&&cy===ty) return true;
     for (const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
       const nx=cx+dx,ny=cy+dy;
@@ -385,7 +386,7 @@ function generateMap(floor) {
   }
 
   // ── Secret room ────────────────────────────────────────────
-  // 60% chance to add 1 secret room in a corner of the map
+  // 60% chance to add 1 secret room in a spare BSP leaf
   if (rand(100) < 60 && leaves.length > targetRooms + 3) {
     const secretLeaf = leaves[targetRooms + 2];
     const secretRoom = placeRoomInLeaf(secretLeaf, 'secret');
@@ -543,7 +544,7 @@ function generateMap(floor) {
   // Fall back to any available room if contentRooms is empty
   const placementRooms = contentRooms.length > 0 ? contentRooms : [bossRoom, exitRoom].filter(Boolean);
 
-  // Base treasures: ~3-5 per floor on normal
+  // Base treasures: 1-3 per floor on normal (scaled by the treasure setting)
   const treasureCount = Math.round(randRange(1, 3) * treasureMult);
   for (let t = 0; t < treasureCount; t++) {
     if (!placementRooms.length) break;
@@ -552,7 +553,7 @@ function generateMap(floor) {
     if (tc) { map[tc.y][tc.x].content = 'treasure'; map[tc.y][tc.x].item = getRandomItemByFloor(floor); }
   }
 
-  // Events: ~2-4 per floor
+  // Events: 2 per floor
   const eventCount = 2;
   for (let e = 0; e < eventCount; e++) {
     if (!placementRooms.length) break;
@@ -561,7 +562,7 @@ function generateMap(floor) {
     if (ec) { map[ec.y][ec.x].content = 'event'; map[ec.y][ec.x].event = EVENTS[rand(EVENTS.length)]; }
   }
 
-  // Shops: 1-2 per floor
+  // Shops: 1 per floor
   const shopCount = 1;
   for (let s = 0; s < shopCount; s++) {
     if (!placementRooms.length) break;

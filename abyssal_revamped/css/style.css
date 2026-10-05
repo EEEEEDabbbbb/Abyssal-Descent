@@ -561,7 +561,7 @@
     border: 1px solid var(--border-dim);
   }
 
-  .stat-item-name { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+  .stat-item-name { font-family: 'Cinzel', serif; font-size:0.6rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
   .stat-item-val { font-size: 0.85rem; color: var(--text-bright); margin-top: 0.1rem; }
   .stat-item-val.buffed { color: var(--text-green); }
   .stat-item-val.debuffed { color: var(--text-crimson); }
@@ -621,7 +621,7 @@
 
   .abn { font-family: 'Cinzel', serif; font-size: 0.65rem; display: block; color: inherit; }
   .ab-cost { font-size: 0.6rem; color: var(--text-dim); display: flex; gap: 0.3rem; margin-top: 0.15rem; }
-  .ab-cd { font-size: 0.55rem; color: var(--text-crimson); position: absolute; top: 0.2rem; right: 0.3rem; font-family: 'Cinzel', serif; }
+  .ab-cd { font-size:0.6rem; color: var(--text-crimson); position: absolute; top: 0.2rem; right: 0.3rem; font-family: 'Cinzel', serif; }
 
   /* BASIC ACTIONS */
   .basic-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
@@ -862,7 +862,7 @@
   .item-type { font-size: 0.65rem; color: var(--text-dim); margin-bottom: 0.2rem; }
   .item-desc { font-size: 0.7rem; color: var(--text-mid); font-style: italic; line-height: 1.4; }
   .item-rarity {
-    font-family: 'Cinzel', serif; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.05em;
+    font-family: 'Cinzel', serif; font-size:0.6rem; text-transform: uppercase; letter-spacing: 0.05em;
   }
   .item-rarity.common { color: var(--text-dim); }
   .item-rarity.uncommon { color: var(--text-green); }
@@ -883,7 +883,7 @@
     padding: 0.4rem;
     min-height: 45px;
   }
-  .equip-slot-name { font-family: 'Cinzel', serif; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 0.15rem; }
+  .equip-slot-name { font-family: 'Cinzel', serif; font-size:0.6rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim); margin-bottom: 0.15rem; }
   .equip-slot-item { font-size: 0.68rem; color: var(--text-mid); }
   .equip-slot-item.equipped { color: var(--accent-gold); }
 
@@ -1388,10 +1388,10 @@
   .loadout-cost { font-family: 'Cinzel', serif; font-size: 0.72rem; color: var(--accent-gold); white-space: nowrap; }
 
   /* ═══ TALENT DUAL COST ═══ */
-  .talent-dual-cost { display: flex; gap: 0.5rem; font-size: 0.58rem; margin-top: 0.2rem; }
+  .talent-dual-cost { display: flex; gap: 0.5rem; font-size:0.6rem; margin-top: 0.2rem; }
   .talent-cost-shard { color: var(--accent-teal-bright); }
   .talent-cost-pts { color: var(--accent-gold); }
-  .talent-locked-msg { font-size: 0.58rem; color: var(--text-crimson); margin-top: 0.2rem; }
+  .talent-locked-msg { font-size:0.6rem; color: var(--text-crimson); margin-top: 0.2rem; }
 
   /* Combo indicator */
   .combo-display {
@@ -1526,7 +1526,7 @@
 /* Stats grid */
 #stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.25rem; }
 .stat-item { display:flex; flex-direction:column; padding:0.25rem 0.4rem; background:var(--bg-card); border:1px solid var(--border-dim); }
-.stat-item-name { font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); }
+.stat-item-name { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); }
 .stat-item-val { font-size:0.82rem; color:var(--text-bright); margin-top:0.05rem; }
 .stat-item-val.buffed { color:var(--text-green); }
 .stat-item-val.debuffed { color:var(--text-crimson); }
@@ -1616,7 +1616,7 @@
 .buy-btn.disabled-btn, .buy-btn:disabled { color:var(--text-dim); border-color:var(--border-dim); cursor:not-allowed; }
 
 /* Item rarity badges */
-.item-rarity-badge { font-family:'Cinzel',serif; font-size:0.52rem; text-transform:uppercase; letter-spacing:0.05em; }
+.item-rarity-badge { font-family:'Cinzel',serif; font-size:0.6rem; text-transform:uppercase; letter-spacing:0.05em; }
 .item-rarity-badge.common   { color:var(--text-dim); }
 .item-rarity-badge.uncommon { color:var(--text-green); }
 .item-rarity-badge.rare     { color:var(--text-violet); }
@@ -2135,7 +2135,7 @@
   display:flex; align-items:center; gap:0.3rem;
 }
 .coll-section-header .coll-section-count {
-  font-size:0.55rem;
+  font-size:0.6rem;
   color:var(--text-dim);
   opacity:0.7;
 }
@@ -2179,7 +2179,7 @@
   position:absolute;
   top:0.4rem; right:0.4rem;
   font-family:'Cinzel',serif;
-  font-size:0.5rem;
+  font-size:0.6rem;
   letter-spacing:0.06em;
   text-transform:uppercase;
   padding:1px 5px;
@@ -2192,7 +2192,7 @@
 .coll-stars {
   display:flex; gap:1px; margin-top:2px; margin-bottom:4px;
 }
-.coll-star { font-size:0.55rem; color:var(--star-color,var(--text-dim)); line-height:1; }
+.coll-star { font-size:0.6rem; color:var(--star-color,var(--text-dim)); line-height:1; }
 .coll-star.empty { opacity:0.15; }
 
 /* Level badge on card */
@@ -2200,13 +2200,13 @@
   position:absolute;
   bottom:0.4rem; right:0.4rem;
   font-family:'Cinzel',serif;
-  font-size:0.55rem;
+  font-size:0.6rem;
   color:var(--badge-color,var(--text-dim));
 }
 
 /* Fusion tag */
 .coll-fusion-tag {
-  font-size:0.58rem;
+  font-size:0.6rem;
   color:#cc00ff;
   margin-bottom:2px;
   letter-spacing:0.02em;
@@ -2446,4 +2446,54 @@
 #center-panel.shake-3 { animation: shake-large 0.4s; }
 
 /* Hotkey number on ability buttons */
-.ability-btn .ab-key { position:absolute; bottom:2px; right:4px; font-size:0.55rem; opacity:0.45; }
+.ability-btn .ab-key { position:absolute; bottom:2px; right:4px; font-size:0.6rem; opacity:0.45; }
+
+/* Floating numbers overlay (spawnFloat in render.js) */
+#float-layer { position:fixed; inset:0; pointer-events:none; z-index:600; overflow:hidden; }
+
+/* On-screen d-pad (explore view) */
+.dpad { position:absolute; right:0.6rem; bottom:0.6rem; width:96px; height:96px; display:grid;
+  grid-template-columns:repeat(3,32px); grid-template-rows:repeat(3,32px); opacity:0.75; z-index:5; }
+.dpad:hover, .dpad:focus-within { opacity:1; }
+.dpad-btn { background:rgba(10,8,14,0.85); border:1px solid var(--border); color:var(--accent-gold);
+  border-radius:4px; font-size:0.8rem; cursor:pointer; padding:0; touch-action:manipulation; }
+.dpad-btn:active { background:var(--bg-hover); }
+.dpad-up    { grid-column:2; grid-row:1; }
+.dpad-left  { grid-column:1; grid-row:2; }
+.dpad-right { grid-column:3; grid-row:2; }
+.dpad-down  { grid-column:2; grid-row:3; }
+.map-viewport { cursor:pointer; }
+@media (hover:none), (max-width:700px) {
+  .dpad { width:138px; height:138px; grid-template-columns:repeat(3,46px); grid-template-rows:repeat(3,46px); opacity:0.9; }
+  .dpad-btn { font-size:1.1rem; }
+  .explore-hint { display:none; }
+}
+
+/* ── Phone layout ──────────────────────────────────────────────
+   Must target #game-screen.active: the desktop grid above uses that
+   selector, so a plain #game-screen rule never wins. Map first, then the
+   action bar, character, and log; the page scrolls. */
+@media (max-width:700px) {
+  body { overflow:auto; }
+  #game-screen.active {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+  #hud-row      { grid-column:1; grid-row:1; position:sticky; top:0; z-index:20; }
+  #center-panel { grid-column:1; grid-row:2; overflow:visible; }
+  #left-panel   { grid-column:1; grid-row:3; border-right:none; border-top:1px solid var(--border-dim); }
+  #right-panel  { grid-column:1; grid-row:4; border-left:none; border-top:1px solid var(--border-dim); max-height:40vh; }
+  #dungeon-view { min-height:55vh !important; }
+  .action-panel { max-height:none !important; overflow:visible !important; }
+  .action-area  { flex-direction:column !important; align-items:stretch !important; }
+  .action-area > div { width:100% !important; }
+  .actions-column { width:100% !important; }
+  #basic-actions { display:grid; grid-template-columns:repeat(3,1fr); gap:0.3rem; }
+  #abilities-grid { grid-template-columns:1fr 1fr; }
+}
+
+/* D-pad: make the buttons read clearly against the dark map */
+.dpad-btn { border-color: var(--accent-gold-dim); box-shadow: 0 0 6px rgba(0,0,0,0.6); }

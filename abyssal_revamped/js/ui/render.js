@@ -101,11 +101,10 @@ function renderStatsGrid() {
        </div>`;
   }).join('');
   document.getElementById('stats-grid').innerHTML = [
-    {name:'ATK',  val:p.stats.atk},
-    {name:'DEF',  val:p.stats.def},
-    {name:'SPD',  val:p.stats.spd},
+    {name:'ATK',  val:Math.round(p.stats.atk)},
+    {name:'DEF',  val:Math.round(p.stats.def)},
+    {name:'SPD',  val:Math.round(p.stats.spd)},
     {name:'CRIT', val:p.stats.crit+'%'},
-    {name:'GOLD', val:p.gold},
   ].map(s=>`<div class="stat-item"><div class="stat-item-name">${s.name}</div><div class="stat-item-val">${s.val}</div></div>`).join('')
   + (elObj ? `<div class="stat-item" style="grid-column:span 2"><div class="stat-item-name">Element</div><div class="stat-item-val" style="color:${elObj.color}">${elObj.icon} ${elObj.name}${elementFlavorText(getClassData(p.classId))}</div></div>` : '')
   + passiveHtml;
@@ -273,7 +272,7 @@ function renderInventory() {
   // Disable item clicks during enemy turn to prevent accidental modal-open while overlay may be pending
   const itemClickable = !(G.inCombat && G.turn !== 'player');
   grid.innerHTML = p.inventory.map((item,i)=>`
-    <div class="item-card" ${itemClickable ? `onclick="openItemMenu(${i})"` : ''} style="${itemClickable ? '' : 'opacity:0.6;cursor:default;'}"
+    <div class="item-card" ${itemClickable ? `onclick="openItemMenu(${i})" role="button" tabindex="0" aria-label="${item.name.replace(/"/g,'&quot;')} (${item.rarity} ${item.type})"` : ''} style="${itemClickable ? '' : 'opacity:0.6;cursor:default;'}"
       onmouseenter="showTooltip(event,'${item.name.replace(/'/g,'`')}','${item.desc.replace(/'/g,'`')}')"
       onmouseleave="hideTooltip()">
       <div class="item-rarity ${item.rarity}" style="position:absolute;top:0.3rem;right:0.4rem">${item.rarity}</div>
@@ -304,7 +303,7 @@ function renderEquipmentSlots() {
       ? `<div style="font-size:0.6rem;color:${elObj?.color||'#ffaa00'};margin-top:1px">⚔ Affinity: ${slotAffinityAbils.map(id=>ABILITIES[id]?.name||id).join(', ')}</div>`
       : '';
     const unequipBtn = item && !item.permanent
-      ? `<button onclick="event.stopPropagation();unequipItem('${s.slot}')" style="font-size:0.55rem;padding:1px 4px;margin-top:3px;background:var(--bg-deep);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;border-radius:2px" title="Unequip">↑ unequip</button>`
+      ? `<button onclick="event.stopPropagation();unequipItem('${s.slot}')" style="font-size:0.6rem;padding:1px 4px;margin-top:3px;background:var(--bg-deep);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;border-radius:2px" title="Unequip">↑ unequip</button>`
       : '';
     return `<div class="equip-slot"
       onmouseenter="${item?`showTooltip(event,'${(item.name||'').replace(/'/g,'`')} ${elIcon}','${(item.desc||'').replace(/'/g,'`')}')`:'null'}"
@@ -334,7 +333,7 @@ function renderAbilities() {
     // Affinity glow: any equipped item's element matches the ability (same rule as combat)
     const hasAffinity = affinityFor(p, ab) > 1;
     const affinityStyle = hasAffinity ? `box-shadow:0 0 6px 2px ${elObj?.color||'#ffaa00'}88;` : '';
-    const affinityBadge = hasAffinity ? `<span style="position:absolute;top:2px;right:3px;font-size:0.55rem;color:${elObj?.color||'#ffaa00'}" title="Weapon Affinity +20%">⚔</span>` : '';
+    const affinityBadge = hasAffinity ? `<span style="position:absolute;top:2px;right:3px;font-size:0.6rem;color:${elObj?.color||'#ffaa00'}" title="Weapon Affinity +20%">⚔</span>` : '';
     return `<button class="ability-btn ${onCd?'on-cooldown':''}"
       style="--ability-color:${ab.color||'var(--accent-violet)'};${affinityStyle}position:relative"
       ${disabled?'disabled':''}
@@ -492,6 +491,9 @@ function renderPackCombatView(view, enemies) {
 }
 
 // ── Explore / map view ────────────────────────────────────────
+// Only the tiles that can be on screen are rendered (a late-game map can have
+// 10,000+ tiles). Click/tap a revealed tile to walk there; the d-pad and
+// WASD/arrow keys step one tile.
 function renderExploreView(view) {
   if (!G.map) { view.innerHTML='<div style="color:var(--text-dim);text-align:center;padding:2rem">Generating dungeon...</div>'; return; }
 
@@ -499,35 +501,45 @@ function renderExploreView(view) {
   const {x:px,y:py} = G.playerPos;
   const viewW = (view.clientWidth  || view.offsetWidth  || 400);
   const viewH = (view.clientHeight || view.offsetHeight || 320);
+  const mapH  = viewH - 36;
+  const biome = getBiomeForFloor(G.floor);
 
-  let html = `<div class="explore-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;padding:0 0.25rem">
-    <span style="font-size:0.7rem;color:var(--text-dim)">${G.floor<=7?'Surface Ruins':G.floor<=20?'The Deep':G.floor<=35?'Brutal Abyss':'The Abyssal Depths'} — Floor ${G.floor}</span>
-    <span style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / ↑↓←→ to move</span>
+  const halfCols = Math.ceil(viewW / cellSize / 2) + 2;
+  const halfRows = Math.ceil(mapH / cellSize / 2) + 2;
+  const x0 = Math.max(0, px - halfCols), x1 = Math.min(G.mapW - 1, px + halfCols);
+  const y0 = Math.max(0, py - halfRows), y1 = Math.min(G.mapH - 1, py + halfRows);
+
+  let html = `<div class="explore-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;padding:0 0.25rem;width:100%">
+    <span style="font-size:0.7rem;color:var(--text-dim)">${biome.name} — Floor ${G.floor}</span>
+    <span class="explore-hint" style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / arrows, or tap a tile</span>
     <span style="font-size:0.7rem;color:var(--text-dim)">${getFloorTier(G.floor).toUpperCase()}</span>
   </div>`;
 
-  html += `<div class="map-viewport" style="width:100%;height:${viewH-36}px;overflow:hidden;position:relative;background:#0a080e;border:1px solid var(--border)">
-    <div class="map-inner" id="map-inner" style="position:absolute;transition:transform 0.12s;transform:translate(${Math.round(viewW/2-px*cellSize-cellSize/2)}px,${Math.round((viewH-36)/2-py*cellSize-cellSize/2)}px)">`;
+  html += `<div class="map-viewport" style="width:100%;height:${mapH}px;overflow:hidden;position:relative;background:#0a080e;border:1px solid var(--border)">
+    <div class="map-inner" id="map-inner" style="position:absolute;transition:transform 0.12s;transform:translate(${Math.round(viewW/2-px*cellSize-cellSize/2)}px,${Math.round(mapH/2-py*cellSize-cellSize/2)}px)">`;
 
-  for (let y=0;y<G.mapH;y++) {
-    for (let x=0;x<G.mapW;x++) {
+  const fontSize = Math.max(10, cellSize*0.5);
+  for (let y=y0; y<=y1; y++) {
+    for (let x=x0; x<=x1; x++) {
       const cell = G.map[y][x];
-      if (!cell.revealed) { html+=`<div class="mc wall fog" style="left:${x*cellSize}px;top:${y*cellSize}px;width:${cellSize}px;height:${cellSize}px;position:absolute"></div>`; continue; }
+      const pos = `left:${x*cellSize}px;top:${y*cellSize}px;width:${cellSize}px;height:${cellSize}px`;
+      if (!cell.revealed) { html+=`<div class="mc wall fog" style="position:absolute;${pos}"></div>`; continue; }
       const isPlayer = x===px&&y===py;
+      const hiddenSecret = cell.secret && !cell.secretRevealed && !isPlayer;
       let cls='mc'; let inner=''; let bg=''; let title='';
-      if (cell.type==='wall') {
+      if (cell.type==='wall' || hiddenSecret) {
+        // Undiscovered secret rooms look exactly like wall until you find them
         cls+=' wall'; bg='background:var(--map-wall)';
-        if (cell.secretHint&&!cell.secretRevealed) { cls+=' secret-hint'; }
+        if (cell.secretHint && cell.secretHintRevealed) cls+=' secret-hint';
       } else {
         cls+=' floor'; bg='background:var(--map-floor)';
         if (cell.visited) bg='background:var(--map-floor-visited)';
         if (cell.isCorridor) bg='background:var(--map-corridor)';
-        if (cell.secret&&!cell.secretRevealed) cls+=' secret-cell';
         if (isPlayer) { cls+=' player-cell'; inner='<div class="player-dot"></div>'; }
         else {
           switch(cell.content) {
             case 'enemy':    cls+=' enemy-cell';   inner=cell.enemies?'👥':'👾'; title=cell.enemies?`Enemy Pack (${cell.enemies.length})`:(cell.enemy?.name||'Enemy'); break;
-            case 'boss': case 'boss_active': cls+=' boss-cell'; inner='💀'; title='BOSS'; break;
+            case 'boss': case 'boss_active': cls+=' boss-cell'; inner='💀'; title=cell.enemy?.isGuardian?'Guardian':'BOSS'; break;
             case 'treasure': cls+=' treasure-cell'; inner='◆'; title='Treasure'; break;
             case 'shop':     cls+=' shop-cell';     inner='🏪'; title='Shop'; break;
             case 'event':    cls+=' event-cell';    inner='?'; title='Event'; break;
@@ -535,14 +547,80 @@ function renderExploreView(view) {
             case 'exit_locked':case 'boss_exit': cls+=' exit-locked-cell'; inner='🔒'; title='Exit (Locked)'; break;
             case 'start':    cls+=' start-cell'; break;
           }
+          if (!inner && cell.droppedItems && cell.droppedItems.length) { inner='🎒'; title=`Items on the ground (${cell.droppedItems.length})`; }
         }
       }
-      html+=`<div class="${cls}" title="${title}" style="position:absolute;left:${x*cellSize}px;top:${y*cellSize}px;width:${cellSize}px;height:${cellSize}px;${bg};font-size:${Math.max(10,cellSize*0.5)}px;display:flex;align-items:center;justify-content:center">${inner}</div>`;
+      html+=`<div class="${cls}" data-x="${x}" data-y="${y}" title="${title}" style="position:absolute;${pos};${bg};font-size:${fontSize}px;display:flex;align-items:center;justify-content:center">${inner}</div>`;
     }
   }
   html+='</div></div>';
+  html+=`<div class="dpad" aria-label="Movement">
+    <button class="dpad-btn dpad-up"    aria-label="Move up"    onclick="cancelWalk();movePlayer(0,-1)">▲</button>
+    <button class="dpad-btn dpad-left"  aria-label="Move left"  onclick="cancelWalk();movePlayer(-1,0)">◀</button>
+    <button class="dpad-btn dpad-right" aria-label="Move right" onclick="cancelWalk();movePlayer(1,0)">▶</button>
+    <button class="dpad-btn dpad-down"  aria-label="Move down"  onclick="cancelWalk();movePlayer(0,1)">▼</button>
+  </div>`;
 
   view.innerHTML = html;
+  const vp = view.querySelector('.map-viewport');
+  if (vp) vp.onclick = ev => {
+    const tile = ev.target.closest('.mc[data-x]');
+    if (tile) walkTo(+tile.dataset.x, +tile.dataset.y);
+  };
+}
+
+// ── Click-to-move ─────────────────────────────────────────────
+// walkTo — pathfinds over revealed tiles and walks there one step at a time.
+// Stops at anything interesting (fights, events, shops…) or if you act.
+let _walkTimer = null;
+function cancelWalk() { clearTimeout(_walkTimer); _walkTimer = null; }
+
+function walkTo(tx, ty) {
+  cancelWalk();
+  if (!G.map || G.phase !== 'explore' || G.inCombat) return;
+  const path = findPath(G.playerPos.x, G.playerPos.y, tx, ty);
+  if (!path || !path.length) return;
+  const step = () => {
+    if (!path.length || G.phase !== 'explore' || G.inCombat || document.getElementById('overlay').classList.contains('active')) { cancelWalk(); return; }
+    const [nx, ny] = path.shift();
+    const before = { ...G.playerPos };
+    movePlayer(nx - before.x, ny - before.y);
+    if (G.playerPos.x !== nx || G.playerPos.y !== ny) { cancelWalk(); return; } // blocked
+    _walkTimer = setTimeout(step, 70);
+  };
+  step();
+}
+
+// findPath — BFS over revealed walkable tiles. Only the destination may hold
+// content, so a walk never blunders into a fight or shop on the way.
+function findPath(sx, sy, tx, ty) {
+  const passable = (x, y, isGoal) => {
+    const c = G.map[y] && G.map[y][x];
+    if (!c || !c.revealed || c.type === 'wall') return false;
+    if (c.secret && !c.secretRevealed) return false;
+    if (c.content === 'exit_locked' || c.content === 'boss_exit') return false;
+    const busy = c.content && !['visited','start','player'].includes(c.content);
+    return isGoal || !busy;
+  };
+  if (!passable(tx, ty, true)) return null;
+  const key = (x, y) => y * G.mapW + x;
+  const prev = new Map([[key(sx, sy), null]]);
+  const queue = [[sx, sy]];
+  for (let head = 0; head < queue.length; head++) {
+    const [x, y] = queue[head];
+    if (x === tx && y === ty) break;
+    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+      const nx = x + dx, ny = y + dy, k = key(nx, ny);
+      if (nx < 0 || ny < 0 || nx >= G.mapW || ny >= G.mapH || prev.has(k)) continue;
+      if (!passable(nx, ny, nx === tx && ny === ty)) continue;
+      prev.set(k, [x, y]);
+      queue.push([nx, ny]);
+    }
+  }
+  if (!prev.has(key(tx, ty))) return null;
+  const path = [];
+  for (let cur = [tx, ty]; cur && !(cur[0] === sx && cur[1] === sy); cur = prev.get(key(cur[0], cur[1]))) path.unshift(cur);
+  return path;
 }
 
 // ── Right panel (log) ─────────────────────────────────────────
@@ -582,15 +660,22 @@ function screenShake(intensity = 1) {
 }
 
 // ── Floating damage numbers ───────────────────────────────────
+// Floats live in a fixed overlay layer positioned over their target, so the
+// constant re-rendering of panels can't wipe them before they're seen.
 function spawnFloat(text, type, containerId) {
   if (!S.dmgNumbers) return;
-  const container = document.getElementById(containerId);
-  if (!container) return;
+  const target = document.getElementById(containerId);
+  if (!target) return;
+  const rect = target.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  let layer = document.getElementById('float-layer');
+  if (!layer) { layer = document.createElement('div'); layer.id = 'float-layer'; document.body.appendChild(layer); }
   const el = document.createElement('div');
   el.className = `float-num ${type}`;
   el.textContent = type==='damage'?`-${text}`:type==='heal'?`+${text}`:text;
-  el.style.cssText = `left:${20+rand(60)}%;top:${10+rand(40)}%;`;
-  container.appendChild(el);
+  el.style.left = `${rect.left + rect.width * (0.2 + Math.random() * 0.6)}px`;
+  el.style.top  = `${rect.top + rect.height * (0.1 + Math.random() * 0.4)}px`;
+  layer.appendChild(el);
   setTimeout(()=>el.remove(), 1200);
 }
 

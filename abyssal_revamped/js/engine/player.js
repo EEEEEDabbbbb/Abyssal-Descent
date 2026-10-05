@@ -430,9 +430,9 @@ function applyLoadout(player) {
       logEntry('reward',"Survivor's Bundle: 2× Blood Flask + 10 gold.");
       break;
     case 'relic_cache': {
-      const rare = getRandomItem('rare');
-      addToInventory(rare);
-      logEntry('reward',`Relic Cache: ${rare.name} found!`);
+      const epic = getRandomItem('epic');
+      addToInventory(epic);
+      logEntry('reward',`Relic Cache: ${epic.name} found!`);
       break;
     }
     case 'blessed_arms': {

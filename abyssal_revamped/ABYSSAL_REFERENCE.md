@@ -9,25 +9,28 @@
 ABYSSAL is a browser-based roguelike dungeon crawler where you descend a procedurally generated dungeon floor by floor, fighting enemies in turn-based combat, collecting loot, levelling up, and pushing toward Floor 50 to face the Abyssal God. Each run is distinct due to BSP map generation, randomised item drops, and a floor-scaling difficulty system.
 
 - **Difficulty Tiers:** Normal → Hard → Brutal → Abyssal — each tier scales enemy ATK, DEF, and HP significantly (×1.0 / ×1.25 / ×1.6 / ×2.0 base stat multiplier).
-- **Milestone Floors:** Boss floors every 5th floor apply an additional ×1.5 stat multiplier and trigger phase-based boss fights.
+- **Bosses & Milestones:** Every 5th floor is a boss floor with a phase-based boss fight. Milestone floors (10, 20, 25, 30, 40, 50) apply an additional ×1.5 stat multiplier. Other floors lock their exit behind a Guardian.
+- **World settings:** Difficulty (Normal ×1.0 / Hard ×1.3 / Nightmare ×1.7 enemy HP & ATK), room count, enemy density, treasure rate and map size are chosen per run. New Game+ adds +30% enemy HP & ATK per cycle.
 - **Win Condition:** Defeat THE ABYSSAL GOD on Floor 50. Doing so unlocks The Abyssal One class and grants the Crown of the Abyss relic permanently.
 
 ---
 
-## 🧙 Classes — 639 Total
+## 🧙 Classes — 41 base & secret, 3 abyssal, 630 fusions
 
 The class roster is split into four categories: **Base** (unlocked via Soul Shards or free), **Secret** (unlocked by defeating secret bosses), **Abyssal** (endgame unlocks), and **Fusion** (crafted by combining two classes in the Fusion Lab).
 
 ### Class Systems
 
 Each class has:
-- **8 class abilities** — unique to that class
+- **4–8 class abilities** — unique to that class (hotkeys 1–9)
 - **1 burst ability** — charged via combo meter (fills at 5 charges); powerful damage at 500–800% ATK
-- **1 passive** (base classes) or **2 passives** (fusion classes) — always-active combat bonuses
+- **1 passive** (base classes) or **2 passives** (fusion classes) — always-active combat bonuses; hover a passive in the stats panel for exactly what it does
 - **Weapon Arts** — equipping a weapon with a different element than your class swaps your abilities to a matching Arts set, enabling massive build variety across 40+ element combinations
 
 ### Class Levelling & Fusion
-Each class has a level (max 20) that persists across runs. Reaching level 10 on two classes enables you to fuse them in the Fusion Lab, creating a new class with both parents' abilities and two passives.
+Each class has a level (max 20) that persists across runs, earned through Class XP from every fight won with that class. Reaching level 20 on two classes enables you to fuse them in the Fusion Lab, creating a new class with both parents' abilities and two passives.
+
+Run levels are separate: each level-up grants stats weighted by your class's strengths (its HP/MP/ATK/DEF/SPD ratings) and 2 Talent Points for this run.
 
 ---
 
@@ -121,7 +124,7 @@ The rarest classes — each requires exceptional progression to access.
 
 ---
 
-### Fusion Classes (595)
+### Fusion Classes (630)
 
 Created in the Fusion Lab by combining any two unlocked base or secret classes, both at level 10 or higher. Fusion classes inherit a mix of both parents' abilities and gain two passives.
 
@@ -144,7 +147,7 @@ Created in the Fusion Lab by combining any two unlocked base or secret classes, 
 
 ---
 
-## 👾 Enemies — 91 Total (81 Regular + 10 Bosses)
+## 👾 Enemies — 80 Total (70 Regular + 10 Bosses), plus 5 Secret Bosses
 
 ### Regular Enemies
 
@@ -159,7 +162,11 @@ All enemies scale with floor depth: base stats are multiplied by floor tier (×1
 **Tier 3 — Floors 21–50 (25 enemies)**
 👿 Void Demon · 👻 Screaming Banshee · 🗿 Abyss Golem · ⚔️ Dread Knight · 🌪️ Chaos Elemental · 🦑 Abyssal Horror · 💀 Elder Lich · 🪨 Stone Golem · 🦅 Sky Predator · 🧊 Glacier Titan · 🔮 Void Witch · ⛈️ Storm Giant · ☠️ Plague Knight · 🐲 Abyssal Hydra · 🔥 Flame Archon · 🗜️ Iron Colossus · 💀 Death Specter · 🌳 Verdant Colossus · 🩸 Crimson Revenant · 🌀 Abyssal Djinn · 🐉 Tempest Wyrm · 🦀 Deep Tyrant · 🖤 Null Knight · 🦅 Abyssal Phoenix · 🔱 Runic Colossus
 
-### Enemy Ability Types (14 patterns)
+### Enemy Ability Types (34 patterns)
+
+Enemies telegraph their next move ("Next: …"). They lean on pressure moves when you're below 30% HP and on drain moves when they are. 12% of enemies from floor 3 are Elite (×1.4 stats, better rewards); from floor 4, 16% of encounters are 2-enemy packs (each at 70% stats and rewards). Enemy attacks carry their element.
+
+The first 14:
 
 | Ability | Effect |
 |---|---|
@@ -177,6 +184,10 @@ All enemies scale with floor depth: base stats are multiplied by floor tier (×1
 | `infernal_breath` | Fire element hit + Scorched debuff |
 | `void_tear` | Shield-piercing void attack |
 | `enrage_strike` | Damage scales with enemy's own missing HP |
+
+Also: Summon (drain) · Frost Bite · Blizzard · Thunder Clap · Lightning Chain · Spore Cloud · Entangle · Acid Spray · Sandstorm · Heat Wave · Deep Dive · Undertow · Talon Rake · Earthshatter · Rust · Mind Spike · Soul Rend · Channel Burst (two-turn wind-up, punishable) · Summon Ally (lingering minion damage) · Culling Strike (scales with your debuffs). All their stat penalties wear off when they expire, and always when the fight ends.
+
+**Bosses** resist executes (an execute can take at most 15% of their max HP at once) and gain 2 turns of stun immunity after being stunned. You can't flee bosses or guardians.
 
 ---
 
@@ -302,18 +313,18 @@ Secret bosses never spawn on boss floors (5, 10, 15, etc.) and cannot trigger mo
 
 ---
 
-## 🎒 Items — 240 Total
+## 🎒 Items — 239 Total
 
-Items span 7 rarity tiers: Common → Uncommon → Rare → Epic → Legendary → Mythical → Divine. Drop quality scales with floor depth — mostly Common/Uncommon early, Legendary/Mythical regularly by Floor 20+, with Divine drops possible from Floor 40 onward.
+Items span 7 rarity tiers: Common → Uncommon → Rare → Epic → Legendary → Mythical → Divine. Drop quality rises steadily with floor depth (it never gets worse deeper down) — mostly Common/Uncommon early, Epic/Legendary regularly by Floor 20+, Divine increasingly common from Floor 30.
 
 | Category | Count | Slot |
 |---|---|---|
-| Consumables | 55 | Inventory (use in combat or from map) |
-| Weapons | 57 | Weapon slot (grants element, stats, special effects) |
-| Armor | 58 | Armor slot (DEF, HP, MP, special effects) |
-| Relics | 57 + 1 conquest | Relic slot (passive always-on effects) |
+| Consumables | 60 | Inventory (use in combat or from map) |
+| Weapons | 60 | Weapon slot (grants element, stats, special effects) |
+| Armor | 60 | Armor slot (DEF, HP, MP, special effects) |
+| Relics | 59 + 1 conquest | Relic slot (passive always-on effects) |
 
-*(Full item tables — consumables, weapons, armor, relics — are unchanged from the previous document. All 240 entries remain current.)*
+Inventory holds 12 items. When it's full, new loot is left on the ground where you stand (🎒 on the map) — step back onto the tile to pick it up. Using or equipping an item during a fight takes your turn.
 
 ---
 
@@ -331,29 +342,35 @@ Maps are procedurally generated using BSP (Binary Space Partitioning), creating 
 | Secret | Hidden rooms discoverable during exploration; contain bonus loot; nearby walls show faint visual hints |
 | Exit | Staircase to the next floor; guarded until boss/guardian is defeated |
 
-The map is fog-of-war; tiles reveal as you walk within range. The full map can be revealed via the Ancient Tome event (spend 15 MP).
+The map is fog-of-war; tiles reveal as you walk within range. Secret rooms look like solid wall until you step inside; walls nearby sometimes give a hint. The full map can be revealed via the Dark Altar event (spend MP). Move with WASD/arrows, the on-screen pad, or by tapping a revealed tile.
 
 ---
 
-## 📖 Random Events — 7 Types
+## 📖 Random Events — 13 Types
 
-Discovered during floor exploration. Each event offers 3 choices with distinct risk/reward tradeoffs.
+Discovered during floor exploration. Costs and rewards scale with depth (shown values are floor 1).
 
 | Event | Choices |
 |---|---|
-| ⛩️ Dark Altar | Spend 20 HP for +4 ATK / +2 SPD · Spend 15 MP to reveal full map · Leave |
-| 👤 Wandering Soul | Buy random Uncommon (30 gold) · Trade inventory item for higher rarity · Ignore |
-| 👁️ Chamber of Curses | Embrace curse (+5 ATK, -5 DEF, cursed) · Resist (take 20 dmg, gain 40 gold) · Flee |
-| 💧 Font of Healing | Full HP restore · 50% HP+MP restore · Take a free Health Potion |
-| 📕 Ancient Tome | Gain 60 XP · Absorb random +3 stat boost · Destroy for 15 gold |
-| 🌀 Soul Well | +15 max HP / +10 max MP · Gain 25 Soul Shards · Leave |
-| 🗿 Mysterious Statue | 50/50 blessing or -10 HP · Smash for 20 gold (take 5 dmg) · Ignore |
+| ⛩️ Dark Altar | Spend 20% max HP for +ATK / +SPD · Spend MP to reveal the full map · Leave |
+| 👤 Wandering Soul | Buy a random item for this floor · Trade an inventory item for a higher rarity · Ignore |
+| 👁️ Chamber of Curses | Embrace (+ATK permanently, −DEF for 3 floors) · Resist (take damage, gain gold) · Flee |
+| 💧 Font of Healing | Full HP restore · Restore half of missing HP+MP · Take a Blood Flask |
+| 📕 Ancient Tome | Gain XP (60% of a level) · Absorb a random +2 stat · Destroy for gold |
+| 🌀 Soul Well | +max HP / +max MP · Gain Soul Shards · Leave |
+| 🗿 Mysterious Statue | 50/50: +1 ATK/DEF/SPD or lose HP · Smash for gold (take damage) · Ignore |
+| 🎲 The Bone Gambler | Wager gold (50%: double) · Wager HP for a prize · Walk away |
+| 🛡️ Rusted Armory | Search for gear (30% trap) · Salvage for gold · Leave |
+| ⛲ Crimson Fountain | Full heal for −max HP for 3 floors · +ATK for 3 floors for 20% HP · Leave |
+| 👻 Trapped Spirit | Free it (+1 Talent Point) · Bind it (+3 CRIT permanently, −MP) · Leave |
+| 🧝 Wounded Adventurer | Give a Blood Flask for a good item · Bandage (−HP, +XP) · Rob (+gold, −1 DEF) |
+| 🧰 Whispering Chest | Open (60% great loot, 40% mimic bite) · Leave |
 
 ---
 
 ## 🧪 Status Effects
 
-A robust system of buffs and debuffs persist turn-to-turn with per-turn callbacks. Status interactions are core to class identity and build strategy.
+Buffs and debuffs last the number of turns shown (counted on their owner's turns) and run per-turn effects such as damage-over-time. Every status — and every temporary stat change — ends when the fight ends; only level-ups, talents, gear, events and Shard Emporium upgrades change your stats for the rest of a run.
 
 ### Enemy Debuffs (Applied by Player)
 
@@ -427,21 +444,21 @@ Sound · Light · Cosmic · Crystal · Nuclear · Tech · Spirit · Magma · Sto
 Progress persists between runs via Soul Shards earned through gameplay. Three systems allow permanent improvements.
 
 ### Talent Tree (9 Talents)
-Purchased with Talent Points earned by levelling up mid-run.
+Bought with Talent Points (2 per level-up) during a run; talents reset when the run ends.
 
-| Talent | Effect | Max Ranks | Shard Cost/Rank |
+| Talent | Effect | Max Ranks | Points/Rank |
 |---|---|---|---|
-| Blood Price | +10 max HP per rank | 3 | 5 |
-| Soul Reserve | +10 max MP per rank | 3 | 5 |
-| Iron Will | +2 DEF per rank | 3 | 6 |
-| Shadow Arts | +2 ATK per rank | 3 | 6 |
-| Quickening | +3 SPD per rank | 2 | 10 |
-| Fate-Touched | +5% CRIT per rank | 2 | 10 |
-| Undying | Survive lethal damage at 1 HP once per run | 1 | 30 |
-| Deep Roots | +5 max HP and +5 max MP per rank | 3 | 12 |
-| Critical Eye | +3% CRIT and +5% CRIT DMG per rank | 3 | 14 |
+| Blood Price | +10 max HP per rank | 3 | 1 |
+| Soul Reserve | +10 max MP per rank | 3 | 1 |
+| Iron Will | +2 DEF per rank | 3 | 1 |
+| Shadow Arts | +2 ATK per rank | 3 | 1 |
+| Quickening | +3 SPD per rank | 2 | 2 |
+| Fate-Touched | +5% CRIT per rank | 2 | 2 |
+| Undying | Survive lethal damage at 1 HP once per run | 1 | 4 |
+| Deep Roots | +5 max HP and +5 max MP per rank | 3 | 2 |
+| Critical Eye | +3% CRIT and +5% CRIT DMG per rank | 3 | 2 |
 
-### Shard Shop (19 Upgrades)
+### Shard Shop (16 Upgrades)
 Permanent upgrades purchased with Soul Shards.
 
 | Upgrade | Effect | Max Ranks | Cost |
@@ -488,31 +505,29 @@ Each class has a level (max 20) that persists across all runs. XP gained per com
 
 | File | Purpose |
 |---|---|
-| `js/data/abilities.js` | ~158k lines — 46 hand-written base abilities + weapon arts + ~75k generated hybrid combinations |
-| `js/data/classes.js` | 36 base class definitions + CLASS_UNLOCK_COSTS |
-| `js/data/enemies.js` | 81 regular enemies + 10 bosses + ENEMY_ABILITIES + getRandomEnemy() floor scaling |
+| `js/data/abilities.js` | ~158k lines — hand-written class abilities + weapon arts + generated hybrid combinations (6,800+ abilities) |
+| `js/data/classes.js` | 41 base & secret class definitions + CLASS_UNLOCK_COSTS |
+| `js/data/enemies.js` | 70 regular enemies + 10 bosses + ENEMY_ABILITIES + floor/difficulty/NG+ scaling |
 | `js/data/elements.js` | 40-element effectiveness table |
-| `js/data/events.js` | 7 random event definitions with branching choices |
+| `js/data/events.js` | 13 random events with depth-scaled choices |
+| `js/data/biomes.js` | 7 biomes (floor ranges, flavor, exploration hazards) |
 | `js/data/fusion.js` | Rarity tiers, CLASS_RARITY, lazy loader, secret boss definitions, convergence logic |
-| `js/data/fusion_lookup.js` | Recipe key → file number map (595 entries, do not hand-edit) |
-| `js/data/fusions/fusion_data_1–17.js` | 595 fusion class definitions, lazy-loaded on demand |
-| `js/data/items.js` | 240 items — consumables, weapons, armor, relics |
+| `js/data/fusion_lookup.js` | Recipe key → file, fusion class → file (regenerate with tools/build_fusion_index.js) |
+| `js/data/fusions/fusion_data_1–17.js` | 630 fusion class definitions, lazy-loaded on demand |
+| `js/data/items.js` | 239 items + loot tables |
 | `js/data/meta.js` | Talent tree, shard shop upgrades, loadout definitions |
-| `js/engine/combat.js` | Full turn-based combat engine — hit resolution, crits, passives, status, win/lose |
-| `js/engine/mapgen.js` | BSP procedural map generation, room content placement, secret boss floor generator |
-| `js/engine/player.js` | createPlayer(), stat application, talent/shard bonuses |
-| `js/engine/run_save.js` | 3-slot localStorage save system with serialise/deserialise |
-| `js/engine/state.js` | G object definition and defaults |
-| `js/engine/status.js` | addStatus(), tickStatus() — per-turn callbacks |
-| `js/engine/utils.js` | calcDmg(), getDmgMult(), XP/levelling, saveMeta(), status helpers |
-| `js/ui/fusion_modal.js` | Fusion Lab screen + Class Collection screen (both live here) |
-| `js/ui/modals.js` | Shop, events, rewards, inventory use modals |
-| `js/ui/render.js` | updateUI() and all sub-renderers (stats, map, combat, inventory) |
-| `js/ui/screens.js` | showScreen(), renderClassSelect(), renderCollection() |
-| `js/ui/settings.js` | Settings screen |
-
-**Total codebase:** ~160k+ lines across 40+ JavaScript files + HTML/CSS.
+| `js/engine/combat.js` | Turn-based combat engine — damage pipeline, initiative, enemy turns, win/lose |
+| `js/engine/passives.js` | Passive names/descriptions and hook implementations |
+| `js/engine/stats.js` | Permanent (p.base) vs temporary (p.stats) stats; enemy stats view |
+| `js/engine/status.js` | addStatus(), tickStatus(), removeStatuses() |
+| `js/engine/mapgen.js` | BSP map generation, movement, floor transitions, secret boss arenas |
+| `js/engine/player.js` | createPlayer(), inventory, equipment, weapon arts, loadouts |
+| `js/engine/run_save.js` | 3-slot localStorage run saves |
+| `js/engine/state.js` | G object, defaultMeta(), version |
+| `js/engine/utils.js` | calcDmg(), damage multipliers, XP/levelling, saveMeta(), status helpers |
+| `js/ui/*.js` | Rendering, modals, screens, Fusion Lab, settings, sound effects |
+| `tests/` (repo root) | Automated browser tests — `npm install && npm test` |
 
 ---
 
-*End of ABYSSAL Game Reference — v2.0*
+*End of ABYSSAL Game Reference — v2.1*

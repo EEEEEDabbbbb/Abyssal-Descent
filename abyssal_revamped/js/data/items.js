@@ -660,7 +660,7 @@ const ITEM_POOL = [
 // ── Permanent gear unlocked by defeating the Floor 50 Final Boss ──
 const CONQUEST_GEAR = [
   { id:'abyssal_crown',   name:'Crown of the Abyss', type:'relic', icon:'👁️', rarity:'divine',
-    desc:'PERMANENT. +60 ATK, +40 DEF, 25% evasion, Lifesteal, Spellmaster. Marks you as Conqueror.',
+    desc:'PERMANENT. +60 ATK, +40 DEF, +40% crit damage. 15% evasion, Lifesteal, Spellmaster. Marks you as Conqueror.',
     slot:'relic', element:'shadow', bonuses:{atk:60,def:40,critDmg:40}, effect:'evasion2_lifesteal_spellmaster', permanent:true },
 ];
 
@@ -672,97 +672,44 @@ function getRandomItem(rarity) {
   return cloneItem(pool[Math.floor(Math.random() * pool.length)]);
 }
 
+// ── Floor loot table ──────────────────────────────────────────
+// Rarity weights at anchor floors; floors in between are interpolated, so
+// loot quality only ever improves as you descend.
+//                       common uncommon rare epic legendary mythical divine
+const LOOT_ANCHORS = [
+  { floor: 1,  w: [55, 35, 10,  0,  0,  0,  0] },
+  { floor: 5,  w: [30, 35, 25, 10,  0,  0,  0] },
+  { floor: 10, w: [12, 25, 35, 20,  7,  1,  0] },
+  { floor: 20, w: [ 0, 12, 30, 32, 18,  7,  1] },
+  { floor: 30, w: [ 0,  5, 20, 30, 27, 13,  5] },
+  { floor: 40, w: [ 0,  0, 10, 25, 30, 22, 13] },
+  { floor: 50, w: [ 0,  0,  5, 20, 30, 27, 18] },
+];
+const LOOT_RARITIES = ['common','uncommon','rare','epic','legendary','mythical','divine'];
+
+function getLootWeights(floor) {
+  const f = clamp(floor, 1, FLOOR_COUNT);
+  let i = 0;
+  while (i < LOOT_ANCHORS.length - 2 && f > LOOT_ANCHORS[i + 1].floor) i++;
+  const a = LOOT_ANCHORS[i], b = LOOT_ANCHORS[i + 1];
+  const t = clamp((f - a.floor) / (b.floor - a.floor), 0, 1);
+  const w = a.w.map((v, k) => v + (b.w[k] - v) * t);
+  // Loot Purge upgrades: purged rarities roll as the next rarity up instead
+  const bonus = (typeof getShardShopBonuses === 'function') ? getShardShopBonuses() : {};
+  [['purgeCommon', 0], ['purgeUncommon', 1], ['purgeRare', 2]].forEach(([flag, k]) => {
+    if (bonus[flag]) { w[k + 1] += w[k]; w[k] = 0; }
+  });
+  return w;
+}
+
 function getRandomItemByFloor(floor) {
-  const roll = Math.floor(Math.random() * 100);
-  // Check loot purge upgrades
-  const b = (typeof getShardShopBonuses === 'function') ? getShardShopBonuses() : {};
-  const noCommon   = !!b.purgeCommon;
-  const noUncommon = !!b.purgeUncommon;
-  const noRare     = !!b.purgeRare;
-  // Helper: resolve fallback rarity based on purge flags
-  function lowestAllowed() {
-    if (!noRare)     return 'rare';
-    if (!noUncommon) return 'uncommon'; // shouldn't happen (rare requires uncommon purged first) but safe
-    return 'epic';
+  const w = getLootWeights(floor);
+  let roll = Math.random() * w.reduce((s, v) => s + v, 0);
+  for (let k = 0; k < w.length; k++) {
+    roll -= w[k];
+    if (roll < 0) return getRandomItem(LOOT_RARITIES[k]);
   }
-  function resolve(rarity) {
-    if (rarity === 'common'   && noCommon)   return resolve('uncommon');
-    if (rarity === 'uncommon' && noUncommon) return resolve('rare');
-    if (rarity === 'rare'     && noRare)     return resolve('epic');
-    return rarity;
-  }
-  if (floor >= 40) {
-    if (roll < 10) return getRandomItem('divine');
-    if (roll < 25) return getRandomItem('mythical');
-    if (roll < 50) return getRandomItem('legendary');
-    if (roll < 75) return getRandomItem('epic');
-    return getRandomItem(resolve('rare'));
-  }
-  if (floor >= 30) {
-    if (roll < 5)  return getRandomItem('divine');
-    if (roll < 18) return getRandomItem('mythical');
-    if (roll < 40) return getRandomItem('legendary');
-    if (roll < 65) return getRandomItem('epic');
-    if (roll < 85) return getRandomItem(resolve('rare'));
-    return getRandomItem(resolve('uncommon'));
-  }
-  if (floor >= 20) {
-    if (roll < 8)  return getRandomItem('mythical');
-    if (roll < 25) return getRandomItem('legendary');
-    if (roll < 50) return getRandomItem('epic');
-    if (roll < 75) return getRandomItem(resolve('rare'));
-    return getRandomItem(resolve('uncommon'));
-  }
-  if (floor >= 14) {
-    if (roll < 3)  return getRandomItem('mythical');
-    if (roll < 15) return getRandomItem('legendary');
-    if (roll < 40) return getRandomItem('epic');
-    if (roll < 68) return getRandomItem(resolve('rare'));
-    if (roll < 88) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (floor >= 7) {
-    if (roll < 1)  return getRandomItem('divine');
-    if (roll < 5)  return getRandomItem('mythical');
-    if (roll < 15) return getRandomItem('legendary');
-    if (roll < 38) return getRandomItem('epic');
-    if (roll < 65) return getRandomItem(resolve('rare'));
-    if (roll < 88) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (floor >= 6) {
-    if (roll < 3)  return getRandomItem('legendary');
-    if (roll < 15) return getRandomItem('epic');
-    if (roll < 45) return getRandomItem(resolve('rare'));
-    if (roll < 75) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (floor >= 5) {
-    if (roll < 8)  return getRandomItem('epic');
-    if (roll < 30) return getRandomItem(resolve('rare'));
-    if (roll < 65) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (floor >= 4) {
-    if (roll < 15) return getRandomItem('legendary');
-    if (roll < 35) return getRandomItem('epic');
-    if (roll < 65) return getRandomItem(resolve('rare'));
-    if (roll < 85) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (floor >= 3) {
-    if (roll < 20) return getRandomItem('epic');
-    if (roll < 45) return getRandomItem(resolve('rare'));
-    if (roll < 75) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (floor >= 2) {
-    if (roll < 30) return getRandomItem(resolve('rare'));
-    if (roll < 60) return getRandomItem(resolve('uncommon'));
-    return getRandomItem(resolve('common'));
-  }
-  if (roll < 45) return getRandomItem(resolve('uncommon'));
-  return getRandomItem(resolve('common'));
+  return getRandomItem('rare');
 }
 
 // getBossLootByFloor — guaranteed high-quality loot for boss kills.
