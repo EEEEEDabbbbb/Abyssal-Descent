@@ -470,7 +470,7 @@ const FUSION_CLASSES_14 = {
     fusedFrom:['arcanist','techsavant'],
     stats:{hp:73,maxHp:73,mp:110,maxMp:110,atk:11,def:5,spd:14,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:11},
-    abilities:['power_surge','overclock','system_hack','turret_deploy','psychic_cosmic_blast','psychic_dark_weaken','steel_cosmic_blast','electric_psychic_vortex'],
+    abilities:['power_surge','overclock','system_hack','turret_deploy','psychic_cosmic_blast','psychic_dark_weaken','electric_psychic_vortex','psychic_tech_blast'],
     burstAbility:'void_burst',
     passives:['overclock','arcane_mastery'],
     description:'Arcane formulae implemented in technical systems — spells that run as programs, magical effects triggered by technical conditions. The Arcane Engine executes the arcanist\'s most complex formulae faster than biological casting allows and at a reliability the organic mind cannot maintain.',

@@ -4,6 +4,7 @@
 //
 //   node tools/class_balance.js            # all base classes
 //   node tools/class_balance.js pyromancer warlord
+//   FUSIONS=40 node tools/class_balance.js   # 40 random fusion classes
 //   PRE="CLASSES.warlord.stats.atk += 2" node tools/class_balance.js warlord
 //     (PRE runs in the page first: try a change without editing the data)
 //
@@ -16,7 +17,16 @@ const FIGHTS = Number(process.env.FIGHTS) || 30;
 (async () => {
   const ctx = await openGame();
   await prepare(ctx.page);
-  const only = process.argv.slice(2);
+  let only = process.argv.slice(2);
+  if (process.env.FUSIONS) {
+    only = await ctx.page.evaluate(async n => {
+      const ids = Object.keys(FUSION_CLASS_FILE).sort(() => Math.random() - 0.5).slice(0, n);
+      for (const id of ids) await ensureClassLoaded(id);
+      return ids;
+    }, Number(process.env.FUSIONS));
+  } else {
+    await ctx.page.evaluate(async ids => { for (const id of ids) await ensureClassLoaded(id); }, only);
+  }
   if (process.env.PRE) await ctx.page.evaluate(process.env.PRE);
   const rows = await ctx.page.evaluate(({ FLOORS, FIGHTS, only }) => {
     window.setTimeout = fn => { fn(); return 0; };
@@ -24,8 +34,7 @@ const FIGHTS = Number(process.env.FIGHTS) || 30;
     window.renderCombatPanel = () => {}; window.sfx = () => {}; window.screenShake = () => {};
     G._enemyTurnDelay = 0;
     const out = [];
-    for (const id of Object.keys(CLASSES)) {
-      if (only.length && !only.includes(id)) continue;
+    for (const id of (only.length ? only : Object.keys(CLASSES))) {
       let wins = 0, fights = 0, hpLeft = 0, turns = 0;
       const perFloor = {};
       for (const floor of FLOORS) {
@@ -54,7 +63,7 @@ const FIGHTS = Number(process.env.FIGHTS) || 30;
           G.inCombat = false; G.phase = 'explore';
         }
       }
-      const c = CLASSES[id].stats;
+      const c = getClassData(id).stats;
       out.push({ id, atk: c.atk, def: c.def, hp: c.maxHp, mp: c.maxMp, spd: c.spd, win: Math.round(100 * wins / fights), hpLeft: wins ? Math.round(100 * hpLeft / wins) : 0, turns: +(turns / fights).toFixed(1),
         ...Object.fromEntries(FLOORS.map(f => ['f' + f, Math.round(100 * perFloor[f] / FIGHTS)])) });
     }

@@ -555,84 +555,24 @@ function performFinalFusion() {
 Object.assign(FUSION_CLASSES, {
 
   // ── VOIDREAPER — unlocked by Herald of Nothing ──────────────
-  voidreaper: {
-    id:'voidreaper', name:'Voidreaper', icon:'🌑',
-    tagline:'The threshold is not a warning. It is an invitation.',
-    color:'#9900cc', element:'void', rarity:'secret',
-    secretBossUnlock: 'herald_of_nothing',
-    stats:{hp:75,maxHp:75,mp:110,maxMp:110,atk:16,def:4,spd:13,crit:18},
-    statDisplay:{HP:5,ATK:11,DEF:3,SPD:8,MP:10},
-    abilities:['void_harvest','threshold_cut','oblivion_mark','null_cascade',
-               'void_harvest','threshold_cut','oblivion_mark','null_cascade'],
-    burstAbility:'voidreaper_burst',
-    passives:['void_affinity','void_mastery'],
-    description:'An execute specialist who sets thresholds that rise as the fight continues. Each kill raises the execute ceiling permanently.',
-    lore:'The Herald did not survive the encounter. What came back wearing its shape was something that had learned from it.'
-  },
+  // Same class as CLASSES.voidreaper (classes.js); only the unlock info is added here
+  voidreaper: { ...CLASSES.voidreaper, rarity:'secret', secretBossUnlock:'herald_of_nothing' },
 
   // ── PLAGUEBORN — unlocked by The Rot ───────────────────────
-  plagueborn: {
-    id:'plagueborn', name:'Plagueborn', icon:'🦠',
-    tagline:'The disease is not the weapon. The disease IS you.',
-    color:'#44aa22', element:'poison', rarity:'secret',
-    secretBossUnlock: 'the_rot',
-    stats:{hp:80,maxHp:80,mp:100,maxMp:100,atk:11,def:6,spd:11,crit:12},
-    statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
-    abilities:['rot_touch','spore_cloud','festering_wound','plague_cascade',
-               'rot_touch','spore_cloud','festering_wound','plague_cascade'],
-    burstAbility:'plagueborn_burst',
-    passives:['death_aura','plague_lord'],
-    description:'A DoT specialist with 4 distinct diseases that stack independently. When all 4 are active simultaneously, they detonate each other in sequence.',
-    lore:'It did not catch The Rot. It became a better version of it.'
-  },
+  // Same class as CLASSES.plagueborn (classes.js); only the unlock info is added here
+  plagueborn: { ...CLASSES.plagueborn, rarity:'secret', secretBossUnlock:'the_rot' },
 
   // ── STORMLORD — unlocked by The Tempest Unbound ────────────
-  stormlord: {
-    id:'stormlord', name:'Stormlord', icon:'⛈️',
-    tagline:'Every strike is a promise. The burst is the delivery.',
-    color:'#3388ff', element:'electric', rarity:'secret',
-    secretBossUnlock: 'the_tempest_unbound',
-    stats:{hp:78,maxHp:78,mp:105,maxMp:105,atk:14,def:5,spd:17,crit:20},
-    statDisplay:{HP:5,ATK:10,DEF:3,SPD:10,MP:10},
-    abilities:['charge_strike','storm_coil','lightning_cage','discharge',
-               'charge_strike','storm_coil','lightning_cage','discharge'],
-    burstAbility:'stormlord_burst',
-    passives:['static_charge','storm_mastery'],
-    description:'A burst specialist that accumulates Storm Charge across turns. Each stored charge multiplies the next detonation. At 10 charges, abilities auto-upgrade.',
-    lore:'The Tempest Unbound was a ceiling. The Stormlord removed it.'
-  },
+  // Same class as CLASSES.stormlord (classes.js); only the unlock info is added here
+  stormlord: { ...CLASSES.stormlord, rarity:'secret', secretBossUnlock:'the_tempest_unbound' },
 
   // ── SOULRENDER — unlocked by The Undying Horror ─────────────
-  soulrender: {
-    id:'soulrender', name:'Soulrender', icon:'👁️',
-    tagline:'You do not run out of enemies. You run out of soul.',
-    color:'#cc4488', element:'ghost', rarity:'secret',
-    secretBossUnlock: 'undying_horror',
-    stats:{hp:85,maxHp:85,mp:95,maxMp:95,atk:13,def:7,spd:12,crit:14},
-    statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:9},
-    abilities:['soul_rip','life_siphon','spectral_drain','soul_collapse',
-               'soul_rip','life_siphon','spectral_drain','soul_collapse'],
-    burstAbility:'soulrender_burst',
-    passives:['soul_harvest','undying'],
-    description:'A drain specialist that converts all damage dealt into HP and MP. Above 90% HP, all abilities gain +40% damage. Below 30% HP, lifesteal triples.',
-    lore:'The Undying Horror collected everything it killed. The Soulrender learned to spend that collection.'
-  },
+  // Same class as CLASSES.soulrender (classes.js); only the unlock info is added here
+  soulrender: { ...CLASSES.soulrender, rarity:'secret', secretBossUnlock:'undying_horror' },
 
   // ── ABYSSAL TYRANT — unlocked by The First Warden ──────────
-  abyssal_tyrant: {
-    id:'abyssal_tyrant', name:'Abyssal Tyrant', icon:'🔱',
-    tagline:'Nothing acts without permission. You stopped giving it.',
-    color:'#885500', element:'dark', rarity:'secret',
-    secretBossUnlock: 'the_first_warden',
-    stats:{hp:100,maxHp:100,mp:90,maxMp:90,atk:13,def:10,spd:10,crit:12},
-    statDisplay:{HP:7,ATK:9,DEF:7,SPD:6,MP:8},
-    abilities:['dominion','stat_shatter','ability_lock','total_suppression',
-               'dominion','stat_shatter','ability_lock','total_suppression'],
-    burstAbility:'abyssal_tyrant_burst',
-    passives:['abyssal_presence','intimidation'],
-    description:'A control specialist that methodically removes enemy capabilities. Each ability locks out a different combat option — ATK, SPD, DEF, or actions entirely.',
-    lore:'The First Warden held the Abyss in order for eons. The Abyssal Tyrant inherited that authority and pointed it at everything.'
-  },
+  // Same class as CLASSES.abyssal_tyrant (classes.js); only the unlock info is added here
+  abyssal_tyrant: { ...CLASSES.abyssal_tyrant, rarity:'secret', secretBossUnlock:'the_first_warden' },
 
   // ══════════════════════════════════════════════════════════
   // THE CONVERGENCE — fused from all 5 secret boss classes
@@ -662,7 +602,7 @@ Object.assign(FUSION_CLASSES, {
     conquestOnly: true,
     stats:{hp:110,maxHp:110,mp:110,maxMp:110,atk:15,def:10,spd:15,crit:18},
     statDisplay:{HP:8,ATK:10,DEF:7,SPD:10,MP:11},
-    abilities:['void_bolt','shadow_strike','death_coil','annihilate','abyssal_pulse','void_rupture','abyss_gaze'],
+    abilities:['void_bolt','shadow_strike','death_coil','annihilate','abyssal_pulse','void_rupture','abyss_gaze','void_void_final'],
     burstAbility:'void_burst',
     passives:['abyssal_presence'],
     description:'The conqueror of the Abyss. A blend of all darkness made manifest. Unlocked by defeating the Abyssal God.',

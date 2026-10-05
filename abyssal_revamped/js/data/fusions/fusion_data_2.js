@@ -389,7 +389,7 @@ const FUSION_CLASSES_2 = {
     fusedFrom:['ironclad','windwalker'],
     stats:{hp:110,maxHp:110,mp:55,maxMp:55,atk:12,def:11,spd:15,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:9},
-    abilities:['shield_bash','fortify','retaliate','warcry','fire_wind_thermal','fire_wind_cyclone','fire_flying_updraft','fire_flying_dive'],
+    abilities:['shield_bash','fortify','retaliate','warcry','fire_wind_thermal','fire_wind_cyclone','fire_flying_dive','steel_wind_blast'],
     burstAbility:'windwalker_burst',
     passives:['iron_skin','gust'],
     description:'Iron armor propelled by controlled wind currents. Moves with impossible speed for its weight, intercepts attacks from the other side of the arena, and uses momentum to amplify every defensive bash.',

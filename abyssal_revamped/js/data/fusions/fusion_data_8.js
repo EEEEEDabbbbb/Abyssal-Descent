@@ -66,7 +66,7 @@ const FUSION_CLASSES_8 = {
     fusedFrom:['necromancer','cosmomancer'],
     stats:{hp:70,maxHp:70,mp:118,maxMp:118,atk:10,def:5,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:6,MP:11},
-    abilities:['raise_dead','soul_drain','bone_armor','undead_army','dark_cosmic_blast','dark_cosmic_strike','light_cosmic_blast','normal_space_consume'],
+    abilities:['raise_dead','soul_drain','bone_armor','undead_army','dark_cosmic_blast','dark_cosmic_strike','normal_space_consume','ghost_cosmic_drain'],
     burstAbility:'cosmomancer_burst',
     passives:['death_aura','stardust'],
     description:'Channels the death of celestial bodies — dead stars as power sources, the energy of collapsed worlds fueling undead armies, cosmic-scale necrotic force focused down to dungeon range. The Stellar Necropolis fights with the weight of extinction.',

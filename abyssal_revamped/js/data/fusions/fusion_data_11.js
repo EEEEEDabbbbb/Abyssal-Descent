@@ -400,7 +400,7 @@ const FUSION_CLASSES_11 = {
     fusedFrom:['soundbreaker','cosmomancer'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:12,def:6,spd:14,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
-    abilities:['sonic_blast','resonance_field','shockwave','frequency_break','sound_cosmic_drain','sound_cosmic_weaken','sound_cosmic_blast','dark_cosmic_blast'],
+    abilities:['sonic_blast','resonance_field','shockwave','frequency_break','sound_cosmic_drain','sound_cosmic_weaken','sound_cosmic_blast','sound_cosmic_dot_strike'],
     burstAbility:'cosmomancer_burst',
     passives:['resonance','stardust'],
     description:'The cosmic background frequency — the vibration permeating all of spacetime, concentrated and directed as a weapon. The Cosmic Frequency attacks at a wavelength that all matter resonates with, making physical shielding irrelevant by definition.',

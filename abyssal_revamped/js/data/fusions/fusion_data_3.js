@@ -305,7 +305,7 @@ const FUSION_CLASSES_3 = {
     fusedFrom:['soulweaver','windwalker'],
     stats:{hp:75,maxHp:75,mp:85,maxMp:85,atk:11,def:6,spd:16,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:8},
-    abilities:['soul_drain','necrotic_bolt','wither','death_coil','fire_wind_thermal','fire_wind_cyclone','fire_flying_updraft','fire_wind_ember'],
+    abilities:['soul_drain','necrotic_bolt','wither','death_coil','fire_wind_thermal','fire_wind_cyclone','fire_wind_ember','ghost_wind_blast'],
     burstAbility:'soulweaver_burst',
     passives:['soul_harvest','gust'],
     description:'Rides wind currents loaded with harvested soul energy. Strikes from every direction as a howling vortex of spiritual force, then is gone — carried to the next target before the last one has finished falling.',

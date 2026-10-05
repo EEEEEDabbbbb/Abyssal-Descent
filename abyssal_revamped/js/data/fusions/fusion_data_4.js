@@ -528,7 +528,7 @@ const FUSION_CLASSES_4 = {
     fusedFrom:['stormcaller','magnetist'],
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:13,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
-    abilities:['lightning_bolt','chain_lightning','storm_surge','thunderclap','electric_steel_magnetize','electric_steel_coil','electric_ground_magnetize','electric_steel_polarize'],
+    abilities:['lightning_bolt','chain_lightning','storm_surge','thunderclap','electric_steel_magnetize','electric_steel_coil','electric_steel_polarize','electric_magnet_drain'],
     burstAbility:'magnetist_burst',
     passives:['static_charge','magnetic_field'],
     description:'Uses magnetic fields to direct lightning with surgical precision — draws bolts toward metallic armor, creates electromagnetic cages that hold enemies in place for sustained arcing, and redirects incoming attacks into stored charge.',

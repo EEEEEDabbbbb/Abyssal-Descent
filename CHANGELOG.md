@@ -35,6 +35,11 @@
 - Life Drain heals the enemy for half the damage dealt (was all of it).
 - 26 classes had padded kits that repeated the same 2–7 abilities. Every
   class now has 8 different abilities, filled from its element's ability set.
+- The same fix for fusion classes: 26 had padded kits and 46 had two
+  abilities with the same name. All 638 now have 8 distinct abilities.
+- The five secret classes were defined twice, and the Collection and Fusion
+  Lab showed an outdated copy (different stats and kit from what you
+  played). There is now one definition.
 - Nullbringer's Sunders now also deal damage, and an already-applied Sunder
   can't be cast again by mistake.
 - Weaker classes got more ATK/HP (Phantom, Frostweaver, Ironclad, Sentinel,

@@ -260,7 +260,7 @@ const FUSION_CLASSES_15 = {
     fusedFrom:['magnetist','doomcaster'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:11,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:9},
-    abilities:['magnetic_pull','field_surge','pole_shift','iron_cage','time_void_blast','steel_void_blast','dark_blood_final','wind_void_final'],
+    abilities:['magnetic_pull','field_surge','pole_shift','iron_cage','time_void_blast','dark_blood_final','wind_void_final','dark_magnet_blast'],
     burstAbility:'doomcaster_burst',
     passives:['magnetic_field','doom_aura'],
     description:'Doom anchored at the magnetic pole — the field lines point toward the doom, pulling metal-bearing targets inexorably toward the sealed fate at the center. The Gravitational Doom Pole converts the magnetist\'s pulling force into a doom delivery mechanism with unusual directional authority.',

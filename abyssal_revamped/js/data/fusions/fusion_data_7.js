@@ -206,7 +206,7 @@ const FUSION_CLASSES_7 = {
     fusedFrom:['runeblade','hexblade'],
     stats:{hp:90,maxHp:90,mp:80,maxMp:80,atk:13,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:8,MP:8},
-    abilities:['rune_strike','bind_rune','runic_shield','elder_rune','dark_rune_drain','dark_rune_blast','dark_rune_strike','normal_void_curse'],
+    abilities:['rune_strike','bind_rune','runic_shield','elder_rune','dark_rune_drain','dark_rune_blast','normal_void_curse','normal_dark_drain'],
     burstAbility:'hexblade_burst',
     passives:['rune_mastery','hex_master'],
     description:'Carves hexes as runes — the inscription is simultaneously a mark and a curse. Contact with the Accursed Mark triggers the hex immediately. The rune cannot be removed without triggering it first. There is no safe way to deal with it.',

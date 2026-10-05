@@ -178,7 +178,7 @@ const FUSION_CLASSES_6 = {
     fusedFrom:['voidmancer','chronomancer'],
     stats:{hp:68,maxHp:68,mp:110,maxMp:110,atk:10,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
-    abilities:['void_bolt','entropy','singularity','annihilate','normal_time_age','normal_time_drain','normal_void_drain','normal_time_stasis'],
+    abilities:['void_bolt','entropy','singularity','annihilate','normal_time_age','normal_time_drain','normal_time_stasis','shadow_time_blast'],
     burstAbility:'void_burst',
     passives:['void_affinity','time_warp'],
     description:'Erases time from targets — not killing them, but removing their place in the timeline. The End of Hours ages enemies into the void at the terminus of their personal timeline, reaching forward to pull the end backward into the present.',
