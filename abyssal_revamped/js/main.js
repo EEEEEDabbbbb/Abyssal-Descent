@@ -23,6 +23,7 @@
 //   Space        — burst
 //   Arrows/WASD  — movement (exploration only)
 //   M            — toggle the minimap
+//   X            — auto-explore
 //   Escape       — close a closeable dialog, otherwise open the pause menu
 // ══════════════════════════════════════════════════════════════
 
@@ -188,6 +189,7 @@ function handleKeyDown(e) {
   }
 
   if (key === 'm') { e.preventDefault(); toggleMinimap(); return; }
+  if (key === 'x' && G.phase === 'explore') { e.preventDefault(); autoExplore(); return; }
 
   if (G.phase === 'explore' && MOVE_KEYS[key]) {
     e.preventDefault();

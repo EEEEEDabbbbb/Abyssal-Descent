@@ -2722,3 +2722,13 @@ body.reduce-motion .title-btn.first-visit-hint { animation: none; }
   100% { filter: none; transform: none; }
 }
 body.reduce-motion .enemy-sprite.crit-hit { animation: none; }
+
+/* Auto-explore button (render.js) — bottom-left of the map, clear of the d-pad */
+.map-viewport { position: relative; }
+.auto-explore-btn {
+  position: absolute; left: 10px; bottom: 10px; z-index: 4;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--bg-card); border: 1px solid var(--accent-gold-dim, #7a6030);
+  font-size: 1.3rem; cursor: pointer; box-shadow: 0 0 6px rgba(0,0,0,0.6);
+}
+.auto-explore-btn:hover, .auto-explore-btn:focus-visible { border-color: var(--accent-gold); }

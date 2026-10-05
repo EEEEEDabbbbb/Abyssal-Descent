@@ -79,6 +79,10 @@
   the button and in Records.
 - Minimap in the corner of the map (toggle with M or in Settings); click it
   to walk somewhere you have already seen.
+- Auto-explore (X, or the 🧭 button on the map): walks to the nearest chest,
+  event or dropped loot, otherwise to the nearest unexplored ground, and
+  stops as soon as an enemy comes into view. It never walks into fights,
+  shops or the exit.
 - Run statistics: kills, damage, biggest hit, chests, steps, play time and
   more. They're shown on the death screen and in the pause menu (📊 Run Stats).
 - Records screen (🏆 on the title screen): lifetime totals, your last 20

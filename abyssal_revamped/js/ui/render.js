@@ -513,7 +513,7 @@ function renderExploreView(view) {
 
   let html = `<div class="explore-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;padding:0 0.25rem;width:100%">
     <span style="font-size:0.7rem;color:var(--text-dim)">${biome.name} — Floor ${G.floor}</span>
-    <span class="explore-hint" style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / arrows, or tap a tile · M: minimap</span>
+    <span class="explore-hint" style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / arrows, or tap a tile · X: auto-explore · M: minimap</span>
     <span style="font-size:0.7rem;color:var(--text-dim)">${getFloorTier(G.floor).toUpperCase()}</span>
   </div>`;
 
@@ -558,6 +558,7 @@ function renderExploreView(view) {
   html+='</div>';
   if (S.minimap) html+=`<canvas id="minimap" class="minimap" role="img" aria-label="Minimap of floor ${G.floor}" title="Minimap: click to walk there (M to hide)"></canvas>`;
   html+='</div>';
+  html+=`<button class="auto-explore-btn" onclick="autoExplore()" title="Auto-explore (X)" aria-label="Auto-explore">🧭</button>`;
   html+=`<div class="dpad" aria-label="Movement">
     <button class="dpad-btn dpad-up"    aria-label="Move up"    onclick="cancelWalk();movePlayer(0,-1)">▲</button>
     <button class="dpad-btn dpad-left"  aria-label="Move left"  onclick="cancelWalk();movePlayer(-1,0)">◀</button>
@@ -636,20 +637,77 @@ function toggleMinimap() {
 let _walkTimer = null;
 function cancelWalk() { clearTimeout(_walkTimer); _walkTimer = null; }
 
-function walkTo(tx, ty) {
+// opts.onArrive — called after the last step; opts.stopIf — checked after
+// every step (return a message to stop early and log it)
+function walkTo(tx, ty, opts = {}) {
   cancelWalk();
   if (!G.map || G.phase !== 'explore' || G.inCombat) return;
   const path = findPath(G.playerPos.x, G.playerPos.y, tx, ty);
   if (!path || !path.length) return;
   const step = () => {
-    if (!path.length || G.phase !== 'explore' || G.inCombat || document.getElementById('overlay').classList.contains('active')) { cancelWalk(); return; }
+    if (G.phase !== 'explore' || G.inCombat || document.getElementById('overlay').classList.contains('active')) { cancelWalk(); return; }
+    if (!path.length) { cancelWalk(); if (opts.onArrive) opts.onArrive(); return; }
     const [nx, ny] = path.shift();
     const before = { ...G.playerPos };
     movePlayer(nx - before.x, ny - before.y);
     if (G.playerPos.x !== nx || G.playerPos.y !== ny) { cancelWalk(); return; } // blocked
+    const why = opts.stopIf && opts.stopIf();
+    if (why) { cancelWalk(); logEntry('system', why); updateUI(); return; }
     _walkTimer = setTimeout(step, 70);
   };
   step();
+}
+
+// ── Auto-explore (X, or the 🧭 button) ────────────────────────
+// Walks to the nearest chest, event or loot on the ground, otherwise to the
+// nearest edge of what you've seen, and keeps going until something needs
+// you: an enemy comes into view, a chest/event opens, or nothing is left.
+// Never walks into enemies, shops or the exit.
+function autoExplore() {
+  cancelWalk();
+  if (!G.map || !G.player || G.phase !== 'explore' || G.inCombat || document.getElementById('overlay').classList.contains('active')) return;
+  const target = autoExploreTarget();
+  if (!target) { logEntry('system', '🧭 Nothing left to explore here. Find the guardian and the exit.'); updateUI(); return; }
+  const seen = visibleEnemyCount();
+  walkTo(target.x, target.y, {
+    stopIf: () => visibleEnemyCount() > seen ? '🧭 You spot an enemy and stop exploring.' : null,
+    onArrive: () => { if (target.frontier) _walkTimer = setTimeout(autoExplore, 70); },
+  });
+}
+
+function visibleEnemyCount() {
+  let n = 0;
+  G.map.forEach(row => row.forEach(c => { if (c.revealed && (c.content === 'enemy' || c.content === 'boss')) n++; }));
+  return n;
+}
+
+// autoExploreTarget — nearest {x, y, frontier} by walking distance, or null
+function autoExploreTarget() {
+  const W = G.mapW, H = G.mapH, { x: sx, y: sy } = G.playerPos;
+  const at = (x, y) => (G.map[y] && G.map[y][x]) || null;
+  const walkable = c => c && c.revealed && c.type !== 'wall' && !(c.secret && !c.secretRevealed);
+  const quiet = c => !c.content || ['visited', 'start', 'player'].includes(c.content);
+  const wanted = c => c.content === 'treasure' && !inventoryFull() || c.content === 'event' || (c.droppedItems && c.droppedItems.length && !inventoryFull());
+  const frontier = (x, y) => [[1,0],[-1,0],[0,1],[0,-1]].some(([dx, dy]) => { const n = at(x + dx, y + dy); return n && !n.revealed; });
+  const seen = new Set([sy * W + sx]);
+  const queue = [[sx, sy]];
+  for (let head = 0; head < queue.length; head++) {
+    const [x, y] = queue[head];
+    const c = at(x, y);
+    if (head > 0) {
+      if (wanted(c)) return { x, y, frontier: false };
+      if (quiet(c) && frontier(x, y)) return { x, y, frontier: true };
+    }
+    if (head > 0 && !quiet(c)) continue; // don't path through content
+    for (const [dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+      const nx = x + dx, ny = y + dy, k = ny * W + nx;
+      if (nx < 0 || ny < 0 || nx >= W || ny >= H || seen.has(k)) continue;
+      const n = at(nx, ny);
+      if (!walkable(n) || n.content === 'exit_locked' || n.content === 'boss_exit') continue;
+      seen.add(k); queue.push([nx, ny]);
+    }
+  }
+  return null;
 }
 
 // findPath — BFS over revealed walkable tiles. Only the destination may hold

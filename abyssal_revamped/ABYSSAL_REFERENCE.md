@@ -477,7 +477,7 @@ Maps are procedurally generated using BSP (Binary Space Partitioning), creating 
 | Secret | Hidden rooms discoverable during exploration; contain bonus loot; nearby walls show faint visual hints |
 | Exit | Staircase to the next floor; guarded until boss/guardian is defeated |
 
-The map is fog-of-war; tiles reveal as you walk within range. Secret rooms look like solid wall until you step inside; walls nearby sometimes give a hint. The full map can be revealed via the Dark Altar event (spend MP). Move with WASD/arrows, the on-screen pad, or by tapping a revealed tile. The minimap (M) shows everything you have revealed.
+The map is fog-of-war; tiles reveal as you walk within range. Secret rooms look like solid wall until you step inside; walls nearby sometimes give a hint. The full map can be revealed via the Dark Altar event (spend MP). Move with WASD/arrows, the on-screen pad, or by tapping a revealed tile. The minimap (M) shows everything you have revealed. Auto-explore (X or the 🧭 button) walks to the nearest chest, event or dropped loot, otherwise to the nearest unexplored ground, and stops when an enemy comes into view.
 
 **Seeds & the Daily Descent.** Every run has a seed (pause menu); the same seed and World Settings always build the same floors. The 📅 Daily Descent on the title screen uses one seed per calendar day with standard settings and any class; your best floor that day is kept.
 

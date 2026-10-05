@@ -122,3 +122,67 @@ test('on a phone, the on-screen pad moves you and tapping a revealed tile walks 
   await page.close();
 });
 
+
+test('auto-explore walks to the nearest chest, then on to unexplored ground, and stops when an enemy comes into view', async () => {
+  const { page, errors } = await gamePage();
+  // Clear the floor, then put one chest in reach and nothing else
+  const chest = await page.evaluate(() => {
+    applySetting('animSpeed', 'instant');
+    G.map.forEach(row => row.forEach(c => { if (c.content && c.content !== 'start') { c.content = null; c.enemy = null; c.enemies = null; c.item = null; c.event = null; } }));
+    const { x, y } = G.playerPos;
+    let best = null;
+    G.map.forEach((row, cy) => row.forEach((c, cx) => {
+      if (!c.revealed || c.type === 'wall' || (cx === x && cy === y)) return;
+      const path = findPath(x, y, cx, cy);
+      if (path && path.length >= 3 && (!best || path.length < best.d)) best = { x: cx, y: cy, d: path.length };
+    }));
+    const c = G.map[best.y][best.x];
+    c.content = 'treasure'; c.item = cloneItem(ITEM_POOL.find(i => i.rarity === 'common'));
+    updateUI();
+    return best;
+  });
+  await page.keyboard.press('x');
+  await page.waitForFunction(t => G.map[t.y][t.x].content === 'visited', chest, { timeout: 5000 });
+  await page.evaluate(() => closeModal());
+  const pos = await page.evaluate(() => ({ ...G.playerPos }));
+  assert.deepEqual({ x: pos.x, y: pos.y }, { x: chest.x, y: chest.y });
+
+  // Now hide an enemy just past the edge of what's been seen and explore again
+  const r = await page.evaluate(async () => {
+    const sleep = ms => new Promise(res => setTimeout(res, ms));
+    const target = autoExploreTarget();
+    if (!target || !target.frontier) return { skipped: true };
+    const W = G.mapW, H = G.mapH;
+    let spot = null;
+    for (let r = 2; r <= 4 && !spot; r++) for (const [dx, dy] of [[r,0],[-r,0],[0,r],[0,-r]]) {
+      const x = target.x + dx, y = target.y + dy;
+      const c = G.map[y] && G.map[y][x];
+      if (c && !c.revealed && c.type !== 'wall') { spot = { x, y }; break; }
+    }
+    if (!spot) return { skipped: true };
+    const c = G.map[spot.y][spot.x];
+    c.content = 'enemy'; c.enemy = getRandomEnemy(1);
+    autoExplore();
+    for (let i = 0; i < 200 && _walkTimer; i++) await sleep(20);
+    return { inCombat: G.inCombat, seen: G.map[spot.y][spot.x].revealed, log: G.log.slice(0, 3).map(e => e.msg) };
+  });
+  if (!r.skipped) {
+    assert.equal(r.inCombat, false, JSON.stringify(r));
+    assert.equal(r.seen, true);
+    assert.ok(r.log.some(m => /spot an enemy/.test(m)), JSON.stringify(r.log));
+  }
+  assert.deepEqual(errors, []);
+  await page.close();
+});
+
+test('auto-explore says so when the floor is fully explored', async () => {
+  const { page, errors } = await gamePage();
+  const log = await page.evaluate(() => {
+    G.map.forEach(row => row.forEach(c => { c.revealed = true; if (c.content && c.content !== 'start') { c.content = null; c.enemy = null; c.enemies = null; } }));
+    autoExplore();
+    return G.log[0].msg;
+  });
+  assert.match(log, /Nothing left to explore/);
+  assert.deepEqual(errors, []);
+  await page.close();
+});
