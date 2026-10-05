@@ -7,7 +7,9 @@ mastered classes into 600+ new ones.
 ## Play
 
 Open `abyssal_revamped/index.html` in a browser. No install, server or build
-step is needed. Progress is saved in the browser's local storage.
+step is needed. Progress is saved in the browser's local storage. It plays
+with a keyboard, a mouse or a touch screen; press `?` in game for How to Play,
+and see the Controls table in `ABYSSAL_REFERENCE.md`.
 
 - `abyssal_revamped/READ_ME_FIRST.md`: quick start and community links
 - `abyssal_revamped/ABYSSAL_REFERENCE.md`: full game reference (classes, enemies, items, systems)
