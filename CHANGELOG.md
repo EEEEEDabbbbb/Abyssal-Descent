@@ -29,6 +29,11 @@
   on class), and a fully upgraded account reaches floors 12–30.
 - Guardians, bosses and secret bosses follow the same curve. Secret bosses
   used fixed stats: deadly on floor 5, trivial on floor 30.
+- Initiative and flee chance compare SPD as a ratio and enemy SPD grows
+  with depth. Player SPD grows several-fold over a run, and the old flat
+  difference meant you acted first 90% of the time from about floor 8.
+- Floor guardians ramp up over floors 1–10. On floor 1 they could kill a
+  level-1 character who met one before any other fight.
 - Each level-up restores 25% HP and MP.
 - Merchants always sell a healing potion that keeps up with your depth,
   plus a consumable rolled with the floor's loot odds (they only ever sold

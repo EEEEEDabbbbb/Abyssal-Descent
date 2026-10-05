@@ -478,10 +478,13 @@ function dealEnvironmentDamage(p, dmg) {
 // never a lock (clamped 10–90%) so a slower combatant can still open a
 // round sometimes. Mirrors the existing dodge-chance formula style used
 // elsewhere in this file (see the evasion check ~line 672) for consistency.
+// Uses the SPD *ratio*, not the difference: player SPD grows several-fold
+// over a run, and a flat difference soon pinned every fight at 90%.
+function spdEdge(a, b) { return (a - b) / Math.max(1, a + b); } // -1..1
 function determineFirstActor(p, e) {
   const pSpd = p.stats.spd;
   const eSpd = e.spd ?? 8;
-  const pFirstChance = clamp(50 + (pSpd - eSpd) * 2, 10, 90);
+  const pFirstChance = clamp(50 + 40 * spdEdge(pSpd, eSpd), 10, 90);
   return rand(100) < pFirstChance ? 'player' : 'enemy';
 }
 
@@ -898,8 +901,8 @@ function playerAction(type, abilityId=null) {
       logEntry('system', 'There is no escape — this foe bars the way forward!');
       updateUI(); return;
     }
-    // Flee chance: 40 + player SPD - fastest enemy SPD, clamped to 10–90%
-    const chance = clamp(40 + p.stats.spd - (fastestEnemy()?.spd ?? 8), 10, 90);
+    // Flee chance: 40% at equal SPD, better the faster you are (10–90%)
+    const chance = clamp(40 + 50 * spdEdge(p.stats.spd, fastestEnemy()?.spd ?? 8), 10, 90);
     if (rand(100) < chance) {
       logEntry('system','You flee from combat!');
       trackStat('fled');

@@ -1471,7 +1471,12 @@ const ENEMY_CURVE = [
 const MILESTONE_MULT = 1.2;
 // Bosses relative to a regular enemy on the same floor
 const BOSS_MULT     = { hp:3.5, atk:1.15, def:1.4 };
-const GUARDIAN_MULT = { hp:2.6, atk:1.2,  def:1.2, xp:2.5 };
+const GUARDIAN_MULT = { hp:2.6, atk:1.2,  def:1.2, xp:2.5 }; // full strength from floor 10
+// Early guardians are gentler: you may meet one at level 1 before any other fight
+function guardianMult(floor) {
+  const t = clamp((floor - 1) / 9, 0, 1);
+  return { ...GUARDIAN_MULT, hp: 1.6 + (GUARDIAN_MULT.hp - 1.6) * t, atk: 1.0 + (GUARDIAN_MULT.atk - 1.0) * t, def: 1.0 + (GUARDIAN_MULT.def - 1.0) * t };
+}
 const SECRET_BOSS_MULT = 1.0;  // on top of BOSS_MULT (secret bosses can't be avoided)
 
 const ENEMY_POOLS = {
@@ -1495,6 +1500,10 @@ function rollEnemyPoolKey(floor) {
   }
   return enemyPoolKey(floor);
 }
+
+// Enemy SPD grows 4% per floor (players get much faster over a run too;
+// initiative compares the two as a ratio, see determineFirstActor).
+function enemySpdScale(floor) { return 1 + (clamp(floor, 1, 50) - 1) * 0.04; }
 
 // enemyCurve(floor) — the average regular enemy's stats on that floor.
 // noMilestone: bosses already ARE the floor's spike, so they skip the bump.
@@ -1530,6 +1539,7 @@ function scaleEnemyToFloor(e, floor, poolAvg, mult = {}) {
   e.maxHp = e.hp;
   e.atk   = Math.max(1, Math.round(rel('atk') * c.atk * (mult.atk || 1) * diff));
   e.def   = Math.max(0, Math.round(rel('def') * c.def * (mult.def || 1)));
+  e.spd   = Math.max(1, Math.round((e.spd || 8) * enemySpdScale(floor)));
   e.xp    = Math.round(rel('xp') * c.xp * (mult.xp || 1));
   const g = (e.gold[0] + e.gold[1]) / 2;
   const goldScale = c.gold * (mult.gold || 1) / (poolAvg.gold || g || 1);
@@ -1620,6 +1630,7 @@ function scaleBoss(b, floor, ref, extra = 1) {
   b.maxHp = b.hp;
   b.atk   = Math.round(b.atk * kAtk * diff);
   b.def   = Math.round(b.def * kDef);
+  b.spd   = Math.max(1, Math.round((b.spd || 8) * enemySpdScale(floor)));
   Object.defineProperty(b, '_phaseScale', { value: { atk: kAtk * diff, def: kDef }, enumerable: true, writable: true, configurable: true });
   return b;
 }
@@ -1629,7 +1640,7 @@ function getGuardianForFloor(floor) {
   const pool = GUARDIAN_POOLS[enemyPoolKey(floor)];
   const base = deepCopy(ENEMY_POOL[pool[rand(pool.length)]]);
   // Normalised against the regular pool of the same tier, then made sturdier
-  scaleEnemyToFloor(base, floor, poolAverage(ENEMY_POOLS[enemyPoolKey(floor)]), { ...GUARDIAN_MULT, gold: 1.5 * (1 + (floor - 1) * 0.04) });
+  scaleEnemyToFloor(base, floor, poolAverage(ENEMY_POOLS[enemyPoolKey(floor)]), { ...guardianMult(floor), gold: 1.5 * (1 + (floor - 1) * 0.04) });
   base.isGuardian = true;
   base.status = [];
   base.patternIndex = 0;

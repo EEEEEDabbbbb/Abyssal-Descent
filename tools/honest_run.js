@@ -69,10 +69,10 @@ const MAX_FLOOR = Number(process.env.MAX_FLOOR) || 50;
     // Average player stats on arrival at each floor
     const by = {};
     all.forEach(r => r.growth.forEach(g => { (by[g.floor] = by[g.floor] || []).push(g); }));
-    console.log('floor\tlevel\tatk\tdef\tmaxHp\tgear');
+    console.log('floor\tlevel\tatk\tdef\tmaxHp\tspd\tgear');
     Object.keys(by).map(Number).sort((a, b) => a - b).forEach(f => {
       const a = by[f], avg = k => Math.round(a.reduce((s, g) => s + g[k], 0) / a.length);
-      console.log([f, avg('level'), avg('atk'), avg('def'), avg('maxHp'), avg('gear')].join('\t'));
+      console.log([f, avg('level'), avg('atk'), avg('def'), avg('maxHp'), avg('spd'), avg('gear')].join('\t'));
     });
   }
   const se = all.filter(r => r.statusErrors.length);
@@ -229,7 +229,7 @@ const BOT_SOURCE = `
     G.phase = 'explore';
     const p = G.player;
     const growth = [];
-    const snap = () => growth.push({ floor: G.floor, level: p.level, atk: p.base.atk, def: p.base.def, maxHp: p.base.maxHp,
+    const snap = () => growth.push({ floor: G.floor, level: p.level, atk: p.base.atk, def: p.base.def, maxHp: p.base.maxHp, spd: p.base.spd,
       gear: Math.round(Object.values(p.equipment).reduce((s, it) => s + gearScore(it), 0)) });
     snap();
     if (god && !window.__realDealDmgToPlayer) {

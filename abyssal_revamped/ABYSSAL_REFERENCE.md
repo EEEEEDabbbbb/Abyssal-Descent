@@ -164,7 +164,9 @@ All enemies follow one depth curve (`ENEMY_CURVE` in enemies.js), fitted to how 
 | 40 | 1,250 | 245 | 47 |
 | 50 | 1,650 | 300 | 57 |
 
-Guardians are ×2.6 HP / ×1.2 ATK of the floor's average enemy; floor bosses and secret bosses ×3.5 HP / ×1.15 ATK (boss phase ATK boosts scale with the boss). Armour can block at most 85% of any hit.
+Guardians are ×2.6 HP / ×1.2 ATK of the floor's average enemy (gentler before floor 10: ×1.6 HP / ×1.0 ATK on floor 1); floor bosses and secret bosses ×3.5 HP / ×1.15 ATK (boss phase ATK boosts scale with the boss). Enemy SPD grows 4% per floor. Armour can block at most 85% of any hit.
+
+**Initiative and fleeing** compare SPD as a ratio: at equal SPD you act first 50% of the time and flee 40% of the time; being much faster raises both, up to 90%.
 
 **Tier 1 — Floors 1–7 (21 enemies)**
 💀 Restless Skeleton · 👻 Hollow Wraith · 👺 Abyssal Goblin · ⚔️ Cursed Armor · 🪱 Grave Worm · 😈 Shadow Imp · 🗡️ Hollow Knight · 🕷️ Giant Cave Spider · ❄️ Frost Sprite · 🐢 Mud Crawler · 🦇 Rabid Bat · 🧹 Bog Witch · 🪨 Stone Sprite · 🌱 Vine Horror · 🗿 Cracked Golem · 🔵 Ice Wisp · 🐀 Crypt Rat · 💨 Wind Sprite · 🔥 Ember Imp · 🐺 Dire Wolf · 🦀 Thunder Crab
