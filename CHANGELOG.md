@@ -97,6 +97,9 @@
   event or dropped loot, otherwise to the nearest unexplored ground, and
   stops as soon as an enemy comes into view. It never walks into fights,
   shops or the exit.
+- Stepping on the exit asks first if you've seen chests, events or loot you
+  haven't taken ("You're leaving 2 chests behind"). Enter descends; with
+  nothing left behind you go straight down as before.
 - Number keys pick choices in events and boss rewards, and Enter continues
   after an event, so a keyboard player never needs the mouse.
 - Run statistics: kills, damage, biggest hit, chests, steps, play time and

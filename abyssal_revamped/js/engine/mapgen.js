@@ -642,6 +642,23 @@ function movePlayer(dx, dy) {
   updateUI();
 }
 
+// leftBehindOnFloor — "2 chests and 1 event" for revealed things you haven't
+// taken, or '' if there are none
+function leftBehindOnFloor() {
+  let chests = 0, events = 0, loot = 0;
+  G.map.forEach(row => row.forEach(c => {
+    if (!c.revealed) return;
+    if (c.content === 'treasure') chests++;
+    else if (c.content === 'event') events++;
+    if (c.droppedItems && c.droppedItems.length) loot++;
+  }));
+  const parts = [];
+  if (chests) parts.push(`${chests} chest${chests > 1 ? 's' : ''}`);
+  if (events) parts.push(`${events} event${events > 1 ? 's' : ''}`);
+  if (loot) parts.push(`${loot} pile${loot > 1 ? 's' : ''} of loot`);
+  return parts.length > 1 ? parts.slice(0, -1).join(', ') + ' and ' + parts[parts.length - 1] : parts[0] || '';
+}
+
 function markSecretRoomRevealed(roomId) {
   G.map.forEach(row => row.forEach(c => { if (c.secret && c.room === roomId) c.secretRevealed = true; }));
 }
@@ -691,7 +708,9 @@ function handleCellContent(cell, x, y) {
       showShop(cell,x,y);
       break;
     case 'exit':
-      nextFloor();
+      // Ask first if you've seen chests, events or loot you haven't taken
+      if (leftBehindOnFloor()) showDescendConfirm();
+      else nextFloor();
       break;
     case 'exit_locked':
     case 'boss_exit':

@@ -45,6 +45,23 @@ function closeModal() {
   if (G.phase==='event'||G.phase==='shop') { G.phase='explore'; updateUI(); }
 }
 
+// ── Descend? (stepping on the exit with things left behind) ───
+function showDescendConfirm() {
+  showModal(`
+    <div class="modal-title">▼ Descend to Floor ${G.floor + 1}?</div>
+    <div style="text-align:center;color:var(--text-mid);margin:0.75rem 0 1rem;line-height:1.6">You're leaving ${leftBehindOnFloor()} behind on this floor.</div>
+    <div style="display:flex;gap:0.5rem">
+      <button class="title-btn primary choice-btn" id="descend-btn" data-key="1" style="flex:1" onclick="confirmDescend()"><span class="key-hint">1</span>Descend</button>
+      <button class="title-btn choice-btn" data-key="2" style="flex:1" onclick="closeModal()"><span class="key-hint">2</span>Stay</button>
+    </div>`);
+  const btn = document.getElementById('descend-btn');
+  if (btn) btn.focus({ preventScroll: true }); // Enter descends, Escape stays
+}
+function confirmDescend() {
+  closeModal();
+  if (G.player && G.map && G.map[G.playerPos.y][G.playerPos.x].content === 'exit') nextFloor();
+}
+
 // ── Event dialog ──────────────────────────────────────────────
 function showEvent(event, cell, cx, cy) {
   let html = `<div class="modal-title">${event.icon} ${event.name}</div>
@@ -476,7 +493,7 @@ function openHowToPlay() {
     <div class="modal-title">? How to Play</div>
     <div style="font-size:0.78rem;line-height:1.9;color:var(--text-mid)">
       <b style="color:var(--accent-gold)">Exploration</b><br>
-      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼. The minimap (M) shows everything you've uncovered; click it to walk there. Auto-explore (X or 🧭) walks to the nearest chest or unexplored ground and stops when an enemy comes into view. In events and boss rewards, number keys pick a choice. Each level-up restores a quarter of your HP and MP, and descending restores some too.<br><br>
+      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼. The minimap (M) shows everything you've uncovered; click it to walk there. Auto-explore (X or 🧭) walks to the nearest chest or unexplored ground and stops when an enemy comes into view. In events and boss rewards, number keys pick a choice. If you step on the exit with chests or events still in sight, you're asked before you descend. Each level-up restores a quarter of your HP and MP, and descending restores some too.<br><br>
       <b style="color:var(--accent-gold)">Combat</b><br>
       Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do and roughly how hard it will hit you (≈45 dmg) — Defend before the big ones.<br><br>
       <b style="color:var(--accent-gold)">Buffs & Debuffs</b><br>

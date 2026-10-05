@@ -74,7 +74,7 @@ async function playFloors(classId, targetFloor, maxSteps = 6000) {
       let b;
       if (/Boss Reward/.test(text)) { stats.rewards++; b = content.querySelector('.reward-item'); }
       else if (/Merchant/.test(text)) { stats.shops++; b = pick(/Leave/); }
-      else if ((b = pick(/Take it|Continue|No — Keep|^OK$|Resume|Return to the Surface/))) {}
+      else if ((b = pick(/Take it|Continue|No — Keep|^OK$|Resume|Return to the Surface/i)) || (b = pick(/^1?\s*Descend$/i))) {}
       else if (content.querySelector('.modal-close-btn') && !/choice|Offer|Drink|Buy|Pray/.test(text)) b = content.querySelector('.modal-close-btn');
       else { stats.events++; b = buttons[buttons.length - 1]; } // event: take the safe last choice
       (b || buttons[0]).click();

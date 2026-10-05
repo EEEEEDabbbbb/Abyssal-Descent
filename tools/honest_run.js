@@ -161,6 +161,7 @@ const BOT_SOURCE = `
       let bi = 0; G._rewardChoices.forEach((it, i) => { if (gearScore(it) > gearScore(G._rewardChoices[bi])) bi = i; });
       claimReward(bi); return;
     }
+    if (document.getElementById('descend-btn')) { confirmDescend(); return; } // leave unclaimed chests behind
     if (G._currentEvent) {
       const n = G._currentEvent.choices.length;
       resolveEvent(Math.floor(Math.random() * n)); return;

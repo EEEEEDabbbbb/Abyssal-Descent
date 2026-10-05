@@ -208,3 +208,38 @@ test('number keys pick event choices and boss rewards; Enter continues', async (
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('stepping on the exit asks first only if you\'re leaving chests or events behind', async () => {
+  const { page, errors } = await gamePage();
+  const setup = () => page.evaluate(() => {
+    G.floor = 1; G.map = generateMap(1); G.phase = 'explore'; G._gameOverShown = false;
+    G.map.forEach(row => row.forEach(c => { if (['treasure', 'event', 'enemy', 'boss'].includes(c.content)) c.content = null; }));
+    // An open exit right next to the player
+    const { x, y } = G.playerPos;
+    const [dx, dy] = [[1,0],[-1,0],[0,1],[0,-1]].find(([dx, dy]) => { const c = G.map[y+dy] && G.map[y+dy][x+dx]; return c && c.type !== 'wall'; });
+    G.map[y+dy][x+dx].content = 'exit';
+    updateUI();
+    return { dx, dy };
+  });
+  // Nothing left behind: straight down
+  let d = await setup();
+  await page.evaluate(({ dx, dy }) => movePlayer(dx, dy), d);
+  assert.equal(await page.evaluate(() => G.floor), 2);
+  // A chest in sight: asked, Stay keeps you here, Enter on Descend goes down
+  d = await setup();
+  const asked = await page.evaluate(({ dx, dy }) => {
+    const chest = G.map.flat().find(c => c.type === 'floor' && !c.content && c.revealed);
+    chest.content = 'treasure'; chest.item = cloneItem(ITEM_POOL[0]);
+    movePlayer(dx, dy);
+    return { floor: G.floor, text: document.getElementById('overlay-content').textContent };
+  }, d);
+  assert.equal(asked.floor, 1);
+  assert.match(asked.text, /leaving 1 chest behind/);
+  await page.keyboard.press('2');
+  assert.deepEqual(await page.evaluate(() => ({ floor: G.floor, open: isModalOpen() })), { floor: 1, open: false });
+  await page.evaluate(({ dx, dy }) => { movePlayer(-dx, -dy); movePlayer(dx, dy); }, d);
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(() => G.floor), 2);
+  assert.deepEqual(errors, []);
+  await page.close();
+});
