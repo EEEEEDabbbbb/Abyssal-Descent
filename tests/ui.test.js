@@ -293,3 +293,17 @@ test('? opens How to Play', async () => {
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('the map header says whether the exit is sealed or open', async () => {
+  const { page, errors } = await gamePage();
+  const r = await page.evaluate(() => {
+    renderCenterPanel();
+    const sealed = document.querySelector('.explore-header').textContent;
+    G.map[G.exitPos.y][G.exitPos.x].content = 'exit'; renderCenterPanel();
+    return { sealed, open: document.querySelector('.explore-header').textContent };
+  });
+  assert.match(r.sealed, /Exit sealed/);
+  assert.match(r.open, /Exit open/);
+  assert.deepEqual(errors, []);
+  await page.close();
+});

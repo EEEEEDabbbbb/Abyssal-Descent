@@ -97,6 +97,7 @@
   event or dropped loot, otherwise to the nearest unexplored ground, and
   stops as soon as an enemy comes into view. It never walks into fights,
   shops or the exit.
+- The map header says whether the floor's exit is still sealed (🔒) or open (▼).
 - Stepping on the exit asks first if you've seen chests, events or loot you
   haven't taken ("You're leaving 2 chests behind"). Enter descends; with
   nothing left behind you go straight down as before.

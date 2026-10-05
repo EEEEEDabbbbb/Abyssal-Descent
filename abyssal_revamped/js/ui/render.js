@@ -377,6 +377,16 @@ function renderCenterPanel() {
 }
 
 // ── Combat view ───────────────────────────────────────────────
+// exitStatusHtml — "🔒 Exit sealed" until the floor's guardian or boss falls,
+// then "▼ Exit open", in the map header
+function exitStatusHtml() {
+  const c = G.exitPos && G.map[G.exitPos.y] && G.map[G.exitPos.y][G.exitPos.x];
+  if (!c) return '';
+  return c.content === 'exit'
+    ? `<span class="exit-status open" title="The way down is open">▼ Exit open</span> · `
+    : `<span class="exit-status" title="Defeat this floor's guardian to open the exit">🔒 Exit sealed</span> · `;
+}
+
 // matchupHtml — "You deal ×0.5 · You take ×2" under an enemy's name when your
 // class element and its element aren't a neutral match, so a hard counter is
 // obvious before you commit to the fight (and you can flee it)
@@ -533,7 +543,7 @@ function renderExploreView(view) {
   let html = `<div class="explore-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;padding:0 0.25rem;width:100%">
     <span style="font-size:0.7rem;color:var(--text-dim)">${biome.name} — Floor ${G.floor}</span>
     <span class="explore-hint" style="font-size:0.62rem;color:var(--text-dim);font-style:italic">WASD / arrows, or tap a tile · X: auto-explore · M: minimap</span>
-    <span style="font-size:0.7rem;color:var(--text-dim)">${getFloorTier(G.floor).toUpperCase()}</span>
+    <span style="font-size:0.7rem;color:var(--text-dim)">${exitStatusHtml()}${getFloorTier(G.floor).toUpperCase()}</span>
   </div>`;
 
   html += `<div class="map-viewport" style="width:100%;height:${mapH}px;overflow:hidden;position:relative;background:#0a080e;border:1px solid var(--border)">
