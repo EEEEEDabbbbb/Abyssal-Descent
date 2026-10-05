@@ -13,6 +13,11 @@
   are fixed by where they are on the floor, so reloading and taking a
   different route can't re-roll them. In a Daily Descent everyone gets the
   same merchants and the same luck.
+- A hit your shield soaked completely was logged as "attacks for 0"; the
+  log shows its real size, and Thorns now pricks on shielded hits too.
+- Lifesteal healed from overkill damage (a 500 hit on a 20 HP enemy healed
+  as if all 500 landed).
+- Resonance echoes counted as damage-over-time kills for Slow Burn.
 
 ### Balance
 - **Difficulty curve rebuilt.** Enemy strength came from per-tier stat
@@ -49,16 +54,18 @@
   plus a consumable rolled with the floor's loot odds (they only ever sold
   floor-1 potions before). Their three other slots are always gear, never
   the same piece twice (a potion could show up there at a gear price, next
-  to the same potion at the normal price). HP-regen gear restores 2% max HP per turn
-  instead of a flat 5. Selling pays a quarter of the merchant's price at
-  your depth (a mythical item sold for 60 gold on any floor). Consumables
-  sell for a quarter of a consumable's price, so nothing a merchant sells can
-  be sold back for a profit.
+  to the same potion at the normal price).
+- Selling pays a quarter of the merchant's price at your depth (a mythical
+  item sold for 60 gold on any floor). Consumables sell for a quarter of a
+  consumable's price, so nothing a merchant sells can be sold back for a
+  profit.
+- HP-regen gear restores 2% of max HP per turn (was a flat 5).
 - Armour can block at most 85% of a hit (high-DEF builds took a flat 1
   damage from anything weaker than them).
 - Life Drain heals the enemy for half the damage dealt (was all of it).
-- The same fix for fusion classes: 26 had padded kits and 46 had two
-  abilities with the same name. All 638 now have 8 distinct abilities.
+- Fusion classes had the padded-kit problem 2.2 fixed for base classes: 26
+  repeated the same few abilities and 46 had two abilities with the same
+  name. All 638 now have 8 distinct abilities.
 - The five secret classes were defined twice, and the Collection and Fusion
   Lab showed an outdated copy (different stats and kit from what you
   played). There is now one definition.
