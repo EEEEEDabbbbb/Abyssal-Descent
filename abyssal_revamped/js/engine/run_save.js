@@ -70,10 +70,10 @@ function rehydrateItem(saved) {
 // ── Map cells ──────────────────────────────────────────────────
 const CELL_DEFAULTS = { type:'wall', revealed:false, visited:false, content:null };
 
-function _serialiseCell(cell) {
+function _serialiseCell(cell, skip) {
   const out = {};
   for (const [k, v] of Object.entries(cell)) {
-    if (k === 'event') continue;
+    if (k === 'event' || (skip && skip(k, v))) continue;
     if (v === undefined || typeof v === 'function') continue;
     if (k in CELL_DEFAULTS && CELL_DEFAULTS[k] === v) continue;
     out[k] = v;
@@ -92,6 +92,44 @@ function _deserialiseCell(saved) {
   if (cell._shopItems) cell._shopItems = cell._shopItems.map(rehydrateItem);
   if (cell.droppedItems) cell.droppedItems = cell.droppedItems.map(rehydrateItem);
   return cell;
+}
+
+// ── Packed map ─────────────────────────────────────────────────
+// Every cell's type (floor/wall), revealed, visited and isCorridor flags fit
+// in one letter, and its room number in one more, so each row is two short
+// strings; anything else a cell holds (content, enemies, items…) is kept per
+// cell in `extras`. A large map saves in a fraction of the space of one
+// object per cell.
+const PACKED_TYPES = ['wall', 'floor'];
+const _packableRoom = r => Number.isInteger(r) && r >= 0 && r < 4000;
+function _packMap(map) {
+  const rows = [], rooms = [], extras = [];
+  const packedKey = (k, v) => k === 'revealed' || k === 'visited' || k === 'isCorridor'
+    || (k === 'type' && PACKED_TYPES.includes(v)) || (k === 'room' && _packableRoom(v));
+  map.forEach((row, y) => {
+    let line = '', roomLine = '';
+    row.forEach((cell, x) => {
+      const v = (cell.type === 'floor' ? 1 : 0) | (cell.revealed ? 2 : 0) | (cell.visited ? 4 : 0) | (cell.isCorridor ? 8 : 0);
+      line += String.fromCharCode(97 + v);
+      roomLine += _packableRoom(cell.room) ? String.fromCharCode(48 + cell.room) : '.';
+      const rest = _serialiseCell(cell, packedKey);
+      if (rest) extras.push([x, y, rest]);
+    });
+    rows.push(line); rooms.push(roomLine);
+  });
+  return { rows, rooms, extras };
+}
+function _unpackMap(packed) {
+  const map = packed.rows.map((line, y) => Array.from(line, (ch, x) => {
+    const v = ch.charCodeAt(0) - 97;
+    const cell = { type: PACKED_TYPES[v & 1], revealed: !!(v & 2), visited: !!(v & 4) };
+    if (v & 8) cell.isCorridor = true;
+    const r = packed.rooms && packed.rooms[y] ? packed.rooms[y].charCodeAt(x) : 46;
+    if (r !== 46) cell.room = r - 48;
+    return cell;
+  }));
+  const extra = new Map((packed.extras || []).map(([x, y, rest]) => [y * 100000 + x, rest]));
+  return map.map((row, y) => row.map((base, x) => _deserialiseCell({ ...base, ...(extra.get(y * 100000 + x) || {}) })));
 }
 
 // ── Serialise the current run ──────────────────────────────────
@@ -127,7 +165,7 @@ function _serialiseRun() {
     pendingCombat: G._pendingCombat ? _serialisePendingCombat(G._pendingCombat) : null,
     pendingReward: G._rewardChoices ? JSON.parse(JSON.stringify(G._rewardChoices)) : null,
     player,
-    map:        G.map ? G.map.map(row => row.map(_serialiseCell)) : null,
+    mapPacked:  G.map ? _packMap(G.map) : null,
     mapW:       G.mapW,
     mapH:       G.mapH,
   };
@@ -195,7 +233,8 @@ async function _deserialiseRun(data) {
   resetTemporaryStats(p);
 
   G.player     = p;
-  G.map        = data.map ? data.map.map(row => row.map(_deserialiseCell)) : null;
+  G.map        = data.mapPacked ? _unpackMap(data.mapPacked)
+               : data.map ? data.map.map(row => row.map(_deserialiseCell)) : null; // saves from before packing
   G.mapW       = data.mapW;
   G.mapH       = data.mapH;
   G.floor      = data.floor;

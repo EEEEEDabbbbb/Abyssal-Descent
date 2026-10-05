@@ -143,6 +143,10 @@
 - Item names with apostrophes ("Miser's Coin") showed a backtick in tooltips.
 
 ### Developer
+- Run saves pack the map (one letter per tile for its type and flags, one for
+  its room): a fully explored large map saves in 59 KB instead of 378 KB.
+  Older saves still load. This matters on itch.io, where browser storage may
+  be shared with other games.
 - `tools/class_balance.js` simulates fights for every class and prints win rates.
 - `tools/honest_run.js` plays whole runs with no cheats and reports how deep
   they get and what killed them (`GOD=1` prints the player growth curve,

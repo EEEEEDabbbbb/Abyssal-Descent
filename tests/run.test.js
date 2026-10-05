@@ -349,6 +349,36 @@ test('reloading can\'t re-roll an event wager or a merchant\'s stock', async () 
   assert.deepEqual(r, { outcomes: 1, stocks: 1 });
 });
 
+test('the packed map saves and loads every cell exactly, and old saves still load', async () => {
+  const r = await run(async () => {
+    const norm = map => JSON.stringify(map.map(row => row.map(c => _serialiseCell(c))));
+    const out = [];
+    for (const [floor, size] of [[3, 'small'], [12, 'normal'], [25, 'large'], [37, 'normal']]) {
+      G.worldGen.mapSize = size;
+      __startTestRun('shadowblade', floor, 'PACK' + floor);
+      // Some play: reveal and visit cells, drop loot, open a shop
+      G.map.forEach((row, y) => row.forEach((c, x) => { if ((x + y) % 3 === 0) c.revealed = true; if ((x * y) % 7 === 1) c.visited = true; }));
+      const floorCell = G.map.flat().find(c => c.type === 'floor' && !c.content);
+      floorCell.droppedItems = [cloneItem(ITEM_POOL[5])];
+      const before = norm(G.map);
+      const data = JSON.parse(JSON.stringify(_serialiseRun()));
+      const legacy = { ...data, map: G.map.map(row => row.map(c => _serialiseCell(c))), mapPacked: undefined };
+      await _deserialiseRun(data);
+      const packedOk = norm(G.map) === before;
+      await _deserialiseRun(JSON.parse(JSON.stringify(legacy)));
+      const legacyOk = norm(G.map) === before;
+      out.push({ floor, size, packedOk, legacyOk, ratio: +(JSON.stringify(data).length / JSON.stringify(legacy).length).toFixed(2) });
+    }
+    G.worldGen.mapSize = 'normal';
+    return out;
+  });
+  for (const row of r) {
+    assert.equal(row.packedOk, true, JSON.stringify(row));
+    assert.equal(row.legacyOk, true, JSON.stringify(row));
+    assert.ok(row.ratio < 0.5, `packed save should be much smaller: ${JSON.stringify(row)}`);
+  }
+});
+
 test('abandoning a run deletes its save (no repeat shard payouts)', async () => {
   await fresh();
   const r = await run(() => {
