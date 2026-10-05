@@ -87,3 +87,38 @@ test('a long press shows the tooltip on touch screens without pressing the butto
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('on a phone, the on-screen pad moves you and tapping a revealed tile walks there', async () => {
+  const { page, errors } = await gamePage({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
+  // Find a pad direction that leads onto open floor, press it
+  const moved = await page.evaluate(() => {
+    G.map.forEach(row => row.forEach(c => { if (c.content && c.content !== 'start') { c.content = null; c.enemy = null; c.enemies = null; } }));
+    updateUI();
+    const { x, y } = G.playerPos;
+    const dirs = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+    for (const [name, [dx, dy]] of Object.entries(dirs)) {
+      const c = G.map[y + dy] && G.map[y + dy][x + dx];
+      if (c && c.type !== 'wall') return { name, from: { x, y }, to: { x: x + dx, y: y + dy } };
+    }
+    return null;
+  });
+  await page.tap(`.dpad-btn.dpad-${moved.name}`);
+  const afterPad = await page.evaluate(() => ({ ...G.playerPos }));
+  assert.deepEqual(afterPad, moved.to);
+  // Tap a revealed floor tile two steps away and let the walk finish
+  const target = await page.evaluate(() => {
+    const { x, y } = G.playerPos;
+    for (const [dx, dy] of [[2,0],[-2,0],[0,2],[0,-2],[1,1],[-1,-1],[1,-1],[-1,1]]) {
+      const c = G.map[y + dy] && G.map[y + dy][x + dx];
+      if (c && c.type !== 'wall' && c.revealed && findPath(x, y, x + dx, y + dy)) return { x: x + dx, y: y + dy };
+    }
+    return null;
+  });
+  if (target) {
+    await page.tap(`.mc[data-x="${target.x}"][data-y="${target.y}"]`);
+    await page.waitForFunction(t => G.playerPos.x === t.x && G.playerPos.y === t.y, target, { timeout: 5000 });
+  }
+  assert.deepEqual(errors, []);
+  await page.close();
+});
+
