@@ -142,6 +142,37 @@ test('a hit your shield soaks is still logged with its damage', async () => {
   assert.match(r.logged, /attacks for [1-9]\d*\./);
 });
 
+test('the "Next:" telegraph estimates the damage a move will do', async () => {
+  const r = await run(() => {
+    __startTestRun('ironclad', 12);
+    const p = G.player; p.passives = [];
+    const e = getRandomEnemy(12, false); e.element = 'normal';
+    startCombat(e); G.turn = 'enemy';
+    const out = {};
+    for (const id of ['basic', 'heavy', 'double', 'charge', 'brood_swarm']) {
+      const est = estimateEnemyMove(e, id, p);
+      let total = 0; const n = 60;
+      for (let i = 0; i < n; i++) {
+        p.shield = 0; p.stats.hp = p.stats.maxHp = 1e6; removeStatuses(p, () => true);
+        const hp0 = p.stats.hp; G._actingEnemy = e; ENEMY_ABILITIES[id](e, p); G._actingEnemy = null;
+        total += hp0 - p.stats.hp;
+      }
+      out[id] = { est, avg: total / n };
+    }
+    out.channel = estimateEnemyMove(e, 'channel_burst', p);
+    e.patterns = ['heavy']; updateUI(); renderCenterPanel();
+    out.shown = document.querySelector('.next-est') ? document.querySelector('.next-est').textContent : null;
+    return out;
+  });
+  for (const id of ['basic', 'heavy', 'double', 'charge']) {
+    const { est, avg } = r[id];
+    assert.ok(Math.abs(est - avg) <= Math.max(3, avg * 0.12), `${id}: estimate ${est} vs average ${avg}`);
+  }
+  assert.ok(r.brood_swarm.est > 0);
+  assert.equal(r.channel, null);
+  assert.match(String(r.shown), /^≈\d+$/);
+});
+
 test('a low-HP boss never drains twice in a row', async () => {
   const r = await run(() => {
     __startTestRun('shadowblade', 30);

@@ -59,6 +59,9 @@
 - Run seeds: every run has a seed (shown in the pause menu, or enter one in
   World Settings). The same seed and settings build the same floors, and
   reloading a save can't re-roll chests, drops or flee attempts.
+- The enemy's "Next:" move now shows roughly how much damage it will do to
+  you (≈45), so you can decide when to defend or heal. The estimate is read
+  from the move's own formula, your DEF and the element matchup.
 - Minimap in the corner of the map (toggle with M or in Settings); click it
   to walk somewhere you have already seen.
 - Run statistics: kills, damage, biggest hit, chests, steps, play time and

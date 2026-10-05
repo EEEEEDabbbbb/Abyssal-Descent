@@ -177,7 +177,7 @@ Guardians are ×2.6 HP / ×1.2 ATK of the floor's average enemy; floor bosses an
 
 ### Enemy Ability Types (34 patterns)
 
-Enemies telegraph their next move ("Next: …"). They lean on pressure moves when you're below 30% HP and on drain moves when they are (but never drain twice in a row). 12% of enemies from floor 3 are Elite (×1.4 stats, better rewards); from floor 4, 16% of encounters are 2-enemy packs (each at 70% stats and rewards). Enemy attacks carry their element.
+Enemies telegraph their next move ("Next: …"), with an estimate of the damage it will do to you for ordinary attacks (≈45). They lean on pressure moves when you're below 30% HP and on drain moves when they are (but never drain twice in a row). 12% of enemies from floor 3 are Elite (×1.4 stats, better rewards); from floor 4, 16% of encounters are 2-enemy packs (each at 70% stats and rewards). Enemy attacks carry their element.
 
 The first 14:
 

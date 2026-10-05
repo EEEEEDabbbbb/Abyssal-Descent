@@ -499,11 +499,42 @@ function pickEnemyAbility(e, p) {
   return pattern[idx % pattern.length];
 }
 
+// estimateEnemyMove — rough damage a move will do to you, for the "Next:"
+// telegraph. Read straight from the move's own calcDmg(e.atk*X, p.stats.def*Y)
+// terms (and a `for(i<N)` multi-hit loop), so it can't drift from the real
+// formula. null for moves whose damage depends on more than that.
+const _moveTermsCache = {};
+function _enemyMoveTerms(abId) {
+  if (abId in _moveTermsCache) return _moveTermsCache[abId];
+  const src = String(ENEMY_ABILITIES[abId] || '');
+  let terms = null;
+  if (!/_channeling|debuffCount|\bmult\b|stacks/.test(src)) {
+    terms = [];
+    for (const m of src.matchAll(/calcDmg\(e\.atk(?:\*([\d.]+))?,\s*p\.stats\.def(?:\*([\d.]+))?\)/g)) terms.push([m[1] ? +m[1] : 1, m[2] ? +m[2] : 1]);
+    const loop = src.match(/for\(let i=0;i<(\d+);i\+\+\)/);
+    if (loop) terms = terms.flatMap(t => Array(+loop[1]).fill(t));
+    if (!terms.length) terms = null;
+  }
+  return (_moveTermsCache[abId] = terms);
+}
+function estimateEnemyMove(e, abId, p) {
+  const terms = _enemyMoveTerms(abId);
+  if (!terms || !p) return null;
+  let dmg = terms.reduce((s, [a, d]) => s + Math.max(1, e.atk * a - p.stats.def * d, e.atk * a * 0.15), 0);
+  (e.status || []).forEach(s => { if (s.atkMult) dmg *= s.atkMult; if (s.dmgReduction) dmg *= Math.max(0, 1 - s.dmgReduction); });
+  const myEl = (getClassData(p.classId) || {}).element || 'normal';
+  if (e.element) dmg *= getElementMult(e.element, myEl);
+  const reduce = (p.status || []).reduce((s, st) => s + (st.dmgReduce || 0), 0);
+  if (reduce > 0) dmg *= 1 - Math.min(0.75, reduce);
+  return Math.max(1, Math.round(dmg));
+}
+
 // getEnemyNextMove — returns the {icon,label} for whatever pickEnemyAbility()
 // would choose right now. Always exactly matches what enemyTurn() will do.
 function getEnemyNextMove(e) {
   const abId = pickEnemyAbility(e, G.player);
-  return ENEMY_ABILITY_INFO[abId] || ENEMY_ABILITY_INFO.basic;
+  const info = ENEMY_ABILITY_INFO[abId] || ENEMY_ABILITY_INFO.basic;
+  return { ...info, est: estimateEnemyMove(e, abId, G.player) };
 }
 
 const ENEMY_POOL = {

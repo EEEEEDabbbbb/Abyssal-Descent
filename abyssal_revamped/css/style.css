@@ -2705,3 +2705,6 @@ body.reduce-motion .toast { animation: none; transition: none; }
   #title-screen .title-btn { padding-top: 0.55rem; padding-bottom: 0.55rem; font-size: 0.95rem; }
   .title-divider { margin: 0.5rem 0 !important; }
 }
+
+/* Estimated damage next to the enemy's "Next:" move (render.js) */
+.next-est { color: #ff7a7a; font-weight: 600; font-size: 0.95em; }
