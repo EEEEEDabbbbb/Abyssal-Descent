@@ -36,6 +36,12 @@ function init() {
   // Load the big generated ability file in the background (abilities.js)
   ensureAbilitiesLoaded().catch(err => console.warn(err));
   document.addEventListener('keydown', handleKeyDown);
+  // Web app manifest (add to home screen). Only over http(s): browsers refuse
+  // to fetch it from a file:// page and log an error.
+  if (/^https?:$/.test(location.protocol)) {
+    const link = Object.assign(document.createElement('link'), { rel: 'manifest', href: 'manifest.webmanifest' });
+    document.head.appendChild(link);
+  }
   window.addEventListener('resize', () => { if (isScreenActive('game-screen')) renderCenterPanel(); });
   // Tooltips: hover, keyboard focus or long press (render.js)
   initTooltips();

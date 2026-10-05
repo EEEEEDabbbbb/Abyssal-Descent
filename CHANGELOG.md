@@ -121,6 +121,9 @@
   now says class XP comes from won fights.
 
 ### Phones
+- The game has an icon and a web app manifest, so on a phone "Add to Home
+  Screen" opens it full-screen like an app (when served over https, e.g.
+  itch.io).
 - Your HP and MP stay visible in the top bar while you scroll, which matters
   in fights, since the character panel sits below the action bar on phones.
 - Fixed on phones: the Fusion Lab was cut off on both sides, class select
