@@ -51,8 +51,19 @@
 - 15 new items with 7 new gear effects: Thorns, Executioner, First Strike,
   Mana Siphon, Last Stand, Scholar and Midas.
 
+### Accessibility
+- Tooltips work without a mouse: they open on keyboard focus and on a long
+  press on touch screens (the press doesn't also trigger the button).
+- Unusable abilities stay focusable and their tooltip says why ("Not enough
+  mana", "Form is already sundered"…).
+- Item names with apostrophes ("Miser's Coin") showed a backtick in tooltips.
+
 ### Developer
 - `tools/class_balance.js` simulates fights for every class and prints win rates.
+- The bundled fonts now ship with their SIL Open Font License files
+  (`abyssal_revamped/css/fonts/`).
+- New tests: run records, rival bosses and gear effects, tooltip
+  accessibility (`npm test` now runs 113 checks).
 
 ## 2.1.0
 

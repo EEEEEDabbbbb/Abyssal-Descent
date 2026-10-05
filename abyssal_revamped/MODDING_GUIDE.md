@@ -935,3 +935,19 @@ That section was machine-generated, but the generator script is no longer part
 of the project, so hand edits there are now safe and permanent. Prefer adding
 new hand-crafted abilities near the top of the file with the class they belong
 to.
+
+### Tooltips that only work with a mouse / break on apostrophes
+
+Don't write `onmouseenter="showTooltip(event,'${name}',…)"`. Give the element
+`tabindex="0"` and `${tipAttrs(name, desc)}` (or `data-tip-ability="${abId}"`
+for an ability). `initTooltips()` (render.js) then shows it on hover, on
+keyboard focus and on a long press, and `tipAttrs` escapes quotes for you.
+Use `escAttr(text)` for any other free text placed inside an HTML attribute.
+Inline `onclick="…"` handlers are fine for ids and numbers, but never
+interpolate names, descriptions or other free text into them.
+
+### Gameplay randomness that ignores the seed
+
+Use `rand(n)` / `randFloat()` for anything that affects play. `Math.random()`
+skips the run seed, so seeded runs stop reproducing and reloading a save can
+re-roll the result. Keep `Math.random()` for purely cosmetic effects.

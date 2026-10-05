@@ -35,11 +35,8 @@ function init() {
   ensureAbilitiesLoaded().catch(err => console.warn(err));
   document.addEventListener('keydown', handleKeyDown);
   window.addEventListener('resize', () => { if (isScreenActive('game-screen')) renderCenterPanel(); });
-  // Tooltips open on hover; on touch screens there is no "hover out", so any
-  // tap or scroll closes them.
-  document.addEventListener('click', hideTooltip, true);
-  document.addEventListener('touchstart', hideTooltip, { capture:true, passive:true });
-  document.addEventListener('scroll', hideTooltip, true);
+  // Tooltips: hover, keyboard focus or long press (render.js)
+  initTooltips();
   // Save on tab close / hide so progress since the last fight isn't lost
   const flushSave = () => { if (G.player && !G.inCombat) autoSaveRun(); };
   window.addEventListener('pagehide', flushSave);

@@ -33,6 +33,9 @@ The suite boots the real game in headless Chromium and checks:
   the fight.
 - **Regressions**: one test per fixed bug (saves, softlocks, exploits, combat
   rules, passives).
+- **Content and UI**: every rival boss fought through all its phases, every
+  gear effect, run records and achievements, and tooltips by mouse, keyboard
+  and touch.
 - **End-to-end play**: a bot plays through the UI for several floors, including
   a boss fight. Set `PLAY_FLOORS=21 npm test` to send it deeper.
 
@@ -40,5 +43,7 @@ Other tools:
 
 - `node tools/build_fusion_index.js` rebuilds the fusion class → file index and
   fixes fusion element/id problems. Run it after editing fusion data.
+- `node tools/class_balance.js [classId…]` simulates fights for each class on
+  several floors and prints win rates, which is handy after changing a class.
 - Opening `index.html?dev=1` loads the developer console (backtick or F2), the
   in-browser self test (`devtest()`), and a call logger.

@@ -51,7 +51,7 @@
     <input id="class-search" type="text" placeholder="🔍 Search classes..." autocomplete="off" spellcheck="false"
       oninput="filterClassGrid(this.value)"
       style="flex:1;background:var(--bg-deep);border:1px solid var(--border);color:var(--text-bright);padding:0.4rem 0.6rem;border-radius:4px;font-size:0.75rem;outline:none"/>
-    <button onclick="document.getElementById('class-search').value='';filterClassGrid('')" style="background:var(--bg-deep);border:1px solid var(--border);color:var(--text-dim);padding:0.4rem 0.5rem;font-size:0.75rem;border-radius:4px;cursor:pointer;flex-shrink:0;line-height:1;transition:color 0.2s" onmouseover="this.style.color='var(--text-bright)'" onmouseout="this.style.color='var(--text-dim)'">✕</button>
+    <button class="search-clear-btn" aria-label="Clear search" onclick="document.getElementById('class-search').value='';filterClassGrid('')">✕</button>
   </div>
   <div id="class-grid"></div>
   <div class="cs-footer" style="margin-top:0.5rem">

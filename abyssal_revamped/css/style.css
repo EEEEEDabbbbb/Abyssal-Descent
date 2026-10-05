@@ -605,14 +605,14 @@
     transition: opacity 0.2s;
   }
 
-  .ability-btn:hover:not(:disabled) {
+  .ability-btn:hover:not([aria-disabled="true"]) {
     border-color: var(--border-bright);
     background: var(--bg-hover);
     color: var(--text-bright);
   }
-  .ability-btn:hover:not(:disabled)::before { opacity: 1; }
+  .ability-btn:hover:not([aria-disabled="true"])::before { opacity: 1; }
 
-  .ability-btn:disabled {
+  .ability-btn[aria-disabled="true"] {
     opacity: 0.4;
     cursor: not-allowed;
   }
@@ -2339,11 +2339,11 @@
   box-shadow: var(--shadow-raised);
   transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background 0.15s, color 0.15s;
 }
-.ability-btn:hover:not(:disabled) {
+.ability-btn:hover:not([aria-disabled="true"]) {
   box-shadow: var(--shadow-raised-hover);
   transform: translateY(-1px);
 }
-.ability-btn:disabled { box-shadow: var(--shadow-recessed); }
+.ability-btn[aria-disabled="true"] { box-shadow: var(--shadow-recessed); }
 
 .basic-btn {
   background-color: var(--bg-card);
@@ -2630,3 +2630,18 @@ body.reduce-motion .toast { animation: none; transition: none; }
   .run-row { flex-wrap: wrap; }
   .run-side { text-align: left; width: 100%; padding-left: 1.9rem; }
 }
+
+/* Class search ✕ (was inline styles + JS hover) */
+.search-clear-btn {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 0.4rem 0.5rem;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.search-clear-btn:hover, .search-clear-btn:focus-visible { color: var(--text-bright); }

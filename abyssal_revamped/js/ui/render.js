@@ -91,11 +91,7 @@ function renderStatsGrid() {
   const passiveHtml = (p.passives||[]).map(passive => {
     const name = PASSIVE_INFO[passive]?.name || passive;
     const desc = PASSIVE_INFO[passive]?.desc || 'No description available.';
-    const safeName = name.replace(/'/g,'`');
-    const safeDesc = desc.replace(/'/g,'`');
-    return `<div class="stat-item" style="grid-column:span 2;cursor:help"
-      onmouseenter="showTooltip(event,'${safeName}','${safeDesc}')"
-      onmouseleave="hideTooltip()">
+    return `<div class="stat-item" style="grid-column:span 2;cursor:help" tabindex="0" ${tipAttrs(name, desc)}>
         <div class="stat-item-name">Passive</div>
         <div class="stat-item-val" style="color:var(--accent-teal-bright);font-size:0.65rem">${name}</div>
        </div>`;
@@ -257,11 +253,8 @@ function renderStatusEffects(statuses, containerId) {
     const desc = getStatusDesc(s);
     const stackStr = s.stacks ? ` (×${s.stacks})` : '';
     const dur = s.duration >= 999 ? 'permanent' : `${s.duration}t`;
-    const tooltipName = `${s.icon} ${s.name}${stackStr}`.replace(/'/g,'`');
-    const tooltipDesc = `${dur} — ${desc}`.replace(/'/g,'`');
-    return `<div class="status-tag ${s.type} status-pulse" style="cursor:help"
-      onmouseenter="showTooltip(event,'${tooltipName}','${tooltipDesc}')"
-      onmouseleave="hideTooltip()">
+    return `<div class="status-tag ${s.type} status-pulse" style="cursor:help" tabindex="0"
+      ${tipAttrs(`${s.icon} ${s.name}${stackStr}`, `${dur} — ${desc}`)}>
       ${s.icon} ${s.name}${s.stacks?` ×${s.stacks}`:''} <span style="opacity:0.6">${s.duration>=999?'∞':s.duration+'t'}</span>
     </div>`;
   }).join('');
@@ -277,9 +270,8 @@ function renderInventory() {
   // Disable item clicks during enemy turn to prevent accidental modal-open while overlay may be pending
   const itemClickable = !(G.inCombat && G.turn !== 'player');
   grid.innerHTML = p.inventory.map((item,i)=>`
-    <div class="item-card" ${itemClickable ? `onclick="openItemMenu(${i})" role="button" tabindex="0" aria-label="${item.name.replace(/"/g,'&quot;')} (${item.rarity} ${item.type})"` : ''} style="${itemClickable ? '' : 'opacity:0.6;cursor:default;'}"
-      onmouseenter="showTooltip(event,'${item.name.replace(/'/g,'`')}','${item.desc.replace(/'/g,'`')}')"
-      onmouseleave="hideTooltip()">
+    <div class="item-card" tabindex="0" ${itemClickable ? `onclick="openItemMenu(${i})" role="button" aria-label="${escAttr(item.name)} (${item.rarity} ${item.type})"` : ''} style="${itemClickable ? '' : 'opacity:0.6;cursor:default;'}"
+      ${tipAttrs(item.name, item.desc)}>
       <div class="item-rarity ${item.rarity}" style="position:absolute;top:0.3rem;right:0.4rem">${item.rarity}</div>
       <div class="item-name">${item.icon} ${item.name}</div>
       <div class="item-type">${item.type}${item.element&&ELEMENTS[item.element]?' <span style="color:'+ELEMENTS[item.element].color+'">'+ELEMENTS[item.element].icon+'</span>':''}</div>
@@ -310,9 +302,7 @@ function renderEquipmentSlots() {
     const unequipBtn = item && !item.permanent
       ? `<button onclick="event.stopPropagation();unequipItem('${s.slot}')" style="font-size:0.6rem;padding:1px 4px;margin-top:3px;background:var(--bg-deep);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;border-radius:2px" title="Unequip">↑ unequip</button>`
       : '';
-    return `<div class="equip-slot"
-      onmouseenter="${item?`showTooltip(event,'${(item.name||'').replace(/'/g,'`')} ${elIcon}','${(item.desc||'').replace(/'/g,'`')}')`:'null'}"
-      onmouseleave="hideTooltip()">
+    return `<div class="equip-slot" ${item ? `tabindex="0" ${tipAttrs(`${item.name || ''} ${elIcon}`, item.desc || '')}` : ''}>
       <div class="equip-slot-name">${s.label}</div>
       <div class="equip-slot-item ${item?'equipped':''}">${item ? item.icon+' '+item.name+(elIcon?' '+elIcon:'') : '—'}</div>
       ${affinityNote}
@@ -341,10 +331,8 @@ function renderAbilities() {
     const affinityBadge = hasAffinity ? `<span style="position:absolute;top:2px;right:3px;font-size:0.6rem;color:${elObj?.color||'#ffaa00'}" title="Weapon Affinity +20%">⚔</span>` : '';
     return `<button class="ability-btn ${onCd?'on-cooldown':''}"
       style="--ability-color:${ab.color||'var(--accent-violet)'};${affinityStyle}position:relative"
-      ${disabled?'disabled':''}
-      onclick="playerAction('ability','${abId}')"
-      onmouseenter="showAbilityTooltip(event,'${abId}')"
-      onmouseleave="hideTooltip()">
+      ${disabled ? 'aria-disabled="true"' : `onclick="playerAction('ability','${abId}')"`}
+      data-tip-ability="${abId}">
       ${onCd?`<span class="ab-cd">${p.cooldowns[abId]}t</span>`:''}
       ${idx < 9 ? `<span class="ab-key" aria-hidden="true">${idx+1}</span>` : ''}
       ${affinityBadge}
@@ -765,6 +753,8 @@ function showTooltip(event, name, desc) {
 }
 function showAbilityTooltip(event, abId) {
   const ab = ABILITIES[abId]; if(!ab)return;
+  const check = (G.player && G.inCombat) ? canUseAbility(G.player, abId) : { ok:true };
+  const whyNot = check.ok ? '' : `<br><span style="color:var(--accent-crimson)">${check.reason}</span>`;
   const elObj = ab.element?ELEMENTS[ab.element]:null;
   const elStr = elObj?` · <span style="color:${elObj.color}">${elObj.icon} ${elObj.name}</span>`:'';
   const costStr = ab.costType==='hp' ? `<span style="color:var(--hp-color)">${ab.cost>0?ab.cost:'—'}♥ HP</span>`
@@ -772,10 +762,70 @@ function showAbilityTooltip(event, abId) {
                 : `<span style="color:var(--mp-color)">${ab.cost}✦ MP</span>`;
   const affinityStr = (G.player && affinityFor(G.player, ab) > 1)
     ? ` · <span style="color:${elObj?.color||'#ffaa00'}">⚔ +20% Affinity</span>` : '';
-  showTooltip(event, ab.name+elStr, ab.desc + ` · ${costStr}` + (ab.maxCooldown?` · CD: ${ab.maxCooldown}t`:'') + affinityStr);
+  showTooltip(event, ab.name+elStr, ab.desc + ` · ${costStr}` + (ab.maxCooldown?` · CD: ${ab.maxCooldown}t`:'') + affinityStr + whyNot);
 }
 function hideTooltip() {
   const tt=document.getElementById('tooltip'); if(tt)tt.style.display='none';
+  _tipHoverEl = null; // so hovering the same element again re-opens it
+}
+
+// ── Tooltip wiring ────────────────────────────────────────────
+// Anything with data-tip-name/data-tip-desc (tipAttrs) or data-tip-ability
+// gets a tooltip on mouse hover, on keyboard focus, and on a long press on
+// touch screens — never mouse-only. initTooltips() is called once from init().
+function escAttr(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function tipAttrs(name, desc) { return `data-tip-name="${escAttr(name)}" data-tip-desc="${escAttr(desc)}"`; }
+
+function _tipTarget(node) {
+  return node && node.closest ? node.closest('[data-tip-name],[data-tip-ability]') : null;
+}
+function _showTipFor(el, pos) {
+  if (el.dataset.tipAbility) showAbilityTooltip(pos, el.dataset.tipAbility);
+  else showTooltip(pos, el.dataset.tipName, el.dataset.tipDesc || '');
+}
+
+let _tipHoverEl = null, _tipPressTimer = null, _tipFromPress = false;
+function initTooltips() {
+  // mousemove (not just mouseover) so a tooltip hidden by scrolling comes
+  // back as soon as the pointer moves again
+  const onHover = e => {
+    if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return; // emulated by a tap
+    const t = _tipTarget(e.target);
+    if (t === _tipHoverEl) return;
+    if (t) { _showTipFor(t, e); _tipHoverEl = t; } else hideTooltip();
+  };
+  document.addEventListener('mouseover', onHover);
+  document.addEventListener('mousemove', onHover, { passive: true });
+  document.addEventListener('mouseout', e => { if (!e.relatedTarget) { _tipHoverEl = null; hideTooltip(); } });
+  document.addEventListener('focusin', e => {
+    const t = _tipTarget(e.target);
+    if (!t || !e.target.matches(':focus-visible')) return;
+    const r = t.getBoundingClientRect();
+    _showTipFor(t, { clientX: r.left, clientY: r.bottom });
+  });
+  document.addEventListener('focusout', e => { if (_tipTarget(e.target)) hideTooltip(); });
+  // Long press = hover for touch screens
+  document.addEventListener('touchstart', e => {
+    clearTimeout(_tipPressTimer);
+    hideTooltip();
+    const t = _tipTarget(e.target);
+    if (!t || !e.touches.length) return;
+    const { clientX, clientY } = e.touches[0];
+    _tipPressTimer = setTimeout(() => { _tipFromPress = true; _showTipFor(t, { clientX, clientY }); }, 450);
+  }, { passive: true });
+  const cancelPress = () => clearTimeout(_tipPressTimer);
+  document.addEventListener('touchmove', cancelPress, { passive: true });
+  document.addEventListener('touchend', cancelPress, { passive: true });
+  document.addEventListener('contextmenu', e => { if (_tipTarget(e.target)) e.preventDefault(); });
+  // The tap that ends a long press only closes the tooltip; it doesn't also
+  // press the button underneath. Any other click just closes it.
+  document.addEventListener('click', e => {
+    if (_tipFromPress) { _tipFromPress = false; e.preventDefault(); e.stopPropagation(); return; }
+    hideTooltip();
+  }, true);
+  document.addEventListener('scroll', hideTooltip, true);
 }
 
 // ── Item popup ────────────────────────────────────────────────
