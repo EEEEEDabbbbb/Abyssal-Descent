@@ -76,14 +76,19 @@ function resetRunState() {
   G._saveFailWarned = false;
   G._biomeProcs = 0;
   G._biomeMoves = 0;
+  G.seed       = null;
+  G.rngState   = null; // outside a run, rand() uses Math.random
 }
 
 function startRun() {
   if (!G.selectedClass) return;
   const classId = G.selectedClass;
   showWorldGenModal(async () => {
+    const seed = G._pendingSeed;
     resetRunState();
     G.selectedClass = classId;
+    seedRun(seed);
+    G._pendingSeed = null;
     try {
       if (!window.ABILITIES_GENERATED_LOADED) {
         showModal('<div class="modal-title">Preparing the descent…</div><div style="text-align:center;color:var(--text-dim)">Loading abilities</div>', false);
@@ -109,7 +114,7 @@ function startRun() {
     }
     const biome = getBiomeForFloor(G.floor);
     logEntry('system', `══ Abyssal Descent: Floor ${G.floor} ══`);
-    logEntry('system', `You descend as the ${G.player.name}.`);
+    logEntry('system', `You descend as the ${G.player.name}. (Seed ${G.seed})`);
     logEntry('system', `🗺 Entering ${biome.name}.`);
 
     showScreen('game-screen');

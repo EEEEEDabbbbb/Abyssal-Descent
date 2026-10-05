@@ -26,8 +26,9 @@ async function loadAllFusions(page) {
 // Puts the game into a fresh run on the given floor without going through the
 // world-gen modal. Runs inside the page.
 const START_RUN_IN_PAGE = `
-  window.__startTestRun = function(classId, floor) {
+  window.__startTestRun = function(classId, floor, seed) {
     G.player = null;
+    seedRun(seed);
     G.selectedClass = classId;
     G.floor = floor || 1;
     G.log = [];

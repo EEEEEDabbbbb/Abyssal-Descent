@@ -505,6 +505,11 @@ function startCombat(enemyOrEnemies) {
   const enemyList = (Array.isArray(enemyOrEnemies) ? enemyOrEnemies : [enemyOrEnemies]).filter(Boolean);
   if (!enemyList.length) return;
   enemyList.forEach(prepareEnemy); // gives enemies a `stats` view (stats.js)
+  // Remember each enemy's stats as the fight starts, so an enemy you flee
+  // from goes back to normal instead of keeping this fight's buffs/debuffs.
+  enemyList.forEach(en => {
+    Object.defineProperty(en, '_fightStart', { value: { maxHp:en.maxHp, atk:en.atk, def:en.def, spd:en.spd }, enumerable:false, configurable:true, writable:true });
+  });
   const enemy = enemyList[0]; // lead enemy — for the intro text and boss-only fields
   G.inCombat    = true;
   G.phase       = 'combat';
@@ -861,9 +866,14 @@ function playerAction(type, abilityId=null) {
     if (rand(100) < chance) {
       logEntry('system','You flee from combat!');
       resetCombo(p);
-      // The enemies stay where they were, wounded but with their statuses gone
+      // The enemies stay where they were: still wounded, but with this
+      // fight's statuses and stat changes gone
       const survivors = G.enemies.filter(en => en.hp > 0);
-      survivors.forEach(en => { en.status = []; });
+      survivors.forEach(en => {
+        en.status = [];
+        if (en._fightStart) Object.assign(en, en._fightStart);
+        en.hp = Math.min(en.hp, en.maxHp);
+      });
       const cell = G.map[G.playerPos.y][G.playerPos.x];
       endCombat(false); // false = fled, not won
       G.phase = 'explore';

@@ -311,7 +311,10 @@ How statuses behave (status.js):
   skips that first tick, so "for 3 turns" means the next 3 turns.
 - **Record fields** — `atkBonus/defBonus/spdBonus/critBonus` are subtracted on
   expiry; `atkPen/defPen/spdPen` (and `atkLoss/defLoss/spdLoss`) are added back.
-  Re-applying an active status adds the new amounts to the old ones.
+  Re-applying an active status **refreshes** it: the longer duration and the
+  larger amount win, so casting "-25% DEF" twice is still -25%. Give the
+  status a `stacks` field (e.g. `stacks:1`) to make amounts add up instead,
+  up to 10 stacks.
 - **onApply / onTurn stat changes** — if `onApply` or `onTurn` changes stats,
   the engine applies it **once** (not every turn) and undoes it on expiry
   unless your `onExpire` already does. Prefer the record fields above.
@@ -325,6 +328,11 @@ How statuses behave (status.js):
 - **Cleansing** — use `removeStatuses(entity, s => s.type === 'debuff')`, which
   undoes stat changes. Don't just filter `entity.status`.
 - Whatever happens, every temporary stat change is reset when the fight ends.
+  Enemies you flee from also go back to the stats they had when the fight began.
+- **Randomness** — use `rand(n)` / `randFloat()` for anything that affects
+  play, never `Math.random()`. They follow the run's seed, so seeds reproduce
+  floors and reloading a save can't re-roll results. `Math.random()` is only
+  for cosmetics (particles, sounds).
 
 ### Built-in Status Helpers
 

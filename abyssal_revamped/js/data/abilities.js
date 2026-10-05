@@ -2443,7 +2443,7 @@ const ABILITIES = {
       const isCrit=rand(100)<p.stats.crit; const critMult=1.6+((p.stats.critDmg||0)/100);
       const dmg=Math.round(calcDmg(p.stats.atk*1.8,e.def)*(isCrit?critMult:1));
       dealDmgToEnemy(e,dmg,isCrit,false,false,'fighting');
-      if(p._cleaveStacks<=5){ const dp=Math.round(e.def*0.15); e.def=Math.max(0,e.def-dp); addStatus(e,{id:'cleaved',name:'Cleaved',type:'debuff',icon:'⚔️',duration:999,defPen:(e.status.find(s=>s.id==='cleaved')?.defPen||0)+dp}); }
+      if(p._cleaveStacks<=5){ const dp=Math.round(e.def*0.15); e.def=Math.max(0,e.def-dp); addStatus(e,{id:'cleaved',name:'Cleaved',type:'debuff',icon:'⚔️',duration:999,stacks:1,defPen:dp}); }
       return isCrit?`Cleave CRITS for ${dmg}!`:`Cleave slices for ${dmg}. DEF reduced.`;
     }
   },

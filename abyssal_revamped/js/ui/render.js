@@ -208,12 +208,17 @@ function getStatusDesc(s) {
   if (s.atkPen)    parts.push(`-${s.atkPen} ATK`);
   if (s.defPen)    parts.push(`-${s.defPen} DEF`);
   if (s.spdPen)    parts.push(`-${s.spdPen} SPD`);
+  if (s.atkLoss)   parts.push(`-${s.atkLoss} ATK`);
+  if (s.defLoss)   parts.push(`-${s.defLoss} DEF`);
+  if (s.spdLoss)   parts.push(`-${s.spdLoss} SPD`);
   if (s.dmgMult && s.dmgMult !== 1)         parts.push(`×${s.dmgMult} outgoing dmg`);
   if (s.dmgReduce && s.dmgReduce > 0)       parts.push(`-${Math.round(s.dmgReduce*100)}% incoming dmg`);
   if (s.incomingDmgMult && s.incomingDmgMult !== 1) parts.push(`×${s.incomingDmgMult} incoming dmg`);
   if (s.hpRegen)     parts.push(`+${s.hpRegen} HP/turn`);
   if (s.mpRegen)     parts.push(`+${s.mpRegen} MP/turn`);
   if (s.dodgeChance) parts.push(`${s.dodgeChance}% dodge`);
+  if (s.dodgeBonus)  parts.push(`+${s.dodgeBonus}% dodge`);
+  if (s.stacks > 1)  parts.push(`×${s.stacks} stacks`);
   if (s.missChance)  parts.push(`${s.missChance}% enemy miss`);
   if (parts.length) return parts.join(', ');
   // 3. Pattern fallback for generated/hybrid IDs

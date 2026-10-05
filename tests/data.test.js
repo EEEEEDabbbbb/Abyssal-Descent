@@ -80,6 +80,23 @@ test('enemy patterns, items and weapon arts reference real abilities', async () 
   assert.deepEqual(bad, []);
 });
 
+test('every generated ability is defined exactly once', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const src = fs.readFileSync(path.join(__dirname, '..', 'abyssal_revamped', 'js', 'data', 'abilities_generated.js'), 'utf8');
+  const ids = [...src.matchAll(/^ABILITIES\.([A-Za-z0-9_]+)\s*=/gm)].map(m => m[1]);
+  const seen = new Set(), dupes = new Set();
+  ids.forEach(id => (seen.has(id) ? dupes : seen).add(id));
+  assert.deepEqual([...dupes], []);
+});
+
+test('abilities only use status fields the engine reads', async () => {
+  // e.g. a stray `pl.dodgeChance = …` does nothing; dodge lives on statuses
+  const bad = await ctx.page.evaluate(() => Object.values(ABILITIES)
+    .filter(a => /\b(?:p|pl|player)\.dodgeChance\s*=/.test(String(a.use))).map(a => a.id));
+  assert.deepEqual(bad, []);
+});
+
 test('every passive has a name, a description and an implementation', async () => {
   const bad = await ctx.page.evaluate(() => {
     const all = new Set([...Object.values(CLASSES), ...Object.values(FUSION_CLASSES)].flatMap(c => c.passives || []));

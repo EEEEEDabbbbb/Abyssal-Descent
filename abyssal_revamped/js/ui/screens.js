@@ -378,6 +378,7 @@ function winGame() {
 // ── In-game menu (pause) ──────────────────────────────────────
 function showPauseMenu() {
   let html = `<div class="modal-title">⏸ Paused</div>
+    ${G.seed ? `<div style="text-align:center;font-size:0.7rem;color:var(--text-dim)">Floor ${G.floor} · Seed <span style="color:var(--text-mid);user-select:all">${G.seed}</span></div>` : ''}
     <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.5rem">
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal()">Resume</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();showTalentTree()">🌟 Talents${G.player?.talentPoints?` (${G.player.talentPoints})`:''}</button>

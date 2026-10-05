@@ -2497,3 +2497,20 @@
 
 /* D-pad: make the buttons read clearly against the dark map */
 .dpad-btn { border-color: var(--accent-gold-dim); box-shadow: 0 0 6px rgba(0,0,0,0.6); }
+
+/* Text inputs (world-gen seed) */
+.text-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-glow);
+  color: var(--text-bright, #e8e0f0);
+  font: inherit;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.6rem;
+  border-radius: 4px;
+}
+.text-input:focus { outline: 2px solid var(--border-bright); outline-offset: 1px; }
+.text-input::placeholder { color: var(--text-dim); letter-spacing: normal; text-transform: none; }

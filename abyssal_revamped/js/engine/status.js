@@ -14,7 +14,9 @@
 // just remembers by how much so expiry can undo it):
 //   atkBonus/defBonus/spdBonus/critBonus      — undone by subtracting
 //   atkPen/defPen/spdPen, atkLoss/defLoss/spdLoss — undone by adding back
-//   Re-applying an active status adds the new amounts to the old ones.
+//   Re-applying an active status REFRESHES it (longer duration, larger of the
+//   two amounts) unless it has `stacks`, in which case the amounts add up
+//   (at most 10 stacks).
 //
 // HOOKS
 //   onApply(entity)            — once, when first applied
@@ -76,8 +78,27 @@ function addStatus(entity, status) {
   const existing = entity.status.find(s => s.id === status.id);
   if (existing) {
     existing.duration = Math.max(existing.duration, status.duration);
-    if (status.stacks) existing.stacks = Math.min(10, (existing.stacks || 1) + status.stacks);
-    STATUS_RECORD_FIELDS.forEach(f => { if (status[f]) existing[f] = (existing[f] || 0) + status[f]; });
+    if (status.stacks) {
+      // Stacking effects (Frenzy, Cleaved, Bleed…) add up, to at most 10 stacks.
+      const before = existing.stacks || 1;
+      existing.stacks = Math.min(10, before + status.stacks);
+      const room = before >= 10 ? 0 : 1;
+      STATUS_RECORD_FIELDS.forEach(f => {
+        if (!status[f]) return;
+        if (room) existing[f] = (existing[f] || 0) + status[f];
+        else _revertRecord(entity, f, status[f]); // capped: the caller's change doesn't land
+      });
+    } else {
+      // Anything else refreshes: casting "-25% DEF" twice is still -25%, not
+      // -44%. The caller already changed the stat, so give back the smaller
+      // of the two amounts and keep the larger one on record.
+      STATUS_RECORD_FIELDS.forEach(f => {
+        if (!status[f]) return;
+        const old = existing[f] || 0;
+        _revertRecord(entity, f, Math.min(Math.abs(old), Math.abs(status[f])) * Math.sign(status[f]));
+        if (Math.abs(status[f]) > Math.abs(old)) existing[f] = status[f];
+      });
+    }
     if (ownTurn) existing._fresh = true;
     return;
   }
@@ -85,6 +106,18 @@ function addStatus(entity, status) {
   if (ownTurn) s._fresh = true;
   entity.status.push(s);
   _attachStatEffects(entity, s);
+}
+
+// Undoes `amount` of a record field's stat change (same rule endStatus uses).
+function _revertRecord(entity, field, amount) {
+  if (!amount) return;
+  if (STATUS_BONUS_FIELDS[field]) {
+    const key = STATUS_BONUS_FIELDS[field];
+    entity.stats[key] = Math.max(key === 'atk' || key === 'spd' ? 1 : 0, (entity.stats[key] || 0) - amount);
+  } else {
+    const key = STATUS_PEN_FIELDS[field];
+    entity.stats[key] = (entity.stats[key] || 0) + amount;
+  }
 }
 
 // Converts onApply/onTurn stat changes into a single "for the duration" delta.
@@ -137,12 +170,7 @@ function tickStatus(entity) {
 // endStatus — removes one status and undoes everything it recorded.
 function endStatus(entity, s) {
   entity.status = (entity.status || []).filter(x => x !== s);
-  for (const [f, key] of Object.entries(STATUS_BONUS_FIELDS)) {
-    if (s[f]) entity.stats[key] = Math.max(key === 'atk' || key === 'spd' ? 1 : 0, (entity.stats[key] || 0) - s[f]);
-  }
-  for (const [f, key] of Object.entries(STATUS_PEN_FIELDS)) {
-    if (s[f]) entity.stats[key] = (entity.stats[key] || 0) + s[f];
-  }
+  STATUS_RECORD_FIELDS.forEach(f => _revertRecord(entity, f, s[f]));
   const before = snapshotStats(entity);
   if (s.onExpire) _safeCall('onExpire', s, s.onExpire, entity);
   if (s.onRemove) _safeCall('onRemove', s, s.onRemove, entity);

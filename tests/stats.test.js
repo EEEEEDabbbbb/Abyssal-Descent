@@ -183,6 +183,54 @@ test('fleeing does not keep buffs', async () => {
   assert.equal(r.after, r.atk0);
 });
 
+test('re-casting a debuff refreshes it instead of stacking it', async () => {
+  const r = await run(() => {
+    const { p, e } = __fight();
+    e.def = 400;
+    const ab = Object.values(ABILITIES).find(a => /const _defPen=Math.round\(e.def\*0.25\)/.test(String(a.use)) && !/stacks|rand\(/.test(String(a.use).replace('rand(100)<p.stats.crit', '')));
+    ab.use(p, e); const once = e.def;
+    ab.use(p, e); ab.use(p, e); const thrice = e.def;
+    removeStatuses(e, s => s.id === 'def_down');
+    return { once, thrice, after: e.def, id: ab.id };
+  });
+  assert.equal(r.once, 300, JSON.stringify(r));
+  assert.equal(r.thrice, 300, JSON.stringify(r));
+  assert.equal(r.after, 400, JSON.stringify(r));
+});
+
+test('stacking effects still stack, and come off cleanly', async () => {
+  const r = await run(() => {
+    const { p } = __fight();
+    const atk0 = p.stats.atk;
+    for (let i = 0; i < 3; i++) { p.stats.atk += 5; addStatus(p, { id:'frenzy', name:'Frenzy', type:'buff', icon:'', duration:3, stacks:1, atkBonus:5 }); }
+    const stacked = p.stats.atk - atk0;
+    removeStatuses(p, s => s.id === 'frenzy');
+    return { stacked, after: p.stats.atk - atk0 };
+  });
+  assert.deepEqual(r, { stacked: 15, after: 0 });
+});
+
+test('a stacking effect stops growing at 10 stacks', async () => {
+  const r = await run(() => {
+    const { p } = __fight();
+    const atk0 = p.stats.atk;
+    for (let i = 0; i < 15; i++) { p.stats.atk += 5; addStatus(p, { id:'frenzy', name:'Frenzy', type:'buff', icon:'', duration:3, stacks:1, atkBonus:5 }); }
+    return p.stats.atk - atk0;
+  });
+  assert.equal(r, 50);
+});
+
+test('Spectral Haunt grants dodge the engine actually reads', async () => {
+  const r = await run(() => {
+    const { p, e } = __fight();
+    const crit0 = p.stats.crit;
+    ABILITIES.fire_ghost_haunt.use(p, e);
+    const s = p.status.find(x => x.id === 'haunt');
+    return { crit: p.stats.crit - crit0, dodge: s && s.dodgeBonus, stray: 'dodgeChance' in p };
+  });
+  assert.deepEqual(r, { crit: 30, dodge: 25, stray: false });
+});
+
 test('no page errors', () => {
   assert.deepEqual(ctx.errors, []);
 });

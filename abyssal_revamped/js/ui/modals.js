@@ -384,6 +384,10 @@ function showWorldGenModal(onConfirm) {
       ${worldGenRow('Treasure Rate','treasureRate',['low','normal','high'],       wg.treasureRate)}
       ${worldGenRow('Map Size',     'mapSize',     ['small','normal','large'],    wg.mapSize)}
     </div>
+    <div style="margin-top:0.6rem">
+      <label for="worldgen-seed" style="display:block;font-size:0.7rem;color:var(--text-mid);margin-bottom:3px">Seed <span style="color:var(--text-dim)">(optional: the same seed and settings build the same floors)</span></label>
+      <input id="worldgen-seed" class="text-input" type="text" maxlength="16" placeholder="Random" autocomplete="off" spellcheck="false">
+    </div>
     <button class="title-btn primary" style="width:100%;margin-top:1rem" onclick="confirmWorldGen()">Descend</button>
     <button class="title-btn" style="width:100%;margin-top:0.4rem" onclick="closeModal()">Cancel</button>`;
   G._worldGenConfirm = onConfirm;
@@ -413,6 +417,8 @@ function setWorldGen(key, val) {
 }
 
 function confirmWorldGen() {
+  const seedInput = document.getElementById('worldgen-seed');
+  G._pendingSeed = seedInput ? normaliseSeed(seedInput.value) : null;
   document.getElementById('overlay').classList.remove('active');
   if (G._worldGenConfirm) G._worldGenConfirm();
   G._worldGenConfirm = null;

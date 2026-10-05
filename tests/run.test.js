@@ -47,6 +47,63 @@ test('fleeing a normal enemy leaves it on the map', async () => {
   assert.deepEqual(r, { inCombat: false, content: 'enemy', hasEnemy: true });
 });
 
+test('an enemy you flee from loses this fight\'s buffs and debuffs', async () => {
+  const r = await run(() => {
+    __startTestRun('shadowblade', 1);
+    const cell = G.map.flat().find(c => c.content === 'enemy' && c.enemy);
+    const y = G.map.findIndex(row => row.includes(cell)), x = G.map[y].indexOf(cell);
+    G._prevPlayerPos = { ...G.playerPos }; G.playerPos = { x, y };
+    const en = cell.enemy;
+    startCombat(en); G.turn = 'player';
+    const before = { atk: en.atk, def: en.def, spd: en.spd, maxHp: en.maxHp };
+    // A status-tracked debuff, a raw debuff and a self-buff
+    const pen = Math.round(en.def * 0.5); en.def -= pen;
+    addStatus(en, { id:'def_down', name:'d', type:'debuff', icon:'', duration:3, defPen: pen });
+    en.spd = Math.round(en.spd * 0.5);
+    en.atk += 40;
+    en.hp = Math.max(1, Math.round(en.maxHp / 2));
+    G.player.stats.spd = 999;
+    const realRand = window.rand; window.rand = () => 0;
+    playerAction('flee');
+    window.rand = realRand;
+    return { before, after: { atk: en.atk, def: en.def, spd: en.spd, maxHp: en.maxHp }, hp: en.hp, status: en.status.length };
+  });
+  assert.deepEqual(r.after, r.before);
+  assert.ok(r.hp < r.before.maxHp, 'wounds stay');
+  assert.equal(r.status, 0);
+});
+
+test('the same seed builds the same floors, whatever happens in between', async () => {
+  const r = await run(() => {
+    const layout = () => G.map.map(row => row.map(c => c.type[0] + (c.content || '-')[0]).join('')).join('/');
+    __startTestRun('shadowblade', 1, 'ABYSS1');
+    const a1 = layout();
+    for (let i = 0; i < 50; i++) rand(100); // e.g. a few fights
+    G.floor = 3; G.map = generateMap(3); const a3 = layout();
+    __startTestRun('shadowblade', 1, 'ABYSS1');
+    const b1 = layout();
+    G.floor = 3; G.map = generateMap(3); const b3 = layout();
+    __startTestRun('shadowblade', 1, 'OTHER2');
+    const c1 = layout();
+    return { same1: a1 === b1, same3: a3 === b3, differs: a1 !== c1, seed: G.seed };
+  });
+  assert.deepEqual(r, { same1: true, same3: true, differs: true, seed: 'OTHER2' });
+});
+
+test('reloading a save cannot re-roll what happens next', async () => {
+  const r = await run(async () => {
+    __startTestRun('shadowblade', 2, 'SCUM42');
+    assignRunSlot(); saveRun();
+    const first = [rand(1000), rand(1000), getRandomItemByFloor(10).id];
+    await loadRun(G._runSaveSlot);
+    const second = [rand(1000), rand(1000), getRandomItemByFloor(10).id];
+    clearActiveRunSave(); // leave the save slots free for the other tests
+    return { first, second, seed: G.seed };
+  });
+  assert.deepEqual(r.second, r.first);
+  assert.equal(r.seed, 'SCUM42');
+});
+
 test('save → load keeps packs, consumables, dropped items, stats and secret-boss state', async () => {
   const r = await run(async () => {
     __startTestRun('shadowblade', 6);

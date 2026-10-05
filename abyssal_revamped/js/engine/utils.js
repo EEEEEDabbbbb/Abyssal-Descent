@@ -47,7 +47,50 @@
 //   loadMeta() — reads and merges with defaults to handle missing new fields
 // ══════════════════════════════════════════════════════════════
 
-function rand(n)          { return Math.floor(Math.random() * n); }
+// ── Randomness ────────────────────────────────────────────────
+// All gameplay randomness goes through rand()/randFloat(). During a run they
+// use a seeded generator (mulberry32) whose state lives in G.rngState and is
+// saved with the run, so:
+//   • the same run seed always builds the same floors (each floor is
+//     generated from its own sub-seed, see withFloorSeed), and
+//   • reloading a save can't re-roll a chest, a drop or a flee attempt.
+// Outside a run (title screen etc.) they fall back to Math.random.
+// Purely cosmetic randomness (particles, sound noise) uses Math.random.
+function _rngNext() {
+  let t = (G.rngState = (G.rngState + 0x6D2B79F5) >>> 0);
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+}
+function randFloat()      { return (typeof G !== 'undefined' && typeof G.rngState === 'number') ? _rngNext() : Math.random(); }
+function rand(n)          { return Math.floor(randFloat() * n); }
+// hashSeed — any string → 32-bit seed (FNV-1a)
+function hashSeed(str) {
+  let h = 0x811c9dc5;
+  for (const ch of String(str)) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
+  return h >>> 0;
+}
+// newRunSeed — a short, shareable seed like "K7Q2MX"
+function newRunSeed() {
+  const abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for (let i = 0; i < 6; i++) s += abc[Math.floor(Math.random() * abc.length)];
+  return s;
+}
+function normaliseSeed(str) { return String(str || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 16); }
+// seedRun — starts the run's generator from a seed string
+function seedRun(seed) {
+  G.seed = normaliseSeed(seed) || newRunSeed();
+  G.rngState = hashSeed(G.seed + ':run');
+}
+// withFloorSeed — runs fn with a generator seeded from (run seed, floor), so
+// a floor's layout never depends on what happened earlier in the run.
+function withFloorSeed(floor, fn) {
+  if (!G.seed) return fn();
+  const saved = G.rngState;
+  G.rngState = hashSeed(`${G.seed}:${G.meta ? G.meta.ngPlus || 0 : 0}:floor${floor}`);
+  try { return fn(); } finally { G.rngState = saved; }
+}
 function randRange(a, b)  { return a + rand(b - a + 1); }
 function clamp(v, mn, mx) { return Math.min(mx, Math.max(mn, v)); }
 function deepCopy(obj)    { return JSON.parse(JSON.stringify(obj)); }

@@ -224,7 +224,13 @@ function markSecretHints(map, secretRoom) {
 }
 
 // ── Main map generator ────────────────────────────────────────
+// generateMap — each floor is built from its own sub-seed of the run seed
+// (withFloorSeed, utils.js), so a seed always produces the same floors.
 function generateMap(floor) {
+  return withFloorSeed(floor, () => _buildMap(floor));
+}
+
+function _buildMap(floor) {
   const dims = getMapDims(floor);
   const wgMapMult = { small:0.75, normal:1.0, large:1.3 }[G.worldGen.mapSize] || 1.0;
   const W = Math.round(dims.w * wgMapMult);

@@ -370,7 +370,7 @@ function checkSecretBossTrigger(floor) {
     const alreadyDefeated = (G.meta.defeatedSecretBosses || []).includes(bossId);
     const effectiveChance = alreadyDefeated ? boss.triggerChance * 0.5 : boss.triggerChance;
 
-    if (Math.random() < effectiveChance) {
+    if (randFloat() < effectiveChance) {
       return bossId;
     }
   }

@@ -669,7 +669,7 @@ function cloneItem(item) { return { ...item }; }
 function getRandomItem(rarity) {
   const pool = ITEM_POOL.filter(i => i.rarity === rarity);
   if (!pool.length) return cloneItem(ITEM_POOL[0]);
-  return cloneItem(pool[Math.floor(Math.random() * pool.length)]);
+  return cloneItem(pool[rand(pool.length)]);
 }
 
 // ── Floor loot table ──────────────────────────────────────────
@@ -704,7 +704,7 @@ function getLootWeights(floor) {
 
 function getRandomItemByFloor(floor) {
   const w = getLootWeights(floor);
-  let roll = Math.random() * w.reduce((s, v) => s + v, 0);
+  let roll = randFloat() * w.reduce((s, v) => s + v, 0);
   for (let k = 0; k < w.length; k++) {
     roll -= w[k];
     if (roll < 0) return getRandomItem(LOOT_RARITIES[k]);
@@ -716,7 +716,7 @@ function getRandomItemByFloor(floor) {
 // Minimum rarity is epic at floor 1, scaling up aggressively with floor.
 // Used for both the auto-drop on boss kill and the 3-choice reward modal.
 function getBossLootByFloor(floor) {
-  const roll = Math.floor(Math.random() * 100);
+  const roll = rand(100);
   if (floor >= 45) {  // floor 45-50 bosses: divine or mythical only
     if (roll < 50) return getRandomItem('divine');
     return getRandomItem('mythical');
