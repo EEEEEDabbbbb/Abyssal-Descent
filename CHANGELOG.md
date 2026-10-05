@@ -60,6 +60,9 @@
   Nullbringer, Magnetist and others); Abyssal Tyrant's control and
   Soulrender's lifesteal were toned down. In simulated fights every shop
   class now wins 60–88% of the time (was 45–90%).
+- Hard and Nightmare world settings pay ×1.25 and ×1.5 Soul Shards during
+  the run (they only made enemies stronger before). Achievements pay their
+  fixed amounts.
 - Class unlocks cost half as many Soul Shards (about 4,000 for all classes,
   was 8,085). Bosses pay 5 + floor shards (was 5 + half the floor), and every
   new depth record pays 2 shards per floor.

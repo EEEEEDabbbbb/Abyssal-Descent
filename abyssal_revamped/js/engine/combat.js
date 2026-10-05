@@ -1211,8 +1211,7 @@ function winCombat() {
   if (G.player.stats.hp > 0 && G.player.stats.hp < G.player.stats.maxHp * 0.05) unlockAchievement('close_call');
 
   if (e.isBoss) {
-    const shardBonus = Math.round(5 + G.floor);
-    awardShards(shardBonus);
+    const shardBonus = awardShards(Math.round(5 + G.floor));
     G.killedBoss = true;
     logEntry('reward', `★ Boss slain! +${shardBonus} Soul Shards.`);
   }
@@ -1370,7 +1369,7 @@ function triggerConquestReward() {
     m.conquestRewards.permanentGear = 'abyssal_crown';
     m.conquestRewards.ngPlusUnlocked = true;
     if (!m.conquestRewards.shardDumpClaimed) {
-      awardShards(150);
+      awardShards(150, true); // one-time reward, not scaled by difficulty
       m.conquestRewards.shardDumpClaimed = true;
     }
     if (!m.unlockedClasses.includes('abyssal_one')) {

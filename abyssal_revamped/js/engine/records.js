@@ -42,11 +42,17 @@ function trackBest(key, v) {
 }
 
 // awardShards — every in-run shard reward goes through here so the run total
-// on the death screen and in the history is complete.
-function awardShards(n) {
-  if (!n) return;
-  G.meta.soulShards += n;
-  trackStat('shards', n);
+// on the death screen and in the history is complete. Harder world settings
+// pay more (getShardRewardMult); pass fixed=true for set amounts (achievements).
+function getShardRewardMult() {
+  return { normal: 1, hard: 1.25, nightmare: 1.5 }[(G.worldGen || {}).difficulty] || 1;
+}
+function awardShards(n, fixed = false) {
+  if (!n) return 0;
+  const amount = fixed ? n : Math.round(n * getShardRewardMult());
+  G.meta.soulShards += amount;
+  trackStat('shards', amount);
+  return amount;
 }
 
 // ── Play clock ─────────────────────────────────────────────────
@@ -130,7 +136,7 @@ function unlockAchievement(id) {
   if (!a || hasAchievement(id)) return false;
   G.meta.achievements = G.meta.achievements || {};
   G.meta.achievements[id] = Date.now();
-  if (G.player && !G._gameOverShown) awardShards(a.shards); else G.meta.soulShards += a.shards;
+  if (G.player && !G._gameOverShown) awardShards(a.shards, true); else G.meta.soulShards += a.shards;
   saveMeta();
   showToast(`<span class="toast-icon">${a.icon}</span><span><b>Achievement: ${a.name}</b><br><span class="toast-sub">${a.desc} +${a.shards} Soul Shards</span></span>`);
   if (typeof logEntry === 'function' && G.player) logEntry('reward', `🏆 Achievement: ${a.name} (+${a.shards} Soul Shards)`);

@@ -71,7 +71,7 @@ const EVENTS = [
       { text:()=>`Drink from the well (+${evScale(12)} max HP, +${evScale(8)} max MP)`,
         effect:(p)=>{ addPermanentStat(p,'maxHp',evScale(12)); addPermanentStat(p,'maxMp',evScale(8)); return 'Soul energy courses through you!'; } },
       { text:()=>`Release the souls (gain ${10+Math.floor(G.floor/2)} Soul Shards)`,
-        effect:(p)=>{ const n=10+Math.floor(G.floor/2); awardShards(n);saveMeta();return `Freed souls reward you with ${n} Soul Shards!`; } },
+        effect:(p)=>{ const n=awardShards(10+Math.floor(G.floor/2));saveMeta();return `Freed souls reward you with ${n} Soul Shards!`; } },
       { text:'Leave the souls be', effect:(p)=>{ return 'Some souls deserve their rest.'; } },
     ]
   },

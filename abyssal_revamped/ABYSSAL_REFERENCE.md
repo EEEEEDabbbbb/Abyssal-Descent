@@ -587,6 +587,8 @@ Progress persists between runs via Soul Shards earned through gameplay. Three sy
 - Each boss: 5 + the floor number (10 on floor 5, 55 on floor 50).
 - Each new depth record: 2 per floor deeper than your previous best.
 - Some events (Soul Well, freed souls) and first-time Abyss conquest (150).
+- On Hard and Nightmare, everything above except the conquest bonus pays ×1.25 / ×1.5.
+- Achievements (Records screen) pay a fixed amount once each.
 
 ### Talent Tree (9 Talents)
 Bought with Talent Points (2 per level-up) during a run; talents reset when the run ends.

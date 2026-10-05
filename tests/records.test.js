@@ -181,6 +181,19 @@ test('Daily Descent: same seed for everyone today, standard settings, best floor
   assert.match(r.btn, /best floor 7/);
 });
 
+test('harder world settings pay more Soul Shards (achievements stay fixed)', async () => {
+  const r = await run(() => {
+    G.meta = defaultMeta(); G._gameOverShown = false;
+    __startTestRun('shadowblade', 3);
+    const pay = diff => { G.worldGen.difficulty = diff; G.meta.soulShards = 0; awardShards(20); return G.meta.soulShards; };
+    const out = { normal: pay('normal'), hard: pay('hard'), nightmare: pay('nightmare') };
+    G.meta.soulShards = 0; unlockAchievement('first_blood'); out.achievement = G.meta.soulShards;
+    G.worldGen.difficulty = 'normal';
+    return out;
+  });
+  assert.deepEqual(r, { normal: 20, hard: 25, nightmare: 30, achievement: 5 });
+});
+
 test('no page errors', () => {
   assert.deepEqual(ctx.errors, []);
 });

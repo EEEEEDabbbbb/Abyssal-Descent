@@ -391,6 +391,7 @@ function showWorldGenModal(onConfirm) {
       ${worldGenRow('Treasure Rate','treasureRate',['low','normal','high'],       wg.treasureRate)}
       ${worldGenRow('Map Size',     'mapSize',     ['small','normal','large'],    wg.mapSize)}
     </div>
+    <div style="font-size:0.68rem;color:var(--text-dim);margin-top:0.4rem;line-height:1.5">Hard: enemies ×1.3, Soul Shards ×1.25 · Nightmare: enemies ×1.7, Soul Shards ×1.5</div>
     <div style="margin-top:0.6rem">
       <label for="worldgen-seed" style="display:block;font-size:0.7rem;color:var(--text-mid);margin-bottom:3px">Seed <span style="color:var(--text-dim)">(optional: the same seed and settings build the same floors)</span></label>
       <input id="worldgen-seed" class="text-input" type="text" maxlength="16" placeholder="Random" autocomplete="off" spellcheck="false">

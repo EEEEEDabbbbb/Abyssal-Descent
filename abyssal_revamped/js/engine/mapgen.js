@@ -720,8 +720,8 @@ function nextFloor() {
     const bonus = 2 * (G.floor - G.meta.maxFloor);
     G.meta.maxFloor = G.floor;
     if (G.floor > 1) {
-      awardShards(bonus);
-      logEntry('reward', `✦ New depth record! +${bonus} Soul Shards.`);
+      const paid = awardShards(bonus);
+      logEntry('reward', `✦ New depth record! +${paid} Soul Shards.`);
     }
   }
   saveMeta();
