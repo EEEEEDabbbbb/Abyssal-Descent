@@ -13,6 +13,21 @@ ABYSSAL is a browser-based roguelike dungeon crawler where you descend a procedu
 - **Recovery:** each level-up restores 25% of your max HP and MP, and descending restores 20% HP / 30% MP.
 - **World settings:** Difficulty (Normal ×1.0 / Hard ×1.3 / Nightmare ×1.7 enemy HP & ATK), room count, enemy density, treasure rate and map size are chosen per run. New Game+ adds +30% enemy HP & ATK per cycle.
 - **Win Condition:** Defeat THE ABYSSAL GOD on Floor 50. Doing so unlocks The Abyssal One class and grants the Crown of the Abyss relic permanently.
+- **Daily Descent:** the same seed for everyone on a given day, standard world settings, any class, always at NG+0. Event outcomes and merchant stock are seeded by their place on the floor, so they're the same for everyone too.
+- **Saves:** the run auto-saves after fights, on each new floor and when you leave the page. Closing the game mid-fight restarts that fight on Continue (same enemies, same dice); an unclaimed boss reward is offered again.
+
+### Controls
+
+| Where | Key | Action |
+|---|---|---|
+| Map | WASD / arrows, the on-screen pad, or tap a revealed tile | Move / walk there |
+| Map | X or 🧭 | Auto-explore: nearest chest, event or loot, else unexplored ground; stops when an enemy comes into view |
+| Map | M | Toggle the minimap (click it to walk there) |
+| Combat | Q / E / R / F | Attack / Defend / Item / Flee |
+| Combat | 1–9 | Use that ability |
+| Combat | Space | Burst |
+| Events, boss rewards | 1–9, then Enter | Pick that choice, then continue |
+| Anywhere | Esc | Close a dialog that has a ✕, otherwise pause |
 
 ---
 
