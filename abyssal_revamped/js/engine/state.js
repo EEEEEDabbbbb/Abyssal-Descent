@@ -61,6 +61,7 @@ function defaultMeta() {
     achievements: {},           // { achievementId: timestamp earned }
     runHistory:   [],           // last 20 finished runs, newest first
     daily:        null,         // { key:'YYYYMMDD', best, runs } for today's Daily Descent
+    tipsSeen:     {},           // { tipId: timestamp } one-time hints already shown (records.js showTip)
     lifetime: { runs:0, deaths:0, conquests:0, kills:0, bosses:0, shards:0, playMs:0, dmgDealt:0, bestHit:0 },
   };
 }

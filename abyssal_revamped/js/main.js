@@ -145,6 +145,7 @@ function startRun() {
     startPlayClock();
     autoSaveRun();
     updateUI();
+    showTip('start');
   };
   if (daily) {
     // Standard settings so every daily run is comparable

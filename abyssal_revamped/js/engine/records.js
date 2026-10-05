@@ -160,6 +160,27 @@ function checkAchievements() {
 
 // ── Toasts ─────────────────────────────────────────────────────
 // Small notices in the corner that never block play.
+// ── First-run tips ─────────────────────────────────────────────
+// One-time hints for a new player, shown as a toast the first time something
+// comes up during their first three runs. Each takes (touch) → text.
+const TIPS = {
+  start:   t => `Explore for chests ◆ and events, then beat the floor's guardian 💀 to open the exit ▼. ${t ? 'Tap 🧭' : 'Press X'} to auto-explore.`,
+  combat:  t => `Your turn: ${t ? 'tap Attack, Defend or an ability' : 'Q attacks, E defends, 1–9 use abilities'}. The enemy's Next: line shows its move and roughly how hard it will hit.`,
+  counter: t => `This enemy resists your element and hits you hard (see the red line under its name). Fleeing${t ? '' : ' (F)'} is often wiser.`,
+  levelup: () => `Level up! Spend your talent points with 🌟 Talents (in your character panel, or the pause menu).`,
+  lowhp:   () => `Running low on HP: drink a potion from your pack before the next fight. Each level-up also restores a quarter of your HP.`,
+};
+function showTip(id) {
+  const m = G.meta;
+  if (!m || !TIPS[id] || ((m.lifetime && m.lifetime.runs) || 0) >= 3) return;
+  m.tipsSeen = m.tipsSeen || {};
+  if (m.tipsSeen[id]) return;
+  m.tipsSeen[id] = Date.now();
+  saveMeta();
+  const touch = typeof matchMedia === 'function' && matchMedia('(hover: none)').matches;
+  showToast(`<span class="toast-icon">💡</span><span>${TIPS[id](touch)}</span>`, 8000);
+}
+
 function showToast(html, ms = 3800) {
   let box = document.getElementById('toast-container');
   if (!box) {
@@ -172,6 +193,8 @@ function showToast(html, ms = 3800) {
   const t = document.createElement('div');
   t.className = 'toast';
   t.innerHTML = html;
+  t.title = 'Tap to dismiss';
+  t.onclick = () => { t.classList.add('toast-out'); setTimeout(() => t.remove(), 400); };
   box.appendChild(t);
   setTimeout(() => t.classList.add('toast-out'), ms);
   setTimeout(() => t.remove(), ms + 400);

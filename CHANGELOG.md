@@ -61,6 +61,11 @@
   fixed amounts.
 
 ### New
+- First-run tips: during your first three runs, a short hint appears the
+  first time something comes up (how a floor works, combat keys, when to
+  flee a counter, spending talent points, healing up). Each shows once;
+  tap a toast to dismiss it. On phones toasts sit below the top bar so
+  HP and MP stay visible.
 - Class select shows which elements the selected class is strong against
   and weak to.
 - Enemy cards show the element matchup when it isn't neutral ("You deal

@@ -392,6 +392,7 @@ function gainXP(amount) {
     p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + Math.round(p.stats.maxMp * 0.25));
     p.talentPoints += 2;
     sfx('levelup');
+    if (typeof showTip === 'function') showTip('levelup');
     logEntry('reward', `★ Level up! Now level ${p.level}. (+${g.maxHp} HP, +${g.maxMp} MP, +${g.atk} ATK, +${g.def} DEF, +${g.spd} SPD)`);
   }
 }

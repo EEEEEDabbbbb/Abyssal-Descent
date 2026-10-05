@@ -737,6 +737,10 @@ function startCombat(enemyOrEnemies) {
   resolveNextRoundInitiative();
 
   updateUI();
+  // First-run tips (records.js)
+  showTip('combat');
+  const myEl = (getClassData(p.classId) || {}).element;
+  if (!enemyList.some(en => en.isBoss || en.isGuardian) && enemyList.some(en => isHardCounter(en.element, myEl))) showTip('counter');
 }
 
 // targetEnemy — player clicks an enemy card in a pack fight (render.js's
@@ -1303,6 +1307,7 @@ function winCombat() {
   checkAchievements();
   if (typeof autoSaveRun === 'function') autoSaveRun();
   updateUI();
+  if (G.player.stats.hp < G.player.stats.maxHp * 0.35) showTip('lowhp');
 }
 
 // endCombat — final cleanup of combat state

@@ -173,6 +173,27 @@ test('dying on floor 1 of a first run shows floor 1 as your best, not 0', async 
   assert.equal(r.deepest, true);
 });
 
+test('first-run tips show once each, and stop after three runs', async () => {
+  const r = await run(async () => {
+    const tips = () => [...document.querySelectorAll('#toast-container .toast')].filter(t => t.textContent.includes('💡')).length;
+    document.querySelectorAll('#toast-container .toast').forEach(t => t.remove());
+    G.meta = defaultMeta(); G._gameOverShown = false;
+    __startTestRun('shadowblade', 1);
+    const fight = () => { const e = getRandomEnemy(1, false); e.hp = e.maxHp = 999; startCombat(e); endCombat(false); G.phase = 'explore'; };
+    fight(); const first = tips();
+    fight(); const second = tips();
+    const seen = Object.keys(G.meta.tipsSeen);
+    document.querySelectorAll('#toast-container .toast').forEach(t => t.remove());
+    G.meta = defaultMeta(); G.meta.lifetime.runs = 3;
+    fight();
+    return { first, second, seen, veteran: tips() };
+  });
+  assert.equal(r.first, 1);
+  assert.equal(r.second, 1, 'the combat tip is not repeated');
+  assert.ok(r.seen.includes('combat'));
+  assert.equal(r.veteran, 0);
+});
+
 test('Daily Descent: same seed for everyone today, standard settings, best floor kept', async () => {
   const r = await run(async () => {
     G.meta = defaultMeta(); G._gameOverShown = false;
