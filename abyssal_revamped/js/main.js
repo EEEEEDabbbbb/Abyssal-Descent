@@ -74,6 +74,8 @@ function resetRunState() {
   G._secretBossTriggeredThisRun = false;
   G._gameOverShown = false;
   G._saveFailWarned = false;
+  G._biomeProcs = 0;
+  G._biomeMoves = 0;
 }
 
 function startRun() {

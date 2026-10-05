@@ -51,6 +51,7 @@ A large bug-fix and polish release. Old run saves from 2.0 can't be continued
 - Ability effects such as damage reduction, counters, guaranteed dodges,
   "cannot heal", lifesteal and Resonance Field echoes now work.
 - Chrono Flask and Elixir of the Gods now reset cooldowns.
+- Enemy damage could show fractions ("256.5"). Damage is now always a whole number.
 
 ### Balance
 - Loot quality now rises steadily with depth (floors 3–4 used to drop better
@@ -59,7 +60,8 @@ A large bug-fix and polish release. Old run saves from 2.0 can't be continued
 - Packs pay about 1.4× a single enemy (was 2×). Boss XP and guardian gold scale with depth.
 - New Game+ now actually makes enemies stronger (+30% per cycle).
 - Events scale with depth. Shop reroll cost scales with depth. Relic Cache gives an epic item.
-- Biome hazards can no longer kill you.
+- Biome hazards can no longer kill you, trigger less often (5% per step, at
+  most 3 per floor) and can't hit several steps in a row.
 
 ### New
 - 6 new events (13 total).

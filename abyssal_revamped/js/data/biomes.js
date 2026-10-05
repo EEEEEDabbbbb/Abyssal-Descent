@@ -18,7 +18,9 @@
 // getBiomeForFloor(floor) — mirrors the existing getFloorTier() pattern.
 // ══════════════════════════════════════════════════════════════
 
-const BIOME_EFFECT_CHANCE = 10; // % chance per move (non-combat) to trigger
+const BIOME_EFFECT_CHANCE       = 5;  // % chance per move (non-combat) to trigger
+const BIOME_EFFECT_COOLDOWN     = 12; // moves that must pass between two triggers
+const BIOME_EFFECT_MAX_PER_FLOOR = 3; // a spice, not a punishment
 
 const BIOMES = [
   {
@@ -122,6 +124,11 @@ function triggerBiomeEffect() {
   if (!G.player || G.inCombat) return;
   const biome = getBiomeForFloor(G.floor);
   if (!biome.effect) return;
+  G._biomeMoves = (G._biomeMoves || 0) + 1;
+  if ((G._biomeProcs || 0) >= BIOME_EFFECT_MAX_PER_FLOOR) return;
+  if (G._biomeMoves < BIOME_EFFECT_COOLDOWN) return;
   if (rand(100) >= BIOME_EFFECT_CHANCE) return;
+  G._biomeMoves = 0;
+  G._biomeProcs = (G._biomeProcs || 0) + 1;
   biome.effect(G.player);
 }

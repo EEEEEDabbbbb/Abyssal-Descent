@@ -21,7 +21,7 @@ is only needed for development:
 
 ```bash
 npm install     # installs Playwright and a headless Chromium
-npm test        # runs the automated test suite (about 3 minutes)
+npm test        # runs the automated test suite (well under a minute)
 ```
 
 The suite boots the real game in headless Chromium and checks:
@@ -34,7 +34,7 @@ The suite boots the real game in headless Chromium and checks:
 - **Regressions**: one test per fixed bug (saves, softlocks, exploits, combat
   rules, passives).
 - **End-to-end play**: a bot plays through the UI for several floors, including
-  a boss fight.
+  a boss fight. Set `PLAY_FLOORS=21 npm test` to send it deeper.
 
 Other tools:
 

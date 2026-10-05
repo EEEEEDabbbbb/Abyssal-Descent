@@ -82,7 +82,9 @@ async function playFloors(classId, targetFloor, maxSteps = 6000) {
 
     while (G.floor < targetFloor && stats.steps < maxSteps) {
       stats.steps++;
-      if (document.getElementById('game-over-screen').classList.contains('active')) return { ...stats, floor: G.floor, died: true };
+      if (document.getElementById('game-over-screen').classList.contains('active')) {
+        return { ...stats, floor: G.floor, died: true, lastLog: G.log.slice(0, 14).map(l => l.msg) };
+      }
       if (document.getElementById('overlay').classList.contains('active')) { handleModal(); await sleep(0); continue; }
       if (G.inCombat) {
         if (G.turn === 'player') { stats.fights += G.combatRound === 0 ? 1 : 0; key('q'); }
@@ -94,15 +96,18 @@ async function playFloors(classId, targetFloor, maxSteps = 6000) {
       const k = step.dx === 1 ? 'ArrowRight' : step.dx === -1 ? 'ArrowLeft' : step.dy === 1 ? 'ArrowDown' : 'ArrowUp';
       key(k);
       if (G.floor === lastFloor) { if (++stuck > 3000) return { ...stats, floor: G.floor, stuck: 'too long on floor' }; }
-      else { lastFloor = G.floor; stuck = 0; }
+      else { lastFloor = G.floor; stuck = 0; p.stats.hp = p.stats.maxHp; } // the bot never heals itself
       await sleep(0);
     }
     return { ...stats, floor: G.floor, logErrors: (G._statusErrors || []).length };
   }, { targetFloor, maxSteps });
 }
 
-test('a bot can play from floor 1 through the floor-5 boss', async () => {
-  const r = await playFloors('shadowblade', 7);
+// PLAY_FLOORS=21 npm test  — play deeper (more bosses, biomes, milestones)
+const DEPTH = Number(process.env.PLAY_FLOORS) || 7;
+
+test(`a bot can play from floor 1 to floor ${DEPTH} (incl. the floor-5 boss)`, async () => {
+  const r = await playFloors('shadowblade', DEPTH, 600 * DEPTH);
   assert.equal(r.died, undefined, JSON.stringify(r));
   assert.equal(r.stuck, undefined, JSON.stringify(r));
   assert.ok(r.floor >= 7, JSON.stringify(r));
@@ -111,9 +116,10 @@ test('a bot can play from floor 1 through the floor-5 boss', async () => {
 });
 
 test('the same works for a fusion class', async () => {
-  const r = await playFloors('darkguard', 4);
+  const target = Math.max(4, Math.min(DEPTH, 12));
+  const r = await playFloors('darkguard', target, 600 * target);
   assert.equal(r.died, undefined, JSON.stringify(r));
-  assert.ok(r.floor >= 4, JSON.stringify(r));
+  assert.ok(r.floor >= target, JSON.stringify(r));
 });
 
 test('no page errors while playing', () => {

@@ -62,7 +62,7 @@ function getClassData(classId) {
 function calcDmg(atk, def) {
   const base     = Math.max(1, atk - def);
   const variance = Math.round(base * 0.15);
-  return Math.max(1, base + randRange(-variance, variance));
+  return Math.max(1, Math.round(base + randRange(-variance, variance)));
 }
 // ── Status helpers ──────────────────────────────────────────
 function getBurnStacks(e)  { const b=e.status&&e.status.find(s=>s.id==='burn');    return b?b.stacks:0; }

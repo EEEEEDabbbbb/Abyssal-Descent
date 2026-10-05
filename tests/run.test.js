@@ -261,6 +261,32 @@ test('save export → import restores all progress', async () => {
   assert.deepEqual(r, { shards: 1234, runs: 1 });
 });
 
+test('beating floor 50 conquers the Abyss and unlocks New Game+', async () => {
+  await fresh();
+  const r = await run(() => {
+    __startTestRun('shadowblade', 50);
+    assignRunSlot(); saveRun();
+    const boss = getBossForFloor(50);
+    startCombat(boss); G.turn = 'player';
+    boss.hp = 1;
+    addPermanentStat(G.player, 'atk', 99999);
+    playerAction('attack');
+    const modal = document.getElementById('overlay-content').innerText;
+    const conquered = G.meta.conquestRewards.conquered;
+    // "Return to the Surface"
+    [...document.querySelectorAll('#overlay-content button')].find(b => /Return to the Surface/.test(b.textContent)).click();
+    const onTitle = document.getElementById('title-screen').classList.contains('active');
+    const ngBtn = document.getElementById('ngplus-btn');
+    const saveGone = !hasAnyRunSave();
+    ngBtn.click();
+    [...document.querySelectorAll('#overlay-content button')].find(b => /Begin NG\+/.test(b.textContent)).click();
+    return { conquered, modalShown: /CONQUERED/.test(modal), onTitle, ngVisible: ngBtn.style.display !== 'none', saveGone,
+             ngPlus: G.meta.ngPlus, onClassSelect: document.getElementById('class-select-screen').classList.contains('active'),
+             unlocked: G.meta.unlockedClasses.includes('abyssal_one') };
+  });
+  assert.deepEqual(r, { conquered: true, modalShown: true, onTitle: true, ngVisible: true, saveGone: true, ngPlus: 1, onClassSelect: true, unlocked: true });
+});
+
 test('no page errors', () => {
   assert.deepEqual(ctx.errors, []);
 });

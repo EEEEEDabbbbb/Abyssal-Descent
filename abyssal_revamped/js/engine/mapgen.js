@@ -707,6 +707,8 @@ function nextFloor() {
 
   if (G.floor > G.meta.maxFloor) G.meta.maxFloor = G.floor;
   saveMeta();
+  G._biomeProcs = 0;   // biome hazard budget is per floor (biomes.js)
+  G._biomeMoves = 0;
 
   G.phase = 'explore';
   G.inCombat = false;
