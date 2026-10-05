@@ -517,8 +517,19 @@ function _enemyMoveTerms(abId) {
   }
   return (_moveTermsCache[abId] = terms);
 }
+// Moves whose damage depends on the fight so far, as [atkMult, defMult] terms
+// for the hit they will land next (keep in step with ENEMY_ABILITIES above).
+const DYNAMIC_MOVE_TERMS = {
+  shadow_slash:   () => [[1.3, 0.6]],
+  talon_rake:     () => [[1.2, 0.7]],
+  mirror_ward:    () => [[0.9, 1]],
+  blood_pact:     () => [[1.1, 1]], // the strike after the pact (pact ATK shows next turn)
+  culling_strike: (e, p) => [[1 + (p.status || []).filter(s => s.type === 'debuff').length * 0.25, 0.6]],
+  enrage_strike:  e => [[(2 - e.hp / Math.max(1, e.maxHp)) * 1.5, 0.6]],
+  channel_burst:  e => e._channeling ? [[2.4, 0.4]] : [[0.3, 1]],
+};
 function estimateEnemyMove(e, abId, p) {
-  const terms = _enemyMoveTerms(abId);
+  const terms = DYNAMIC_MOVE_TERMS[abId] && p ? DYNAMIC_MOVE_TERMS[abId](e, p) : _enemyMoveTerms(abId);
   if (!terms || !p) return null;
   let dmg = terms.reduce((s, [a, d]) => s + Math.max(1, e.atk * a - p.stats.def * d, e.atk * a * 0.15), 0);
   (e.status || []).forEach(s => { if (s.atkMult) dmg *= s.atkMult; if (s.dmgReduction) dmg *= Math.max(0, 1 - s.dmgReduction); });

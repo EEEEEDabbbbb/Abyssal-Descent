@@ -149,27 +149,39 @@ test('the "Next:" telegraph estimates the damage a move will do', async () => {
     const e = getRandomEnemy(12, false); e.element = 'normal';
     startCombat(e); G.turn = 'enemy';
     const out = {};
-    for (const id of ['basic', 'heavy', 'double', 'charge', 'brood_swarm']) {
+    for (const id of ['basic', 'heavy', 'double', 'charge', 'brood_swarm', 'shadow_slash', 'talon_rake', 'mirror_ward', 'culling_strike', 'enrage_strike']) {
       const est = estimateEnemyMove(e, id, p);
       let total = 0; const n = 60;
       for (let i = 0; i < n; i++) {
         p.shield = 0; p.stats.hp = p.stats.maxHp = 1e6; removeStatuses(p, () => true);
-        const hp0 = p.stats.hp; G._actingEnemy = e; ENEMY_ABILITIES[id](e, p); G._actingEnemy = null;
+        const def0 = e.def, hp0 = p.stats.hp; G._actingEnemy = e; ENEMY_ABILITIES[id](e, p); G._actingEnemy = null;
         total += hp0 - p.stats.hp;
+        removeStatuses(e, () => true); e.def = def0; // undo Mirror Ward
       }
       out[id] = { est, avg: total / n };
     }
-    out.channel = estimateEnemyMove(e, 'channel_burst', p);
+    // Channel: a light hit while charging, then the big one
+    e._channeling = null; const charge = estimateEnemyMove(e, 'channel_burst', p);
+    e._channeling = 'channel_burst'; const release = estimateEnemyMove(e, 'channel_burst', p);
+    e._channeling = null;
+    out.channel = { charge, release };
+    // Culling Strike hits harder for every debuff on you
+    const cull0 = estimateEnemyMove(e, 'culling_strike', p);
+    addStatus(p, { id: 'test_weak', name: 'Weak', type: 'debuff', duration: 3 });
+    addStatus(p, { id: 'test_slow', name: 'Slow', type: 'debuff', duration: 3 });
+    out.cull = { cull0, cull2: estimateEnemyMove(e, 'culling_strike', p) };
+    removeStatuses(p, () => true);
     e.patterns = ['heavy']; updateUI(); renderCenterPanel();
     out.shown = document.querySelector('.next-est') ? document.querySelector('.next-est').textContent : null;
     return out;
   });
-  for (const id of ['basic', 'heavy', 'double', 'charge']) {
+  for (const id of ['basic', 'heavy', 'double', 'charge', 'shadow_slash', 'talon_rake', 'mirror_ward', 'culling_strike', 'enrage_strike']) {
     const { est, avg } = r[id];
     assert.ok(Math.abs(est - avg) <= Math.max(3, avg * 0.12), `${id}: estimate ${est} vs average ${avg}`);
   }
   assert.ok(r.brood_swarm.est > 0);
-  assert.equal(r.channel, null);
+  assert.ok(r.channel.release > r.channel.charge * 3, JSON.stringify(r.channel));
+  assert.ok(r.cull.cull2 > r.cull.cull0, JSON.stringify(r.cull));
   assert.match(String(r.shown), /^≈\d+ dmg$/);
 });
 
