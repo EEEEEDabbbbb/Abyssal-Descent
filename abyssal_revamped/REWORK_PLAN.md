@@ -35,7 +35,7 @@
 - ✅ Phase 5 — Juice pass: synthesized sound effects, screen shake on crits/big hits/boss phases, a crit flash on the enemy, varied attack lines in the combat log, achievement toasts, damage estimates in the "Next:" telegraph.
 - ✅ 2.2 systems work (beyond the original plan): one smooth difficulty curve fitted to measured player growth (`ENEMY_CURVE`, `tools/honest_run.js`), seeded runs + Daily Descent, run records/achievements, minimap. See `CHANGELOG.md`.
 - ✅ 2.3 (overnight session): auto-explore, element matchup on enemy cards and class select, guardians never hard-counter your class, fights restart on Continue (no reload dodging), events/merchants seeded by position, packed run saves, first-run tips, keyboard choices in dialogs, descend confirmation, app icon/manifest. See `CHANGELOG.md` 2.3.0.
-  - Measured but **not** changed (data didn't support it): softening the whole element chart (0.25× → 0.5×), and normalising enemy ATK by measured move power (`tools/measure_moves.js`; it shifted deaths onto floors 1–5). Bleed-stacking moves (Shadow Slash, Talon Rake) hit 2.5–3× what the normalisation credits — a candidate for a future targeted change.
+  - Measured but **not** changed (data didn't support it): softening the whole element chart (0.25× → 0.5×), and normalising enemy ATK by measured move power (`tools/measure_moves.js`; it shifted deaths onto floors 1–5). Bleed-stacking moves (Shadow Slash, Talon Rake) hit 2.5–3× what the normalisation credits, which made their users the top killers; enemy Bleed now deals 12% of ATK per stack (was 20%, `ENEMY_BLEED_PER_STACK`), measured over 10 runs × 6 classes.
 
 ## Priority Order (confirmed with you)
 1. **Combat feel & excitement** — pacing, impact, tension

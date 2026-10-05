@@ -285,3 +285,11 @@ test('quitting from the pause menu mid-fight brings you back to that fight on Co
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('? opens How to Play', async () => {
+  const { page, errors } = await gamePage();
+  await page.keyboard.press('Shift+Slash');
+  assert.match(await page.evaluate(() => isModalOpen() ? document.getElementById('overlay-content').textContent : ''), /How to Play/);
+  assert.deepEqual(errors, []);
+  await page.close();
+});

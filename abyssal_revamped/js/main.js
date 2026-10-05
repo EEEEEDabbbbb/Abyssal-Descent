@@ -25,6 +25,7 @@
 //   M            — toggle the minimap
 //   X            — auto-explore
 //   1–9 (dialog) — pick that choice in an event or boss reward
+//   ?            — How to Play
 //   Escape       — close a closeable dialog, otherwise open the pause menu
 // ══════════════════════════════════════════════════════════════
 
@@ -182,6 +183,9 @@ function handleKeyDown(e) {
     }
     return;
   }
+
+  // ? — How to Play, from anywhere a dialog isn't already open
+  if (e.key === '?' && !isModalOpen()) { e.preventDefault(); openHowToPlay(); return; }
 
   // Number keys pick a numbered choice in a dialog (events, boss rewards)
   if (isModalOpen() && /^[1-9]$/.test(key)) {

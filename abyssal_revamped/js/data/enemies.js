@@ -3,6 +3,13 @@
 // ══════════════════════════════════════════════════════════════
 
 // ── ENEMY ABILITIES ──────────────────────────────────────────
+// Bleed from enemies (Shadow Slash, Talon Rake): this share of the enemy's ATK
+// per stack, every turn, ignoring DEF. Stacks build up to 10 over a fight, so
+// at 0.2 the Bleed users (Void Stalker, the Shadow Tyrant…) were the top
+// killers by far; at 0.12 deaths spread across the whole bestiary
+// (measured with tools/honest_run.js, 10 runs × 6 classes).
+const ENEMY_BLEED_PER_STACK = 0.12;
+
 const ENEMY_ABILITIES = {
   basic:(e,p)=>{
     let dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
@@ -88,7 +95,7 @@ const ENEMY_ABILITIES = {
     let dmg=Math.max(1,calcDmg(e.atk*1.3,p.stats.def*0.6));
     dmg=dealDmgToPlayer(dmg);
     addStatus(p,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,stacks:2,
-      onTurn:(pl)=>{let bd=Math.max(1,Math.round(e.atk*0.2*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks));bd=dealDmgToPlayer(bd,true);}});
+      onTurn:(pl)=>{let bd=Math.max(1,Math.round(e.atk*ENEMY_BLEED_PER_STACK*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks));bd=dealDmgToPlayer(bd,true);}});
     logEntry('enemy-action',`${e.name} slashes from shadow for ${dmg}! Bleed x2.`);
   },
   infernal_breath:(e,p)=>{
@@ -291,7 +298,7 @@ const ENEMY_ABILITIES = {
     let dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.7));
     dmg=dealDmgToPlayer(dmg);
     addStatus(p,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,stacks:3,
-      onTurn:(pl)=>{ let bd=Math.max(1,Math.round(e.atk*0.2*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks)); bd=dealDmgToPlayer(bd,true); }});
+      onTurn:(pl)=>{ let bd=Math.max(1,Math.round(e.atk*ENEMY_BLEED_PER_STACK*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks)); bd=dealDmgToPlayer(bd,true); }});
     logEntry('enemy-action',`${e.name} rakes talons for ${dmg}! Bleed x3.`);
   },
   earthshatter:(e,p)=>{
