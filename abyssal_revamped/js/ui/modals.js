@@ -52,7 +52,8 @@ function showEvent(event, cell, cx, cy) {
     <div style="color:var(--text-mid);font-size:0.8rem;margin-bottom:1rem;font-style:italic">${event.desc}</div>
     <div style="display:flex;flex-direction:column;gap:0.5rem">`;
   event.choices.forEach((ch,i)=>{
-    html+=`<button class="title-btn" onclick="resolveEvent(${i})" style="text-align:left;font-size:0.75rem;padding:0.5rem 0.8rem;min-width:0;max-width:100%;white-space:normal;letter-spacing:0.05em;line-height:1.4">${ch.text}</button>`;
+    const text = typeof ch.text === 'function' ? ch.text(G.player) : ch.text;
+    html+=`<button class="title-btn" onclick="resolveEvent(${i})" style="text-align:left;font-size:0.75rem;padding:0.5rem 0.8rem;min-width:0;max-width:100%;white-space:normal;letter-spacing:0.05em;line-height:1.4">${text}</button>`;
   });
   html+='</div>';
   G._currentEvent = event;
@@ -284,16 +285,13 @@ function buyTalent(id) {
   if (rank>=t.maxRank||p.talentPoints<t.cost) return;
   p.talentPoints -= t.cost;
   p.talents[id] = rank+1;
-  // Apply bonus immediately to player stats
+  // Apply the difference between the new and old rank as a permanent stat bonus
   if (t.bonus) {
-    const b = t.bonus(1); // bonus for 1 additional rank
-    if (b.maxHp)  { p.stats.maxHp+=b.maxHp; p.stats.hp=Math.min(p.stats.maxHp,p.stats.hp+b.maxHp); }
-    if (b.maxMp)  { p.stats.maxMp+=b.maxMp; p.stats.mp=Math.min(p.stats.maxMp,p.stats.mp+b.maxMp); }
-    if (b.atk)    p.stats.atk+=b.atk;
-    if (b.def)    p.stats.def+=b.def;
-    if (b.spd)    p.stats.spd+=b.spd;
-    if (b.crit)   p.stats.crit+=b.crit;
-    if (b.critDmg)p.stats.critDmg=(p.stats.critDmg||0)+b.critDmg;
+    const now  = t.bonus(rank + 1);
+    const prev = rank > 0 ? t.bonus(rank) : {};
+    const diff = {};
+    for (const k of Object.keys(now)) diff[k] = now[k] - (prev[k] || 0);
+    applyPermanentBonuses(p, diff, 1);
   }
   if (t.special === 'undying') p.undying = true;
   logEntry('reward',`Talent: ${t.name} rank ${rank+1}.`);

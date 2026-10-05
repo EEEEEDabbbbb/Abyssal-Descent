@@ -367,7 +367,9 @@ function resolveNextRoundInitiative() {
 // Sets up G.inCombat, applies all combat-start passives and equipment effects
 // G._nullSunderActive is set here for Nullbringer's anatomical_study passive
 function startCombat(enemyOrEnemies) {
-  const enemyList = Array.isArray(enemyOrEnemies) ? enemyOrEnemies : [enemyOrEnemies];
+  const enemyList = (Array.isArray(enemyOrEnemies) ? enemyOrEnemies : [enemyOrEnemies]).filter(Boolean);
+  if (!enemyList.length) return;
+  enemyList.forEach(prepareEnemy); // gives enemies a `stats` view (stats.js)
   const enemy = enemyList[0]; // primary/lead enemy — used below for the single-target
                               // pre-combat passives (curse/mark/debuff-on-start effects)
                               // and for boss-only fields (isBoss/title/etc.)
@@ -457,10 +459,9 @@ function startCombat(enemyOrEnemies) {
     logEntry('player-action', `🌀 Void Affinity: Entropy seeps into ${G.enemy.name}.`);
   }
 
-  // Runeblade: rune_mastery — one-time ATK boost; p._runeMasteryApplied prevents re-application
-  if (passives.includes('rune_mastery') && !p._runeMasteryApplied) {
+  // Runeblade: rune_mastery — +8% ATK for this fight (reset with all temporary stats in endCombat)
+  if (passives.includes('rune_mastery')) {
     p.stats.atk = Math.round(p.stats.atk * 1.08);
-    p._runeMasteryApplied = true;
     logEntry('player-action', `🔱 Rune Mastery: ATK empowered by rune inscriptions.`);
   }
 
@@ -802,12 +803,18 @@ function playerAction(type, abilityId=null) {
     if (affinityMatch) logEntry('system', `⚔ ${ELEMENTS[ab.element]?.icon||''} Affinity! +20% ${ab.element} damage.`);
 
     G._currentAbilityMagic = !!(ab.tags && ab.tags.includes('magic'));
+    const comboBefore = p.combo || 0;
     msg = ab.use(p, e); // ability function returns a description string for the log
     G._currentAbilityMagic = false;
     G._weaponAffinity = 1.0;
     if (ab.maxCooldown > 0) p.cooldowns[abilityId] = ab.maxCooldown;
-    // Physical/magic tagged abilities advance combo; utility abilities don't
-    if (ab.tags && (ab.tags.includes('physical')||ab.tags.includes('magic'))) addCombo(p);
+    // Physical/magic tagged abilities advance combo; utility abilities don't.
+    // Some abilities bump p.combo themselves — that bump IS this cast's combo,
+    // so don't count it twice (but still charge the burst meter once).
+    if (ab.tags && (ab.tags.includes('physical')||ab.tags.includes('magic'))) {
+      if ((p.combo || 0) > comboBefore) p.combo -= 1;
+      addCombo(p);
+    }
     // Storm Mastery: +1 extra storm charge per ability use
     if (G._stormMasteryActive && typeof p._stormCharge !== 'undefined') {
       p._stormCharge = (p._stormCharge || 0) + 1;
@@ -1138,12 +1145,10 @@ function endCombat(won) {
   G._spiritBondActive     = false;
   G._stardustActive       = false;
   G._stardustHits         = 0;
-  if (won) G.player.shield = 0;
-  if (!won) {
-    G.player.status = []; // fleeing clears everything (debuffs too)
-  } else {
-    clearCombatStatuses(G.player); // defined in status.js — removes only combat buffs/debuffs
-  }
+  G.player.shield = 0;
+  // Every buff/debuff ends with the fight and live stats snap back to the
+  // permanent base (status.js / stats.js) — nothing temporary can leak.
+  clearCombatStatuses(G.player);
 }
 
 // ── Boss phase UI ────────────────────────────────────────────

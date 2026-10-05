@@ -48,7 +48,7 @@ const ITEM_POOL = [
     use:(p)=>{ const h=Math.min(25,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; logEntry('heal',`Dried Meat restores ${h} HP.`); } },
   { id:'crude_bandage',    name:'Crude Bandage',        type:'consumable', icon:'🩹', rarity:'common',
     desc:'Stop the bleeding. Restore 15 HP and cleanse 1 debuff.',  element:'normal',
-    use:(p)=>{ const h=Math.min(15,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; const d=p.status&&p.status.find(s=>s.type==='debuff'); if(d){p.status=p.status.filter(s=>s!==d);} logEntry('heal',`Crude Bandage restores ${h} HP${d?' and cleanses '+d.name+'.':'.'}` ); } },
+    use:(p)=>{ const h=Math.min(15,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; const d=p.status&&p.status.find(s=>s.type==='debuff'); if(d){removeStatuses(p,s=>s===d);} logEntry('heal',`Crude Bandage restores ${h} HP${d?' and cleanses '+d.name+'.':'.'}` ); } },
   { id:'mp_draught',       name:'Mana Draught',         type:'consumable', icon:'🔵', rarity:'common',
     desc:'A thin blue liquid. Restore 20 MP.',         element:'psychic',
     use:(p)=>{ const m=Math.min(20,p.stats.maxMp-p.stats.mp); p.stats.mp+=m; logEntry('heal',`Mana Draught restores ${m} MP.`); } },
@@ -71,7 +71,7 @@ const ITEM_POOL = [
     use:(p)=>{ if(!G.enemy)return; addStatus(G.enemy,{id:'smoke_blind',name:'Smoke-Blind',type:'debuff',icon:'💨',duration:2}); logEntry('player-action',`Smoke Bomb: ${G.enemy.name} is blinded for 2 turns!`); } },
   { id:'lesser_antidote',  name:'Lesser Antidote',       type:'consumable', icon:'🧫', rarity:'uncommon',
     desc:'Cleanse poison and restore 20 HP.',          element:'grass',
-    use:(p)=>{ p.status=(p.status||[]).filter(s=>s.id!=='poison'&&s.id!=='venom'); const h=Math.min(20,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; logEntry('heal',`Lesser Antidote cleanses poison and restores ${h} HP.`); } },
+    use:(p)=>{ removeStatuses(p,s=>s.id==='poison'||s.id==='venom'); const h=Math.min(20,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; logEntry('heal',`Lesser Antidote cleanses poison and restores ${h} HP.`); } },
 
   { id:'focus_root',       name:'Focus Root',           type:'consumable', icon:'🌾', rarity:'uncommon',
     desc:'Chew the root. +8 CRIT for 4 turns.',        element:'grass',
@@ -95,7 +95,7 @@ const ITEM_POOL = [
     use:(p)=>{ addStatus(p,{id:'swift',name:'Swift',type:'buff',icon:'💨',duration:4,spdBonus:15,critBonus:12}); p.stats.spd+=15; p.stats.crit+=12; logEntry('status-applied','Swift Tonic: +15 SPD, +12 CRIT for 4 turns!'); } },
   { id:'full_antidote',    name:'Full Antidote',         type:'consumable', icon:'🧪', rarity:'rare',
     desc:'Cleanse all debuffs. Restore 30 HP.',        element:'grass',
-    use:(p)=>{ const count=(p.status||[]).filter(s=>s.type==='debuff').length; p.status=(p.status||[]).filter(s=>s.type!=='debuff'); const h=Math.min(30,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; logEntry('heal',`Full Antidote cleanses ${count} debuff(s) and restores ${h} HP.`); } },
+    use:(p)=>{ const count=(p.status||[]).filter(s=>s.type==='debuff').length; removeStatuses(p,s=>s.type==='debuff'); const h=Math.min(30,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; logEntry('heal',`Full Antidote cleanses ${count} debuff(s) and restores ${h} HP.`); } },
   { id:'plague_vial',      name:'Plague Vial',           type:'consumable', icon:'☠️', rarity:'rare',
     desc:'Apply Plague to the enemy (2 stacks).',      element:'poison',
     use:(p)=>{ if(!G.enemy)return; applyPlague(G.enemy,p,2); logEntry('player-action',`Plague Vial: ${G.enemy.name} is afflicted with Plague (2 stacks)!`); } },
@@ -125,7 +125,7 @@ const ITEM_POOL = [
     use:(p)=>{ if(!G.enemy)return; const dmg=Math.max(10,90-Math.floor(G.enemy.def*0.3)); G.enemy.hp=Math.max(0,G.enemy.hp-dmg); applyEntropy(G.enemy,p,3); logEntry('player-action',`Void Grenade hits ${G.enemy.name} for ${dmg} damage and applies Entropy!`); if(G.enemy.hp<=0)winCombat(); } },
   { id:'purity_draught',   name:'Purity Draught',        type:'consumable', icon:'🌿', rarity:'epic',
     desc:'Cleanse ALL debuffs, restore 60 HP. Immunity to debuffs for 2 turns.',  element:'fairy',
-    use:(p)=>{ const count=(p.status||[]).filter(s=>s.type==='debuff').length; p.status=(p.status||[]).filter(s=>s.type!=='debuff'); const h=Math.min(60,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; addStatus(p,{id:'debuff_immune',name:'Pure',type:'buff',icon:'🌿',duration:2}); logEntry('heal',`Purity Draught cleanses ${count} debuff(s), restores ${h} HP, and grants debuff immunity for 2 turns!`); } },
+    use:(p)=>{ const count=(p.status||[]).filter(s=>s.type==='debuff').length; removeStatuses(p,s=>s.type==='debuff'); const h=Math.min(60,p.stats.maxHp-p.stats.hp); p.stats.hp+=h; addStatus(p,{id:'debuff_immune',name:'Pure',type:'buff',icon:'🌿',duration:2}); logEntry('heal',`Purity Draught cleanses ${count} debuff(s), restores ${h} HP, and grants debuff immunity for 2 turns!`); } },
   { id:'inferno_bomb',     name:'Inferno Bomb',          type:'consumable', icon:'🌋', rarity:'epic',
     desc:'Hurl a burning bomb. Deals 70 damage and applies 4 Burn stacks.',  element:'fire',
     use:(p)=>{ if(!G.enemy)return; const dmg=Math.max(10,70-Math.floor(G.enemy.def*0.3)); G.enemy.hp=Math.max(0,G.enemy.hp-dmg); applyBurn(G.enemy,p,4); logEntry('player-action',`Inferno Bomb blasts ${G.enemy.name} for ${dmg} damage and 4 Burn stacks!`); if(G.enemy.hp<=0)winCombat(); } },
@@ -186,10 +186,10 @@ const ITEM_POOL = [
     use:(p)=>{ addStatus(p,{id:'invulnerable',name:'Invulnerable',type:'buff',icon:'👁️',duration:3}); p.nextAttackMult=(p.nextAttackMult||1)*3; addStatus(p,{id:'triple_dmg',name:'Lethal',type:'buff',icon:'⚡',duration:3}); logEntry('status-applied','🔥 God Mode Brew: Invulnerable + Triple Damage for 3 turns!'); } },
   { id:'cooldown_reset',   name:'Chrono Flask',          type:'consumable', icon:'⏳', rarity:'mythical',
     desc:'Instantly reset ALL ability cooldowns to 0.',  element:'ghost',
-    use:(p)=>{ if(p.abilityCooldowns){ Object.keys(p.abilityCooldowns).forEach(k=>p.abilityCooldowns[k]=0); } logEntry('status-applied','⏳ Chrono Flask: All ability cooldowns reset to 0!'); } },
+    use:(p)=>{ if(p.cooldowns){ Object.keys(p.cooldowns).forEach(k=>p.cooldowns[k]=0); } logEntry('status-applied','⏳ Chrono Flask: All ability cooldowns reset to 0!'); } },
   { id:'soul_resurrection',name:'Soul Vial',             type:'consumable', icon:'💫', rarity:'mythical',
     desc:'Restore HP and MP to full. Gain 200 shield. Cleanse all debuffs.',  element:'fairy',
-    use:(p)=>{ p.status=(p.status||[]).filter(s=>s.type!=='debuff'); p.stats.hp=p.stats.maxHp; p.stats.mp=p.stats.maxMp; p.shield=(p.shield||0)+200; logEntry('heal','💫 Soul Vial: Full HP/MP restored, +200 shield, all debuffs cleansed!'); } },
+    use:(p)=>{ removeStatuses(p,s=>s.type==='debuff'); p.stats.hp=p.stats.maxHp; p.stats.mp=p.stats.maxMp; p.shield=(p.shield||0)+200; logEntry('heal','💫 Soul Vial: Full HP/MP restored, +200 shield, all debuffs cleansed!'); } },
   { id:'oblivion_bomb',    name:'Oblivion Bomb',         type:'consumable', icon:'💥', rarity:'mythical',
     desc:'Deals 350 magic damage ignoring DEF. Destroys ALL enemy buffs.',  element:'void',
     use:(p)=>{ if(!G.enemy)return; G.enemy.status=(G.enemy.status||[]).filter(s=>s.type!=='buff'); G.enemy.hp=Math.max(0,G.enemy.hp-350); logEntry('player-action',`💥 Oblivion Bomb erases buffs and deals 350 damage to ${G.enemy.name}!`); if(G.enemy.hp<=0)winCombat(); } },
@@ -200,7 +200,7 @@ const ITEM_POOL = [
   // ── DIVINE CONSUMABLE ×1 ──────────────────────────────────────
   { id:'elixir_of_gods',   name:'Elixir of the Gods',    type:'consumable', icon:'🔮', rarity:'divine',
     desc:'The ultimate consumable. Fully restore HP/MP. +60 ATK, +40 DEF, +40 SPD, +40 CRIT for 10 turns. Invulnerable for 2 turns. Reset all cooldowns. Deal 500 magic damage to the enemy.',  element:'cosmic',
-    use:(p)=>{ p.stats.hp=p.stats.maxHp; p.stats.mp=p.stats.maxMp; p.status=(p.status||[]).filter(s=>s.type!=='debuff'); if(p.abilityCooldowns)Object.keys(p.abilityCooldowns).forEach(k=>p.abilityCooldowns[k]=0); addStatus(p,{id:'gods_gift',name:"Gods' Gift",type:'buff',icon:'🔮',duration:10,atkBonus:60,defBonus:40,spdBonus:40,critBonus:40}); p.stats.atk+=60; p.stats.def+=40; p.stats.spd+=40; p.stats.crit+=40; addStatus(p,{id:'invulnerable',name:'Invulnerable',type:'buff',icon:'🛡️',duration:2}); if(G.enemy){ G.enemy.hp=Math.max(0,G.enemy.hp-500); logEntry('player-action',`🔮 Elixir of the Gods shatters ${G.enemy.name} for 500 magic damage!`); if(G.enemy.hp<=0){winCombat();return;} } logEntry('heal','🔮 Elixir of the Gods: Full restore, +60 ATK/+40 DEF/SPD/CRIT, Invulnerable, all cooldowns reset!'); } },
+    use:(p)=>{ p.stats.hp=p.stats.maxHp; p.stats.mp=p.stats.maxMp; removeStatuses(p,s=>s.type==='debuff'); if(p.cooldowns)Object.keys(p.cooldowns).forEach(k=>p.cooldowns[k]=0); addStatus(p,{id:'gods_gift',name:"Gods' Gift",type:'buff',icon:'🔮',duration:10,atkBonus:60,defBonus:40,spdBonus:40,critBonus:40}); p.stats.atk+=60; p.stats.def+=40; p.stats.spd+=40; p.stats.crit+=40; addStatus(p,{id:'invulnerable',name:'Invulnerable',type:'buff',icon:'🛡️',duration:2}); if(G.enemy){ G.enemy.hp=Math.max(0,G.enemy.hp-500); logEntry('player-action',`🔮 Elixir of the Gods shatters ${G.enemy.name} for 500 magic damage!`); if(G.enemy.hp<=0){winCombat();return;} } logEntry('heal','🔮 Elixir of the Gods: Full restore, +60 ATK/+40 DEF/SPD/CRIT, Invulnerable, all cooldowns reset!'); } },
 
   // ── WEAPONS ──────────────────────────────────────────────────
   // Common

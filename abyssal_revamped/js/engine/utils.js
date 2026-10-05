@@ -124,15 +124,13 @@ function hasEquipEffect(p, eff) {
     // e.g. 'evasion2_lifesteal_spellmaster'.includes('lifesteal') → true
     // Handles both plain 'lifesteal' and compound 'piercing_lifesteal_burnboost'
     if (slot.effect === eff) return true;
+    // Match a single token ('lifesteal') or two adjacent tokens ('spd_dmg')
     const parts = slot.effect.split('_');
-    // Join parts greedily to match multi-char tokens like 'burnboost2', 'evasion2', 'mpregen2'
     for (let i = 0; i < parts.length; i++) {
       if (parts[i] === eff) return true;
       if (i + 1 < parts.length && parts[i] + '_' + parts[i+1] === eff) return true;
-      // Also try joining 3 parts (e.g. 'piercing_lifesteal_burnboost' as 3-token)
     }
-    // Fallback: substring match for tokens that contain digits (evasion2, burnboost2, mpregen2)
-    return slot.effect.split('_').some(p => p === eff);
+    return false;
   });
 }
 
@@ -230,42 +228,37 @@ function updateComboUI() {
   }
 }
 
-// ── Nightmare difficulty modifier ───────────────────────────
-function getDifficultyMult() {
-  const d = G.worldGen.difficulty;
-  return { normal:1.0, hard:1.3, nightmare:1.7 }[d] || 1.0;
-}
-
 // ── Save / Load meta ─────────────────────────────────────────
 function saveMeta() {
-  try { localStorage.setItem('abyssal_meta', JSON.stringify(G.meta)); } catch(e){}
+  try { localStorage.setItem('abyssal_meta', JSON.stringify(G.meta)); }
+  catch(e) { console.warn('[save] could not save meta progress', e); }
 }
+// loadMeta — merges the save over defaults so fields added in later versions
+// get sane values, while unknown fields from the save are kept. A save that
+// fails to parse is copied to 'abyssal_meta_corrupt_backup' before anything
+// can overwrite it.
 function loadMeta() {
+  let raw = null;
+  try { raw = localStorage.getItem('abyssal_meta'); } catch(e) { return; }
+  if (!raw) return;
   try {
-    const d = localStorage.getItem('abyssal_meta');
-    if (d) {
-      const saved = JSON.parse(d);
-      G.meta = {
-        soulShards:      saved.soulShards      || 0,
-        talentPoints:    saved.talentPoints    || 0,
-        talents:         saved.talents         || {},
-        unlockedShards:  saved.unlockedShards  || 0,
-        shopUpgrades:    saved.shopUpgrades    || {},
-        unlockedClasses: saved.unlockedClasses || ['shadowblade','ironclad'],
-        selectedLoadout: saved.selectedLoadout || null,
-        maxFloor:        saved.maxFloor        || 0,
-        ngPlus:          saved.ngPlus          || 0,
-        conquestRewards: saved.conquestRewards || {
-          conquered:false,title:false,permanentGear:null,ngPlusUnlocked:false,shardDumpClaimed:false
-        },
-        classLevels:          saved.classLevels          || {},
-        classXP:              saved.classXP              || {},
-        unlockedFusions:      saved.unlockedFusions      || [],
-        knownFusionRecipes:   saved.knownFusionRecipes   || [],
-        defeatedSecretBosses: saved.defeatedSecretBosses || [],
-      };
+    const saved = JSON.parse(raw);
+    const d = defaultMeta();
+    G.meta = {
+      ...d,
+      ...saved,
+      conquestRewards: { ...d.conquestRewards, ...(saved.conquestRewards || {}) },
+    };
+    for (const k of ['unlockedClasses','unlockedFusions','knownFusionRecipes','defeatedSecretBosses']) {
+      if (!Array.isArray(G.meta[k])) G.meta[k] = d[k];
     }
-  } catch(e){}
+    for (const k of ['shopUpgrades','classLevels','classXP']) {
+      if (!G.meta[k] || typeof G.meta[k] !== 'object') G.meta[k] = d[k];
+    }
+  } catch(e) {
+    try { localStorage.setItem('abyssal_meta_corrupt_backup', raw); } catch(_) {}
+    console.warn('[save] meta progress was unreadable; a backup was kept', e);
+  }
 }
 
 function logEntry(type, msg) {
@@ -304,6 +297,26 @@ function gainClassXP(classId, amount) {
   saveMeta();
 }
 
+// getLevelUpGains — per-class stat growth. The baseline (+8 HP, +5 MP, +2 ATK,
+// +1 DEF, +1 SPD) is scaled by the class's statDisplay rating for that stat
+// (rating 5 = baseline, 10 = 1.5×, 0 = 0.5×). Fractions carry over between
+// levels in p._growthCarry so low-growth stats still rise every few levels.
+const LEVEL_UP_BASE = { maxHp:8, maxMp:5, atk:2, def:1, spd:1 };
+const LEVEL_UP_DISPLAY_KEY = { maxHp:'HP', maxMp:'MP', atk:'ATK', def:'DEF', spd:'SPD' };
+function getLevelUpGains(p) {
+  const display = (getClassData(p.classId) || {}).statDisplay || {};
+  p._growthCarry = p._growthCarry || {};
+  const gains = {};
+  for (const [k, baseGain] of Object.entries(LEVEL_UP_BASE)) {
+    const rating = display[LEVEL_UP_DISPLAY_KEY[k]];
+    const mult = clamp(0.5 + (typeof rating === 'number' ? rating : 5) / 10, 0.5, 1.7);
+    const total = (p._growthCarry[k] || 0) + baseGain * mult;
+    gains[k] = Math.floor(total);
+    p._growthCarry[k] = total - gains[k];
+  }
+  return gains;
+}
+
 function gainXP(amount) {
   const p = G.player;
   if (!p) return;
@@ -311,12 +324,9 @@ function gainXP(amount) {
   while (p.xp >= xpForLevel(p.level)) {
     p.xp -= xpForLevel(p.level);
     p.level++;
-    p.stats.maxHp  += 8;  p.stats.hp  = Math.min(p.stats.maxHp, p.stats.hp + 8);
-    p.stats.maxMp  += 5;  p.stats.mp  = Math.min(p.stats.maxMp, p.stats.mp + 5);
-    p.stats.atk    += 2;
-    p.stats.def    += 1;
-    p.stats.spd    += 1;
+    const g = getLevelUpGains(p);
+    applyPermanentBonuses(p, g, 1); // maxHp/maxMp gains also restore that much HP/MP
     p.talentPoints += 2;
-    logEntry('reward', `★ Level up! Now level ${p.level}.`);
+    logEntry('reward', `★ Level up! Now level ${p.level}. (+${g.maxHp} HP, +${g.maxMp} MP, +${g.atk} ATK, +${g.def} DEF, +${g.spd} SPD)`);
   }
 }

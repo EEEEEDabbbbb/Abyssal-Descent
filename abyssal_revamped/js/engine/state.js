@@ -32,6 +32,33 @@ function getRoomCount(floor, setting='normal') {
   };
 }
 
+// defaultMeta — persistent cross-run progress (saved to localStorage by
+// saveMeta/loadMeta in utils.js). Add new fields here; loadMeta() merges old
+// saves over these defaults.
+function defaultMeta() {
+  return {
+    soulShards:      0,
+    shopUpgrades:    {},
+    unlockedClasses: ['shadowblade','ironclad'],
+    selectedLoadout: null,
+    maxFloor:        0,
+    ngPlus:          0,   // New Game+ cycle count
+    conquestRewards: {    // unlocked by defeating Floor 50 Final Boss
+      conquered:        false,
+      title:            false,
+      permanentGear:    null,
+      ngPlusUnlocked:   false,
+      shardDumpClaimed: false,
+    },
+    // ── Fusion system ──
+    classLevels:          {},   // { classId: classLevel } — from class XP, persists across runs
+    classXP:              {},   // { classId: xp toward next class level }
+    unlockedFusions:      [],   // fusion class IDs permanently unlocked
+    knownFusionRecipes:   [],   // canonical '+'-joined keys of revealed recipes
+    defeatedSecretBosses: [],   // secret boss IDs defeated at least once
+  };
+}
+
 let G = {
   player: null,
   // ── MULTI-ENEMY COMBAT ──────────────────────────────────────
@@ -76,29 +103,7 @@ let G = {
   // resolveNextRoundInitiative() in combat.js — see that function's comment.
   _pendingSecondActor: null,
   log: [],
-  meta: {
-    soulShards:      0,
-    talentPoints:    0,
-    talents:         {},
-    unlockedShards:  0,
-    shopUpgrades:    {},
-    unlockedClasses: ['shadowblade','ironclad'],
-    selectedLoadout: null,
-    maxFloor:        0,
-    ngPlus:          0,   // New Game+ cycle count
-    conquestRewards: {    // unlocked by defeating Floor 50 Final Boss
-      conquered:        false,
-      title:            false,
-      permanentGear:    null,
-      ngPlusUnlocked:   false,
-      shardDumpClaimed: false,
-    },
-    // ── Fusion system ──
-    classLevels:          {},   // { classId: highestLevelReached } — persists across runs
-    unlockedFusions:      [],   // fusion class IDs permanently unlocked
-    knownFusionRecipes:   [],   // canonical '+'-joined keys of revealed recipes
-    defeatedSecretBosses: [],   // secret boss IDs defeated at least once
-  },
+  meta: defaultMeta(),
   // ── Per-run secret boss flag (resets each run, not persisted) ──
   _secretBossTriggeredThisRun: false,
   selectedClass: null,

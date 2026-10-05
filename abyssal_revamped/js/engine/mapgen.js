@@ -684,70 +684,79 @@ function nextFloor() {
   if (G.floor > FLOOR_COUNT) { winGame(); return; }
 
   const p = G.player;
+  // Leftover buffs/debuffs end with the floor; stats snap back to permanent values
+  p.status = [];
+  resetTemporaryStats(p);
+  p.combo  = 0;
+  tickFloorEffects(p);
   // Partial restore between floors
   p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + Math.round(p.stats.maxHp*0.2));
   p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + Math.round(p.stats.maxMp*0.3));
-  p.status   = [];
-  p.combo    = 0;
 
-  // Decay floor ward
-  if (p.floorWardRemaining > 0) {
-    p.floorWardRemaining--;
-    if (p.floorWardRemaining<=0 && p.floorWardBonus>0) {
-      p.stats.def=Math.max(0,p.stats.def-p.floorWardBonus);
-      logEntry('system','⚗ Abyss Ward has faded.');
-    }
-  }
-
-  // Update maxFloor and persist class level for fusion tracking
-  if (G.floor > G.meta.maxFloor) {
-    G.meta.maxFloor = G.floor;
-  }
-  if (p.classId) {
-    const prev = G.meta.classLevels[p.classId] || 0;
-    if (p.level > prev) G.meta.classLevels[p.classId] = p.level;
-  }
+  if (G.floor > G.meta.maxFloor) G.meta.maxFloor = G.floor;
   saveMeta();
-  // ── Auto-save run on floor transition ──
-  if (typeof autoSaveRun === 'function') autoSaveRun();
+
+  G.phase = 'explore';
+  G.inCombat = false;
+  G.killedBoss = false;
+
   const secretBossId = checkSecretBossTrigger(G.floor);
   if (secretBossId) {
     G._secretBossTriggeredThisRun = true;
     G._pendingSecretBoss = secretBossId;
     G.map = generateSecretBossFloor(G.floor, secretBossId);
-    G.phase = 'explore';
-    G.inCombat = false;
-    G.killedBoss = false;
     const boss = SECRET_BOSSES[secretBossId];
     logEntry('system', `══ ??? Floor ${G.floor} ══`);
     logEntry('system', `⚠ ${boss.announcement}`);
-    updateUI();
-    return;
+  } else {
+    G.map = generateMap(G.floor);
+    const tierName = { normal:'Normal', hard:'Hard', brutal:'Brutal', abyssal:'Abyssal' }[getFloorTier(G.floor)] || '';
+    logEntry('system', `══ Descending to Floor ${G.floor} [${tierName}] ══`);
+
+    // BIOME: announce on the first floor of a new biome, then a random
+    // flavor line every floor for fresh atmosphere.
+    const biome = getBiomeForFloor(G.floor);
+    if (G.floor === biome.floors[0]) logEntry('system', `🗺 Entering ${biome.name}.`);
+    logEntry('system', biome.flavor[rand(biome.flavor.length)]);
+
+    if (MILESTONE_FLOORS.includes(G.floor)) {
+      logEntry('system', `⚠ MILESTONE FLOOR — Beware. Something powerful awaits.`);
+    }
   }
+  applyBiomeTheme(G.floor);
 
-  G.map = generateMap(G.floor);
-  G.phase = 'explore';
-  G.inCombat = false;
-  G.killedBoss = false;
-
-  const tierName = { normal:'Normal', hard:'Hard', brutal:'Brutal', abyssal:'Abyssal' }[getFloorTier(G.floor)] || '';
-  logEntry('system', `══ Descending to Floor ${G.floor} [${tierName}] ══`);
-
-  // BIOME: announce on the first floor of a new biome, then a random
-  // flavor line every floor for fresh atmosphere. Also retints the map's
-  // floor-tile border accent to match (--biome-accent, see style.css).
-  const biome = getBiomeForFloor(G.floor);
-  const biomeElement = ELEMENTS[biome.element];
-  if (biomeElement) document.documentElement.style.setProperty('--biome-accent', biomeElement.color);
-  if (G.floor === biome.floors[0]) logEntry('system', `🗺 Entering ${biome.name}.`);
-  logEntry('system', biome.flavor[rand(biome.flavor.length)]);
-
-  // Milestone floor announcement
-  if (MILESTONE_FLOORS.includes(G.floor)) {
-    logEntry('system', `⚠ MILESTONE FLOOR — Beware. Something powerful awaits.`);
-  }
-
+  // Auto-save AFTER the new floor exists, so a reload resumes on this floor's map
+  if (typeof autoSaveRun === 'function') autoSaveRun();
   updateUI();
+}
+
+// tickFloorEffects — counts down floor-limited stat effects (Abyss Ward,
+// event curses) on each descent and reverts them when they run out.
+function tickFloorEffects(p) {
+  if (p.floorWardRemaining > 0) {
+    p.floorWardRemaining--;
+    if (p.floorWardRemaining <= 0 && p.floorWardBonus > 0) {
+      addPermanentStat(p, 'def', -p.floorWardBonus);
+      p.floorWardBonus = 0;
+      logEntry('system','⚗ Abyss Ward has faded.');
+    }
+  }
+  (p.floorEffects || []).forEach(fx => {
+    fx.floors--;
+    if (fx.floors <= 0) {
+      addPermanentStat(p, fx.stat, -fx.amount);
+      logEntry('system', `✦ ${fx.name} has lifted.`);
+    }
+  });
+  p.floorEffects = (p.floorEffects || []).filter(fx => fx.floors > 0);
+}
+
+// applyBiomeTheme — tints floor tiles with the current biome's element color
+// (--biome-accent in style.css). Called on run start, floor change and load.
+function applyBiomeTheme(floor) {
+  const biome = getBiomeForFloor(floor);
+  const el = biome && ELEMENTS[biome.element];
+  if (el) document.documentElement.style.setProperty('--biome-accent', el.color);
 }
 
 // ── Secret Boss Floor Generator ───────────────────────────────
