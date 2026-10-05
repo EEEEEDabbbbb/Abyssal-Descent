@@ -15,7 +15,7 @@
 // dependencies (npm install).
 const { openGame, prepare } = require('../tests/helpers');
 
-const CLASSES = process.argv.slice(2).length ? process.argv.slice(2)
+let CLASSES = process.argv.slice(2).length ? process.argv.slice(2)
   : ['shadowblade', 'ironclad', 'pyromancer', 'warlord', 'necromancer', 'paladin'];
 const RUNS = Number(process.env.RUNS) || 6;
 const MAX_FLOOR = Number(process.env.MAX_FLOOR) || 50;
@@ -30,6 +30,15 @@ const MAX_FLOOR = Number(process.env.MAX_FLOOR) || 50;
     G._enemyTurnDelay = 0;
   });
   await ctx.page.addScriptTag({ content: BOT_SOURCE });
+  // FUSIONS=n: run n random fusion classes instead
+  if (process.env.FUSIONS) {
+    CLASSES = await ctx.page.evaluate(n => {
+      const ids = Object.keys(FUSION_CLASS_FILE);
+      const out = [];
+      while (out.length < n) { const id = ids[Math.floor(Math.random() * ids.length)]; if (!out.includes(id)) out.push(id); }
+      return out;
+    }, Number(process.env.FUSIONS));
+  }
   const all = [];
   for (const cls of CLASSES) {
     for (let i = 0; i < RUNS; i++) {
@@ -66,6 +75,8 @@ const MAX_FLOOR = Number(process.env.MAX_FLOOR) || 50;
       console.log([f, avg('level'), avg('atk'), avg('def'), avg('maxHp'), avg('gear')].join('\t'));
     });
   }
+  const se = all.filter(r => r.statusErrors.length);
+  if (se.length) console.log('status errors:', JSON.stringify(se.map(r => [r.cls, r.statusErrors])));
   if (ctx.errors.length) console.log('page errors:', ctx.errors.slice(0, 5));
   await ctx.browser.close();
 })();
@@ -202,7 +213,8 @@ const BOT_SOURCE = `
     return { dx: cur[0] - sx, dy: cur[1] - sy };
   }
 
-  window.__honestRun = function (cls, seed, maxFloor, diff, god, meta) {
+  window.__honestRun = async function (cls, seed, maxFloor, diff, god, meta) {
+    await ensureClassLoaded(cls);
     localStorage.clear();
     G.meta = defaultMeta();
     if (meta === 'max') SHARD_SHOP_ITEMS.forEach(u => { G.meta.shopUpgrades[u.id] = u.maxRank; });
@@ -225,6 +237,7 @@ const BOT_SOURCE = `
       window.dealDmgToPlayer = function () { const r = __realDealDmgToPlayer.apply(this, arguments); if (window.__god && G.player.stats.hp < 1) G.player.stats.hp = 1; return r; };
     }
     window.__god = !!god;
+    G._statusErrors = [];
     let steps = 0, lastFloor = 1, floorSteps = 0, diedToBoss = false, stuck = null;
     const fights = []; G._botFight = null;
     while (!G._gameOverShown && G.floor <= maxFloor && steps < 60000) {
@@ -250,7 +263,7 @@ const BOT_SOURCE = `
       else if (++floorSteps > 4000) { stuck = 'too long on floor at ' + before + ' phase ' + G.phase + ' cell ' + G.map[G.playerPos.y][G.playerPos.x].content; break; }
     }
     const gear = Object.values(p.equipment).filter(Boolean).map(i => i.rarity[0]).join('');
-    return { cls, seed, floor: G.floor, level: p.level, died: !!G._gameOverShown, diedToBoss: G._gameOverShown && diedToBoss,
+    return { statusErrors: (G._statusErrors || []).slice(0, 5), cls, seed, floor: G.floor, level: p.level, died: !!G._gameOverShown, diedToBoss: G._gameOverShown && diedToBoss,
              killedBy: G._gameOverShown ? p._lastHitBy : null, atk: p.base.atk, def: p.base.def, hp: p.base.maxHp, gear, stuck, growth, fights: fights.concat(G._botFight ? [{ ...G._botFight, hp1: 0 }] : []) };
   };
 })();

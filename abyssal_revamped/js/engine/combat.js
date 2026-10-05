@@ -197,7 +197,7 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
     trackBest('bestHit', finalDmg);
     if (isCrit) trackStat('crits');
     if (finalDmg >= 1000) unlockAchievement('heavy_hitter');
-  } else if (isDot && e.hp <= 0) {
+  } else if (isDot && e.hp <= 0 && !G._echoing) {
     unlockAchievement('slow_burn');
   }
 
@@ -210,7 +210,7 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
       if (s.fullLifesteal) steal += 1;
       if (s.lifestealBonus) steal += s.lifestealBonus / 100;
     });
-    if (steal > 0) p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + Math.round(finalDmg * steal));
+    if (steal > 0) p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + Math.round((hpBefore - e.hp) * steal)); // overkill doesn't heal
 
     // Resonance Field: direct hits echo for extra damage
     const echo = (p.status || []).find(s => s.echoOnHit);
@@ -371,6 +371,9 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   // Passive defenses (passives.js)
   dmg = passiveIncoming(p, dmg, attacker);
   if (dmg <= 0) return 0;
+  // What landed on you (shield + HP). This is what the function returns, so
+  // logs read "hits for 30" even when your shield soaked all of it.
+  const landed = dmg;
 
   // Shield absorption — shield acts as HP buffer, absorbs damage first
   if (!ignoreShield && p.shield > 0) {
@@ -389,7 +392,10 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
     }
   }
 
-  if (dmg <= 0) return 0;
+  if (dmg <= 0) {
+    if (attacker && hasEquipEffect(p, 'thorns')) reflectDamage(attacker, Math.max(1, Math.round(landed * 0.2)));
+    return landed;
+  }
 
   // Lethal hit: Undying talent (once per run), then lethal-save passives (once per fight)
   if (p.stats.hp - dmg <= 0) {
@@ -399,12 +405,12 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
       logEntry('system', '✦ Undying — survived with 1 HP!');
       spawnFloat('UNDYING','heal','char-portrait');
       resetCombo(p);
-      return dmg;
+      return landed;
     }
     if (passiveLethal(p, dmg, attacker)) {
       spawnFloat('SAVED','heal','char-portrait');
       resetCombo(p);
-      return dmg;
+      return landed;
     }
   }
 
@@ -415,7 +421,7 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   if (hitter && hitter.name) p._lastHitBy = hitter.name;
   // Gear: Thorns — attackers take 20% of the damage they deal back
   if (attacker && hasEquipEffect(p, 'thorns')) {
-    const back = reflectDamage(attacker, Math.max(1, Math.round(dmg * 0.2)));
+    const back = reflectDamage(attacker, Math.max(1, Math.round(landed * 0.2)));
     if (back > 0) logEntry('player-action', `🌹 Thorns: ${attacker.name} takes ${back} back.`);
   }
   spawnFloat(dmg.toString(),'damage','char-portrait');
@@ -442,7 +448,7 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   // Taking damage resets combo (prevents tanking to build combo)
   resetCombo(p);
 
-  return dmg;
+  return landed;
 }
 
 // dealEnvironmentDamage — hazards outside combat (biomes). Can't be dodged,
@@ -570,10 +576,10 @@ function startCombat(enemyOrEnemies) {
       onTurn:(pl)=>{ pl.stats.mp=Math.min(pl.stats.maxMp,pl.stats.mp+mpRate); }});
   }
 
-  // HP regen (jade amulet, bark armor equipment)
+  // HP regen gear: 2% of max HP per turn (at least 5)
   if (hasEquipEffect(p,'hpregen')) {
     addStatus(p, {id:'hp_regen_combat',name:'HP Regen',type:'buff',icon:'🌿',duration:999,
-      onTurn:(pl)=>{ const h=Math.min(5,pl.stats.maxHp-pl.stats.hp); if(h>0){pl.stats.hp+=h;} }});
+      onTurn:(pl)=>{ const h=Math.min(Math.max(5, Math.round(pl.stats.maxHp*0.02)),pl.stats.maxHp-pl.stats.hp); if(h>0){pl.stats.hp+=h;} }});
   }
 
   // Shield Pendant equipment: +5 shield at combat start

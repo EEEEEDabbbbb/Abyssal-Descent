@@ -128,6 +128,20 @@ test('enemy moves log the damage you actually take', async () => {
   assert.ok(r.logged.includes(`for ${r.lost}.`), JSON.stringify(r));
 });
 
+test('a hit your shield soaks is still logged with its damage', async () => {
+  const r = await run(() => {
+    __startTestRun('ironclad', 10);
+    const p = G.player; p.passives = [];
+    const e = getRandomEnemy(10, false); e.element = 'normal';
+    startCombat(e); G.turn = 'enemy'; p.shield = 100000;
+    const hp0 = p.stats.hp; G.log = [];
+    G._actingEnemy = e; ENEMY_ABILITIES.basic(e, p); G._actingEnemy = null;
+    return { lostHp: hp0 - p.stats.hp, logged: G.log.map(l => l.msg).find(m => /attacks for/.test(m)) };
+  });
+  assert.equal(r.lostHp, 0);
+  assert.match(r.logged, /attacks for [1-9]\d*\./);
+});
+
 test('a low-HP boss never drains twice in a row', async () => {
   const r = await run(() => {
     __startTestRun('shadowblade', 30);
