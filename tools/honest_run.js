@@ -150,15 +150,22 @@ const BOT_SOURCE = `
 
   // FLEE=1: run from ordinary fights a person would give up on — a hard
   // element counter at the start, or losing badly — instead of fighting on
+  // Cells of enemies fled from on this floor: walk around them, and if one
+  // is in the only way forward, fight it this time
+  const fled = { floor: 0, cells: new Set() };
+  function fledCells() { if (fled.floor !== G.floor) { fled.floor = G.floor; fled.cells.clear(); } return fled.cells; }
   function wantsToFlee(p) {
     if (!window.__FLEE) return false;
+    const here = G.playerPos.x + ',' + G.playerPos.y;
+    if (fledCells().has(here)) return false;
     const foes = (G.enemies || []).filter(e => e.hp > 0);
     if (!foes.length || foes.some(e => e.isBoss || e.isGuardian || e.isSecretBoss)) return false;
     const myEl = (getClassData(p.classId) || {}).element;
     const lead = foes[0];
     const counter = getElementMult(myEl, lead.element) < 1 && getElementMult(lead.element, myEl) > 1;
-    if (counter && G.combatRound <= 1) return true;
-    return p.stats.hp < p.stats.maxHp * 0.3 && lead.hp > lead.maxHp * 0.4;
+    const flee = (counter && G.combatRound <= 1) || (p.stats.hp < p.stats.maxHp * 0.3 && lead.hp > lead.maxHp * 0.4);
+    if (flee) fledCells().add(here);
+    return flee;
   }
 
   function combatTurn(p) {
@@ -203,7 +210,8 @@ const BOT_SOURCE = `
     closeModal();
   }
 
-  function nextStep() {
+  function nextStep(avoidFled = true) {
+    const avoid = avoidFled ? fledCells() : new Set();
     const { x: sx, y: sy } = G.playerPos;
     const exitOpen = G.exitPos && G.map[G.exitPos.y][G.exitPos.x].content === 'exit';
     const prev = new Map([[sx + ',' + sy, null]]);
@@ -223,12 +231,13 @@ const BOT_SOURCE = `
         if (nx < 0 || ny < 0 || nx >= G.mapW || ny >= G.mapH || prev.has(k)) continue;
         const n = G.map[ny][nx];
         if (n.type === 'wall' || n.content === 'exit_locked' || n.content === 'boss_exit') continue;
+        if (avoid.has(k) && n.content === 'enemy') continue;
         prev.set(k, [x, y]); q.push([nx, ny]);
       }
     }
     // Explore and loot before taking on the floor's guardian
     const target = (exitOpen && goal) || interesting || fallback || goal;
-    if (!target) return null;
+    if (!target) return avoidFled && avoid.size ? nextStep(false) : null;
     let cur = target;
     while (prev.get(cur[0] + ',' + cur[1]) && (prev.get(cur[0] + ',' + cur[1])[0] !== sx || prev.get(cur[0] + ',' + cur[1])[1] !== sy)) cur = prev.get(cur[0] + ',' + cur[1]);
     return { dx: cur[0] - sx, dy: cur[1] - sy };

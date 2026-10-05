@@ -152,6 +152,14 @@ function filterClassGrid(query) {
   });
 }
 
+// classMatchupLine — "Strong vs 🔥❄️ · Weak to ⚡🪨" for the selected class
+function classMatchupLine(cls) {
+  if (!cls.element || typeof elementMatchups !== 'function') return '';
+  const { strong, weak } = elementMatchups(cls.element);
+  const icons = list => list.map(id => `<span title="${ELEMENTS[id].name}">${ELEMENTS[id].icon}</span>`).join('') || '—';
+  return `<span class="class-matchups">Strong vs ${icons(strong)} · Weak to ${icons(weak)}</span><br>`;
+}
+
 function renderClassSelect() {
   const m = G.meta;
   const grid = document.getElementById('class-grid');
@@ -257,6 +265,7 @@ function renderClassSelect() {
         document.getElementById('start-run-btn').disabled = false;
         document.getElementById('selected-class-desc').innerHTML =
           `<strong>${cls.name}</strong>${cls._isFusion ? ' <span style="color:#aa44ff;font-size:0.7rem">⚗ Fusion</span>' : ''} — ${cls.description || cls.tagline || ''}<br>
+          ${classMatchupLine(cls)}
           <span style="font-size:0.65rem;color:var(--text-dim);font-style:italic">${cls.lore || ''}</span>`;
       };
     }

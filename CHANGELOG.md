@@ -84,6 +84,8 @@
 - Run seeds: every run has a seed (shown in the pause menu, or enter one in
   World Settings). The same seed and settings build the same floors, and
   reloading a save can't re-roll chests, drops or flee attempts.
+- Class select shows which elements the selected class is strong against
+  and weak to.
 - Enemy cards show the element matchup when it isn't neutral ("You deal
   ×0.25 · You take ×2", red when it's against you), so a hard counter is
   obvious before you sink turns into it, and you can flee.

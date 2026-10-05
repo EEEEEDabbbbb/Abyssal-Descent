@@ -270,6 +270,16 @@ function getElementMult(atkType, defType) {
   return EFFECTIVENESS[atkType][defType] ?? 1.0;
 }
 
+// elementMatchups(el) — which elements `el` hits hard, and which hit it hard
+// (2× or more), for class select
+function elementMatchups(el) {
+  const ids = Object.keys(ELEMENTS);
+  return {
+    strong: ids.filter(x => x !== el && getElementMult(el, x) >= 2),
+    weak:   ids.filter(x => getElementMult(x, el) >= 2),
+  };
+}
+
 function getEffectivenessLabel(mult) {
   if (mult >= 4)    return { text: '⚡ DEVASTATES!! (4×)',      color: '#ff2200' };
   if (mult >= 2)    return { text: '✦ Super effective! (2×)',   color: '#ffaa00' };

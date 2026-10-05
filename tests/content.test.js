@@ -198,9 +198,11 @@ test('the enemy card shows a non-neutral element matchup, and nothing for a neut
     startCombat(neutral); updateUI(); renderCenterPanel();
     out.neutral = !!document.querySelector('#enemy-display .matchup');
     endCombat(false); G.phase = 'explore';
+    out.weakToElectric = elementMatchups('wind').weak.includes('electric') && /Weak to .*⚡/.test(classMatchupLine(getClassData('windwalker')));
     return out;
   });
   assert.equal(r.bad, 'You deal ×0.25 · You take ×2');
+  assert.ok(r.weakToElectric, 'class select lists Electric among Wind\'s weaknesses');
   assert.equal(r.badTone, true);
   assert.equal(r.neutral, false);
 });

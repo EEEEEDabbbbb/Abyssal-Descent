@@ -2715,6 +2715,9 @@ body.reduce-motion .toast { animation: none; transition: none; }
   background: rgba(255,90,90,0.10); white-space: nowrap; font-variant-numeric: tabular-nums;
 }
 
+/* Strong vs / Weak to on class select (screens.js classMatchupLine) */
+.class-matchups { font-size: 0.68rem; color: var(--text-mid); letter-spacing: 0.02em; }
+
 /* Element matchup under an enemy's name (render.js matchupHtml) */
 .matchup { font-size: 0.66rem; margin-top: 2px; color: var(--text-dim); letter-spacing: 0.02em; }
 .matchup.good { color: #7fd99a; }
