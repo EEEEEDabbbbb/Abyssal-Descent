@@ -5,23 +5,23 @@
 // ── ENEMY ABILITIES ──────────────────────────────────────────
 const ENEMY_ABILITIES = {
   basic:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} attacks for ${dmg}.`);
   },
   heavy:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.6,p.stats.def*0.7));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.6,p.stats.def*0.7));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} unleashes a heavy blow for ${dmg}!`);
   },
   double:(e,p)=>{
-    const d1=Math.max(1,calcDmg(e.atk*0.7,p.stats.def));
-    const d2=Math.max(1,calcDmg(e.atk*0.7,p.stats.def));
-    dealDmgToPlayer(d1); dealDmgToPlayer(d2);
+    let d1=Math.max(1,calcDmg(e.atk*0.7,p.stats.def));
+    let d2=Math.max(1,calcDmg(e.atk*0.7,p.stats.def));
+    d1=dealDmgToPlayer(d1); d2=dealDmgToPlayer(d2);
     logEntry('enemy-action',`${e.name} attacks twice for ${d1}+${d2}!`);
   },
   drain:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.5));
+    let dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.5));
     const taken=dealDmgToPlayer(dmg);
     if(healEnemy(e,Math.round(taken*0.4))>0){
       logEntry('enemy-action',`${e.name} drains ${taken} HP and heals!`);
@@ -30,8 +30,8 @@ const ENEMY_ABILITIES = {
     }
   },
   curse:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     // Use a per-turn penalty tracked on the status so it can be restored on expiry
     const existing = p.status && p.status.find(s=>s.id==='cursed');
     if (existing) {
@@ -52,25 +52,25 @@ const ENEMY_ABILITIES = {
     const pen=Math.round(p.stats.def*0.3);
     addStatus(p,{id:'wail',name:'Wailing',type:'debuff',icon:'😱',duration:2,defPen:pen});
     p.stats.def=Math.max(0,p.stats.def-pen);
-    const dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} wails! -${pen} DEF for 2 turns. ${dmg} dmg.`);
   },
   poison_spit:(e,p)=>{
     addStatus(p,{id:'poison',name:'Poison',type:'debuff',icon:'☠️',duration:4,
-      onTurn:(pl)=>{const pd=Math.round(e.atk*0.25);dealDmgToPlayer(pd,true);logEntry('enemy-action',`Poison burns for ${pd}!`);}});
-    const dmg=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
-    dealDmgToPlayer(dmg);
+      onTurn:(pl)=>{let pd=Math.round(e.atk*0.25);pd=dealDmgToPlayer(pd,true);logEntry('enemy-action',`Poison burns for ${pd}!`);}});
+    let dmg=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} spits poison! Poisoned. ${dmg} dmg.`);
   },
   charge:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*2.0,p.stats.def*0.5));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*2.0,p.stats.def*0.5));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} CHARGES for ${dmg}!!!`);
   },
   stun_strike:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     if(rand(100)<35){
       addStatus(G.player,{id:'stun',name:'Stunned',type:'debuff',icon:'⚡',duration:1,onTurn:(pl)=>{logEntry('system','You are stunned!');}});
       logEntry('enemy-action',`${e.name} stun-strikes for ${dmg}! YOU ARE STUNNED.`);
@@ -79,46 +79,119 @@ const ENEMY_ABILITIES = {
     }
   },
   life_drain:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.4,p.stats.def*0.4));
+    let dmg=Math.max(1,calcDmg(e.atk*1.4,p.stats.def*0.4));
     const taken=dealDmgToPlayer(dmg);
     const healed=healEnemy(e,taken);
     logEntry('enemy-action',`${e.name} drains your life for ${taken}!${healed>0?` Heals ${healed}.`:''}`);
   },
   shadow_slash:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.3,p.stats.def*0.6));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.3,p.stats.def*0.6));
+    dmg=dealDmgToPlayer(dmg);
     addStatus(p,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,stacks:2,
-      onTurn:(pl)=>{const bd=Math.max(1,Math.round(e.atk*0.2*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks));dealDmgToPlayer(bd,true);}});
+      onTurn:(pl)=>{let bd=Math.max(1,Math.round(e.atk*0.2*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks));bd=dealDmgToPlayer(bd,true);}});
     logEntry('enemy-action',`${e.name} slashes from shadow for ${dmg}! Bleed x2.`);
   },
   infernal_breath:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.5,p.stats.def*0.5));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.5,p.stats.def*0.5));
+    dmg=dealDmgToPlayer(dmg);
     addStatus(p,{id:'burn_player',name:'Burning',type:'debuff',icon:'🔥',duration:3,
-      onTurn:(pl)=>{const bd=Math.round(e.atk*0.3);dealDmgToPlayer(bd,true);logEntry('enemy-action',`Burning for ${bd}!`);}});
+      onTurn:(pl)=>{let bd=Math.round(e.atk*0.3);bd=dealDmgToPlayer(bd,true);logEntry('enemy-action',`Burning for ${bd}!`);}});
     logEntry('enemy-action',`${e.name} breathes fire for ${dmg}! You are Burning!`);
   },
   void_tear:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.8,p.stats.def*0.3));
-    dealDmgToPlayer(dmg,true); // ignores shield
+    let dmg=Math.max(1,calcDmg(e.atk*1.8,p.stats.def*0.3));
+    dmg=dealDmgToPlayer(dmg,true); // ignores shield
     logEntry('enemy-action',`${e.name} tears the void for ${dmg}! (Shield ignored)`);
   },
   summon:(e,p)=>{
     const healed=healEnemy(e,Math.round(e.maxHp*0.1));
-    const dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} summons minions and attacks for ${dmg}!${healed>0?` Healed ${healed}.`:''}`);
   },
   enrage_strike:(e,p)=>{
     const mult=1.0+(1.0-e.hp/e.maxHp);
-    const dmg=Math.max(1,calcDmg(e.atk*mult*1.5,p.stats.def*0.6));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*mult*1.5,p.stats.def*0.6));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} ENRAGES and strikes for ${dmg}!!!`);
+  },
+  // ── RIVAL BOSS SIGNATURE MOVES (see BOSS_RIVALS) ─────────
+  brood_swarm:(e,p)=>{
+    let total=0;
+    for(let i=0;i<3;i++){ total+=dealDmgToPlayer(Math.max(1,calcDmg(e.atk*0.45,p.stats.def*0.6))); }
+    addStatus(p,{id:'infested',name:'Infested',type:'debuff',icon:'🕷️',duration:3,
+      onTurn:(pl)=>{let d=Math.max(1,Math.round(e.atk*0.15));d=dealDmgToPlayer(d,true);logEntry('enemy-action',`The brood gnaws for ${d}!`);}});
+    logEntry('enemy-action',`${e.name} looses the brood — 3 bites for ${total}! You are Infested.`);
+  },
+  dirge:(e,p)=>{
+    let dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
+    const pen=Math.round(p.stats.atk*0.2);
+    p.stats.atk=Math.max(1,p.stats.atk-pen);
+    addStatus(p,{id:'mournful',name:'Mournful',type:'debuff',icon:'🎶',duration:3,atkPen:pen});
+    logEntry('enemy-action',`${e.name} sings a dirge for ${dmg}! -${pen} ATK for 3 turns.`);
+  },
+  glacial_prison:(e,p)=>{
+    let dmg=Math.max(1,calcDmg(e.atk*1.0,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
+    const pen=Math.round(p.stats.spd*0.4);
+    p.stats.spd=Math.max(1,p.stats.spd-pen);
+    addStatus(p,{id:'imprisoned',name:'Ice-Bound',type:'debuff',icon:'🧊',duration:3,spdPen:pen});
+    if(rand(100)<30){
+      addStatus(p,{id:'stun',name:'Frozen Solid',type:'debuff',icon:'🧊',duration:1,onTurn:()=>logEntry('system','You are frozen solid!')});
+      logEntry('enemy-action',`${e.name} seals you in ice for ${dmg}! FROZEN SOLID.`);
+    } else logEntry('enemy-action',`${e.name} encases you in ice for ${dmg}! -${pen} SPD.`);
+  },
+  mirror_ward:(e,p)=>{
+    // Refreshes rather than stacks (status.js), so the ward never snowballs
+    const bonus=Math.round(e.def*0.3);
+    e.def+=bonus;
+    addStatus(e,{id:'mirror_ward',name:'Mirror Ward',type:'buff',icon:'🪞',duration:2,defBonus:bonus});
+    let dmg=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
+    logEntry('enemy-action',`${e.name} raises a Mirror Ward (+${bonus} DEF for 2 turns), striking for ${dmg}.`);
+  },
+  quake_slam:(e,p)=>{
+    let dmg=Math.max(1,calcDmg(e.atk*1.7,p.stats.def*0.5));
+    dmg=dealDmgToPlayer(dmg,true);
+    logEntry('enemy-action',`${e.name} slams the seabed — QUAKE for ${dmg}! (Shield ignored)`);
+  },
+  starfall:(e,p)=>{
+    let total=0;
+    for(let i=0;i<3;i++){ total+=dealDmgToPlayer(Math.max(1,calcDmg(e.atk*0.6,p.stats.def*0.4)),true); }
+    logEntry('enemy-action',`Stars fall at ${e.name}'s call — ${total} damage! (Shield ignored)`);
+  },
+  blood_pact:(e,p)=>{
+    // Each pact costs 6% max HP for +12% ATK, up to 3 pacts per fight
+    const pact=(e.status||[]).find(s=>s.id==='blood_pact');
+    if(!pact || (pact.stacks||1)<3){
+      const cost=Math.round(e.maxHp*0.06);
+      e.hp=Math.max(1,e.hp-cost);
+      const bonus=Math.round(e.atk*0.12);
+      e.atk+=bonus;
+      addStatus(e,{id:'blood_pact',name:'Blood Pact',type:'buff',icon:'🩸',duration:99,stacks:1,atkBonus:bonus});
+      logEntry('enemy-action',`${e.name} spills ${cost} of its own blood: +${bonus} ATK!`);
+    }
+    let dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
+    logEntry('enemy-action',`${e.name} strikes with blood-fury for ${dmg}.`);
+  },
+  time_rewind:(e,p)=>{
+    const cleansed=removeStatuses(e,s=>s.type==='debuff').length;
+    const healed=healEnemy(e,Math.round(e.maxHp*0.06));
+    logEntry('enemy-action',`${e.name} rewinds its own time!${healed>0?` Restores ${healed} HP.`:''}${cleansed?` ${cleansed} debuff${cleansed>1?'s':''} undone.`:''}`);
+  },
+  oblivion_gaze:(e,p)=>{
+    const mpLoss=Math.round(p.stats.mp*0.25);
+    p.stats.mp=Math.max(0,p.stats.mp-mpLoss);
+    let dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.6));
+    dmg=dealDmgToPlayer(dmg);
+    logEntry('enemy-action',`${e.name} gazes into you: ${dmg} damage, ${mpLoss} MP forgotten.`);
   },
   // ── NEW ABILITIES ────────────────────────────────────────
   frost_bite:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     const existing=p.status&&p.status.find(s=>s.id==='frozen');
     if(!existing){
       const spdLoss=Math.round(p.stats.spd*0.3);
@@ -128,17 +201,17 @@ const ENEMY_ABILITIES = {
     logEntry('enemy-action',`${e.name} bites with frost for ${dmg}! SPD reduced.`);
   },
   blizzard:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.4,p.stats.def*0.8));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.4,p.stats.def*0.8));
+    dmg=dealDmgToPlayer(dmg);
     const spdLoss=Math.round(p.stats.spd*0.4);
     p.stats.spd=Math.max(1,p.stats.spd-spdLoss);
     addStatus(p,{id:'blizzard_slow',name:'Blizzard',type:'debuff',icon:'🌨️',duration:3,spdLoss,
-      onTurn:(pl)=>{ const cd=Math.round(e.atk*0.15); dealDmgToPlayer(cd,true); logEntry('enemy-action',`Blizzard chills you for ${cd}!`); }});
+      onTurn:(pl)=>{ let cd=Math.round(e.atk*0.15); cd=dealDmgToPlayer(cd,true); logEntry('enemy-action',`Blizzard chills you for ${cd}!`); }});
     logEntry('enemy-action',`${e.name} blizzards for ${dmg}! Slowed and freezing!`);
   },
   thunder_clap:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.7));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.7));
+    dmg=dealDmgToPlayer(dmg);
     if(rand(100)<40){
       addStatus(p,{id:'stun',name:'Stunned',type:'debuff',icon:'⚡',duration:1});
       logEntry('enemy-action',`${e.name} THUNDER CLAPS for ${dmg}! YOU ARE STUNNED!`);
@@ -147,42 +220,42 @@ const ENEMY_ABILITIES = {
     }
   },
   lightning_chain:(e,p)=>{
-    const d1=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
-    const d2=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
-    dealDmgToPlayer(d1); dealDmgToPlayer(d2);
+    let d1=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
+    let d2=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
+    d1=dealDmgToPlayer(d1); d2=dealDmgToPlayer(d2);
     const spdLoss=Math.round(p.stats.spd*0.2);
     p.stats.spd=Math.max(1,p.stats.spd-spdLoss);
     addStatus(p,{id:'shocked',name:'Shocked',type:'debuff',icon:'⚡',duration:2,spdLoss});
     logEntry('enemy-action',`${e.name} chains lightning for ${d1}+${d2}! Shocked (-SPD).`);
   },
   spore_cloud:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*0.7,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*0.7,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     const atkLoss=Math.round(p.stats.atk*0.2);
     p.stats.atk=Math.max(1,p.stats.atk-atkLoss);
     addStatus(p,{id:'spored',name:'Spore Sick',type:'debuff',icon:'🍄',duration:3,atkLoss,
-      onTurn:(pl)=>{ const pd=Math.round(e.atk*0.18); dealDmgToPlayer(pd,true); logEntry('enemy-action',`Spores fester for ${pd}!`); }});
+      onTurn:(pl)=>{ let pd=Math.round(e.atk*0.18); pd=dealDmgToPlayer(pd,true); logEntry('enemy-action',`Spores fester for ${pd}!`); }});
     logEntry('enemy-action',`${e.name} releases spores for ${dmg}! ATK reduced + ticking damage.`);
   },
   entangle:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     const spdLoss=Math.round(p.stats.spd*0.5);
     p.stats.spd=Math.max(1,p.stats.spd-spdLoss);
     addStatus(p,{id:'entangled',name:'Entangled',type:'debuff',icon:'🌿',duration:2,spdLoss});
     logEntry('enemy-action',`${e.name} entangles you for ${dmg}! SPD halved for 2 turns.`);
   },
   acid_spray:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.0,p.stats.def*0.6));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.0,p.stats.def*0.6));
+    dmg=dealDmgToPlayer(dmg);
     const defLoss=Math.round(p.stats.def*0.25);
     p.stats.def=Math.max(0,p.stats.def-defLoss);
     addStatus(p,{id:'corroded',name:'Corroded',type:'debuff',icon:'🧪',duration:3,defLoss});
     logEntry('enemy-action',`${e.name} sprays acid for ${dmg}! DEF reduced.`);
   },
   sandstorm:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def*0.9));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.1,p.stats.def*0.9));
+    dmg=dealDmgToPlayer(dmg);
     if(!(p.status&&p.status.find(s=>s.id==='blinded'))){
       addStatus(p,{id:'blinded',name:'Blinded',type:'debuff',icon:'🌪️',duration:2,
         onTurn:(pl)=>{ logEntry('system','Vision blurred — you fumble your footing!'); }});
@@ -190,40 +263,40 @@ const ENEMY_ABILITIES = {
     logEntry('enemy-action',`${e.name} kicks up a sandstorm for ${dmg}! Blinded!`);
   },
   heat_wave:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.8));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.8));
+    dmg=dealDmgToPlayer(dmg);
     const mpDrain=Math.round(p.stats.mp*0.2);
     p.stats.mp=Math.max(0,p.stats.mp-mpDrain);
     addStatus(p,{id:'scorched',name:'Scorched',type:'debuff',icon:'☀️',duration:2,
-      onTurn:(pl)=>{ const md=Math.round(pl.stats.maxMp*0.08); pl.stats.mp=Math.max(0,pl.stats.mp-md); logEntry('enemy-action',`Heat drains ${md} MP!`); }});
+      onTurn:(pl)=>{ let md=Math.round(pl.stats.maxMp*0.08); pl.stats.mp=Math.max(0,pl.stats.mp-md); logEntry('enemy-action',`Heat drains ${md} MP!`); }});
     logEntry('enemy-action',`${e.name} unleashes a heat wave for ${dmg}! MP burns away.`);
   },
   deep_dive:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.3,p.stats.def*0.5));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.3,p.stats.def*0.5));
+    dmg=dealDmgToPlayer(dmg);
     addStatus(p,{id:'waterlogged',name:'Waterlogged',type:'debuff',icon:'💧',duration:3,
-      onTurn:(pl)=>{ const wd=Math.round(e.atk*0.2); dealDmgToPlayer(wd,true); logEntry('enemy-action',`You gasp for air — ${wd} dmg!`); }});
+      onTurn:(pl)=>{ let wd=Math.round(e.atk*0.2); wd=dealDmgToPlayer(wd,true); logEntry('enemy-action',`You gasp for air — ${wd} dmg!`); }});
     logEntry('enemy-action',`${e.name} pulls you under for ${dmg}! Waterlogged.`);
   },
   undertow:(e,p)=>{
-    const d1=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
-    const d2=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
-    dealDmgToPlayer(d1); dealDmgToPlayer(d2);
+    let d1=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
+    let d2=Math.max(1,calcDmg(e.atk*0.9,p.stats.def));
+    d1=dealDmgToPlayer(d1); d2=dealDmgToPlayer(d2);
     const defLoss=Math.round(p.stats.def*0.2);
     p.stats.def=Math.max(0,p.stats.def-defLoss);
     addStatus(p,{id:'drenched',name:'Drenched',type:'debuff',icon:'🌊',duration:2,defLoss});
     logEntry('enemy-action',`${e.name} batters with undertow for ${d1}+${d2}! DEF reduced.`);
   },
   talon_rake:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.7));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.7));
+    dmg=dealDmgToPlayer(dmg);
     addStatus(p,{id:'bleed',name:'Bleed',type:'debuff',icon:'🩸',duration:3,stacks:3,
-      onTurn:(pl)=>{ const bd=Math.max(1,Math.round(e.atk*0.2*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks)); dealDmgToPlayer(bd,true); }});
+      onTurn:(pl)=>{ let bd=Math.max(1,Math.round(e.atk*0.2*(pl.status.find(s=>s.id==='bleed')||{stacks:1}).stacks)); bd=dealDmgToPlayer(bd,true); }});
     logEntry('enemy-action',`${e.name} rakes talons for ${dmg}! Bleed x3.`);
   },
   earthshatter:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.8,p.stats.def*0.6));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*1.8,p.stats.def*0.6));
+    dmg=dealDmgToPlayer(dmg);
     if(rand(100)<30){
       addStatus(p,{id:'stun',name:'Stunned',type:'debuff',icon:'⚡',duration:1});
       logEntry('enemy-action',`${e.name} SHATTERS the ground for ${dmg}! STUNNED!`);
@@ -232,23 +305,23 @@ const ENEMY_ABILITIES = {
     }
   },
   rust:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*0.8,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     const defLoss=Math.round(p.stats.def*0.35);
     p.stats.def=Math.max(0,p.stats.def-defLoss);
     addStatus(p,{id:'rusted',name:'Rusted',type:'debuff',icon:'🔩',duration:4,defLoss});
     logEntry('enemy-action',`${e.name} corrodes your armor for ${dmg}! -${defLoss} DEF for 4 turns.`);
   },
   mind_spike:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.0,p.stats.def*0.5));
-    dealDmgToPlayer(dmg,true);
+    let dmg=Math.max(1,calcDmg(e.atk*1.0,p.stats.def*0.5));
+    dmg=dealDmgToPlayer(dmg,true);
     const mpDrain=Math.round(p.stats.maxMp*0.3);
     p.stats.mp=Math.max(0,p.stats.mp-mpDrain);
     logEntry('enemy-action',`${e.name} spikes your mind for ${dmg} (shield piercing)! -${mpDrain} MP.`);
   },
   soul_rend:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*1.5,p.stats.def*0.4));
-    dealDmgToPlayer(dmg,true);
+    let dmg=Math.max(1,calcDmg(e.atk*1.5,p.stats.def*0.4));
+    dmg=dealDmgToPlayer(dmg,true);
     const atkLoss=Math.round(p.stats.atk*0.15);
     const defLoss=Math.round(p.stats.def*0.15);
     p.stats.atk=Math.max(1,p.stats.atk-atkLoss);
@@ -266,13 +339,13 @@ const ENEMY_ABILITIES = {
     if (!e._channeling) {
       e._channeling = 'channel_burst';
       addStatus(p,{id:'incoming_burst',name:'Incoming Burst',type:'debuff',icon:'🌀',duration:2});
-      const dmg=Math.max(1,calcDmg(e.atk*0.3,p.stats.def));
-      dealDmgToPlayer(dmg);
+      let dmg=Math.max(1,calcDmg(e.atk*0.3,p.stats.def));
+      dmg=dealDmgToPlayer(dmg);
       logEntry('enemy-action',`${e.name} begins channeling a devastating attack! (${dmg} dmg)`);
     } else {
       e._channeling = null;
-      const dmg=Math.max(1,calcDmg(e.atk*2.4,p.stats.def*0.4));
-      dealDmgToPlayer(dmg);
+      let dmg=Math.max(1,calcDmg(e.atk*2.4,p.stats.def*0.4));
+      dmg=dealDmgToPlayer(dmg);
       logEntry('enemy-action',`${e.name} UNLEASHES the channeled attack for ${dmg}!!!`);
     }
   },
@@ -281,11 +354,11 @@ const ENEMY_ABILITIES = {
   // turn, simulating a minion joining the fight without needing true
   // multi-enemy combat.
   summon_ally:(e,p)=>{
-    const dmg=Math.max(1,calcDmg(e.atk*0.6,p.stats.def));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*0.6,p.stats.def));
+    dmg=dealDmgToPlayer(dmg);
     if(!(p.status&&p.status.find(s=>s.id==='harried'))){
       addStatus(p,{id:'harried',name:'Harried',type:'debuff',icon:'👥',duration:4,
-        onTurn:(pl)=>{const md=Math.round(e.atk*0.35);dealDmgToPlayer(md,true);logEntry('enemy-action',`A summoned minion strikes for ${md}!`);}});
+        onTurn:(pl)=>{let md=Math.round(e.atk*0.35);md=dealDmgToPlayer(md,true);logEntry('enemy-action',`A summoned minion strikes for ${md}!`);}});
       logEntry('enemy-action',`${e.name} calls forth a minion to aid it! ${dmg} dmg.`);
     } else {
       logEntry('enemy-action',`${e.name} attacks for ${dmg} while its minion harries you!`);
@@ -297,8 +370,8 @@ const ENEMY_ABILITIES = {
   // player) for letting stacks pile up instead of clearing them.
   culling_strike:(e,p)=>{
     const debuffCount=(p.status||[]).filter(s=>s.type==='debuff').length;
-    const dmg=Math.max(1,calcDmg(e.atk*(1.0+debuffCount*0.25),p.stats.def*0.6));
-    dealDmgToPlayer(dmg);
+    let dmg=Math.max(1,calcDmg(e.atk*(1.0+debuffCount*0.25),p.stats.def*0.6));
+    dmg=dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} exploits your weakened state for ${dmg}!${debuffCount>0?` (+${debuffCount*25}% from ${debuffCount} debuffs)`:''}`);
   },
 };
@@ -345,6 +418,15 @@ const ENEMY_ABILITY_INFO = {
   channel_burst:{icon:'🌀',label:'Channeling...'},
   summon_ally:{icon:'👥',label:'Summon Ally'},
   culling_strike:{icon:'⚰️',label:'Culling Strike'},
+  brood_swarm:{icon:'🕷️',label:'Brood Swarm'},
+  dirge:{icon:'🎶',label:'Dirge'},
+  glacial_prison:{icon:'🧊',label:'Glacial Prison'},
+  mirror_ward:{icon:'🪞',label:'Mirror Ward'},
+  quake_slam:{icon:'🌊',label:'Quake Slam'},
+  starfall:{icon:'🌠',label:'Starfall'},
+  blood_pact:{icon:'🩸',label:'Blood Pact'},
+  time_rewind:{icon:'⏪',label:'Rewind'},
+  oblivion_gaze:{icon:'👁️',label:'Oblivion Gaze'},
 };
 
 // getEnemyNextMove — returns the {icon,label} for whatever ability key is
@@ -366,7 +448,10 @@ const ABILITY_ROLE = {
   acid_spray:'control', sandstorm:'control', heat_wave:'drain', deep_dive:'pressure',
   undertow:'pressure', talon_rake:'pressure', earthshatter:'pressure', rust:'control',
   mind_spike:'control', soul_rend:'pressure',
-  channel_burst:'pressure', summon_ally:'control', culling_strike:'pressure'
+  channel_burst:'pressure', summon_ally:'control', culling_strike:'pressure',
+  brood_swarm:'pressure', dirge:'control', glacial_prison:'control', mirror_ward:'drain',
+  quake_slam:'pressure', starfall:'pressure', blood_pact:'pressure', time_rewind:'drain',
+  oblivion_gaze:'control'
 };
 
 // pickEnemyAbility — single source of truth for "what does this enemy do
@@ -398,9 +483,18 @@ function pickEnemyAbility(e, p) {
     const pressureMoves = pattern.filter(id => ABILITY_ROLE[id] === 'pressure');
     if (pressureMoves.length > 0) return pressureMoves[idx % pressureMoves.length];
   }
-  if (e.hp / e.maxHp < 0.3) {
+  // Low on HP: reach for a heal — but never twice in a row, or a boss whose
+  // drain heals what it deals could out-heal the player forever.
+  if (e.hp / e.maxHp < 0.3 && !e._lastWasDrain) {
     const drainMoves = pattern.filter(id => ABILITY_ROLE[id] === 'drain');
     if (drainMoves.length > 0) return drainMoves[idx % drainMoves.length];
+  }
+  if (e._lastWasDrain) {
+    // Right after a drain, take the next non-drain move in the cycle
+    for (let k = 0; k < pattern.length; k++) {
+      const id = pattern[(idx + k) % pattern.length];
+      if (ABILITY_ROLE[id] !== 'drain') return id;
+    }
   }
   return pattern[idx % pattern.length];
 }
@@ -1123,6 +1217,170 @@ const ENEMY_POOL = {
     conquestReward:true,
     status:[],patternIndex:0,currentPhase:0,enrageCount:0
   },
+
+  // ── RIVAL BOSSES — each run meets one of two bosses on floors 5–45 ──
+  carrion_matron:{
+    id:'carrion_matron', name:'The Carrion Matron', icon:'🕷️', element:'bug',
+    title:'Every corpse down here is a nursery.',
+    isBoss:true,
+    hp:260, maxHp:260, atk:20, def:9, spd:11, xp:120, gold:[40,60], loot:1.0,
+    patterns:['brood_swarm','basic','poison_spit','basic'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: The Brood Wakes', atkBoost:7, defBoost:4,
+        announce:'The Carrion Matron splits open — the brood pours out!',
+        newPatterns:['brood_swarm','poison_spit','heavy','brood_swarm'] },
+      { threshold:0.25, name:'Phase 3: Hive Mother', atkBoost:14, defBoost:7,
+        announce:'HIVE MOTHER — the walls themselves crawl toward you.',
+        newPatterns:['brood_swarm','charge','brood_swarm','poison_spit'] },
+    ],
+    enrageTurns:20,
+    enrageAnnounce:'The Carrion Matron shrieks — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  hollow_choir:{
+    id:'hollow_choir', name:'The Hollow Choir', icon:'🎶', element:'sound',
+    title:'Seven voices. No throats.',
+    isBoss:true,
+    hp:450, maxHp:450, atk:30, def:14, spd:15, xp:250, gold:[70,100], loot:1.0,
+    patterns:['dirge','basic','wail','double'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: Crescendo', atkBoost:11, defBoost:7,
+        announce:'The Hollow Choir swells into a CRESCENDO. Your ears bleed.',
+        newPatterns:['dirge','wail','heavy','dirge'] },
+      { threshold:0.25, name:'Phase 3: The Final Note', atkBoost:19, defBoost:11,
+        announce:'THE FINAL NOTE — a sound that unmakes whoever hears it.',
+        newPatterns:['dirge','charge','wail','dirge','heavy'] },
+    ],
+    enrageTurns:18,
+    enrageAnnounce:'The Hollow Choir screams in unison — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  frostbound_queen:{
+    id:'frostbound_queen', name:'The Frostbound Queen', icon:'❄️', element:'ice',
+    title:'She froze her court so it could never leave her.',
+    isBoss:true,
+    hp:640, maxHp:640, atk:36, def:20, spd:12, xp:380, gold:[100,150], loot:1.0,
+    patterns:['glacial_prison','frost_bite','basic','blizzard'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: Winter Court', atkBoost:13, defBoost:10,
+        announce:'The Frostbound Queen summons her frozen court to her side.',
+        newPatterns:['glacial_prison','blizzard','heavy','frost_bite'] },
+      { threshold:0.25, name:'Phase 3: Absolute Winter', atkBoost:21, defBoost:14,
+        announce:'ABSOLUTE WINTER — the air itself freezes solid.',
+        newPatterns:['glacial_prison','blizzard','charge','glacial_prison'] },
+    ],
+    enrageTurns:16,
+    enrageAnnounce:'The Frostbound Queen shatters her crown — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  mirror_sovereign:{
+    id:'mirror_sovereign', name:'The Mirror Sovereign', icon:'🪞', element:'glass',
+    title:'It wears the faces of everyone who looked too long.',
+    isBoss:true,
+    hp:880, maxHp:880, atk:46, def:24, spd:15, xp:550, gold:[150,220], loot:1.0,
+    patterns:['mirror_ward','heavy','mind_spike','double'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: Shattered Reflection', atkBoost:17, defBoost:12,
+        announce:'The Mirror Sovereign cracks — and every shard is still watching.',
+        newPatterns:['mirror_ward','mind_spike','charge','heavy'] },
+      { threshold:0.25, name:'Phase 3: A Thousand Faces', atkBoost:28, defBoost:17,
+        announce:'A THOUSAND FACES — all of them yours.',
+        newPatterns:['charge','mirror_ward','void_tear','mind_spike','heavy'] },
+    ],
+    enrageTurns:15,
+    enrageAnnounce:'The Mirror Sovereign shrieks in a thousand voices — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  drowned_titan:{
+    id:'drowned_titan', name:'The Drowned Titan', icon:'🌊', element:'water',
+    title:'It sank with its city and kept growing.',
+    isBoss:true,
+    hp:1250, maxHp:1250, atk:55, def:28, spd:10, xp:750, gold:[200,300], loot:1.0,
+    patterns:['quake_slam','undertow','basic','deep_dive'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: High Tide', atkBoost:21, defBoost:14,
+        announce:'HIGH TIDE — water floods the chamber to your waist.',
+        newPatterns:['quake_slam','deep_dive','heavy','undertow'] },
+      { threshold:0.25, name:'Phase 3: The Deluge', atkBoost:36, defBoost:21,
+        announce:'THE DELUGE — the Drowned Titan brings the whole sea down on you.',
+        newPatterns:['quake_slam','charge','deep_dive','quake_slam','undertow'] },
+    ],
+    enrageTurns:14,
+    enrageAnnounce:'The Drowned Titan roars like a breaking wave — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  star_eater:{
+    id:'star_eater', name:'The Star Eater', icon:'🌠', element:'cosmic',
+    title:'It ate the sky above the abyss. Now it is still hungry.',
+    isBoss:true,
+    hp:1500, maxHp:1500, atk:68, def:30, spd:16, xp:1000, gold:[280,400], loot:1.0,
+    patterns:['starfall','basic','void_tear','heavy'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: Event Horizon', atkBoost:27, defBoost:17,
+        announce:'The Star Eater opens its maw. Light bends toward it.',
+        newPatterns:['starfall','void_tear','charge','starfall'] },
+      { threshold:0.25, name:'Phase 3: Supernova', atkBoost:43, defBoost:27,
+        announce:'SUPERNOVA — it vomits back every star it ever swallowed.',
+        newPatterns:['starfall','enrage_strike','void_tear','starfall','charge'] },
+    ],
+    enrageTurns:13,
+    enrageAnnounce:'The Star Eater collapses inward — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  blood_regent:{
+    id:'blood_regent', name:'The Blood Regent', icon:'🩸', element:'blood',
+    title:'It rules with a crown it grew from its own veins.',
+    isBoss:true,
+    hp:1950, maxHp:1950, atk:82, def:38, spd:16, xp:1400, gold:[380,550], loot:1.0,
+    patterns:['blood_pact','life_drain','heavy','shadow_slash'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: Sanguine Court', atkBoost:31, defBoost:22,
+        announce:'The Blood Regent calls its court — every drop of spilled blood rises.',
+        newPatterns:['blood_pact','shadow_slash','charge','life_drain'] },
+      { threshold:0.25, name:'Phase 3: The Red Throne', atkBoost:52, defBoost:32,
+        announce:'THE RED THRONE — it drinks the whole room dry.',
+        newPatterns:['blood_pact','enrage_strike','life_drain','charge','shadow_slash'] },
+    ],
+    enrageTurns:12,
+    enrageAnnounce:'The Blood Regent tears open its veins — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  the_unwound:{
+    id:'the_unwound', name:'The Unwound', icon:'⏳', element:'time',
+    title:'A clock that stopped, and refused to die with it.',
+    isBoss:true,
+    hp:2500, maxHp:2500, atk:96, def:46, spd:18, xp:1900, gold:[500,700], loot:1.0,
+    patterns:['time_rewind','heavy','mind_spike','charge'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: Wrong Hours', atkBoost:36, defBoost:26,
+        announce:'The Unwound skips forward. You were hit before you saw it move.',
+        newPatterns:['heavy','time_rewind','charge','mind_spike','heavy'] },
+      { threshold:0.25, name:'Phase 3: Time Undone', atkBoost:60, defBoost:38,
+        announce:'TIME UNDONE — every second you survive is borrowed.',
+        newPatterns:['charge','enrage_strike','time_rewind','charge','void_tear'] },
+    ],
+    enrageTurns:11,
+    enrageAnnounce:'The Unwound runs backward into fury — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
+  eye_of_oblivion:{
+    id:'eye_of_oblivion', name:'The Eye of Oblivion', icon:'👁️', element:'void',
+    title:'It does not attack you. It forgets you, a little at a time.',
+    isBoss:true,
+    hp:3200, maxHp:3200, atk:116, def:56, spd:18, xp:2600, gold:[650,900], loot:1.0,
+    patterns:['oblivion_gaze','void_tear','soul_rend','heavy'],
+    phases:[
+      { threshold:0.5, name:'Phase 2: The Lid Opens', atkBoost:43, defBoost:31,
+        announce:'The Eye of Oblivion opens fully. Your name slips from your mind.',
+        newPatterns:['oblivion_gaze','void_tear','charge','soul_rend'] },
+      { threshold:0.25, name:'Phase 3: Nothing Remains', atkBoost:72, defBoost:46,
+        announce:'NOTHING REMAINS — not even the memory of light.',
+        newPatterns:['oblivion_gaze','enrage_strike','void_tear','oblivion_gaze','charge'] },
+    ],
+    enrageTurns:10,
+    enrageAnnounce:'The Eye of Oblivion widens — ENRAGED!',
+    status:[],patternIndex:0,currentPhase:0,enrageCount:0
+  },
 };
 
 // ── Boss floor map ──
@@ -1131,6 +1389,12 @@ const BOSS_BY_FLOOR = {
   5:'bone_revenant', 10:'shadow_tyrant', 15:'plaguelord', 20:'void_emperor',
   25:'crimson_leviathan', 30:'undying_archon', 35:'abyssal_sovereign',
   40:'eternal_devourer', 45:'abyssal_overlord', 50:'abyssal_god'
+};
+// Rival bosses: on each of these floors a run meets either the usual boss or
+// its rival (decided by the floor's seed, so a seed always meets the same ones).
+const BOSS_RIVALS = {
+  5:'carrion_matron', 10:'hollow_choir', 15:'frostbound_queen', 20:'mirror_sovereign',
+  25:'drowned_titan', 30:'star_eater', 35:'blood_regent', 40:'the_unwound', 45:'eye_of_oblivion'
 };
 
 // ── Milestone floors (extra difficult, special modifiers) ──
@@ -1220,9 +1484,10 @@ function getRandomEnemyPack(floor) {
   return [a, b];
 }
 
-function getBossForFloor(floor) {
-  const bossId = BOSS_BY_FLOOR[floor];
-  if (!bossId) return null;
+// getBossForFloor(floor, bossId?) — bossId forces a specific boss (tests, dev)
+function getBossForFloor(floor, forceId) {
+  const bossId = forceId || (BOSS_RIVALS[floor] && rand(2) === 1 ? BOSS_RIVALS[floor] : BOSS_BY_FLOOR[floor]);
+  if (!bossId || !ENEMY_POOL[bossId]) return null;
   const b = deepCopy(ENEMY_POOL[bossId]);
   const mult = getFloorStatMult(floor);
   const diffMult = getDifficultyMult() * getNgPlusMult();

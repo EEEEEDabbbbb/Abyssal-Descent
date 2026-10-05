@@ -147,7 +147,7 @@ Created in the Fusion Lab by combining any two unlocked base or secret classes, 
 
 ---
 
-## 👾 Enemies — 80 Total (70 Regular + 10 Bosses), plus 5 Secret Bosses
+## 👾 Enemies — 89 Total (70 Regular + 19 Bosses), plus 5 Secret Bosses
 
 ### Regular Enemies
 
@@ -164,7 +164,7 @@ All enemies scale with floor depth: base stats are multiplied by floor tier (×1
 
 ### Enemy Ability Types (34 patterns)
 
-Enemies telegraph their next move ("Next: …"). They lean on pressure moves when you're below 30% HP and on drain moves when they are. 12% of enemies from floor 3 are Elite (×1.4 stats, better rewards); from floor 4, 16% of encounters are 2-enemy packs (each at 70% stats and rewards). Enemy attacks carry their element.
+Enemies telegraph their next move ("Next: …"). They lean on pressure moves when you're below 30% HP and on drain moves when they are (but never drain twice in a row). 12% of enemies from floor 3 are Elite (×1.4 stats, better rewards); from floor 4, 16% of encounters are 2-enemy packs (each at 70% stats and rewards). Enemy attacks carry their element.
 
 The first 14:
 
@@ -193,7 +193,7 @@ Also: Summon (drain) · Frost Bite · Blizzard · Thunder Clap · Lightning Chai
 
 ### Bosses (Floor 5, 10, 15, 20, 25, 30, 35, 40, 45, 50)
 
-All 10 bosses are multi-phase encounters with phase-triggered stat boosts, pattern changes, and an enrage timer. Stats shown are base values before floor scaling.
+Every boss is a multi-phase encounter with phase-triggered stat boosts, pattern changes, and an enrage timer. Stats shown are base values before floor scaling.
 
 ---
 
@@ -297,6 +297,114 @@ Phase 3 (≤30% HP): Godhood Unbound — +100 ATK / +65 DEF. The entire abyss is
 
 ---
 
+### Rival Bosses (Floors 5–45)
+
+On each boss floor except 50, a run meets either the boss above or its rival.
+The run's seed decides which, so the same seed always meets the same bosses.
+Each rival has a signature move:
+
+| Move | Effect |
+|---|---|
+| 🕷️ Brood Swarm | 3 bites (45% ATK each) and Infested: 15% ATK per turn for 3 turns |
+| 🎶 Dirge | 110% ATK and −20% ATK for 3 turns |
+| 🧊 Glacial Prison | 100% ATK, −40% SPD for 3 turns, 30% chance to freeze you for a turn |
+| 🪞 Mirror Ward | +30% DEF for 2 turns (refreshes, never stacks) and a 90% ATK strike |
+| 🌊 Quake Slam | 170% ATK that ignores shields |
+| 🌠 Starfall | 3 strikes of 60% ATK that ignore shields |
+| 🩸 Blood Pact | Pays 6% max HP for +12% ATK (at most 3 times), then 110% ATK |
+| ⏪ Rewind | Heals 6% max HP and removes all of its debuffs |
+| 👁️ Oblivion Gaze | 120% ATK and drains 25% of your MP |
+
+**🕷️ The Carrion Matron · Floor 5 (rival)**
+*"Every corpse down here is a nursery."*
+HP: 260 · ATK: 20 · DEF: 9 · SPD: 11 · Element: Bug
+Signature: 🕷️ Brood Swarm. Patterns: `brood_swarm, basic, poison_spit, basic`
+Phase 2 (≤50% HP): The Brood Wakes — +7 ATK / +4 DEF. Patterns: `brood_swarm, poison_spit, heavy, brood_swarm`
+Phase 3 (≤25% HP): Hive Mother — +14 ATK / +7 DEF. Patterns: `brood_swarm, charge, brood_swarm, poison_spit`
+⚠ Enrage: 20 turns
+
+---
+
+**🎶 The Hollow Choir · Floor 10 (rival)**
+*"Seven voices. No throats."*
+HP: 450 · ATK: 30 · DEF: 14 · SPD: 15 · Element: Sound
+Signature: 🎶 Dirge. Patterns: `dirge, basic, wail, double`
+Phase 2 (≤50% HP): Crescendo — +11 ATK / +7 DEF. Patterns: `dirge, wail, heavy, dirge`
+Phase 3 (≤25% HP): The Final Note — +19 ATK / +11 DEF. Patterns: `dirge, charge, wail, dirge, heavy`
+⚠ Enrage: 18 turns
+
+---
+
+**❄️ The Frostbound Queen · Floor 15 (rival)**
+*"She froze her court so it could never leave her."*
+HP: 640 · ATK: 36 · DEF: 20 · SPD: 12 · Element: Ice
+Signature: 🧊 Glacial Prison. Patterns: `glacial_prison, frost_bite, basic, blizzard`
+Phase 2 (≤50% HP): Winter Court — +13 ATK / +10 DEF. Patterns: `glacial_prison, blizzard, heavy, frost_bite`
+Phase 3 (≤25% HP): Absolute Winter — +21 ATK / +14 DEF. Patterns: `glacial_prison, blizzard, charge, glacial_prison`
+⚠ Enrage: 16 turns
+
+---
+
+**🪞 The Mirror Sovereign · Floor 20 (rival)**
+*"It wears the faces of everyone who looked too long."*
+HP: 880 · ATK: 46 · DEF: 24 · SPD: 15 · Element: Glass
+Signature: 🪞 Mirror Ward. Patterns: `mirror_ward, heavy, mind_spike, double`
+Phase 2 (≤50% HP): Shattered Reflection — +17 ATK / +12 DEF. Patterns: `mirror_ward, mind_spike, charge, heavy`
+Phase 3 (≤25% HP): A Thousand Faces — +28 ATK / +17 DEF. Patterns: `charge, mirror_ward, void_tear, mind_spike, heavy`
+⚠ Enrage: 15 turns
+
+---
+
+**🌊 The Drowned Titan · Floor 25 (rival)**
+*"It sank with its city and kept growing."*
+HP: 1,250 · ATK: 55 · DEF: 28 · SPD: 10 · Element: Water
+Signature: 🌊 Quake Slam. Patterns: `quake_slam, undertow, basic, deep_dive`
+Phase 2 (≤50% HP): High Tide — +21 ATK / +14 DEF. Patterns: `quake_slam, deep_dive, heavy, undertow`
+Phase 3 (≤25% HP): The Deluge — +36 ATK / +21 DEF. Patterns: `quake_slam, charge, deep_dive, quake_slam, undertow`
+⚠ Enrage: 14 turns
+
+---
+
+**🌠 The Star Eater · Floor 30 (rival)**
+*"It ate the sky above the abyss. Now it is still hungry."*
+HP: 1,500 · ATK: 68 · DEF: 30 · SPD: 16 · Element: Cosmic
+Signature: 🌠 Starfall. Patterns: `starfall, basic, void_tear, heavy`
+Phase 2 (≤50% HP): Event Horizon — +27 ATK / +17 DEF. Patterns: `starfall, void_tear, charge, starfall`
+Phase 3 (≤25% HP): Supernova — +43 ATK / +27 DEF. Patterns: `starfall, enrage_strike, void_tear, starfall, charge`
+⚠ Enrage: 13 turns
+
+---
+
+**🩸 The Blood Regent · Floor 35 (rival)**
+*"It rules with a crown it grew from its own veins."*
+HP: 1,950 · ATK: 82 · DEF: 38 · SPD: 16 · Element: Blood
+Signature: 🩸 Blood Pact. Patterns: `blood_pact, life_drain, heavy, shadow_slash`
+Phase 2 (≤50% HP): Sanguine Court — +31 ATK / +22 DEF. Patterns: `blood_pact, shadow_slash, charge, life_drain`
+Phase 3 (≤25% HP): The Red Throne — +52 ATK / +32 DEF. Patterns: `blood_pact, enrage_strike, life_drain, charge, shadow_slash`
+⚠ Enrage: 12 turns
+
+---
+
+**⏳ The Unwound · Floor 40 (rival)**
+*"A clock that stopped, and refused to die with it."*
+HP: 2,500 · ATK: 96 · DEF: 46 · SPD: 18 · Element: Time
+Signature: ⏪ Rewind. Patterns: `time_rewind, heavy, mind_spike, charge`
+Phase 2 (≤50% HP): Wrong Hours — +36 ATK / +26 DEF. Patterns: `heavy, time_rewind, charge, mind_spike, heavy`
+Phase 3 (≤25% HP): Time Undone — +60 ATK / +38 DEF. Patterns: `charge, enrage_strike, time_rewind, charge, void_tear`
+⚠ Enrage: 11 turns
+
+---
+
+**👁️ The Eye of Oblivion · Floor 45 (rival)**
+*"It does not attack you. It forgets you, a little at a time."*
+HP: 3,200 · ATK: 116 · DEF: 56 · SPD: 18 · Element: Void
+Signature: 👁️ Oblivion Gaze. Patterns: `oblivion_gaze, void_tear, soul_rend, heavy`
+Phase 2 (≤50% HP): The Lid Opens — +43 ATK / +31 DEF. Patterns: `oblivion_gaze, void_tear, charge, soul_rend`
+Phase 3 (≤25% HP): Nothing Remains — +72 ATK / +46 DEF. Patterns: `oblivion_gaze, enrage_strike, void_tear, oblivion_gaze, charge`
+⚠ Enrage: 10 turns
+
+---
+
 ### Secret Bosses (5)
 
 Hidden encounters that spawn randomly during floor transitions when specific conditions are met. Defeating them permanently unlocks a secret class. Only one secret boss can spawn per run.
@@ -313,16 +421,28 @@ Secret bosses never spawn on boss floors (5, 10, 15, etc.) and cannot trigger mo
 
 ---
 
-## 🎒 Items — 239 Total
+## 🎒 Items — 254 Total
 
 Items span 7 rarity tiers: Common → Uncommon → Rare → Epic → Legendary → Mythical → Divine. Drop quality rises steadily with floor depth (it never gets worse deeper down) — mostly Common/Uncommon early, Epic/Legendary regularly by Floor 20+, Divine increasingly common from Floor 30.
 
 | Category | Count | Slot |
 |---|---|---|
 | Consumables | 60 | Inventory (use in combat or from map) |
-| Weapons | 60 | Weapon slot (grants element, stats, special effects) |
-| Armor | 60 | Armor slot (DEF, HP, MP, special effects) |
-| Relics | 59 + 1 conquest | Relic slot (passive always-on effects) |
+| Weapons | 64 | Weapon slot (grants element, stats, special effects) |
+| Armor | 64 | Armor slot (DEF, HP, MP, special effects) |
+| Relics | 65 + 1 conquest | Relic slot (passive always-on effects) |
+
+**Gear effects added in 2.2** (on 15 new items, Uncommon to Mythical):
+
+| Effect | What it does |
+|---|---|
+| Thorns | Attackers take 20% of the damage they deal back |
+| Executioner | +30% damage to enemies under 30% HP |
+| First Strike | Your first hit each fight deals +50% |
+| Mana Siphon | Your first hit each turn restores 4 MP |
+| Last Stand | Take 25% less damage while under 25% HP |
+| Scholar | +25% XP from fights |
+| Midas | +50% gold from fights |
 
 Inventory holds 12 items. When it's full, new loot is left on the ground where you stand (🎒 on the map) — step back onto the tile to pick it up. Using or equipping an item during a fight takes your turn.
 

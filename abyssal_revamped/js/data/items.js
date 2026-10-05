@@ -655,6 +655,40 @@ const ITEM_POOL = [
     desc:'+50 ATK, +40 DEF, +30% crit dmg, +30 max MP. Burnboost++ + Spellmaster + 20% evasion.', slot:'relic', element:'dragon', bonuses:{atk:50,def:40,critDmg:30,maxMp:30}, effect:'burnboost2_spellmaster_evasion2' },
   { id:'genesis_soul',      name:'Genesis Soul',         type:'relic', icon:'🔮', rarity:'divine',
     desc:'+45 ATK, +35 DEF, +50 max HP, +25% crit dmg. Shadow element. Lifesteal + Evasion + Spellmaster + HP regen.', slot:'relic', element:'shadow', bonuses:{atk:45,def:35,maxHp:50,critDmg:25}, effect:'lifesteal_evasion2_spellmaster_hpregen' },
+
+  // ── 2.2 gear: new effects ─────────────────────────────────────
+  // thorns: attackers take 20% of their damage back · executioner: +30% vs
+  // enemies under 30% HP · firststrike: +50% on your first hit each fight ·
+  // manasiphon: +4 MP on your first hit each action · laststand: -25%
+  // damage taken below 25% HP · scholar: +25% XP · midas: +50% gold
+  { id:'thornweave_vest',    name:'Thornweave Vest',       type:'armor',  icon:'🌹', rarity:'uncommon',
+    desc:'+6 DEF, +8 max HP. Thorns: attackers take 20% of their damage back.', slot:'armor', element:'grass', bonuses:{def:6,maxHp:8}, effect:'thorns' },
+  { id:'misers_coin',        name:"Miser's Coin",          type:'relic',  icon:'🪙', rarity:'uncommon',
+    desc:'+2 DEF. Midas: +50% gold from fights.', slot:'relic', element:'normal', bonuses:{def:2}, effect:'midas' },
+  { id:'headsmans_axe',      name:"Headsman's Axe",        type:'weapon', icon:'🪓', rarity:'rare',
+    desc:'+11 ATK. Executioner: +30% damage to enemies under 30% HP.', slot:'weapon', element:'steel', bonuses:{atk:11}, effect:'executioner' },
+  { id:'lantern_of_lessons', name:'Lantern of Lessons',    type:'relic',  icon:'🏮', rarity:'rare',
+    desc:'+3 ATK, +2 DEF. Scholar: +25% XP from fights.', slot:'relic', element:'light', bonuses:{atk:3,def:2}, effect:'scholar' },
+  { id:'leech_idol',         name:'Leech Idol',            type:'relic',  icon:'🗿', rarity:'rare',
+    desc:'+3 ATK, +15 max MP. Mana Siphon: your first hit each turn restores 4 MP.', slot:'relic', element:'poison', bonuses:{atk:3,maxMp:15}, effect:'manasiphon' },
+  { id:'duskfang',           name:'Duskfang',              type:'weapon', icon:'🌒', rarity:'epic',
+    desc:'+17 ATK, +6% CRIT. First Strike: your first hit each fight deals +50%.', slot:'weapon', element:'shadow', bonuses:{atk:17,crit:6}, effect:'firststrike' },
+  { id:'briarplate',         name:'Briarplate',            type:'armor',  icon:'🌵', rarity:'epic',
+    desc:'+16 DEF, +30 max HP. Thorns.', slot:'armor', element:'grass', bonuses:{def:16,maxHp:30}, effect:'thorns' },
+  { id:'hourglass_first_light', name:'Hourglass of First Light', type:'relic', icon:'⌛', rarity:'epic',
+    desc:'+7 ATK, +4 SPD. First Strike.', slot:'relic', element:'time', bonuses:{atk:7,spd:4}, effect:'firststrike' },
+  { id:'brineglass_trident', name:'Brineglass Trident',    type:'weapon', icon:'🔱', rarity:'legendary',
+    desc:'+26 ATK, +20 max MP. Mana Siphon + Executioner.', slot:'weapon', element:'water', bonuses:{atk:26,maxMp:20}, effect:'manasiphon_executioner' },
+  { id:'last_bastion',       name:'Last Bastion',          type:'armor',  icon:'🏯', rarity:'legendary',
+    desc:'+24 DEF, +45 max HP. Last Stand: take 25% less damage below 25% HP.', slot:'armor', element:'steel', bonuses:{def:24,maxHp:45}, effect:'laststand' },
+  { id:'crown_of_thorns',    name:'Crown of Thorns',       type:'relic',  icon:'👑', rarity:'legendary',
+    desc:'+16 ATK, +10 DEF. Thorns + Lifesteal.', slot:'relic', element:'blood', bonuses:{atk:16,def:10}, effect:'thorns_lifesteal' },
+  { id:'starforged_greatsword', name:'Starforged Greatsword', type:'weapon', icon:'⚔️', rarity:'mythical',
+    desc:'+40 ATK, +5 DEF, +15% crit dmg. Executioner + First Strike.', slot:'weapon', element:'cosmic', bonuses:{atk:40,def:5,critDmg:15}, effect:'executioner_firststrike' },
+  { id:'mantle_of_the_drowned', name:'Mantle of the Drowned', type:'armor', icon:'🧥', rarity:'mythical',
+    desc:'+35 DEF, +80 max HP. Last Stand + Thorns.', slot:'armor', element:'water', bonuses:{def:35,maxHp:80}, effect:'laststand_thorns' },
+  { id:'gilded_grimoire',    name:'Gilded Grimoire',       type:'relic',  icon:'📕', rarity:'mythical',
+    desc:'+28 ATK, +12 DEF, +30 max MP. Scholar + Midas + Spellmaster.', slot:'relic', element:'psychic', bonuses:{atk:28,def:12,maxMp:30}, effect:'scholar_midas_spellmaster' },
 ];
 
 // ── Permanent gear unlocked by defeating the Floor 50 Final Boss ──

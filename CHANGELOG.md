@@ -10,6 +10,10 @@
 - Chronomancer and Soundbreaker could cast their Burst every turn for free
   from the ability bar.
 - Spectral Haunt's dodge bonus did nothing.
+- Enemy attacks logged their damage before resistances and shields ("attacks
+  for 49" when you lost 25). The log now shows what you actually took.
+- A boss low on HP could chain Life Drain every turn and out-heal you
+  forever. Enemies never use a draining move twice in a row now.
 - Cleaved counted its DEF loss twice.
 - Removed 4,650 duplicate ability definitions (the ability file is 40% smaller,
   so the game loads faster).
@@ -39,6 +43,13 @@
   runs, and 20 achievements that each pay Soul Shards once.
 - The death screen counts every shard the run earned (bosses, records,
   events), not just the death payout.
+- 9 rival bosses: on every boss floor from 5 to 45, a run meets either the
+  usual boss or its rival (the Carrion Matron, the Hollow Choir, the
+  Frostbound Queen, the Mirror Sovereign, the Drowned Titan, the Star Eater,
+  the Blood Regent, the Unwound, the Eye of Oblivion). Each has three phases
+  and its own signature move.
+- 15 new items with 7 new gear effects: Thorns, Executioner, First Strike,
+  Mana Siphon, Last Stand, Scholar and Midas.
 
 ### Developer
 - `tools/class_balance.js` simulates fights for every class and prints win rates.

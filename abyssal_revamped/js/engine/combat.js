@@ -154,6 +154,11 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
   // Newer passives (passives.js)
   mult *= passiveDamageMult(p, e, { direct, isDot, magic, kind: magic ? 'magic' : 'physical', element: atkEl });
 
+  // Gear: Executioner (+30% vs enemies under 30% HP), First Strike (+50% on
+  // your first hit of each fight)
+  if (direct && hasEquipEffect(p, 'executioner') && e.hp / e.maxHp < 0.30) mult *= 1.30;
+  if (direct && hasEquipEffect(p, 'firststrike') && !G._firstStrikeUsed) { mult *= 1.50; G._firstStrikeUsed = true; }
+
   let finalDmg = Math.round(dmg * mult);
 
   // Phase: 25% chance per direct hit to slip past most of the enemy's DEF
@@ -184,6 +189,8 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
   const hpBefore = e.hp;
   e.hp = Math.max(0, e.hp - finalDmg);
   if (direct) G._directHitsThisAction = (G._directHitsThisAction || 0) + 1;
+  // Gear: Mana Siphon — your first direct hit each action restores 4 MP
+  if (direct && G._directHitsThisAction === 1 && hasEquipEffect(p, 'manasiphon')) p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + 4);
   // Run stats & achievements (records.js)
   trackStat('dmgDealt', hpBefore - e.hp);
   if (direct) {
@@ -356,8 +363,9 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
     });
   }
 
-  // Flat damage reduction buffs (cap 75%)
-  const reduce = (p.status || []).reduce((sum, s) => sum + (s.dmgReduce || 0), 0);
+  // Flat damage reduction buffs (cap 75%); gear Last Stand adds 25% below 25% HP
+  let reduce = (p.status || []).reduce((sum, s) => sum + (s.dmgReduce || 0), 0);
+  if (hasEquipEffect(p, 'laststand') && p.stats.hp < p.stats.maxHp * 0.25) reduce += 0.25;
   if (reduce > 0) dmg = Math.round(dmg * (1 - Math.min(0.75, reduce)));
 
   // Passive defenses (passives.js)
@@ -405,6 +413,11 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   trackStat('dmgTaken', dmg);
   const hitter = attacker || G.enemy;
   if (hitter && hitter.name) p._lastHitBy = hitter.name;
+  // Gear: Thorns — attackers take 20% of the damage they deal back
+  if (attacker && hasEquipEffect(p, 'thorns')) {
+    const back = reflectDamage(attacker, Math.max(1, Math.round(dmg * 0.2)));
+    if (back > 0) logEntry('player-action', `🌹 Thorns: ${attacker.name} takes ${back} back.`);
+  }
   spawnFloat(dmg.toString(),'damage','char-portrait');
   sfx('hurt');
   if (dmg >= p.stats.maxHp * 0.2) screenShake(2);
@@ -531,6 +544,7 @@ function startCombat(enemyOrEnemies) {
   G.combatRound = 0;
   G.turn        = 'player';
   G._executeResistLogged = false;
+  G._firstStrikeUsed = false;
   G.player.damageTakenCombat = 0;
 
   const p = G.player;
@@ -1042,6 +1056,7 @@ function enemyTurn() {
       // enemy's own pattern list; see its comment for the exact bias rules.
       const abId = pickEnemyAbility(e, G.player);
       e.patternIndex++;
+      e._lastWasDrain = ABILITY_ROLE[abId] === 'drain';
       const abFn = ENEMY_ABILITIES[abId] || ENEMY_ABILITIES.basic;
       playSpriteAnim(enemySpriteId(e), 'attacking');
       G._actingEnemy = e;
@@ -1155,8 +1170,9 @@ function winCombat() {
 
   // Rewards sum across the whole pack — a solo fight is just a 1-element
   // array, so this reduces to exactly the old single-enemy calculation.
-  const xpGain   = allEnemies.reduce((sum, en) => sum + en.xp, 0);
-  const goldGain = allEnemies.reduce((sum, en) => sum + randRange(en.gold[0], en.gold[1]), 0);
+  // Gear: Scholar (+25% XP), Midas (+50% gold)
+  const xpGain   = Math.round(allEnemies.reduce((sum, en) => sum + en.xp, 0) * (hasEquipEffect(G.player, 'scholar') ? 1.25 : 1));
+  const goldGain = Math.round(allEnemies.reduce((sum, en) => sum + randRange(en.gold[0], en.gold[1]), 0) * (hasEquipEffect(G.player, 'midas') ? 1.5 : 1));
   gainXP(xpGain);
   // Class XP: 10 base + 2 per floor, persists in G.meta.classXP (used for fusion unlock)
   const classXpGain = 10 + (G.floor * 2);

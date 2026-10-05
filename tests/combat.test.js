@@ -130,8 +130,8 @@ test('combat-start passives affect every enemy in a pack', async () => {
 
 test('NG+ makes enemies stronger', async () => {
   const r = await run(() => {
-    G.meta.ngPlus = 0; const a = getBossForFloor(10);
-    G.meta.ngPlus = 2; const b = getBossForFloor(10);
+    G.meta.ngPlus = 0; const a = getBossForFloor(10, 'shadow_tyrant');
+    G.meta.ngPlus = 2; const b = getBossForFloor(10, 'shadow_tyrant');
     G.meta.ngPlus = 0;
     return { ratio: b.maxHp / a.maxHp };
   });

@@ -587,7 +587,18 @@ Bosses extend the enemy shape with `isBoss`, `phases`, `enrageTurns`:
 
 ### Assigning Bosses to Floors
 
-In `mapgen.js`, `getBossForFloor(floor)` picks which boss spawns. Find it and add your boss to the floor rotation.
+Boss floors are listed in `BOSS_FLOORS`, and `BOSS_BY_FLOOR` (enemies.js) names
+the usual boss for each. `BOSS_RIVALS` names an alternative: on that floor
+`getBossForFloor(floor)` picks one of the two from the floor's seed. To add a
+boss, put it in `ENEMY_POOL` with `isBoss:true`, then make it the floor's
+boss or its rival. `getBossForFloor(floor, 'my_boss')` forces a specific
+boss for testing.
+
+A new enemy move goes in `ENEMY_ABILITIES` and also needs an entry in
+`ENEMY_ABILITY_INFO` (the "Next:" telegraph) and `ABILITY_ROLE` (AI
+weighting); tests/content.test.js checks all three. Assign the move's result,
+`dmg = dealDmgToPlayer(dmg)`, so the log shows the damage actually taken.
+Use the `'drain'` role only for moves that heal the enemy.
 
 ---
 
