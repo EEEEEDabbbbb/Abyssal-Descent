@@ -2713,3 +2713,12 @@ body.reduce-motion .toast { animation: none; transition: none; }
 .title-btn.first-visit-hint { border-color: var(--accent-gold); color: var(--accent-gold); animation: hintGlow 2.4s ease-in-out infinite; }
 @keyframes hintGlow { 0%,100% { box-shadow: 0 0 0 rgba(201,168,76,0); } 50% { box-shadow: 0 0 14px rgba(201,168,76,0.45); } }
 body.reduce-motion .title-btn.first-visit-hint { animation: none; }
+
+/* Critical hits flash the enemy (combat.js playSpriteAnim 'crit-hit') */
+.enemy-sprite.crit-hit { animation: critFlash 0.32s ease-out; }
+@keyframes critFlash {
+  0%   { filter: brightness(2.6) saturate(0.4); transform: scale(1.12) translateX(-3px); }
+  40%  { filter: brightness(1.6); transform: scale(1.04) translateX(3px); }
+  100% { filter: none; transform: none; }
+}
+body.reduce-motion .enemy-sprite.crit-hit { animation: none; }

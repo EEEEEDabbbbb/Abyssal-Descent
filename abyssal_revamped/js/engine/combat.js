@@ -38,7 +38,7 @@ function enemySpriteId(e) {
 }
 function playSpriteAnim(id, cls) {
   const el = document.getElementById(id);
-  if (el) { el.classList.remove('hurt','attacking','dead'); void el.offsetWidth; el.classList.add(cls); }
+  if (el) { el.classList.remove('hurt','crit-hit','attacking','dead'); void el.offsetWidth; el.classList.add(cls); }
 }
 
 // reflectDamage — retaliation (reflects, counters, shards). Never consumes
@@ -221,7 +221,7 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
     }
 
     // Visual feedback
-    playSpriteAnim(enemySpriteId(e), 'hurt');
+    playSpriteAnim(enemySpriteId(e), isCrit ? 'crit-hit' : 'hurt');
     sfx(isCrit ? 'crit' : 'hit');
     spawnFloat(finalDmg.toString(), isCrit ? 'crit' : 'damage', enemyDisplayId(e));
     if (isCrit) screenShake(1);
@@ -487,6 +487,12 @@ function determineFirstActor(p, e) {
   const pFirstChance = clamp(50 + 40 * spdEdge(pSpd, eSpd), 10, 90);
   return rand(100) < pFirstChance ? 'player' : 'enemy';
 }
+
+// Combat-log variety for basic attacks. Cosmetic, so it uses Math.random and
+// never touches the run's seeded generator.
+const ATTACK_LINES = ['You attack', 'You strike', 'Your blow lands', 'You cut in', 'You press the attack', 'Your strike connects'];
+const CRIT_LINES   = ['Critical hit!', 'A brutal crit!', 'You find a weak point!', 'Devastating strike!'];
+function pickFlavor(lines) { return lines[Math.floor(Math.random() * lines.length)]; }
 
 // fastestEnemy — the alive enemy with the highest SPD (packs race as one side)
 function fastestEnemy() {
@@ -859,7 +865,7 @@ function playerAction(type, abilityId=null) {
     addCombo(p); // increments combo counter, charges burst meter
     const mpGain = Math.max(1, Math.round(p.stats.maxMp * 0.10));
     p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + mpGain);
-    msg = isCrit ? `Critical hit! ${dealt} damage. +${mpGain} MP.` : `You attack for ${dealt} damage. +${mpGain} MP.`;
+    msg = isCrit ? `${pickFlavor(CRIT_LINES)} ${dealt} damage. +${mpGain} MP.` : `${pickFlavor(ATTACK_LINES)} for ${dealt} damage. +${mpGain} MP.`;
     logEntry('player-action', msg);
 
     // Gust: the first attack each fight is too fast to counter — enemies lose their next action
