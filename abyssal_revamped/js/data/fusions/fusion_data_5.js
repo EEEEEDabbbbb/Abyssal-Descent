@@ -95,7 +95,7 @@ const FUSION_CLASSES_5 = {
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
     abilities:['lightning_bolt','chain_lightning','storm_surge','thunderclap','electric_poison_storm','electric_poison_overload','electric_poison_conduct','electric_poison_cascade'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['static_charge','plague_lord'],
     description:'A pestilence delivery system of unprecedented speed and range. The storm carries plague spores on every gust; lightning strikes aerosolize contagion across wide areas; and chain arcs transmit engineered diseases to every target in reach.',
     lore:'The pestilencelord wanted wider coverage. The stormcaller covered wide areas. The Plague Front achieves an infection radius that the plaguedoctor described as "ambitious" and everyone else described as "a significant problem".'
@@ -137,7 +137,7 @@ const FUSION_CLASSES_5 = {
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:11,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
     abilities:['lightning_bolt','chain_lightning','storm_surge','thunderclap','electric_psychic_feedback','electric_psychic_vortex','electric_psychic_mind','electric_psychic_pulse'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['static_charge','arcane_mastery'],
     description:'Arcane amplification meets electrical fury — psychic feedback loops that grow with every bolt, mental vortexes that pull lightning inward, and psionic explosions delivered at electrical speed to targets that cannot process the attack fast enough to respond.',
     lore:'The arcanist worked with the precision of thought. The stormcaller worked with the force of weather. The Psionic Tempest discovered that precision and force are not mutually exclusive when applied at the right velocity.'
@@ -165,7 +165,7 @@ const FUSION_CLASSES_5 = {
     stats:{hp:78,maxHp:78,mp:80,maxMp:80,atk:13,def:6,spd:17,crit:22},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:10,MP:8},
     abilities:['lightning_bolt','chain_lightning','storm_surge','thunderclap','electric_ghost_possession','electric_ghost_chain','electric_ghost_exorcism','water_ghost_phase'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['static_charge','phase'],
     description:'A spectral entity that travels inside lightning bolts — phases out of existence, travels through the arc, and phases back in at the point of impact. Cannot be targeted between strikes. Attacks from inside the electrical discharge.',
     lore:'Ghosts move through walls. Lightning moves through conductors. The Thunderghost found that, at certain frequencies, these are the same movement through the same medium, and has been using both doors ever since.'
@@ -333,7 +333,7 @@ const FUSION_CLASSES_5 = {
     stats:{hp:98,maxHp:98,mp:75,maxMp:75,atk:12,def:9,spd:10,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:6,MP:7},
     abilities:['bloodlust','crimson_slash','sacrifice','blood_nova','normal_blood_mark','normal_blood_tap','fire_poison_plague','normal_blood_feast'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['vital_hunger','immunity'],
     description:'Weaponizes blood as a plague vector — infected blood is harvested from enemies and used to infect subsequent targets. Every drain also transmits disease. Every wound is both a resource and a delivery mechanism.',
     lore:'The plaguedoctor needed reliable transmission vectors. The bloodknight provided direct access to the most reliable one. The Virulent Tide combines bloodletting with infection in a way that makes containment protocols very difficult to implement.'
@@ -501,7 +501,7 @@ const FUSION_CLASSES_5 = {
     stats:{hp:100,maxHp:100,mp:75,maxMp:75,atk:13,def:9,spd:10,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:6,MP:7},
     abilities:['bloodlust','crimson_slash','sacrifice','blood_nova','fire_poison_plague','normal_blood_mark','normal_blood_tap','fire_bug_plague'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['vital_hunger','plague_lord'],
     description:'Disease carried in blood — every wound transmits plague, every bit of blood drawn spreads contagion. The Bleeding Plague uses wounds as transmission events rather than incidental damage. More wounds means faster spread.',
     lore:'The pestilencelord developed blood-borne pathogens. The bloodknight created blood-borne wounds. The Bleeding Plague combined these with enthusiasm and has produced a cascade that healthcare professionals in the dungeon describe as a significant ongoing concern.'
@@ -543,7 +543,7 @@ const FUSION_CLASSES_5 = {
     stats:{hp:93,maxHp:93,mp:85,maxMp:85,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
     abilities:['bloodlust','crimson_slash','sacrifice','blood_nova','normal_blood_sacrifice','normal_blood_pact','fire_psychic_fever','fire_psychic_focus'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['vital_hunger','arcane_mastery'],
     description:'Applies arcane formulae to biology — blood as magical reagent, body chemistry as spell components, the circulatory system as a casting medium. Every arcane technique draws power from the biological systems of whoever is nearest.',
     lore:'The arcanist studied formulae. The bloodknight studied the body. The Sanguine Formula combined these curricula and discovered that the oldest magic textbooks describe blood as the original power source. The knowledge was there. It just needed applying.'

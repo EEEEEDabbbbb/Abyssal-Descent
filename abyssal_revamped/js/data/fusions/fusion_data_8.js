@@ -81,7 +81,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:75,maxHp:75,mp:110,maxMp:110,atk:10,def:6,spd:10,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:5,MP:11},
     abilities:['raise_dead','soul_drain','bone_armor','undead_army','fire_poison_plague','fire_bug_plague','ice_ghost_chill','normal_dark_corrupt'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['death_aura','plague_lord'],
     description:'The undead as a plague delivery system at maximum efficiency — corpses stuffed with engineered diseases spread contagion with every strike while remaining personally immune. The Blighted Host cannot be contained because killing it distributes the payload faster.',
     lore:'The plaguedoctor wanted vectors that did not die from their own cargo. The necromancer produced them. The Blighted Host is the professional result: an undead army optimized for disease transmission, immune to consequences, and extremely motivated in a directionless way.'
@@ -123,7 +123,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:68,maxHp:68,mp:120,maxMp:120,atk:9,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:11},
     abilities:['raise_dead','soul_drain','bone_armor','undead_army','electric_psychic_vortex','electric_ghost_drain','dark_cosmic_blast','dark_time_surge'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['death_aura','arcane_mastery'],
     description:'Applies arcane research to the problem of mortality and solves it conclusively. The Lich Scholar\'s undead retain the full intellectual capacity of their living selves and continue their research. The army is also a library. Both are dangerous.',
     lore:'The arcanist pursued knowledge across a lifetime. The necromancer extended the lifetime. The Lich Scholar found that death is simply an incomplete solution to the continuity problem, and that the necromantic supplement addresses the gaps in the original methodology.'
@@ -151,7 +151,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:70,maxHp:70,mp:100,maxMp:100,atk:12,def:5,spd:14,crit:19},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
     abilities:['raise_dead','soul_drain','bone_armor','undead_army','water_ghost_wraith','water_ghost_phase','ice_ghost_ethereal','electric_ghost_possession'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['death_aura','phase'],
     description:'Commands a court of powerful wraiths — the highest tier of undead, spectral entities that phase through armor, possess enemies and turn them against allies, and drain life force without physical contact. The Wraith Court makes every fight a haunting.',
     lore:'Phantoms exist at the edge of death and non-death. The necromancer found them there. The Wraith Court is what a necromancer becomes when they spend enough time at that edge: something that commands from the threshold and has forgotten which side they were originally on.'
@@ -263,7 +263,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:103,maxHp:103,mp:80,maxMp:80,atk:11,def:11,spd:9,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:5,MP:8},
     abilities:['radiant_aura','divine_lance','holy_nova','martyrs_wrath','fire_poison_plague','fire_bug_plague','normal_light_dawn','normal_light_absorb'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['sacred_aura','immunity'],
     description:'Engineers holy plague — disease that purifies corrupt targets while strengthening the righteous. The Purifying Plague is simultaneously a cure and a weapon depending on the spiritual alignment of whoever it enters. The plaguedoctor finds this distinction useful. The target finds it categorical.',
     lore:'The plaguedoctor studied disease. The paladin studied corruption. The Purifying Plague found these were studying the same thing at different scales, and that a disease calibrated to target corruption rather than biology produces some very useful battlefield effects and some difficult theological questions.'
@@ -431,7 +431,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:105,maxHp:105,mp:80,maxMp:80,atk:12,def:11,spd:9,crit:10},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:5,MP:8},
     abilities:['radiant_aura','divine_lance','holy_nova','martyrs_wrath','fire_poison_plague','fire_bug_plague','normal_light_dawn','normal_blood_sacrifice'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['sacred_aura','plague_lord'],
     description:'Engineers plague that distinguishes between the righteous and the corrupt — the Sanctified Plague is a biological enforcer of divine law, spreading freely through enemies while healing and blessing allies it contacts. It determines righteousness on contact and acts accordingly.',
     lore:'The plaguedoctor made disease that spread to everything. The paladin needed disease that spread selectively. The Sanctified Plague required significant additional development work, a theological consultation, and three failed prototypes before it achieved the discrimination required.'
@@ -473,7 +473,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:98,maxHp:98,mp:90,maxMp:90,atk:11,def:9,spd:11,crit:13},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:6,MP:9},
     abilities:['radiant_aura','divine_lance','holy_nova','martyrs_wrath','electric_psychic_pulse','electric_fairy_enchant','light_cosmic_strike','light_time_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['sacred_aura','arcane_mastery'],
     description:'Applies arcane analysis to divine phenomena — calculates the optimal expression of holy force, derives the theoretical maximum output of sacred energy, and applies both with precision. The Theologian does not act on faith. It acts on demonstrated divine calculus.',
     lore:'The arcanist proved things. The paladin believed things. The Theologian found these were the same activity with different standards of evidence, and that when both standards are applied to the same divine phenomenon, the resulting certainty produces considerably more forceful output than either tradition achieves alone.'
@@ -501,7 +501,7 @@ const FUSION_CLASSES_8 = {
     stats:{hp:100,maxHp:100,mp:70,maxMp:70,atk:13,def:9,spd:14,crit:18},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:8,MP:7},
     abilities:['radiant_aura','divine_lance','holy_nova','martyrs_wrath','water_ghost_phase','fire_spirit_exorcism','ice_ghost_chill','normal_light_blind'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['sacred_aura','phase'],
     description:'Divine power expressed through spectral form — phases through barriers to deliver holy justice where corrupt targets attempt to hide, exorcises demons and undead it passes through, and manifests divine presence in areas that should not have it.',
     lore:'The phantom crossed boundaries that should not be crossed. The paladin believed in authority that should not be denied. The Holy Specter combined these and found that divine authority crossing forbidden boundaries produces a category of holy visitation that the traditional liturgy had not previously documented.'

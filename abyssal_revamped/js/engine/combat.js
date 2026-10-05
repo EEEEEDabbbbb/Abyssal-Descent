@@ -205,6 +205,7 @@ function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=n
 
     // Visual feedback
     playSpriteAnim(enemySpriteId(e), 'hurt');
+    sfx(isCrit ? 'crit' : 'hit');
     spawnFloat(finalDmg.toString(), isCrit ? 'crit' : 'damage', enemyDisplayId(e));
     if (isCrit) screenShake(1);
 
@@ -308,6 +309,7 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
     });
     if (evasChance > 0 && rand(100) < Math.min(75, evasChance)) {
       spawnFloat('EVADE','miss','char-portrait');
+      sfx('miss');
       logEntry('player-action','You evade the attack!');
       return 0;
     }
@@ -391,6 +393,7 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   p.stats.hp = Math.max(0, p.stats.hp - dmg);
   p.damageTakenCombat = (p.damageTakenCombat||0) + dmg;
   spawnFloat(dmg.toString(),'damage','char-portrait');
+  sfx('hurt');
   if (dmg >= p.stats.maxHp * 0.2) screenShake(2);
 
   // On-damage callbacks on buffs (e.g. slime coat: damage → MP; stone resonance: reflect)
@@ -670,6 +673,7 @@ function startCombat(enemyOrEnemies) {
   if (enemy.isBoss) {
     logEntry('system', `════ BOSS BATTLE: ${enemy.name} ════`);
     screenShake(2);
+    sfx('boss');
   } else if (enemyList.length > 1) {
     logEntry('system', `══ Combat begins: ${enemy.name} and ${enemyList.length-1} other${enemyList.length>2?'s':''} ══`);
   } else {
@@ -1139,6 +1143,7 @@ function winCombat() {
     logEntry('reward', `★ Boss slain! +${shardBonus} Soul Shards.`);
   }
   logEntry('reward', `Victory! +${xpGain} XP, +${goldGain} gold.`);
+  sfx('victory');
 
   // Secret boss defeated — fire reward, then place an exit in the arena
   if (e.isSecretBoss && G._pendingSecretBoss) {

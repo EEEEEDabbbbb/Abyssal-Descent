@@ -103,3 +103,30 @@ test('loot rarity never gets worse on deeper floors', async () => {
     assert.ok(curve[f] >= curve[f - 1] - 0.08, `floor ${f + 1} avg ${curve[f].toFixed(2)} < floor ${f} avg ${curve[f - 1].toFixed(2)}`);
   }
 });
+
+test('every event choice resolves cleanly at any depth', async () => {
+  const bad = await ctx.page.evaluate(() => {
+    window.updateUI = () => {}; window.showModal = () => {};
+    const out = [];
+    for (const floor of [1, 20, 45]) {
+      for (const ev of EVENTS) {
+        ev.choices.forEach((ch, i) => {
+          G.player = null; G.floor = floor; G.log = [];
+          G.player = createPlayer('shadowblade');
+          G.map = generateMap(floor);
+          G.player.inventory.push(cloneItem(ITEM_POOL.find(it => it.id === 'health_potion')));
+          G.player.gold = 9999;
+          try {
+            const text = typeof ch.text === 'function' ? ch.text(G.player) : ch.text;
+            const res = ch.effect(G.player);
+            const nums = [...Object.values(G.player.stats), ...Object.values(G.player.base)];
+            if (typeof text !== 'string' || typeof res !== 'string') out.push(`${ev.id}#${i}: missing text`);
+            if (nums.some(n => Number.isNaN(n))) out.push(`${ev.id}#${i}: NaN`);
+          } catch (err) { out.push(`${ev.id}#${i} @${floor}: ${err.message}`); }
+        });
+      }
+    }
+    return out;
+  });
+  assert.deepEqual(bad, []);
+});

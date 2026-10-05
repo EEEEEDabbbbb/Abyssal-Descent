@@ -163,7 +163,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
     abilities:['time_stop','rewind','temporal_rift','age_strike','fire_poison_plague','poison_light_blast','time_blood_final','poison_wind_stance'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['time_warp','plague_lord'],
     description:'Disease delivered at maximum temporal progression — a plague that has been running for the entire timeline of the dungeon arrives in the present at its thousandth-year state. The Long Plague skips every incubation stage that the pestilencelord normally has to wait through.',
     lore:'The pestilencelord needed time for diseases to progress. The chronomancer provided as much as needed. The Long Plague takes a new infection, runs it forward through the temporal fast lane, and delivers the thousand-year version to the target in the current turn, which the target experiences as a very rapid acceleration of events.'
@@ -205,7 +205,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:68,maxHp:68,mp:115,maxMp:115,atk:10,def:5,spd:14,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:11},
     abilities:['time_stop','rewind','temporal_rift','age_strike','psychic_cosmic_blast','psychic_dark_stance','time_rune_surge','time_void_drain'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['time_warp','arcane_mastery'],
     description:'The oldest arcane formulae, retrieved from the beginning of magic itself — spells derived at the moment the arcane tradition began, before any limitations were established. The Absolute Formula operates on the pre-constraint version of magical law.',
     lore:'Arcane law accumulated restrictions over time as its consequences were understood. The arcanist knew the current version. The chronomancer retrieved the original version from before the restrictions were added. The Absolute Formula uses the unedited edition, which is considerably more powerful and the reason the restrictions were added in the first place.'
@@ -233,7 +233,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:70,maxHp:70,mp:95,maxMp:95,atk:12,def:5,spd:16,crit:20},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
     abilities:['time_stop','rewind','temporal_rift','age_strike','water_ghost_phase','ice_ghost_wraith','time_void_surge','time_blood_weaken'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['time_warp','phase'],
     description:'A phantom distributed across its entire timeline — exists simultaneously in every moment it has ever occupied, making it technically impossible to kill because its current form is one of many simultaneous instances. The Timeline Ghost strikes from moments that have already passed.',
     lore:'Phantoms are the residue of a single death. The Timeline Ghost is the residue of every death across every temporal branch, accumulated in a single location. It is difficult to quantify how many of it there are at any given moment. The answer changes depending on which moment you are asking from.'
@@ -247,7 +247,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
     abilities:['psionic_slash','mind_pierce','arcane_edge','thought_shatter','psychic_blood_dot_strike','psychic_blood_drain','fire_poison_plague','poison_light_drain'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['spellblade','immunity'],
     description:'Psionic infection — disease introduced through the mind before it manifests physically. Enemies do not know they are infected until the cognitive symptoms begin, and by then the physical infection is already in progress.',
     lore:'Disease normally enters through physical exposure. The spellsword provided mental access. The Cognitive Infection introduced pathogens via psionic channel, bypassing the immune response that guards physical vectors. The body becomes aware of the infection only after the mind has already been processing it for two turns.'
@@ -415,7 +415,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:85,maxHp:85,mp:90,maxMp:90,atk:13,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:9},
     abilities:['psionic_slash','mind_pierce','arcane_edge','thought_shatter','psychic_blood_weaken','fire_poison_plague','poison_light_surge','psychic_dark_weaken'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['spellblade','plague_lord'],
     description:'A plague of harmful cognition — psychic contagion that spreads from mind to mind on contact, implanting destructive thought patterns that degrade tactical capacity. The Thought Plague is transmitted by proximity to an affected enemy and reaches full cognitive disruption in two turns.',
     lore:'The pestilencelord made biological pathogens. The spellsword made psionic ones. The Thought Plague engineered a cognitive pathogen: a pattern of thought that is both harmful to the host and compulsively transmitted to nearby minds. The pestilencelord finds the infection mechanics familiar; the ethics committee finds them novel.'
@@ -457,7 +457,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:12,def:6,spd:13,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
     abilities:['psionic_slash','mind_pierce','arcane_edge','thought_shatter','psychic_cosmic_weaken','psychic_dark_stance','psychic_rune_final','electric_psychic_vortex'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['spellblade','arcane_mastery'],
     description:'The complete merger of arcane theory and psionic practice — a practitioner whose mind operates as the formula itself, instantiating spells as cognition rather than casting. The Arcane Psyche does not cast. It thinks, and the thinking is the effect.',
     lore:'The arcanist derived formulae for reality. The spellsword enacted formulae as thought. The Arcane Psyche found these were the same operation: the arcanist was already thinking in reality\'s language and the spellsword was already acting in the arcanist\'s language. The merger required no translation at all.'
@@ -485,7 +485,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:80,maxHp:80,mp:80,maxMp:80,atk:14,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:8},
     abilities:['psionic_slash','mind_pierce','arcane_edge','thought_shatter','water_ghost_phase','ice_ghost_ethereal','psychic_dark_surge','psychic_void_surge'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['spellblade','phase'],
     description:'A phantom with psionic precision — phases through physical defenses to deliver precise psychic strikes at cognitive vulnerabilities, attacks at 16 SPD from an immaterial state that weapons cannot reach, and turns every successfully phased attack into a mental disruption event as well as a physical one.',
     lore:'Phantoms phase through matter. The spellsword targeted through thought. The Psionic Specter phases to the target\'s cognitive center and delivers attacks from inside their own mental architecture, where there are no physical defenses because the cognitive space was not designed to be entered from the outside.'
@@ -499,7 +499,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:11,def:10,spd:9,crit:11},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:5,MP:8},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_ground_quake','fire_rock_strike','poison_dark_drain','poison_wind_stance'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','earth_body'],
     description:'Disease introduced into the geological substrate — sick soil that transmits infection to anything in contact with the ground, stone walls that carry plague through their mineral matrix, and an earth that has become a comprehensive transmission medium.',
     lore:'The plaguedoctor studied transmission routes. The geomancer provided one: stone. The Miasmic Earth found that disease introduced into geological material spreads through mineral contact at a rate comparable to airborne transmission and is considerably harder to detect until symptoms present, because no one looks at the floor for the source.'
@@ -513,7 +513,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
     abilities:['infect','plague_cloud','epidemic','quarantine','poison_light_drain','poison_light_surge','normal_light_blind','normal_light_dawn'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','radiant'],
     description:'Holy light weaponized as a plague delivery system — divine radiance that carries disease to targets while purifying the carrier. The Purifier is immune to everything it transmits and delivers it through a medium the enemy associates with healing.',
     lore:'Holy light purifies. The plaguedoctor made the purification selective. The Purifier carries disease inside divine radiance, using the light as a vector that bypasses biological immune responses because the host cells recognize it as beneficial and lower defenses accordingly. The plaguedoctor considers this elegant; the ethics committee considers it something else.'
@@ -527,7 +527,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_poison_plague','normal_dragon_surge','poison_wind_surge','fire_bug_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','feral_bond'],
     description:'Commands a pack of disease-bearing animals — each beast carries a different pathogen, coordinating attacks to expose targets to multiple simultaneous infections. The animals are immune to their own cargo. The Infested Pack is a mobile multi-pathogen deployment system.',
     lore:'The beastmaster used animals for their abilities. The plaguedoctor found another use: as immune carriers. The Infested Pack breeds animals specifically for maximum pathogen load and minimum self-harm, producing a pack that is extremely dangerous without being aware that it is dangerous, which is the ideal carrier profile.'
@@ -541,7 +541,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:11,def:7,spd:13,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_cyber_system_melt','fire_poison_plague','poison_cosmic_blast','poison_dark_dot_strike'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','overclock'],
     description:'Biological weaponry manufactured at technical precision — engineered pathogens produced and deployed with mechanical efficiency, automated disease distribution that the plaguedoctor alone could not maintain, and technical systems that overclock plague production beyond biological generation limits.',
     lore:'The plaguedoctor engineered by hand. The techsavant scaled production. The Pathogen Engine found that technical manufacturing of biological material produces pathogens at a rate and consistency that manual preparation cannot match, and that quality control is considerably easier when the process is automated.'
@@ -555,7 +555,7 @@ const FUSION_CLASSES_12 = {
     stats:{hp:95,maxHp:95,mp:83,maxMp:83,atk:11,def:11,spd:9,crit:11},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:5,MP:8},
     abilities:['infect','plague_cloud','epidemic','quarantine','water_ghost_haunt','fire_poison_plague','water_dark_depths','poison_dark_strike'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','undying'],
     description:'Maintains plague libraries in graves — diseases preserved in deceased tissue, accessed and deployed as needed. The Plague Keeper\'s archive of preserved infections is comprehensive, and every grave in range is both a storage facility and a deployment site.',
     lore:'The gravewarden managed what was buried. The plaguedoctor catalogued what killed them. The Plague Keeper combined these professions and found that graves are the ideal long-term storage for biological agents: cool, sealed, and already categorized by cause of death. The plaguedoctor finds this system highly efficient.'

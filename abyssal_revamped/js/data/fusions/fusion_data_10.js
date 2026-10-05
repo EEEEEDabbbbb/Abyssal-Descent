@@ -51,7 +51,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:105,maxHp:105,mp:75,maxMp:75,atk:14,def:10,spd:11,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:7,SPD:6,MP:7},
     abilities:['dragon_claw','tail_sweep','fire_breath','dragon_charge','fire_poison_plague','fire_bug_plague','dragon_dark_dot_strike','poison_dark_drain'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['intimidation','plague_lord'],
     description:'A plague-bearer of draconic scale — diseases spread by breath weapon across the entire arena, venom upgraded to weaponized biological agent by the pestilencelord\'s expertise. The Plague Wyrm does not die of its own cargo. Everything else might.',
     lore:'The dragonknight survived things that kill lesser creatures. The pestilencelord catalogued what those things were. The Plague Wyrm is the combined result: a dragon that has survived every plague it now carries and delivers them with the enthusiasm of something that has never personally suffered the consequences.'
@@ -93,7 +93,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:98,maxHp:98,mp:85,maxMp:85,atk:13,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:8},
     abilities:['dragon_claw','tail_sweep','fire_breath','dragon_charge','psychic_cosmic_blast','psychic_cosmic_weaken','dragon_cosmic_strike','electric_psychic_vortex'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['intimidation','arcane_mastery'],
     description:'A dragon who also happens to be an arcane grandmaster — formulae derived from the arcane tradition scaled to draconic energy output. The Mage Drake casts spells at magnitudes the arcanist alone could not sustain and the dragon alone would not think to direct.',
     lore:'The arcanist maximized arcane output within biological constraints. The dragonknight had considerably fewer biological constraints. The Mage Drake operates the arcane tradition on a power budget that the original practitioners did not anticipate and the tradition is still updating its upper limits to reflect.'
@@ -121,7 +121,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:100,maxHp:100,mp:65,maxMp:65,atk:15,def:8,spd:15,crit:19},
     statDisplay:{HP:7,ATK:11,DEF:5,SPD:8,MP:6},
     abilities:['dragon_claw','tail_sweep','fire_breath','dragon_charge','water_ghost_phase','ice_ghost_wraith','dragon_spirit_drain','dragon_spirit_final'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['intimidation','phase'],
     description:'A dragon-sized spectral entity that phases through dungeon walls — spectral fire breath, ghostly claw strikes that pass through armor, and the combined authority of draconic intimidation and phantom phasing. The Spectral Wyrm is a full-size dragon that walls cannot contain.',
     lore:'Dragons are already difficult. Ghost dragons are considerably more so. The Spectral Wyrm phases through whatever it encounters and breathes spectral fire that passes through shields. The dungeons were not designed with ghost dragons in mind, and most architectural assumptions no longer apply.'
@@ -191,7 +191,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:80,maxHp:80,mp:95,maxMp:95,atk:10,def:8,spd:12,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:7,MP:9},
     abilities:['tidal_surge','wave_crash','riptide','tsunami','water_poison_miasma','water_poison_dissolve','water_poison_corruption','fire_poison_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['tidal_flow','immunity'],
     description:'Plague carried in tidal water — disease dissolved into the wave itself, ensuring full coverage of everything the tide touches. The Miasmic Tide cannot be avoided by retreating from the water because the water follows.',
     lore:'Water transmits disease effectively. The plaguedoctor considered this a natural delivery system that had been underutilized. The Miasmic Tide formalizes the arrangement: disease is dissolved into the tidal water at therapeutic concentration, and the tide ensures even distribution across the battlefield.'
@@ -359,7 +359,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:83,maxHp:83,mp:95,maxMp:95,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
     abilities:['tidal_surge','wave_crash','riptide','tsunami','water_poison_surge','water_poison_siphon','fire_poison_plague','poison_dark_drain'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['tidal_flow','plague_lord'],
     description:'Biological plague tides — water supersaturated with engineered organisms that bloom on contact with living tissue. The Red Tide covers the entire battlefield in a single wave and the bloom activates immediately on landing.',
     lore:'Red tides occur naturally when certain organisms bloom in seawater. The pestilencelord found the organisms, studied them, and improved them. The Red Tide is an engineered biological event at tidal scale: the tidecaller\'s delivery range combined with the pestilencelord\'s biological expertise.'
@@ -401,7 +401,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:10,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['tidal_surge','wave_crash','riptide','tsunami','water_psychic_drain','water_psychic_torrent','psychic_cosmic_blast','psychic_void_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['tidal_flow','arcane_mastery'],
     description:'Arcane formulae expressed through tidal motion — spells cast as wave patterns that carry their effect across the battlefield. The Formless Theorem is shapeless and exactly correct simultaneously.',
     lore:'The arcanist wrote formulae with fixed syntax. Water has fluid syntax. The Formless Theorem found that a formula expressed as a wave pattern reaches farther than one expressed as a point and carries the same mathematical precision in a much larger delivery envelope.'
@@ -429,7 +429,7 @@ const FUSION_CLASSES_10 = {
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:13,def:6,spd:16,crit:20},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['tidal_surge','wave_crash','riptide','tsunami','water_ghost_phase','water_ghost_wraith','ice_ghost_siphon','water_spirit_siphon'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['tidal_flow','phase'],
     description:'A spectral entity bound to deep water — phases through the battlefield on tidal currents, drains life force through tidal contact, and moves at 16 SPD through a medium no physical barrier can stop.',
     lore:'The deepest water contains things that have been there longer than most dungeon floors have existed. The Deepwater Haunt is one of them: a phantom that predates the current architecture and treats walls and floors as the temporary arrangements they are from its geological perspective.'

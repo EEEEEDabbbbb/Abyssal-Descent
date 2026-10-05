@@ -278,7 +278,7 @@ const FUSION_CLASSES_1 = {
     stats:{hp:78,maxHp:78,mp:80,maxMp:80,atk:13,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['shadow_strike','vanish','hemorrhage','death_mark','shadow_grass_spore_veil','shadow_grass_blight_mark','shadow_grass_entangle','shadow_grass_death_blossom'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['shadow_step','immunity'],
     description:'Delivers contagion from the dark. A single touch in passing leaves a disease that consumes the target hours later — long after the shade is gone.',
     lore:'The plague doctor wore a mask to keep the disease out. This one wears the dark to keep the disease in — until the moment it chooses to release it.'
@@ -446,7 +446,7 @@ const FUSION_CLASSES_1 = {
     stats:{hp:80,maxHp:80,mp:80,maxMp:80,atk:14,def:6,spd:14,crit:18},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:8},
     abilities:['shadow_strike','vanish','hemorrhage','death_mark','shadow_grass_spore_veil','shadow_grass_blight_mark','shadow_grass_overgrowth','shadow_grass_death_blossom'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['shadow_step','plague_lord'],
     description:'A walking pandemic in shadow form. Drifts invisibly through enemy ranks, leaving pestilence on every surface, every breath, every shadow it touches.',
     lore:'The pestilencelord spreads disease. The shadowblade spreads silence. Neither could have predicted that together they would spread something neither had a word for.'
@@ -488,7 +488,7 @@ const FUSION_CLASSES_1 = {
     stats:{hp:73,maxHp:73,mp:90,maxMp:90,atk:13,def:5,spd:15,crit:20},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:9},
     abilities:['shadow_strike','vanish','hemorrhage','death_mark','shadow_normal_feint','shadow_normal_expose','shadow_normal_exploit','shadow_normal_assassination'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['shadow_step','arcane_mastery'],
     description:'Weaves spells invisibly around targets before striking. The arcane damage has already been applied before the blade lands — the target dies twice before they hit the ground.',
     lore:'The arcanist reads the enemy. The shadowblade ends the reading. By the time the phantom is done, neither description applies anymore.'
@@ -516,7 +516,7 @@ const FUSION_CLASSES_1 = {
     stats:{hp:75,maxHp:75,mp:70,maxMp:70,atk:15,def:5,spd:18,crit:25},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:10,MP:7},
     abilities:['shadow_strike','vanish','soul_drain','death_mark','water_ghost_wraith','shadow_water_riptide','shadow_normal_assassination','astral_veil'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['shadow_step','phase'],
     description:'A being from beyond both shadows and death. Passes through walls. Cannot be targeted until it strikes. When it does strike, it attacks through armor, through bone, through will.',
     lore:'Two disciplines of disappearance merged and discovered a third thing entirely: something that does not merely vanish from sight, but from the concept of presence itself.'

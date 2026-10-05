@@ -51,7 +51,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:80,maxHp:80,mp:95,maxMp:95,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
     abilities:['holy_light','divine_strike','radiance_burst','consecrate','fire_bug_plague','fire_poison_plague','light_blood_blast','poison_light_surge'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['radiant','plague_lord'],
     description:'Disease and divine light in the same delivery — the plague carries the light that "purifies" the infected tissue, ensuring complete treatment of the enemy in both senses of that word. The Purifying Plague is both a disease and its own cure, deployed in a sequence that only one of those outcomes survives.',
     lore:'The lightbringer purified through light. The pestilencelord infected through plague. The Purifying Plague found these objectives were compatible if sequenced correctly: infect first, purify second, where "purify" operates at a cellular intensity that resolves both the infection and the host. Theologically it is complicated. Practically it is effective.'
@@ -93,7 +93,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['holy_light','divine_strike','radiance_burst','consecrate','light_rune_blast','light_rune_stance','light_cosmic_blast','psychic_light_surge'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['radiant','arcane_mastery'],
     description:'Arcane formulae expressed as light itself — spells that are their own illumination, theoretical constructs encoded in divine radiance. The Illuminated Formula does not cast toward a target. The formula propagates as light propagates: in all directions, at the speed of light, through everything that light passes through.',
     lore:'The arcanist wrote formulae in darkness and applied them with intent. The lightbringer wrote them in light, which is self-propagating. The Illuminated Formula found that a spell encoded in divine light does not need to be aimed: it travels where the light travels, which is everywhere the light can reach, at the speed the light travels at.'
@@ -121,7 +121,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:13,def:6,spd:15,crit:20},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['holy_light','divine_strike','radiance_burst','consecrate','water_ghost_phase','ice_ghost_phantasm','light_void_blast','light_blood_drain'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['radiant','phase'],
     description:'A radiant phantom — phases through physical defenses while projecting divine light in all directions. The Shining Specter cannot be ambushed because it is its own light source, and its light passes through whatever it is currently phasing through.',
     lore:'Phantoms are traditionally invisible. The lightbringer made this one luminous. The Shining Specter cannot use darkness as a resource and does not attempt to. It phases through matter and illuminates it from the inside on the way through, which produces effects that the lightbringer considers theologically appropriate and the matter finds uncomfortable.'
@@ -247,7 +247,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:13,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
     abilities:['beast_call','pack_tactics','feral_rage','primal_surge','fire_bug_plague','fire_poison_plague','fire_bug_colony','poison_wind_surge'],
-    burstAbility:'pestilencelord_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['feral_bond','plague_lord'],
     description:'Disease-carrying animals coordinated as biological delivery systems — each animal carries a different pathogen, maximizing simultaneous infection vectors. The Plague Herd covers the battlefield at running speed and every contact delivers.',
     lore:'The pestilencelord needed disease vectors. Animals are disease vectors. The Plague Herd formalized the arrangement: each animal is inoculated with pathogens selected for their species-specific compatibility and the target species\' vulnerability. The beastmaster coordinates delivery timing; the pestilencelord selects the pathogen. The animals cover the distance.'
@@ -289,7 +289,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:88,maxHp:88,mp:88,maxMp:88,atk:13,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
     abilities:['beast_call','pack_tactics','feral_rage','primal_surge','psychic_cosmic_blast','psychic_dark_strike','light_rune_blast','electric_psychic_vortex'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['feral_bond','arcane_mastery'],
     description:'Animals whose instincts are supplemented by arcane programming — predators that hunt using mathematical precision, pack coordination through arcane formulae rather than behavioral cues. The Arcane Beast hunts with the efficiency of instinct and the precision of theory simultaneously.',
     lore:'The arcanist derived the optimal predator hunting pattern mathematically. The beastmaster had animals that already used it approximately. The Arcane Beast closed the gap between the theoretical and the instinctual, producing animals that hunt at the mathematically optimal efficiency rather than the evolutionarily approximate one.'
@@ -317,7 +317,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:83,maxHp:83,mp:80,maxMp:80,atk:14,def:6,spd:16,crit:20},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:8},
     abilities:['beast_call','pack_tactics','feral_rage','primal_surge','water_ghost_phase','ice_ghost_haunt','electric_ghost_drain','water_ghost_possess'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['feral_bond','phase'],
     description:'A pack of spectral predators — animals that have passed into ghost form but retain their pack instincts and hunting coordination. The Ghost Pack phases through walls and armor, strikes from within the target\'s own space, and cannot be struck by conventional means because it is no longer conventionally present.',
     lore:'Animals that die in a pack sometimes retain the pack bond past death. The Ghost Pack formalized this: a predator pack maintained across the boundary between life and death, with the tactical advantage of phasing capability added to the already-substantial tactical advantage of coordinated predator hunting. The dungeon does not have a defensive response to this combination.'
@@ -471,7 +471,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:73,maxHp:73,mp:110,maxMp:110,atk:11,def:5,spd:14,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:11},
     abilities:['power_surge','overclock','system_hack','turret_deploy','psychic_cosmic_blast','psychic_dark_weaken','steel_cosmic_blast','electric_psychic_vortex'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['overclock','arcane_mastery'],
     description:'Arcane formulae implemented in technical systems — spells that run as programs, magical effects triggered by technical conditions. The Arcane Engine executes the arcanist\'s most complex formulae faster than biological casting allows and at a reliability the organic mind cannot maintain.',
     lore:'The arcanist derived formulae that were too complex to cast reliably under combat conditions. The techsavant compiled them. The Arcane Engine found that a formula running as code executes without the human error component, which is the variable responsible for most of the arcanist\'s catastrophic failures, and that removing it produces a much more consistent output.'
@@ -499,7 +499,7 @@ const FUSION_CLASSES_14 = {
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:13,def:5,spd:16,crit:21},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['power_surge','overclock','system_hack','turret_deploy','water_ghost_phase','ice_ghost_phantasm','electric_cyber_shutdown','steel_void_surge'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['overclock','phase'],
     description:'Technical systems with phase capability — machines that pass through physical matter while executing their programs, systems that operate without detectable signature. The Ghost Protocol performs every technical function from an undetectable state and phases to the optimal position before deploying.',
     lore:'The techsavant built systems that operated visibly. The phantom operated invisibly. The Ghost Protocol combined these and found that a system that operates while undetectable has a considerable tactical advantage — countermeasures require detection, and a system that phases through detection apparatus requires an entirely different category of response.'

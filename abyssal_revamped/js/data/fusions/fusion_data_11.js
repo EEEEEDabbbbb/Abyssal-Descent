@@ -135,7 +135,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:11,def:7,spd:11,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:9},
     abilities:['gravity_crush','mass_shift','event_horizon','singularity','fire_poison_plague','poison_cosmic_weaken','gravity_void_strike','poison_wind_surge'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['gravity_well','plague_lord'],
     description:'Gravitationally compressed plague — disease concentrated to maximum potency by the same forces that collapse stars. The Dense Contagion delivers plague at densities that standard infection rates cannot match and spreads through gravitationally attracted particles.',
     lore:'Compression increases density. Density increases infection efficiency. The Dense Contagion applies gravitational force to biological agents and finds that the compressed version reaches potency thresholds that normal atmospheric delivery does not approach. The plague enters at full concentration without incubation.'
@@ -177,7 +177,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:10,def:5,spd:13,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['gravity_crush','mass_shift','event_horizon','singularity','psychic_cosmic_blast','psychic_void_blast','gravity_void_surge','electric_psychic_vortex'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['gravity_well','arcane_mastery'],
     description:'Applies arcane mathematics to gravitational theory — formulae that describe and therefore control gravitational force, theoretical constructs that function as gravity modifiers, and the unified field equations that make gravity and the arcane tradition compatible.',
     lore:'The arcanist derived formulae for every magical force. Gravity was the last one. The Grand Unified Theory is the working draft of the equation that combines them all and has found that the unified version has emergent properties neither tradition anticipated, several of which are immediately applicable to combat.'
@@ -205,7 +205,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:73,maxHp:73,mp:88,maxMp:88,atk:12,def:5,spd:15,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
     abilities:['gravity_crush','mass_shift','event_horizon','singularity','water_ghost_phase','gravity_void_blast','gravity_blood_drain','ice_ghost_ethereal'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['gravity_well','phase'],
     description:'A spectral entity with gravitational authority — phases through matter while applying gravitational crush to everything it passes through, creates a gravitational anomaly wherever it exists, and cannot be struck because it is simultaneously a ghost and the densest point in the room.',
     lore:'Phantoms are immaterial. Gravity affects all matter. The Singularity Ghost resolved this apparent contradiction by being both: immaterial to conventional attacks but gravitationally massive in a way that does not require matter to operate. The physics involved are not currently explainable.'
@@ -247,7 +247,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:12,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
     abilities:['sonic_blast','resonance_field','shockwave','frequency_break','poison_wind_strike','poison_wind_blast','sound_void_weaken','fire_poison_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['resonance','immunity'],
     description:'Disease transmitted via sonic resonance — pathogens that respond to specific frequencies, spreading through shared vibrations rather than physical contact. The Carrier Wave transmits plague at the speed of sound across the entire resonance field.',
     lore:'Some organisms respond to vibration. The plaguedoctor found organisms that activate at a specific frequency. The soundbreaker delivered that frequency. The Carrier Wave found that a disease triggered by sound spreads the moment the sound propagates, which is considerably faster than physical transmission.'
@@ -415,7 +415,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:13,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:7,MP:9},
     abilities:['sonic_blast','resonance_field','shockwave','frequency_break','fire_poison_plague','poison_wind_blast','sound_void_weaken','poison_cosmic_surge'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['resonance','plague_lord'],
     description:'Disease delivered via sound waves — pathogens carried in the resonance field, activated by the frequency of the broadcast. The Plague Broadcast covers an area the same way a sound does: instantaneously in all directions from the source.',
     lore:'Radio waves carry information. Sound waves carry vibration. The Plague Broadcast found they can also carry biological material if the biological material is calibrated to propagate on the wave. The pestilencelord engineered organisms that travel on resonance. The soundbreaker provided the resonance.'
@@ -457,7 +457,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:12,def:5,spd:15,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
     abilities:['sonic_blast','resonance_field','shockwave','frequency_break','psychic_cosmic_blast','psychic_void_surge','sound_crystal_drain','sound_cosmic_weaken'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['resonance','arcane_mastery'],
     description:'Arcane formulae expressed as sound — spells that propagate at acoustic speed, mathematical constructs that resonate with reality at the frequency of their derivation. The Harmonic Formula finds the resonant frequency of every arcane structure and exploits it.',
     lore:'The arcanist wrote formulae. The soundbreaker found their resonant frequency. The Harmonic Formula discovered that every arcane construct has a frequency at which it amplifies, and that speaking a formula at its resonant frequency produces significantly more effect than writing it silently — a finding the arcanist tradition is still debating the implications of.'
@@ -485,7 +485,7 @@ const FUSION_CLASSES_11 = {
     stats:{hp:75,maxHp:75,mp:83,maxMp:83,atk:14,def:5,spd:17,crit:21},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:9,MP:8},
     abilities:['sonic_blast','resonance_field','shockwave','frequency_break','water_ghost_phase','ice_ghost_wraith','sound_void_strike','sound_void_dot_strike'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['resonance','phase'],
     description:'A phantom that attacks through sound while remaining inaudible — the Silent Scream phases through physical space, attacks from within the enemy\'s own resonance field, and makes the devastating sound while producing no detectable presence at its source.',
     lore:'Phantoms are silent. Soundbreakers are not. The Silent Scream resolved this by separating the source from the sound: the phantom phases to the optimal position without sound and then delivers the sonic attack, making the most noise while producing the least traceable presence.'

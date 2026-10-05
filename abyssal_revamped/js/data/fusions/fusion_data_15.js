@@ -121,7 +121,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:85,maxHp:85,mp:98,maxMp:98,atk:10,def:10,spd:11,crit:14},
     statDisplay:{HP:6,ATK:7,DEF:7,SPD:6,MP:9},
     abilities:['grave_touch','bone_shield','death_mark','raise_fallen','light_rune_blast','light_rune_drain','psychic_dark_strike','steel_cosmic_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['undying','arcane_mastery'],
     description:'Arcane formulae inscribed on tomb walls — every burial in the Inscribed Tomb is also an arcane construct, the formulae of the arcanist tradition used to preserve and empower the dead. What rises from an arcane tomb is not merely undead but arcane undead: the formulae activated at resurrection.',
     lore:'Ancient tradition inscribed protective formulae on tombs. The arcanist understood what those formulae actually did. The Inscribed Tomb writes functional arcane code rather than decorative scripture and found that formulae inscribed in burial conditions, around the accumulated arcane residue of the dead, become considerably more powerful than the same formulae written anywhere else.'
@@ -149,7 +149,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:80,maxHp:80,mp:83,maxMp:83,atk:12,def:7,spd:15,crit:20},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
     abilities:['grave_touch','bone_shield','death_mark','raise_fallen','water_ghost_phase','water_ghost_possess','ice_ghost_haunt','electric_ghost_drain'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['undying','phase'],
     description:'A spectral entity that refuses containment — phases out of graves as easily as it phases through walls, cannot be interred despite the gravewarden\'s best efforts. The Restless Dead has found that being ungraveable and undying in the same body produces a combat advantage no containment method addresses.',
     lore:'The gravewarden maintained graves. The Restless Dead would not stay in one. After some professional reflection, the gravewarden decided to work with rather than against this quality: a ghost that refuses to stay buried and cannot be killed is a very efficient ally, even if filing the paperwork is irregular.'
@@ -233,7 +233,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:12,def:8,spd:11,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:6,MP:8},
     abilities:['magnetic_pull','field_surge','pole_shift','iron_cage','fire_poison_plague','fire_bug_plague','gravity_magnet_dot_strike','poison_wind_blast'],
-    burstAbility:'pestilencelord_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['magnetic_field','plague_lord'],
     description:'Pathogens engineered to carry magnetic particles — disease that travels on magnetic fields, guided to targets by field lines. The Magnetic Plague infects at range and follows fleeing targets through the field it generates, making retreat in a magnetically active environment actively dangerous.',
     lore:'The pestilencelord needed long-range delivery. Magnetic fields are long-range forces. The Magnetic Plague engineered organisms with iron-particle payloads and found that a magnetically active pathogen travels where the field directs it, which converts the magnetist\'s field control into a precision-guided biological delivery system.'
@@ -275,7 +275,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:72,maxHp:72,mp:108,maxMp:108,atk:11,def:5,spd:13,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['magnetic_pull','field_surge','pole_shift','iron_cage','psychic_cosmic_blast','light_rune_blast','steel_cosmic_final','electric_psychic_vortex'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['magnetic_field','arcane_mastery'],
     description:'Magnetic fields governed by arcane formulae — precise field configurations derived mathematically, theoretical magnetic constructs that the empirical magnetist cannot produce through field manipulation alone. The Arcane Lodestone operates magnetism as applied mathematics.',
     lore:'The magnetist manipulated fields by instinct and practice. The arcanist derived the equations governing them. The Arcane Lodestone found that applying mathematical precision to field configuration produces shapes and behaviors that empirical manipulation cannot achieve — not because of power differences, but because some configurations are only findable by solving the equation, not by experimentation.'
@@ -303,7 +303,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:73,maxHp:73,mp:88,maxMp:88,atk:12,def:5,spd:15,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
     abilities:['magnetic_pull','field_surge','pole_shift','iron_cage','water_ghost_phase','ice_ghost_phantasm','steel_void_surge','gravity_magnet_blast'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['magnetic_field','phase'],
     description:'A spectral entity with magnetic authority — phases through physical matter while maintaining and projecting a magnetic field through what it passes through. The Magnetic Ghost is intangible to physical attack while its field is entirely tangible to every metal object in range.',
     lore:'Phantoms phase through matter. Magnetic fields pass through matter. The Magnetic Ghost found these properties are compatible in the same entity: the ghost is immaterial but the field it generates is not, which means physical immunity does not protect against a field that reaches through walls — and the ghost is usually inside the wall when it applies the field.'
@@ -415,7 +415,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:11,def:5,spd:13,crit:17},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:11},
     abilities:['crystal_form','refraction','crystallize','shatter_burst','psychic_cosmic_blast','light_rune_blast','crystal_void_surge','psychic_dark_stance'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['crystal_body','arcane_mastery'],
     description:'Arcane formulae expressed as crystal structures — three-dimensional equations grown in mineral lattice, theoretical constructs with physical form. The Living Formula can be modified by growing new facets and the crystal\'s own growth adds variables to the formula that the arcanist did not write.',
     lore:'The arcanist wrote formulae in two dimensions. Crystal grows in three. The Living Formula expressed arcane equations as crystal structures and found that three-dimensional formulae have terms that flat notation cannot represent, and that some of those terms produce effects the original formula did not anticipate — which the arcanist classifies as a discovery rather than an error.'
@@ -443,7 +443,7 @@ const FUSION_CLASSES_15 = {
     stats:{hp:73,maxHp:73,mp:85,maxMp:85,atk:13,def:5,spd:15,crit:21},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['crystal_form','refraction','crystallize','shatter_burst','water_ghost_phase','ice_ghost_chill','crystal_void_surge','crystal_void_blast'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['crystal_body','phase'],
     description:'A spectral entity composed of crystal — phases through matter and leaves crystal fragments embedded in whatever it passes through. The Glass Ghost is transparent, intangible to conventional attack, and leaves a trail of crystalline shrapnel that makes retreat through its wake as dangerous as its strike.',
     lore:'Phantoms phase through matter. Crystal passes light through itself. The Glass Ghost found these properties combine into an entity that is simultaneously a ghost and a crystal lattice: it phases through enemies while depositing crystal fragments inside them, which the targets discover as a delayed and internally-distributed damage event that the Glass Ghost considers architecturally elegant.'

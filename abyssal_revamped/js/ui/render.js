@@ -107,7 +107,7 @@ function renderStatsGrid() {
     {name:'CRIT', val:p.stats.crit+'%'},
     {name:'GOLD', val:p.gold},
   ].map(s=>`<div class="stat-item"><div class="stat-item-name">${s.name}</div><div class="stat-item-val">${s.val}</div></div>`).join('')
-  + (elObj ? `<div class="stat-item" style="grid-column:span 2"><div class="stat-item-name">Element</div><div class="stat-item-val" style="color:${elObj.color}">${elObj.icon} ${elObj.name}</div></div>` : '')
+  + (elObj ? `<div class="stat-item" style="grid-column:span 2"><div class="stat-item-name">Element</div><div class="stat-item-val" style="color:${elObj.color}">${elObj.icon} ${elObj.name}${elementFlavorText(getClassData(p.classId))}</div></div>` : '')
   + passiveHtml;
 }
 
@@ -559,6 +559,13 @@ function renderRightPanel() {
   const atTop = log.scrollTop < 40;
   log.innerHTML = G.log.slice(0, 60).map(entry => `<div class="log-entry ${entry.type}">${entry.msg}</div>`).join('');
   if (atTop) log.scrollTop = 0; // keep the newest lines in view unless you scrolled down to read
+}
+
+// " · Bloodsteel" — fusion classes keep their flavor element name for display
+function elementFlavorText(cls) {
+  if (!cls || !cls.elementFlavor) return '';
+  const pretty = cls.elementFlavor.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return ` <span style="opacity:0.7;font-style:italic">· ${pretty}</span>`;
 }
 
 // ── Screen shake ──────────────────────────────────────────────

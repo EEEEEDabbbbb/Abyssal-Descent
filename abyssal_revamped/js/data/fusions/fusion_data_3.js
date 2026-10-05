@@ -124,7 +124,7 @@ const FUSION_CLASSES_3 = {
     stats:{hp:73,maxHp:73,mp:100,maxMp:100,atk:9,def:7,spd:11,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:5,SPD:7,MP:10},
     abilities:['soul_drain','necrotic_bolt','wither','death_coil','fire_poison_corrode','fire_poison_plague','fire_bug_plague','fire_poison_miasma'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['soul_harvest','immunity'],
     description:'Engineered a plague that attacks the soul directly rather than the body. Targets look fine on the outside while their spiritual essence dissolves. By the time symptoms become visible, there is nothing left to treat.',
     lore:'The plaguedoctor said: if we could target the soul, we could cure things medicine cannot reach. The soulweaver said: yes. And the other direction also works.'
@@ -292,7 +292,7 @@ const FUSION_CLASSES_3 = {
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:10,def:7,spd:11,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
     abilities:['soul_drain','necrotic_bolt','wither','death_coil','fire_poison_plague','fire_bug_plague','fire_bug_hive','fire_poison_corrode'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['soul_harvest','plague_lord'],
     description:'A plague that spreads through spiritual contact rather than physical. Cannot be quarantined because it passes between souls rather than bodies. Every soul harvested becomes a new vector for transmission.',
     lore:'The pestilencelord wanted a plague that could not be cured. The soulweaver said: put it somewhere doctors cannot reach. They found a location. Doctors remain frustrated by this.'
@@ -334,7 +334,7 @@ const FUSION_CLASSES_3 = {
     stats:{hp:68,maxHp:68,mp:110,maxMp:110,atk:9,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
     abilities:['soul_drain','necrotic_bolt','wither','death_coil','fire_psychic_blaze','fire_psychic_fever','fire_void_voidfire','fire_void_devour'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['soul_harvest','arcane_mastery'],
     description:'The theoretical limit of soul magic — combines arcane amplification with direct soul destruction to unmake targets at the foundational level. Does not kill enemies. Removes them from the underlying structure of the dungeon.',
     lore:'The arcanist studied the rules of reality. The soulweaver studied the rules of existence. Together they found the clause that says both can be revoked. They are still deciding whether this is a discovery or a warning.'
@@ -362,7 +362,7 @@ const FUSION_CLASSES_3 = {
     stats:{hp:70,maxHp:70,mp:90,maxMp:90,atk:12,def:5,spd:15,crit:19},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:9},
     abilities:['soul_drain','necrotic_bolt','wither','death_coil','water_ghost_wraith','water_ghost_phase','water_ghost_drown','water_ghost_haunt'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['soul_harvest','phase'],
     description:'A fusion so complete it has stopped being a class and become a state. Exists only partially — the rest of it is somewhere between the living world and wherever souls go. Attacks from that in-between place. Cannot be struck while transitioning.',
     lore:'Two things that were already partially absent merged and became almost entirely absent. What remains is enough to kill you. The rest of it is somewhere you cannot follow.'
@@ -558,7 +558,7 @@ const FUSION_CLASSES_3 = {
     stats:{hp:75,maxHp:75,mp:95,maxMp:95,atk:9,def:6,spd:11,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:9},
     abilities:['fireball','ignite','inferno','phoenixflame','fire_poison_sear','fire_poison_plague','fire_bug_plague','fire_poison_corrode'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['combustion','immunity'],
     description:'Disperses plague through fire — burning attacks carry engineered diseases that spread on contact with heat. The fire spreads the plague; the plague makes the fire worse. A self-amplifying system with no natural ceiling.',
     lore:'The plaguedoctor said: heat kills most pathogens. The pyromancer said: most. The plaguedoctor said: yes. They spent several months on the exceptions and produced something that uses fire as a vector rather than a cure.'

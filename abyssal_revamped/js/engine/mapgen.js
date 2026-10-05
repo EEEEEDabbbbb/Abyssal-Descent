@@ -667,6 +667,7 @@ function handleCellContent(cell, x, y) {
         if (inventoryFull()) { logEntry('system','🎒 Your pack is full — the chest stays closed until you make room.'); break; }
         const foundItem=cell.item;
         logEntry('reward',`◆ Chest opened: ${foundItem.name}!`);
+        sfx('chest');
         addToInventory(cloneItem(foundItem));
         cell.content='visited';cell.item=null;
         showItemPopup(foundItem);
@@ -734,6 +735,7 @@ function nextFloor() {
     }
   }
   applyBiomeTheme(G.floor);
+  sfx('descend');
 
   // Auto-save AFTER the new floor exists, so a reload resumes on this floor's map
   if (typeof autoSaveRun === 'function') autoSaveRun();

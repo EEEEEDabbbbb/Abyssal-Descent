@@ -193,7 +193,7 @@ const FUSION_CLASSES_4 = {
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:10,def:6,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:9},
     abilities:['fireball','ignite','inferno','phoenixflame','fire_poison_plague','fire_bug_plague','fire_poison_corrode','fire_poison_miasma'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['combustion','plague_lord'],
     description:'Uses fire as an aerosol delivery system for engineered plague — burning enemies spreads contagion in a radius. The immune to fire are not immune to what rides the fire. The plague that survives ignition is the dangerous one.',
     lore:'Most diseases die in fire. The pestilencelord spent considerable effort developing ones that do not. The pyromancer said: I can deliver those faster than anything. This was the beginning of a productive working relationship.'
@@ -235,7 +235,7 @@ const FUSION_CLASSES_4 = {
     stats:{hp:70,maxHp:70,mp:105,maxMp:105,atk:9,def:5,spd:13,crit:15},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:8,MP:10},
     abilities:['fireball','ignite','inferno','phoenixflame','fire_psychic_blaze','fire_psychic_fever','fire_space_flare','fire_space_plasma_burn'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['combustion','arcane_mastery'],
     description:'Applies arcane theory to combustion — calculates the exact temperature and trajectory of every flame, optimizes burn patterns for maximum coverage, and delivers fire with the precision of a mathematical proof.',
     lore:'The arcanist approached everything as an equation. The pyromancer approached everything as a fire. The Burning Theorem found that one of these approaches has a much faster solution time, and the other makes it more accurate.'
@@ -263,7 +263,7 @@ const FUSION_CLASSES_4 = {
     stats:{hp:73,maxHp:73,mp:85,maxMp:85,atk:11,def:5,spd:15,crit:20},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:8},
     abilities:['fireball','ignite','inferno','phoenixflame','fire_ghost_soulburn','fire_ghost_haunt','fire_ghost_shade','water_ghost_phase'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['combustion','phase'],
     description:'A burning apparition that phases through defenses before igniting from within. Passes through walls to set the other side on fire. Haunts targets with clinging soulfire that bypasses physical armor entirely.',
     lore:'Ghosts cannot be burned. This one found a loophole: it is the fire. Targets struck by the Phantom Blaze report burning sensations in places that have not technically been touched. This is accurate.'
@@ -445,7 +445,7 @@ const FUSION_CLASSES_4 = {
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:11,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:9},
     abilities:['lightning_bolt','chain_lightning','storm_surge','thunderclap','electric_poison_storm','electric_poison_cascade','electric_poison_conduct','electric_poison_venom'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['static_charge','immunity'],
     description:'Uses chain lightning as a disease vector — each bolt carries engineered plague to every target it arcs through. A single infected enemy becomes a transmission tower for the next bolt. The more infected targets, the wider the arc.',
     lore:'The plaguedoctor wanted better transmission vectors. The stormcaller suggested lightning. The Epidemic Arc can infect an entire room from a single initial strike, which the plaguedoctor described as professionally satisfying.'

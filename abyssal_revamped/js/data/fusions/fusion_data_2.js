@@ -208,7 +208,7 @@ const FUSION_CLASSES_2 = {
     stats:{hp:108,maxHp:108,mp:70,maxMp:70,atk:10,def:11,spd:9,crit:9},
     statDisplay:{HP:7,ATK:7,DEF:8,SPD:5,MP:7},
     abilities:['shield_bash','fortify','retaliate','warcry','fire_poison_venom','fire_poison_corrode','fire_poison_plague','fire_poison_miasma'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['iron_skin','immunity'],
     description:'A walking quarantine zone. The armor drips with engineered pestilence — touch it and contract a disease. Strike it and the impact aerosolizes the contagion. The plague bulwark does not need to attack. It simply has to be near you.',
     lore:'The plaguedoctor said: do no harm. The ironclad said: harm everything that comes close. They found a middle position that technically satisfies both.'
@@ -376,7 +376,7 @@ const FUSION_CLASSES_2 = {
     stats:{hp:110,maxHp:110,mp:70,maxMp:70,atk:11,def:11,spd:9,crit:9},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:5,MP:7},
     abilities:['shield_bash','fortify','retaliate','warcry','fire_poison_corrode','fire_poison_plague','fire_bug_plague','fire_bug_hive'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['iron_skin','plague_lord'],
     description:'An iron colossal oozing engineered plague. The armor is its delivery mechanism — every breach of its defenses spreads disease outward. Cracking the Plague Colossus open is exactly what it wants you to do.',
     lore:'The pestilencelord wanted a way to spread disease faster. The ironclad offered itself. This is, in retrospect, a decision that affected a very large number of other people.'
@@ -418,7 +418,7 @@ const FUSION_CLASSES_2 = {
     stats:{hp:103,maxHp:103,mp:80,maxMp:80,atk:10,def:9,spd:11,crit:12},
     statDisplay:{HP:7,ATK:7,DEF:6,SPD:7,MP:8},
     abilities:['shield_bash','fortify','retaliate','warcry','fire_psychic_blaze','fire_psychic_fever','fire_psychic_focus','fire_psychic_thought'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['iron_skin','arcane_mastery'],
     description:'A living arcane ward in iron form. Absorbs magic attacks into its matrix and detonates them as enhanced counterspells. Magic users find that every spell they throw is simply fuel for the next retaliation.',
     lore:'The arcanist called it a perfect defensive matrix. The ironclad called it armor. They were describing the same thing from two directions, and they were both completely right.'
@@ -446,7 +446,7 @@ const FUSION_CLASSES_2 = {
     stats:{hp:105,maxHp:105,mp:60,maxMp:60,atk:12,def:9,spd:14,crit:17},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:8,MP:6},
     abilities:['shield_bash','fortify','retaliate','warcry','water_ghost_wraith','water_ghost_phase','water_ghost_drown','water_ghost_haunt'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['iron_skin','phase'],
     description:'A phantom wearing iron. It phases between solid and spectral — attacks pass through when it chooses, and land against iron when it does not. An enemy cannot know which state they will find it in.',
     lore:'The armor would not let the ghost leave. The ghost stopped trying. Now the armor walks on its own, which is more unsettling than either component was separately.'

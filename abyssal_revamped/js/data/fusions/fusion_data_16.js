@@ -93,7 +93,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:82,maxHp:82,mp:88,maxMp:88,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
     abilities:['spirit_link','ancestral_call','soul_surge','communion','fire_poison_plague','fire_bug_plague','poison_dark_blast','poison_void_surge'],
-    burstAbility:'pestilencelord_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['spirit_bond','plague_lord'],
     description:'Spirits of the plague dead, still infectious — spectral entities that carry active disease in their spectral form, transmitting plague through haunting rather than physical contact. The Plague Spirit infects targets who cannot be physically reached and is immune to countermeasures designed for living plague vectors.',
     lore:'The spiritwalker spoke with spirits of various deaths. The pestilencelord found the plague-dead interesting professionally. The Plague Spirit found that spirits who died of disease retain the disease in spectral form, and that spectral disease infects differently from biological disease — it appears in the target\'s biology without a physical transmission event, which medicine has no established response to.'
@@ -135,7 +135,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['spirit_link','ancestral_call','soul_surge','communion','psychic_cosmic_blast','psychic_rune_blast','psychic_dark_weaken','light_rune_surge'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['spirit_bond','arcane_mastery'],
     description:'Arcane formulae applied to the mechanics of spiritual existence — the spiritwalker\'s intuitive understanding of the spirit plane expressed as equations, making spirit manipulation as precise as any other magical discipline. The Formula of Souls can specify exact behavioral parameters for the spirits it commands.',
     lore:'The spiritwalker worked with spirits through empathy and relationship. The arcanist wanted equations. The Formula of Souls derived the mathematical description of spiritual behavior and found that spirits, once modeled, can be directed with a precision that relationship-based communication does not achieve — not because the relationship is worse but because math does not depend on the spirit\'s mood.'
@@ -163,7 +163,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:12,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
     abilities:['spirit_link','ancestral_call','soul_surge','communion','water_ghost_phase','ice_ghost_phantasm','electric_spirit_possession','electric_ghost_drain'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['spirit_bond','phase'],
     description:'Spirits commanding phantom abilities, and a phantom commanding spirits — operating entirely in the non-material plane, the Deep Haunting has no physical presence to target and no material limitation to navigate. It phases through defenses and commands spiritual forces from within the matter those defenses are made of.',
     lore:'The spiritwalker and the phantom both operated outside material constraints. The Deep Haunting combined their non-material methods and found that the overlap produces a presence so comprehensively outside physical reality that the conventional dungeon has no layer of defense that applies to it — material barriers are phased through, and spiritual wards do not affect a being that is also a spirit.'
@@ -233,7 +233,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:11,def:5,spd:13,crit:17},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:7,MP:11},
     abilities:['hex_strike','curse_mark','debilitate','hex_nova','psychic_rune_blast','psychic_dark_weaken','light_rune_surge','psychic_void_final'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['hex_master','arcane_mastery'],
     description:'Hexes derived from first principles — curses with no gaps because they were derived rather than created by tradition, updated with each iteration to close every loophole. The Formulaic Curse is the theoretically optimal hex, and the arcanist continues to optimize it between combats.',
     lore:'Hexes had loopholes because they were developed by individual practitioners with incomplete knowledge. The arcanist derived the complete hex from foundational principles and found that a curse derived from mathematical axioms has no gaps because axioms have no gaps. Opponents who have studied hex-breaking techniques find none of those techniques apply because the Formulaic Curse was designed with knowledge of every one of them.'
@@ -261,7 +261,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:72,maxHp:72,mp:88,maxMp:88,atk:13,def:5,spd:16,crit:21},
     statDisplay:{HP:4,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['hex_strike','curse_mark','debilitate','hex_nova','water_ghost_phase','ice_ghost_haunt','dark_void_blast','psychic_void_dot_strike'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['hex_master','phase'],
     description:'Hexes placed by an invisible hand — a phantom hexblade that phases through targets while applying curses, leaving no visible caster to locate and counter. The Haunting Hex operates from within the target\'s personal space, applying hexes at point-blank range from a position of complete invisibility.',
     lore:'Counter-hex techniques begin by locating the caster. The phantom has no locatable position. The Haunting Hex places curses while phased into the target\'s occupied space and found that hexes applied at that range are more accurate and more potent than those applied at distance, and that the target cannot identify the caster because the caster is currently in the same location as the target, which is not where they are looking.'
@@ -317,7 +317,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:68,maxHp:68,mp:115,maxMp:115,atk:11,def:4,spd:13,crit:17},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:7,MP:11},
     abilities:['cosmic_ray','void_lance','stellar_surge','gravity_well','psychic_cosmic_blast','psychic_cosmic_final','light_cosmic_blast','psychic_rune_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['stardust','arcane_mastery'],
     description:'The unified theoretical framework describing all forces simultaneously — the arcanist\'s mathematical tradition extended to cosmological scales, producing a formula that describes and therefore controls everything within its scope. The Grand Unified Theory operates at the level where gravity, electromagnetism, and arcane force are the same thing.',
     lore:'The arcanist spent years deriving a formula that unified arcane and physical forces. The cosmomancer worked at scales where those forces were already unified. The Grand Unified Theory completed the derivation and found that at cosmological scale the formula does not distinguish between magic and physics, which means the arcanist\'s most powerful spells and the universe\'s physical laws are expressed by the same equation.'
@@ -345,7 +345,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:70,maxHp:70,mp:95,maxMp:95,atk:13,def:4,spd:16,crit:22},
     statDisplay:{HP:4,ATK:9,DEF:3,SPD:8,MP:9},
     abilities:['cosmic_ray','void_lance','stellar_surge','gravity_well','water_ghost_phase','dark_cosmic_final','psychic_void_blast','gravity_void_blast'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['stardust','phase'],
     description:'Astronomical mass that cannot be detected — a phantom with cosmological substance, exerting gravitational force without any observable presence. The Dark Matter is invisible, intangible to conventional attack, and exerts the gravitational authority of a significant concentration of cosmic mass.',
     lore:'The cosmomancer studied dark matter as a professional interest. The phantom was dark matter in a biological sense. The Dark Matter combined these and achieved the cosmological version: a presence that exerts significant gravitational effects and interacts with nothing except through gravity, which means it cannot be blocked, deflected, or directly opposed — only experienced.'
@@ -359,7 +359,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:78,maxHp:78,mp:88,maxMp:88,atk:12,def:6,spd:15,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
     abilities:['toxic_cloud','virulent_strain','pandemic','plague_bloom','fire_wind_cyclone','fire_flying_updraft','poison_void_surge','poison_cosmic_blast'],
-    burstAbility:'pestilencelord_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['plague_lord','gust'],
     description:'Mass airborne disease deployment — every plague in the pestilencelord\'s arsenal dispersed simultaneously by windwalker cyclone across the entire battlefield. The Airborne Apocalypse has no targeting, because it does not need to target: everything breathes.',
     lore:'The pestilencelord\'s greatest constraint was delivery range. The windwalker removed it entirely. The Airborne Apocalypse releases the full pathogen library into windwalker-generated currents and found that disease in a cyclone achieves complete battlefield saturation in a single action, converting targeted biological warfare into an area event with no dead zones.'
@@ -387,7 +387,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:70,maxHp:70,mp:107,maxMp:107,atk:11,def:4,spd:13,crit:15},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:7,MP:10},
     abilities:['toxic_cloud','virulent_strain','pandemic','plague_bloom','psychic_cosmic_blast','psychic_dark_weaken','poison_cosmic_final','light_rune_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['plague_lord','arcane_mastery'],
     description:'The mathematically optimal pathogen — disease designed by theoretical derivation to be maximally effective against every possible biological target simultaneously. The Theoretical Maximum is what the pestilencelord has been trying to create empirically for their entire career, completed by the arcanist in an afternoon.',
     lore:'The pestilencelord had created very good diseases. The arcanist derived the best possible disease from mathematical principles. The Theoretical Maximum is the result: a pathogen with no evolutionary constraints, designed to the specifications of the optimal lethality formula. The pestilencelord reviewed the result, compared it to their life\'s work, and had complicated feelings about the afternoon it took.'
@@ -401,7 +401,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:115,maxHp:115,mp:70,maxMp:70,atk:9,def:14,spd:8,crit:10},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:7},
     abilities:['toxic_cloud','virulent_strain','pandemic','plague_bloom','normal_rune_ward','fire_steel_quench','poison_void_stance','normal_gravity_burden'],
-    burstAbility:'pestilencelord_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['plague_lord','bastion'],
     description:'A contained biological hazard zone — the sentinel holds the perimeter, the pestilencelord fills the interior. The Plague Ward cannot be approached without entering a disease environment, and the sentinel ensures it cannot be left without permission. Everything inside the perimeter belongs to the plague.',
     lore:'The pestilencelord needed to concentrate disease in a bounded area. The sentinel provided the boundary. The Plague Ward found that a sentinel-enforced quarantine zone contains disease with an efficiency that the pestilencelord\'s biological containment protocols alone could not achieve, and that the sentinel, who does not breathe plague-laced air in the way a living sentinel would, is an ideal perimeter enforcer for a biological hazard.'
@@ -415,7 +415,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:73,maxHp:73,mp:90,maxMp:90,atk:13,def:5,spd:15,crit:19},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:9},
     abilities:['toxic_cloud','virulent_strain','pandemic','plague_bloom','water_ghost_phase','ice_ghost_haunt','poison_void_blast','poison_dark_drain'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['plague_lord','phase'],
     description:'A disease vector without a body — the pestilencelord\'s entire pathogen arsenal carried by a phantom that phases through physical barriers to deliver infection directly. The Specter of Plague cannot be quarantined because walls do not stop it, and the disease it carries cannot be avoided because the carrier has already phased through to the other side.',
     lore:'The pestilencelord needed to reach targets in sealed rooms. The phantom reached everything. The Specter of Plague found that a disease carrier who phases through quarantine walls solves the pestilencelord\'s access problem entirely, and that the phantom\'s inability to be infected means it can carry any combination of pathogens without self-limiting its own effectiveness.'
@@ -443,7 +443,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:68,maxHp:68,mp:108,maxMp:108,atk:11,def:4,spd:16,crit:17},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:9,MP:11},
     abilities:['gale_force','wind_slash','cyclone','tempest_strike','psychic_rune_blast','psychic_wind_blast','wind_cosmic_final','wind_light_surge'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['gust','arcane_mastery'],
     description:'Arcane formulae expressed as wind patterns — the arcanist\'s equations encoded in the topology of moving air. The Living Theorem\'s spells propagate outward as wind fronts, covering the entire battlefield at 16 SPD, and the formula continues to operate as long as the wind blows.',
     lore:'The arcanist wrote formulae in static media. The windwalker moved everything. The Living Theorem found that a formula written in wind topology is a formula that moves toward its target, and that moving formulae are harder to block than static ones — the spell is not coming from a specific direction because the wind comes from every direction, and the formula is in all of it.'
@@ -471,7 +471,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:70,maxHp:70,mp:82,maxMp:82,atk:13,def:4,spd:18,crit:21},
     statDisplay:{HP:4,ATK:9,DEF:3,SPD:9,MP:8},
     abilities:['gale_force','wind_slash','cyclone','tempest_strike','water_ghost_phase','ice_ghost_phantasm','wind_void_drain','wind_blood_surge'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['gust','phase'],
     description:'A phantom moving at 18 SPD — the fastest class in the game, invisible, and phasing through any material obstacle. The Invisible Gale strikes before the target registers it is there, from a direction and distance that cannot be determined because the attacker has no fixed position.',
     lore:'The windwalker moved at high speed. The phantom moved invisibly. The Invisible Gale combined speed and invisibility and found that the two properties compound: an invisible attacker at wind speed leaves no time to react to detection because the detection and the impact occur in the same instant — and the detection of an invisible target typically fails anyway, making the timeline entirely one-sided.'
@@ -513,7 +513,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:68,maxHp:68,mp:92,maxMp:92,atk:12,def:4,spd:16,crit:22},
     statDisplay:{HP:4,ATK:8,DEF:3,SPD:8,MP:9},
     abilities:['doom_mark','seal_fate','inevitable','entropy_strike','water_ghost_phase','ice_ghost_phantasm','dark_void_blast','time_void_drain'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['doom_aura','phase'],
     description:'A phantom carrying doom seals — invisible, intangible, and moving at 16 SPD to place doom marks that cannot be detected before they activate. The Sealed Shade delivers doom as a contact effect from a carrier the target cannot perceive, making counter-doom techniques inapplicable because there is no observable delivery to counter.',
     lore:'The doomcaster needed to place doom seals undetected. The phantom delivered everything undetected. The Sealed Shade applies doom marks while phased into the target\'s occupied space and found that a doom seal placed at that range is invisible not because of any concealment technique but because the caster is in the same location as the target during placement, which is not where anyone looks for an incoming attack.'
@@ -527,7 +527,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:113,maxHp:113,mp:80,maxMp:80,atk:9,def:14,spd:9,crit:12},
     statDisplay:{HP:7,ATK:6,DEF:9,SPD:6,MP:8},
     abilities:['arcane_bolt','spell_surge','mana_burn','arcane_mastery_strike','normal_rune_ward','light_rune_surge','psychic_rune_blast','void_rune_stance'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['arcane_mastery','bastion'],
     description:'Arcane formulae maintaining a defensive position — the sentinel\'s hold expressed as equations that self-sustain without the biological limits of a living defender. The Runic Bastion holds through mathematical necessity: the formula says the position holds, and the formula is correct.',
     lore:'The sentinel held through will. The arcanist held through proof. The Runic Bastion derived the formula for an unbreachable position and found that a defense described by an internally consistent mathematical framework holds for the same reason the framework holds — because the alternative would require the formula to be false, and the arcanist has checked the formula.'
@@ -541,7 +541,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:65,maxHp:65,mp:108,maxMp:108,atk:12,def:4,spd:15,crit:22},
     statDisplay:{HP:4,ATK:8,DEF:3,SPD:8,MP:11},
     abilities:['arcane_bolt','spell_surge','mana_burn','arcane_mastery_strike','water_ghost_phase','psychic_void_final','psychic_rune_blast','psychic_dark_final'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['arcane_mastery','phase'],
     description:'The arcanist\'s most powerful formulae cast from an invisible state — spells that arrive without a visible caster to locate, interrupt, or counter. The Invisible Theorem phases to casting position, executes the formula at point-blank range, and phases away before the target identifies where the spell originated.',
     lore:'The arcanist\'s primary vulnerability was the casting position: visible, stationary, locatable. The phantom had no position to locate. The Invisible Theorem phases to optimal formula execution range and found that the arcanist\'s theoretical output is not limited by range — it is limited by the need to be in range while remaining alive, which the phase capability addresses more comprehensively than any defensive formula the arcanist had previously derived.'
@@ -555,7 +555,7 @@ const FUSION_CLASSES_16 = {
     stats:{hp:112,maxHp:112,mp:72,maxMp:72,atk:11,def:15,spd:13,crit:17},
     statDisplay:{HP:7,ATK:7,DEF:10,SPD:7,MP:7},
     abilities:['fortify','shield_wall','taunt','counter_stance','water_ghost_phase','ice_ghost_phantasm','dark_void_blast','void_rune_surge'],
-    burstAbility:'sentinel_burst',
+    burstAbility:'ironclad_burst',
     passives:['bastion','phase'],
     description:'A defensive presence that is simultaneously immovable and intangible — holds position with 15 DEF while phasing to intercept attacks that bypass the physical wall. The Unbreachable Shadow covers every approach because the physical position blocks the direct approach and the phase covers everything else.',
     lore:'The sentinel held position physically. The phantom occupied positions physically impossible to hold. The Unbreachable Shadow combined these and found the defensive answer to every approach vector: the physical wall handles direct assault, and the phantom capability handles approaches that go through or around the physical wall, which were previously the sentinel\'s theoretical vulnerability and are now also covered.'

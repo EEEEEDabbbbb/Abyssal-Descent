@@ -67,7 +67,7 @@ const FUSION_CLASSES_7 = {
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
     abilities:['rune_strike','bind_rune','runic_shield','elder_rune','normal_rune_mark','normal_rune_drain','fire_poison_plague','fire_bug_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['rune_mastery','immunity'],
     description:'Carves plague-runes that spread disease through the act of inscription — the rune itself is the infection vector. Adjacent enemies not yet marked begin showing symptoms from proximity to marked targets. The Infected Inscription turns every carved mark into a transmission event.',
     lore:'The plaguedoctor recorded symptoms. The runeblade recorded commands. The Infected Inscription found that a rune describing plague is indistinguishable from the plague itself, which solved the transmission problem by making the record the disease.'
@@ -235,7 +235,7 @@ const FUSION_CLASSES_7 = {
     stats:{hp:90,maxHp:90,mp:85,maxMp:85,atk:13,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
     abilities:['rune_strike','bind_rune','runic_shield','elder_rune','normal_rune_mark','fire_poison_plague','normal_rune_drain','fire_bug_plague'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['rune_mastery','plague_lord'],
     description:'Seals engineered plagues inside rune-inscriptions on the target — the disease is held dormant by the rune until the seal breaks. Removing the seal releases the plague at full potency with no incubation period. Shattering the Plague Seal is catastrophic.',
     lore:'The pestilencelord needed a way to delay onset. The runeblade provided a containment vessel. The Plague Seal discovered that a plague in suspension is more dangerous than an active one, because it delivers full potency on a schedule rather than over time.'
@@ -277,7 +277,7 @@ const FUSION_CLASSES_7 = {
     stats:{hp:83,maxHp:83,mp:95,maxMp:95,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
     abilities:['rune_strike','bind_rune','runic_shield','elder_rune','normal_rune_carve','normal_rune_drain','electric_psychic_vortex','fire_psychic_fever'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['rune_mastery','arcane_mastery'],
     description:'Arcane formulae expressed as durable rune-inscriptions — spells that persist after casting because they are written rather than spoken. The Theorem Inscribed does not cast once. It writes once, and the spell continues until the inscription is removed.',
     lore:'The arcanist formulated spells. The runeblade made them permanent. The Theorem Inscribed discovered that a spell written in rune is functionally a trap with infinite duration — it waits patiently for a target and executes when the conditions are met.'
@@ -305,7 +305,7 @@ const FUSION_CLASSES_7 = {
     stats:{hp:85,maxHp:85,mp:75,maxMp:75,atk:14,def:7,spd:16,crit:20},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:9,MP:7},
     abilities:['rune_strike','bind_rune','runic_shield','elder_rune','water_ghost_phase','normal_rune_mark','normal_void_pierce','water_ghost_wraith'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['rune_mastery','phase'],
     description:'Phases through defenses to inscribe runes on the inside of armor and the inside of enemies. Every rune is invisible from the outside. The Invisible Inscription delivers its commands from within, and nothing outside can reach them to remove them.',
     lore:'The runeblade needed access to inscribe. The phantom provided it. The Invisible Inscription inscribes on surfaces no one else can reach, carving commands in places that cannot be seen, touched, or countered from any conventional exterior approach.'
@@ -431,7 +431,7 @@ const FUSION_CLASSES_7 = {
     stats:{hp:73,maxHp:73,mp:110,maxMp:110,atk:9,def:6,spd:10,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:5,MP:11},
     abilities:['raise_dead','soul_drain','bone_armor','undead_army','fire_poison_plague','fire_bug_plague','ice_ghost_chill','normal_dark_corrupt'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['death_aura','immunity'],
     description:'Raises plague-bearing undead — each corpse is a walking contagion delivery system, spreading disease on contact while remaining entirely unaffected by whatever it carries. The raised dead are immune to the plague inside them. The living are not.',
     lore:'The necromancer raised the dead. The plaguedoctor studied what killed them. The Plague Lord\'s Grave found that raising a plague victim raises the plague with them, and that the undead host is a perfect carrier: enthusiastic, mobile, and epidemiologically indifferent.'

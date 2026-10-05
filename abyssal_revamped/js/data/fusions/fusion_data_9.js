@@ -81,7 +81,7 @@ const FUSION_CLASSES_9 = {
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:10,def:8,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:7,MP:9},
     abilities:['ice_lance','frost_nova','frozen_time','absolute_zero','ice_dark_blight','ice_dark_entropy','ice_dark_drift','fire_poison_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['frost_mastery','immunity'],
     description:'Preserves disease in frozen hosts — cold enough to slow metabolism and extend the infection process, ensuring maximum duration of effect. The Frozen Sickness does not kill quickly. It makes the process very long and very thorough.',
     lore:'The plaguedoctor made disease that acted fast. The frostweaver slowed things down. The Frozen Sickness found that slowing a disease extends the window of its effect, which is better for coverage and worse for anyone who was hoping the situation would resolve quickly.'
@@ -249,7 +249,7 @@ const FUSION_CLASSES_9 = {
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:12,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
     abilities:['ice_lance','frost_nova','frozen_time','absolute_zero','ice_dark_blight','fire_poison_plague','fire_bug_plague','ice_ghost_chill'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['frost_mastery','plague_lord'],
     description:'Freezes plague inside the target — disease suspended in biological ice, preserved at full potency. When the ice shatters (at a time of the caster\'s choosing), the preserved contagion releases all at once rather than gradually. The Preserved Contagion stores up to deliver everything simultaneously.',
     lore:'Cold preserves biological material. The plaguedoctor confirmed this was true of their engineered diseases as well. The Preserved Contagion uses this property to hold plague in suspension until the optimal moment, at which point the delivery is instantaneous and comprehensive rather than gradual and partial.'
@@ -291,7 +291,7 @@ const FUSION_CLASSES_9 = {
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:10,def:6,spd:13,crit:17},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['ice_lance','frost_nova','frozen_time','absolute_zero','ice_psychic_pierce','ice_psychic_vortex','ice_psychic_drain','ice_psychic_freeze'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['frost_mastery','arcane_mastery'],
     description:'Applies arcane precision to cold — calculates exact freezing thresholds for every target, delivers cold to the specific biological and magical systems that are most vulnerable to it, and constructs psychic ice structures of mathematical exactness.',
     lore:'At low temperatures, molecular behavior is predictable. The arcanist liked predictable. The frostweaver provided the low temperatures. The Cold Formula found that freezing things to the point where their behavior can be mathematically anticipated makes arcane calculation considerably more reliable.'
@@ -319,7 +319,7 @@ const FUSION_CLASSES_9 = {
     stats:{hp:75,maxHp:75,mp:83,maxMp:83,atk:13,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:8},
     abilities:['ice_lance','frost_nova','frozen_time','absolute_zero','ice_ghost_wraith','ice_ghost_ethereal','ice_ghost_phantasm','water_ghost_phase'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['frost_mastery','phase'],
     description:'A spectral entity made of ice — phases through enemies leaving frost inside them, attacks from a state of near-total immateriality that weapons cannot reach, and drains warmth through spectral contact. The Frost Wraith freezes from the inside out.',
     lore:'Ghosts are cold. The frostweaver made things colder. The Frost Wraith emerged from the overlap and is colder than either source independently — a ghost composed of frost that phases through living things and leaves them colder for having been passed through.'
@@ -403,7 +403,7 @@ const FUSION_CLASSES_9 = {
     stats:{hp:103,maxHp:103,mp:75,maxMp:75,atk:13,def:10,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:6,MP:7},
     abilities:['dragon_claw','tail_sweep','fire_breath','dragon_charge','dragon_dark_dot_strike','dragon_dark_drain','fire_poison_plague','fire_bug_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['intimidation','immunity'],
     description:'A plague-bearing dragon — venom upgraded by the plaguedoctor to a weaponized biological agent, fire breath carrying engineered pathogens, and draconic scale wounds that deliver plague on every strike. The Venom Drake is a flying outbreak that likes to fight.',
     lore:'Dragon venom is biologically complex. The plaguedoctor studied it extensively. The Venom Drake is the result of that study: a dragon whose venom has been systematically optimized from naturally occurring to deliberately engineered, which is a modest improvement on a system that was already extremely effective.'

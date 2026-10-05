@@ -53,7 +53,7 @@ const FUSION_CLASSES_6 = {
     stats:{hp:95,maxHp:95,mp:65,maxMp:65,atk:14,def:8,spd:14,crit:18},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:6},
     abilities:['bloodlust','crimson_slash','sacrifice','blood_nova','water_ghost_wraith','normal_blood_drain','water_ghost_haunt','water_ghost_phase'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['vital_hunger','phase'],
     description:'A ghost that passes through enemies and drains blood without physical contact — the wounds open as if from nothing. Phases through barriers to reach targets, then phases back out before they can respond, leaving them hemorrhaging from invisible injuries.',
     lore:'Ghosts pass through the living without touching them. Usually. The Crimson Shade found a configuration where the passing touches something, specifically something the target needs, and takes it on the way through.'
@@ -375,7 +375,7 @@ const FUSION_CLASSES_6 = {
     stats:{hp:73,maxHp:73,mp:105,maxMp:105,atk:11,def:6,spd:11,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
     abilities:['void_bolt','entropy','singularity','annihilate','normal_void_unmake','fire_poison_plague','normal_void_drain','normal_dark_corrupt'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['void_affinity','plague_lord'],
     description:'Spreads void as a contagion — the Empty Plague transmits null-energy between biological hosts, each carrier becoming less present until they cross the threshold from ill to absent. Uncurable because it is not a disease. It is a state of being.',
     lore:'The pestilencelord created plagues that spread. The void spread itself into anything with a suitable medium. The Empty Plague combined these properties and produced something that the plaguedoctor described as beyond conventional disease management. This was meant as a compliment.'
@@ -417,7 +417,7 @@ const FUSION_CLASSES_6 = {
     stats:{hp:65,maxHp:65,mp:115,maxMp:115,atk:10,def:4,spd:12,crit:17},
     statDisplay:{HP:5,ATK:7,DEF:3,SPD:7,MP:11},
     abilities:['void_bolt','entropy','singularity','annihilate','normal_void_unmake','normal_void_drain','fire_psychic_blaze','normal_void_curse'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['void_affinity','arcane_mastery'],
     description:'Applies arcane theory to void energy — calculates the precise formula for negation and applies it with mathematical precision. Enemy spells are unwritten mid-cast. Reality is edited to remove the premise of the attack.',
     lore:'The arcanist understood the laws of magic. The void was the exception to every law. The Unwritten studied the exception and found it had its own grammar — considerably simpler than magic\'s, and pointing in only one direction.'
@@ -445,7 +445,7 @@ const FUSION_CLASSES_6 = {
     stats:{hp:68,maxHp:68,mp:95,maxMp:95,atk:12,def:4,spd:15,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:3,SPD:9,MP:9},
     abilities:['void_bolt','entropy','singularity','annihilate','water_ghost_phase','normal_void_unmake','normal_space_phase','normal_void_drain'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['void_affinity','phase'],
     description:'Two forms of non-presence merged into one. Phases between void and spectral states in alternation — present enough to attack, absent enough to be untargetable. The Absence strikes from nothingness and retreats to a different nothingness.',
     lore:'The phantom was already not quite there. The voidmancer was already not quite anything. The Absence is what emerged when two types of absence occupied the same space — something that is aggressively, deliberately, and very precisely nothing.'

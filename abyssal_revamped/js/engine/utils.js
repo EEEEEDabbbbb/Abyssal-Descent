@@ -330,6 +330,7 @@ function gainXP(amount) {
     const g = getLevelUpGains(p);
     applyPermanentBonuses(p, g, 1); // maxHp/maxMp gains also restore that much HP/MP
     p.talentPoints += 2;
+    sfx('levelup');
     logEntry('reward', `★ Level up! Now level ${p.level}. (+${g.maxHp} HP, +${g.maxMp} MP, +${g.atk} ATK, +${g.def} DEF, +${g.spd} SPD)`);
   }
 }

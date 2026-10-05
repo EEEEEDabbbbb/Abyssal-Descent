@@ -79,7 +79,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:90,maxHp:90,mp:80,maxMp:80,atk:12,def:9,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:6,MP:8},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_fighting_rage','normal_blood_mark','poison_wind_surge','fire_poison_plague'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','battle_hardened'],
     description:'Applies warlord campaign doctrine to plague deployment — disease used as a tactical weapon, infection timed for maximum disruption of enemy cohesion, and a biological war plan with objectives, timelines, and contingencies. The Biological Campaign treats disease as logistics.',
     lore:'The warlord waged war through position and timing. The plaguedoctor waged it through biology. The Biological Campaign found these were compatible doctrines: plague is an attrition weapon that rewards patience, and warlord discipline is the practice of converting patience into strategic advantage. The resulting campaign plan is both ruthlessly effective and meticulously documented.'
@@ -135,7 +135,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:80,maxHp:80,mp:98,maxMp:98,atk:12,def:8,spd:11,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:6,MP:9},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_bug_plague','fire_poison_plague','poison_cosmic_weaken','poison_wind_blast'],
-    burstAbility:'pestilence_burst',
+    burstAbility:'pestilence_lord_burst',
     passives:['immunity','plague_lord'],
     description:'The combined disease library of two biological weapons specialists — every pathogen from both traditions, administered simultaneously to exploit the synergistic progression where each disease accelerates the others. The Compound Plague makes the plaguedoctor and pestilencelord\'s arsenals available in sequence and overlap.',
     lore:'The plaguedoctor and pestilencelord represent different schools of the same practice. The Compound Plague unified their curricula and found that diseases designed by independent practitioners do not interfere with each other — they accelerate each other. This turns out to be worse for the recipient than either school anticipated.'
@@ -149,7 +149,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:80,maxHp:80,mp:82,maxMp:82,atk:12,def:7,spd:15,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_wind_cyclone','psychic_wind_blast','poison_wind_strike','poison_wind_surge'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','gust'],
     description:'Airborne pathogens at wind velocity — disease delivered as a cloud that moves at 15 SPD and covers the entire battlefield in a single turn. The Airborne has solved the plague doctor\'s fundamental coverage problem: everything in range breathes.',
     lore:'Airborne transmission is the most efficient delivery method. The windwalker controlled air. The Airborne combined these and found that a disease cloud propelled at wind speed achieves total battlefield coverage in the time it takes the enemy to identify they are under a biological attack — which is, in most cases, after they have already breathed.'
@@ -177,7 +177,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:73,maxHp:73,mp:108,maxMp:108,atk:10,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
     abilities:['infect','plague_cloud','epidemic','quarantine','psychic_cosmic_blast','psychic_dark_weaken','poison_cosmic_blast','light_rune_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['immunity','arcane_mastery'],
     description:'Disease designed by mathematical derivation — the arcanist\'s formula applied to pathogen design, producing diseases optimized by theoretical analysis rather than evolutionary selection. The Theoretical Pathogen is more efficient than anything that evolved because it was designed without constraints.',
     lore:'Evolution optimizes under constraint. The arcanist optimizes without it. The Theoretical Pathogen used arcane mathematical frameworks to derive the ideal disease from first principles and found that the result bears no resemblance to anything that evolved naturally, which means immune systems have no heuristic for responding to it.'
@@ -191,7 +191,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:118,maxHp:118,mp:70,maxMp:70,atk:9,def:14,spd:8,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:7},
     abilities:['infect','plague_cloud','epidemic','quarantine','fire_steel_quench','normal_rune_ward','poison_wind_stance','water_dark_depths'],
-    burstAbility:'plaguedoctor_burst',
+    burstAbility:'plague_doctor_burst',
     passives:['immunity','bastion'],
     description:'A fortified biological containment zone — the Quarantine Wall holds its position while sealing all exits with plague-laced barriers. The sentinel\'s immovability enforces the plaguedoctor\'s quarantine, and the disease inside the perimeter is the intended outcome rather than a side effect.',
     lore:'Quarantine requires enforcement. The plaguedoctor needed to seal perimeters. The sentinel was the best available perimeter-sealer. The Quarantine Wall operates as both: the sentinel holds the wall that ensures quarantine holds, and the disease inside the wall operates on its own schedule undisturbed by the usual factors that limit pathogen progression.'
@@ -205,7 +205,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:78,maxHp:78,mp:88,maxMp:88,atk:13,def:6,spd:15,crit:18},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
     abilities:['infect','plague_cloud','epidemic','quarantine','water_ghost_phase','water_ghost_haunt','poison_dark_drain','dark_blood_weaken'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['immunity','phase'],
     description:'A spectral plague vector — phases through physical barriers to deliver infection, immune to any counter-disease because it no longer has biology to infect. The Pestilent Specter carries disease it cannot catch to targets who cannot avoid it.',
     lore:'The plaguedoctor studied what happened when plague victims died. The phantom answered. The Pestilent Specter is the natural outcome: the disease outlasts the host and continues operating in its spectral form, which is immune to antibiotics and most other countermeasures because it no longer has the biological substrate those countermeasures are designed to address.'
@@ -401,7 +401,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:85,maxHp:85,mp:98,maxMp:98,atk:11,def:9,spd:10,crit:14},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:6,MP:9},
     abilities:['stone_skin','earth_pulse','boulder_throw','quake_slam','light_rune_blast','light_rune_drain','psychic_cosmic_blast','steel_cosmic_blast'],
-    burstAbility:'arcanist_burst',
+    burstAbility:'void_burst',
     passives:['earth_body','arcane_mastery'],
     description:'Arcane formulae inscribed in geological material — the Runic Earth casts spells through stone carvings, geological formations that encode the arcanist\'s most powerful theorems. The formulae have been in the stone for centuries. They are still valid.',
     lore:'Ancient arcane practice carved formulae in stone for permanence. The geomancer could always read them. The Runic Earth combined these traditions and found that a formula inscribed in geological substrate has the geological formation\'s own mass as a power source — and geological formations contain a great deal of potential energy.'
@@ -429,7 +429,7 @@ const FUSION_CLASSES_13 = {
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:13,def:8,spd:13,crit:16},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
     abilities:['stone_skin','earth_pulse','boulder_throw','quake_slam','water_ghost_phase','ice_ghost_chill','fire_rock_slag','normal_gravity_collapse'],
-    burstAbility:'phantom_burst',
+    burstAbility:'shadow_burst',
     passives:['earth_body','phase'],
     description:'A spectral entity composed of stone — phases through walls while carrying geological mass, strikes from within solid rock, and phases out leaving behind stone formations where it passed. The Stone Ghost makes the dungeon walls a mobility asset rather than a barrier.',
     lore:'Phantoms phase through solid matter. The geomancer worked with solid matter professionally. The Stone Ghost found that a phantom carrying geological mass phases through walls and leaves that mass behind in configurations the geomancer can specify, which converts every phase-through into both a movement and a terrain modification.'

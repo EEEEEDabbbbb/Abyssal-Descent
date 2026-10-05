@@ -84,5 +84,60 @@ const EVENTS = [
         effect:(p)=>{ const g=evScale(20), d=evScale(5); p.gold+=g;p.stats.hp=Math.max(1,p.stats.hp-d);return `Rubble and ${g} gold. Worth it?`; } },
       { text:'Ignore it', effect:(p)=>{ return 'Its eyes follow you out of the room.'; } },
     ]
+  },  { id:'bone_gambler', name:'The Bone Gambler', icon:'🎲',
+    desc:'A grinning skeleton rattles a cup of knucklebones. "Care to test your luck, little candle?"',
+    choices:[
+      { text:()=>`Wager ${evScale(25)} gold (50%: win double)`,
+        effect:(p)=>{ const w=evScale(25); if(p.gold<w) return 'You cannot cover the wager.'; if(rand(100)<50){p.gold+=w;return `The bones favor you! +${w} gold.`;} p.gold-=w; return `The bones betray you. -${w} gold.`; } },
+      { text:()=>`Wager ${Math.round(G.player.stats.maxHp*0.15)} HP for a prize (50%)`,
+        effect:(p)=>{ const c=Math.round(p.stats.maxHp*0.15); if(p.stats.hp<=c+5) return 'You are too weak to wager blood.'; p.stats.hp-=c; if(rand(100)<50){ const it=getRandomItemByFloor(G.floor+2); addToInventory(it); return `Your blood buys a prize: ${it.name}!`; } return 'The skeleton cackles and keeps your blood.'; } },
+      { text:'Walk away', effect:(p)=>{ return '"Coward," it clicks, not unkindly.'; } },
+    ]
+  },
+  { id:'rusted_armory', name:'Rusted Armory', icon:'🛡️',
+    desc:'Racks of ancient arms line the walls, most rusted to uselessness. Something glints among them.',
+    choices:[
+      { text:'Search the racks (30% chance of a trap)',
+        effect:(p)=>{ if(inventoryFull(p)) return 'Your pack is too full to carry anything more.'; if(rand(100)<30){ const d=evScale(15); p.stats.hp=Math.max(1,p.stats.hp-d); return `A rack collapses on you! -${d} HP.`; } let it=getRandomItemByFloor(G.floor); for(let i=0;i<5&&it.type==='consumable';i++) it=getRandomItemByFloor(G.floor); addToInventory(it); return `Beneath the rust: ${it.name}!`; } },
+      { text:()=>`Salvage the metal (+${evScale(18)} gold)`, effect:(p)=>{ const g=evScale(18); p.gold+=g; return `You haul out scrap worth ${g} gold.`; } },
+      { text:'Leave it to rust', effect:(p)=>{ return 'Some things are best left buried.'; } },
+    ]
+  },
+  { id:'crimson_fountain', name:'Crimson Fountain', icon:'⛲',
+    desc:'A fountain runs thick and red. It smells of iron and old promises.',
+    choices:[
+      { text:()=>`Bathe in it (full heal, -${evScale(10)} max HP for 3 floors)`,
+        effect:(p)=>{ addFloorEffect(p,{name:'Crimson Debt',stat:'maxHp',amount:-evScale(10),floors:3}); p.stats.hp=p.stats.maxHp; return 'Your wounds close — but the fountain keeps something of you.'; } },
+      { text:()=>`Drink deeply (+${2+Math.floor(G.floor/8)} ATK for 3 floors, lose 20% HP)`,
+        effect:(p)=>{ p.stats.hp=Math.max(1,Math.round(p.stats.hp*0.8)); addFloorEffect(p,{name:'Blood Frenzy',stat:'atk',amount:2+Math.floor(G.floor/8),floors:3}); return 'Rage floods your veins.'; } },
+      { text:'Leave the fountain', effect:(p)=>{ return 'The red water stills as you go.'; } },
+    ]
+  },
+  { id:'trapped_spirit', name:'Trapped Spirit', icon:'👻',
+    desc:'A pale figure beats against a ring of glowing runes, begging to be released.',
+    choices:[
+      { text:'Break the runes (+1 talent point)', effect:(p)=>{ p.talentPoints=(p.talentPoints||0)+1; return 'The spirit flees upward, whispering a secret of power. +1 talent point.'; } },
+      { text:()=>`Bind it to yourself (+3 CRIT permanently, -${evScale(10)} MP)`,
+        effect:(p)=>{ p.stats.mp=Math.max(0,p.stats.mp-evScale(10)); addPermanentStat(p,'crit',3); return 'The spirit howls as it sinks into you. +3 CRIT.'; } },
+      { text:'Leave it be', effect:(p)=>{ return 'Its pleading follows you down the corridor.'; } },
+    ]
+  },
+  { id:'wounded_adventurer', name:'Wounded Adventurer', icon:'🧝',
+    desc:'Another delver lies propped against the wall, bleeding badly. "Please… do you have anything?"',
+    choices:[
+      { text:'Give a Blood Flask (they reward you)',
+        effect:(p)=>{ const i=p.inventory.findIndex(it=>it.id==='health_potion'); if(i<0) return 'You have no Blood Flask to give.'; p.inventory.splice(i,1); const it=getRandomItemByFloor(G.floor+3); addToInventory(it); return `"Take this — I won't need it where I'm going." You receive ${it.name}.`; } },
+      { text:()=>`Bandage them (-${evScale(8)} HP, +${Math.round(xpForLevel(G.player.level)*0.4)} XP)`,
+        effect:(p)=>{ p.stats.hp=Math.max(1,p.stats.hp-evScale(8)); gainXP(Math.round(xpForLevel(p.level)*0.4)); return 'You patch them up and learn a thing or two about the depths.'; } },
+      { text:()=>`Rob them (+${evScale(35)} gold, -1 DEF permanently)`, effect:(p)=>{ const g=evScale(35); p.gold+=g; addPermanentStat(p,'def',-1); return `You take ${g} gold. Something in you hardens — and something else cracks.`; } },
+    ]
+  },
+  { id:'whispering_chest', name:'Whispering Chest', icon:'🧰',
+    desc:'An ornate chest whispers your name. Its lid is lined with suspiciously sharp teeth.',
+    choices:[
+      { text:'Open it (60%: great loot, 40%: mimic bite)',
+        effect:(p)=>{ if(inventoryFull(p)) return 'Your pack is too full to take anything.'; if(rand(100)<60){ const it=getRandomItemByFloor(Math.min(FLOOR_COUNT,G.floor+6)); addToInventory(it); return `The whispers were true: ${it.name}!`; } const d=Math.round(p.stats.maxHp*0.25); p.stats.hp=Math.max(1,p.stats.hp-d); return `MIMIC! It bites for ${d} before scuttling into the dark.`; } },
+      { text:'Leave it closed', effect:(p)=>{ return 'The whispering turns to a disappointed sigh.'; } },
+    ]
   },
 ];

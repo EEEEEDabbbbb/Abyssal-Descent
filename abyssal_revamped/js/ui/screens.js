@@ -224,7 +224,7 @@ function renderClassSelect() {
     card.innerHTML = `
       <div class="class-icon">${cls.icon}</div>
       <div class="class-name">${cls.name}</div>
-      ${elObj ? `<div style="color:${elObj.color};font-size:0.65rem;margin-bottom:2px">${elObj.icon} ${elObj.name}</div>` : ''}
+      ${elObj ? `<div style="color:${elObj.color};font-size:0.65rem;margin-bottom:2px">${elObj.icon} ${elObj.name}${elementFlavorText(cls)}</div>` : ''}
       <div class="class-tagline" style="font-size:0.65rem;color:var(--text-mid);font-style:italic;margin-bottom:6px;line-height:1.3">${cls.tagline}</div>
       <div class="class-stat-bars" style="margin-top:auto">${statBars}</div>
       ${lockOverlay}`;
@@ -275,6 +275,7 @@ function gameOver() {
   _updateContinueBtn();
   const p           = G.player;
   const floorReached = G.floor;
+  sfx('death');
   const shards = Math.max(1, Math.round(floorReached * 1.5 + (p.level - 1) * 2));
   G.meta.soulShards += shards;
   saveMeta();
