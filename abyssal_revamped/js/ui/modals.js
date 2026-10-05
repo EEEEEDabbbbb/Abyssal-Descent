@@ -107,9 +107,11 @@ function typicalShopPrice(item, floor = G.floor) {
 function _generateShopItems() {
   const floor = G.floor;
   const items = [];
-  // 3 items + 2 consumables
+  // 3 pieces of gear + 2 consumables, no duplicates
+  const stocked = new Set();
   for (let i=0;i<3;i++) {
-    const item = getRandomItemByFloor(floor);
+    const item = getRandomGearByFloor(floor, stocked);
+    stocked.add(item.id);
     const mult = RARITY_PRICE_MULT[item.rarity] || 1;
     const shopPrice = Math.floor((20 + floor*4 + rand(20)) * mult);
     items.push({...item, shopPrice});
@@ -121,9 +123,7 @@ function _generateShopItems() {
   const healId = floor >= 25 ? 'abyssal_elixir_l' : floor >= 15 ? 'grand_elixir' : floor >= 7 ? 'heavy_elixir' : 'health_potion';
   const heal = ITEM_POOL.find(it => it.id === healId);
   if (heal) items.push({ ...cloneItem(heal), shopPrice: consPrice(heal) });
-  const w = getLootWeights(floor);
-  let roll = randFloat() * w.reduce((s, v) => s + v, 0), rarity = 'common';
-  for (let k = 0; k < w.length; k++) { roll -= w[k]; if (roll < 0) { rarity = LOOT_RARITIES[k]; break; } }
+  const rarity = rollLootRarity(floor);
   const pool = ITEM_POOL.filter(it => it.type === 'consumable' && it.rarity === rarity && it.id !== healId);
   if (pool.length) { const c = pool[rand(pool.length)]; items.push({ ...cloneItem(c), shopPrice: consPrice(c) }); }
   return items;

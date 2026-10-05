@@ -50,7 +50,9 @@
 - Each level-up restores 25% HP and MP.
 - Merchants always sell a healing potion that keeps up with your depth,
   plus a consumable rolled with the floor's loot odds (they only ever sold
-  floor-1 potions before). HP-regen gear restores 2% max HP per turn
+  floor-1 potions before). Their three other slots are always gear, never
+  the same piece twice (a potion could show up there at a gear price, next
+  to the same potion at the normal price). HP-regen gear restores 2% max HP per turn
   instead of a flat 5. Selling pays a quarter of the merchant's price at
   your depth (a mythical item sold for 60 gold on any floor). Consumables
   sell for a quarter of a consumable's price, so nothing a merchant sells can

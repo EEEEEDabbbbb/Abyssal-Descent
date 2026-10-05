@@ -736,14 +736,24 @@ function getLootWeights(floor) {
   return w;
 }
 
-function getRandomItemByFloor(floor) {
+function rollLootRarity(floor) {
   const w = getLootWeights(floor);
   let roll = randFloat() * w.reduce((s, v) => s + v, 0);
   for (let k = 0; k < w.length; k++) {
     roll -= w[k];
-    if (roll < 0) return getRandomItem(LOOT_RARITIES[k]);
+    if (roll < 0) return LOOT_RARITIES[k];
   }
-  return getRandomItem('rare');
+  return 'rare';
+}
+function getRandomItemByFloor(floor) { return getRandomItem(rollLootRarity(floor)); }
+
+// getRandomGearByFloor — a weapon, armour or relic with the floor's loot
+// odds, skipping ids in `exclude` (merchants never stock the same thing twice)
+function getRandomGearByFloor(floor, exclude = new Set()) {
+  const rarity = rollLootRarity(floor);
+  let pool = ITEM_POOL.filter(i => i.type !== 'consumable' && i.rarity === rarity && !exclude.has(i.id));
+  if (!pool.length) pool = ITEM_POOL.filter(i => i.type !== 'consumable' && !exclude.has(i.id));
+  return pool.length ? cloneItem(pool[rand(pool.length)]) : getRandomItem(rarity);
 }
 
 // getBossLootByFloor — guaranteed high-quality loot for boss kills.

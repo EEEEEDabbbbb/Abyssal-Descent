@@ -419,6 +419,25 @@ test('a full pack never eats gold or loot', async () => {
   assert.equal(r.chest, 'treasure');
 });
 
+test('merchants stock three different pieces of gear and two consumables', async () => {
+  const bad = await run(() => {
+    __startTestRun('shadowblade', 1);
+    const out = [];
+    for (const floor of [1, 8, 20, 35, 50]) {
+      G.floor = floor;
+      for (let i = 0; i < 40; i++) {
+        const items = _generateShopItems();
+        const gear = items.slice(0, 3), cons = items.slice(3);
+        if (gear.some(it => it.type === 'consumable')) out.push(`f${floor}: consumable in a gear slot`);
+        if (cons.length !== 2 || cons.some(it => it.type !== 'consumable')) out.push(`f${floor}: consumables ${cons.map(c => c.id)}`);
+        if (new Set(items.map(it => it.id)).size !== items.length) out.push(`f${floor}: duplicate ${items.map(it => it.id)}`);
+      }
+    }
+    return out.slice(0, 5);
+  });
+  assert.deepEqual(bad, []);
+});
+
 test('nothing a merchant sells can be sold back for a profit, on any floor', async () => {
   const bad = await run(() => {
     __startTestRun('shadowblade', 1);
