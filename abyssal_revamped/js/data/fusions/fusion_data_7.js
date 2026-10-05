@@ -48,7 +48,7 @@ const FUSION_CLASSES_7 = {
   rune_spellsword: {
     id:'rune_spellsword', name:'The Written Blade', icon:'🔱',
     tagline:'The spell is the rune. The rune is the sword. It is one weapon.',
-    color:'#c47766', element:'runepsychic', rarity:'rare',
+    color:'#c47766', element:'normal', elementFlavor:'runepsychic', rarity:'rare',
     fusedFrom:['runeblade','spellsword'],
     stats:{hp:95,maxHp:95,mp:75,maxMp:75,atk:13,def:9,spd:13,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:7},
@@ -62,7 +62,7 @@ const FUSION_CLASSES_7 = {
   rune_plague: {
     id:'rune_plague', name:'The Infected Inscription', icon:'🔱',
     tagline:'The mark spreads. What the mark says is contagious.',
-    color:'#b3aa2b', element:'runeplague', rarity:'epic',
+    color:'#b3aa2b', element:'normal', elementFlavor:'runeplague', rarity:'epic',
     fusedFrom:['runeblade','plaguedoctor'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -76,7 +76,7 @@ const FUSION_CLASSES_7 = {
   rune_geo: {
     id:'rune_geo', name:'The Carved Earth', icon:'🔱',
     tagline:'The mountain holds the inscription. The inscription holds the mountain.',
-    color:'#c4993c', element:'runeearth', rarity:'uncommon',
+    color:'#c4993c', element:'normal', elementFlavor:'runeearth', rarity:'uncommon',
     fusedFrom:['runeblade','geomancer'],
     stats:{hp:100,maxHp:100,mp:70,maxMp:70,atk:13,def:11,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:7,MP:7},
@@ -90,7 +90,7 @@ const FUSION_CLASSES_7 = {
   rune_lightbringer: {
     id:'rune_lightbringer', name:'The Illuminated Text', icon:'🔱',
     tagline:'Every rune glows. What it says is bright enough to blind.',
-    color:'#eec433', element:'runelight', rarity:'rare',
+    color:'#eec433', element:'normal', elementFlavor:'runelight', rarity:'rare',
     fusedFrom:['runeblade','lightbringer'],
     stats:{hp:93,maxHp:93,mp:78,maxMp:78,atk:13,def:9,spd:13,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -118,7 +118,7 @@ const FUSION_CLASSES_7 = {
   rune_tech: {
     id:'rune_tech', name:'The Etched Circuit', icon:'🔱',
     tagline:'Runes are ancient code. Circuits are modern runes. They agree on this.',
-    color:'#919966', element:'runetech', rarity:'epic',
+    color:'#919966', element:'normal', elementFlavor:'runetech', rarity:'epic',
     fusedFrom:['runeblade','techsavant'],
     stats:{hp:90,maxHp:90,mp:83,maxMp:83,atk:13,def:8,spd:14,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -132,7 +132,7 @@ const FUSION_CLASSES_7 = {
   rune_grave: {
     id:'rune_grave', name:'The Funerary Script', icon:'🔱',
     tagline:'The inscription on the grave is a command, not a memorial.',
-    color:'#998855', element:'runesoul', rarity:'rare',
+    color:'#998855', element:'normal', elementFlavor:'runesoul', rarity:'rare',
     fusedFrom:['runeblade','gravewarden'],
     stats:{hp:108,maxHp:108,mp:68,maxMp:68,atk:13,def:12,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:7},
@@ -146,7 +146,7 @@ const FUSION_CLASSES_7 = {
   rune_magnetist: {
     id:'rune_magnetist', name:'The Magnetic Inscription', icon:'🔱',
     tagline:'The rune draws what it describes. The inscription becomes the force.',
-    color:'#99a266', element:'runemagnet', rarity:'rare',
+    color:'#99a266', element:'normal', elementFlavor:'runemagnet', rarity:'rare',
     fusedFrom:['runeblade','magnetist'],
     stats:{hp:93,maxHp:93,mp:78,maxMp:78,atk:13,def:9,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -160,7 +160,7 @@ const FUSION_CLASSES_7 = {
   rune_crystal: {
     id:'rune_crystal', name:'Crystal Scripture', icon:'🔱',
     tagline:'The crystal holds the inscription perfectly. It will hold it forever.',
-    color:'#b3b391', element:'runecrystal', rarity:'epic',
+    color:'#b3b391', element:'normal', elementFlavor:'runecrystal', rarity:'epic',
     fusedFrom:['runeblade','crystalmancer'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:14,def:8,spd:14,crit:17},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:8},
@@ -174,7 +174,7 @@ const FUSION_CLASSES_7 = {
   rune_war: {
     id:'rune_war', name:'The Battle Codex', icon:'🔱',
     tagline:'Tactical doctrine carved in iron. The enemy is the footnote.',
-    color:'#d57711', element:'runewar', rarity:'rare',
+    color:'#d57711', element:'normal', elementFlavor:'runewar', rarity:'rare',
     fusedFrom:['runeblade','warlord'],
     stats:{hp:110,maxHp:110,mp:63,maxMp:63,atk:15,def:11,spd:12,crit:12},
     statDisplay:{HP:7,ATK:11,DEF:8,SPD:7,MP:6},
@@ -188,7 +188,7 @@ const FUSION_CLASSES_7 = {
   rune_spirit: {
     id:'rune_spirit', name:'The Living Glyph', icon:'🔱',
     tagline:'The spirit inhabits the inscription. The inscription inhabits the spirit.',
-    color:'#91aa55', element:'runespirit', rarity:'epic',
+    color:'#91aa55', element:'normal', elementFlavor:'runespirit', rarity:'epic',
     fusedFrom:['runeblade','spiritwalker'],
     stats:{hp:95,maxHp:95,mp:78,maxMp:78,atk:12,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -202,7 +202,7 @@ const FUSION_CLASSES_7 = {
   rune_hex: {
     id:'rune_hex', name:'The Accursed Mark', icon:'🔱',
     tagline:'The inscription is the hex. Reading it is enough.',
-    color:'#b36655', element:'bloodrune', rarity:'epic',
+    color:'#b36655', element:'normal', elementFlavor:'bloodrune', rarity:'epic',
     fusedFrom:['runeblade','hexblade'],
     stats:{hp:90,maxHp:90,mp:80,maxMp:80,atk:13,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:8,MP:8},
@@ -216,7 +216,7 @@ const FUSION_CLASSES_7 = {
   rune_cosmo: {
     id:'rune_cosmo', name:'The Astral Codex', icon:'🔱',
     tagline:'The stars were inscribed before the dungeon existed. They have seniority.',
-    color:'#916f66', element:'runecosmic', rarity:'legendary',
+    color:'#916f66', element:'normal', elementFlavor:'runecosmic', rarity:'legendary',
     fusedFrom:['runeblade','cosmomancer'],
     stats:{hp:85,maxHp:85,mp:93,maxMp:93,atk:12,def:7,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
@@ -230,7 +230,7 @@ const FUSION_CLASSES_7 = {
   rune_pestilence: {
     id:'rune_pestilence', name:'The Plague Seal', icon:'🔱',
     tagline:'The rune seals the disease. Inside the target.',
-    color:'#999911', element:'runeplague', rarity:'epic',
+    color:'#999911', element:'normal', elementFlavor:'runeplague', rarity:'epic',
     fusedFrom:['runeblade','pestilencelord'],
     stats:{hp:90,maxHp:90,mp:85,maxMp:85,atk:13,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -244,7 +244,7 @@ const FUSION_CLASSES_7 = {
   rune_wind: {
     id:'rune_wind', name:'The Wind-Written', icon:'🔱',
     tagline:'The wind carries the inscription everywhere it goes. That is everywhere.',
-    color:'#b3bb66', element:'runewind', rarity:'rare',
+    color:'#b3bb66', element:'normal', elementFlavor:'runewind', rarity:'rare',
     fusedFrom:['runeblade','windwalker'],
     stats:{hp:90,maxHp:90,mp:70,maxMp:70,atk:13,def:8,spd:17,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:9,MP:7},
@@ -258,7 +258,7 @@ const FUSION_CLASSES_7 = {
   rune_doom: {
     id:'rune_doom', name:'The Final Inscription', icon:'🔱',
     tagline:'The last rune is always the same rune. It says: end.',
-    color:'#a26f2b', element:'bloodrune', rarity:'legendary',
+    color:'#a26f2b', element:'normal', elementFlavor:'bloodrune', rarity:'legendary',
     fusedFrom:['runeblade','doomcaster'],
     stats:{hp:85,maxHp:85,mp:90,maxMp:90,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
@@ -272,7 +272,7 @@ const FUSION_CLASSES_7 = {
   rune_arcanist: {
     id:'rune_arcanist', name:'The Theorem Inscribed', icon:'🔱',
     tagline:'The formula written in rune cannot be argued with. Only solved.',
-    color:'#996f77', element:'runepsychic', rarity:'epic',
+    color:'#996f77', element:'normal', elementFlavor:'runepsychic', rarity:'epic',
     fusedFrom:['runeblade','arcanist'],
     stats:{hp:83,maxHp:83,mp:95,maxMp:95,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
@@ -286,7 +286,7 @@ const FUSION_CLASSES_7 = {
   rune_sentinel: {
     id:'rune_sentinel', name:'The Warded Bastion', icon:'🔱',
     tagline:'The wall is already inscribed. Every approach triggers something.',
-    color:'#b39955', element:'runeforge', rarity:'uncommon',
+    color:'#b39955', element:'normal', elementFlavor:'runeforge', rarity:'uncommon',
     fusedFrom:['runeblade','sentinel'],
     stats:{hp:130,maxHp:130,mp:55,maxMp:55,atk:11,def:14,spd:9,crit:9},
     statDisplay:{HP:9,ATK:8,DEF:9,SPD:5,MP:5},
@@ -300,7 +300,7 @@ const FUSION_CLASSES_7 = {
   rune_phantom: {
     id:'rune_phantom', name:'The Invisible Inscription', icon:'🔱',
     tagline:'The rune you cannot see still executes when you cross it.',
-    color:'#b3a26f', element:'runesoul', rarity:'legendary',
+    color:'#b3a26f', element:'normal', elementFlavor:'runesoul', rarity:'legendary',
     fusedFrom:['runeblade','phantom'],
     stats:{hp:85,maxHp:85,mp:75,maxMp:75,atk:14,def:7,spd:16,crit:20},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:9,MP:7},
@@ -314,7 +314,7 @@ const FUSION_CLASSES_7 = {
   necro_paladin: {
     id:'necro_paladin', name:'The Undying Crusade', icon:'💀',
     tagline:'Righteousness does not end at death. Neither does the war.',
-    color:'#88bb5e', element:'sacredsoul', rarity:'epic',
+    color:'#88bb5e', element:'ghost', elementFlavor:'sacredsoul', rarity:'epic',
     fusedFrom:['necromancer','paladin'],
     stats:{hp:100,maxHp:100,mp:90,maxMp:90,atk:10,def:9,spd:9,crit:9},
     statDisplay:{HP:7,ATK:7,DEF:6,SPD:5,MP:9},
@@ -328,7 +328,7 @@ const FUSION_CLASSES_7 = {
   necro_frost: {
     id:'necro_frost', name:'The Frozen Dead', icon:'💀',
     tagline:'Cold preserves. This is a feature, not a coincidence.',
-    color:'#5ec4b3', element:'frosted_ghost', rarity:'epic',
+    color:'#5ec4b3', element:'ghost', elementFlavor:'frosted_ghost', rarity:'epic',
     fusedFrom:['necromancer','frostweaver'],
     stats:{hp:75,maxHp:75,mp:103,maxMp:103,atk:10,def:7,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:10},
@@ -342,7 +342,7 @@ const FUSION_CLASSES_7 = {
   necro_dragon: {
     id:'necro_dragon', name:'Dracolicha', icon:'💀',
     tagline:'A dragon does not stay dead. Not when the necromancer is nearby.',
-    color:'#888833', element:'dragonspirit', rarity:'epic',
+    color:'#888833', element:'ghost', elementFlavor:'dragonspirit', rarity:'epic',
     fusedFrom:['necromancer','dragonknight'],
     stats:{hp:100,maxHp:100,mp:85,maxMp:85,atk:13,def:9,spd:10,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:6,MP:8},
@@ -356,7 +356,7 @@ const FUSION_CLASSES_7 = {
   necro_tide: {
     id:'necro_tide', name:'The Drowned Army', icon:'💀',
     tagline:'They drowned. They rose. They are wet about it.',
-    color:'#3ca299', element:'tidesoul', rarity:'rare',
+    color:'#3ca299', element:'ghost', elementFlavor:'tidesoul', rarity:'rare',
     fusedFrom:['necromancer','tidecaller'],
     stats:{hp:78,maxHp:78,mp:105,maxMp:105,atk:10,def:7,spd:11,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:10},
@@ -370,7 +370,7 @@ const FUSION_CLASSES_7 = {
   necro_gravitist: {
     id:'necro_gravitist', name:'The Grave Pull', icon:'💀',
     tagline:'Everything falls into the grave. It simply accelerates the falling.',
-    color:'#3c8066', element:'gravesoul', rarity:'epic',
+    color:'#3c8066', element:'ghost', elementFlavor:'gravesoul', rarity:'epic',
     fusedFrom:['necromancer','gravitist'],
     stats:{hp:73,maxHp:73,mp:108,maxMp:108,atk:9,def:6,spd:11,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:6,MP:10},
@@ -384,7 +384,7 @@ const FUSION_CLASSES_7 = {
   necro_soundbreaker: {
     id:'necro_soundbreaker', name:'The Death Knell', icon:'💀',
     tagline:'The bell rings once. Everyone hears it. Not everyone is still standing when it stops.',
-    color:'#88aa5e', element:'wailsoul', rarity:'epic',
+    color:'#88aa5e', element:'ghost', elementFlavor:'wailsoul', rarity:'epic',
     fusedFrom:['necromancer','soundbreaker'],
     stats:{hp:75,maxHp:75,mp:103,maxMp:103,atk:11,def:6,spd:13,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -398,7 +398,7 @@ const FUSION_CLASSES_7 = {
   necro_chrono: {
     id:'necro_chrono', name:'The Timeless Grave', icon:'💀',
     tagline:'The dead do not age. Time does not reach the grave.',
-    color:'#6f99b3', element:'timeghost', rarity:'epic',
+    color:'#6f99b3', element:'ghost', elementFlavor:'timeghost', rarity:'epic',
     fusedFrom:['necromancer','chronomancer'],
     stats:{hp:70,maxHp:70,mp:115,maxMp:115,atk:9,def:6,spd:12,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:11},
@@ -412,7 +412,7 @@ const FUSION_CLASSES_7 = {
   necro_spellsword: {
     id:'necro_spellsword', name:'The Lich Blade', icon:'💀',
     tagline:'Arcane power and undying will. The blade requires both.',
-    color:'#6f7788', element:'mindghost', rarity:'epic',
+    color:'#6f7788', element:'ghost', elementFlavor:'mindghost', rarity:'epic',
     fusedFrom:['necromancer','spellsword'],
     stats:{hp:80,maxHp:80,mp:100,maxMp:100,atk:11,def:7,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:10},
@@ -426,7 +426,7 @@ const FUSION_CLASSES_7 = {
   necro_plague: {
     id:'necro_plague', name:'The Plague Lord\'s Grave', icon:'💀',
     tagline:'The disease outlives the patient. It is preserved in the corpse. The corpse walks.',
-    color:'#5eaa4d', element:'plaguesoul', rarity:'epic',
+    color:'#5eaa4d', element:'ghost', elementFlavor:'plaguesoul', rarity:'epic',
     fusedFrom:['necromancer','plaguedoctor'],
     stats:{hp:73,maxHp:73,mp:110,maxMp:110,atk:9,def:6,spd:10,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:5,MP:11},
@@ -440,7 +440,7 @@ const FUSION_CLASSES_7 = {
   necro_geo: {
     id:'necro_geo', name:'The Barrow Mound', icon:'💀',
     tagline:'The earth remembers everything buried in it. Every burial is a resource.',
-    color:'#6f995e', element:'earthspirit', rarity:'rare',
+    color:'#6f995e', element:'ghost', elementFlavor:'earthspirit', rarity:'rare',
     fusedFrom:['necromancer','geomancer'],
     stats:{hp:85,maxHp:85,mp:95,maxMp:95,atk:10,def:9,spd:9,crit:10},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:5,MP:9},
@@ -454,7 +454,7 @@ const FUSION_CLASSES_7 = {
   necro_lightbringer: {
     id:'necro_lightbringer', name:'The Graveside Vigil', icon:'💀',
     tagline:'The light at the grave is not comforting. It illuminates what is still moving.',
-    color:'#99c455', element:'sacredsoul', rarity:'epic',
+    color:'#99c455', element:'ghost', elementFlavor:'sacredsoul', rarity:'epic',
     fusedFrom:['necromancer','lightbringer'],
     stats:{hp:78,maxHp:78,mp:103,maxMp:103,atk:11,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -468,7 +468,7 @@ const FUSION_CLASSES_7 = {
   necro_beast: {
     id:'necro_beast', name:'The Dead Pack', icon:'💀',
     tagline:'The pack runs forever. It has no choice in the matter.',
-    color:'#5eb355', element:'runesoul', rarity:'rare',
+    color:'#5eb355', element:'ghost', elementFlavor:'runesoul', rarity:'rare',
     fusedFrom:['necromancer','beastmaster'],
     stats:{hp:83,maxHp:83,mp:93,maxMp:93,atk:12,def:7,spd:12,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:7,MP:9},
@@ -482,7 +482,7 @@ const FUSION_CLASSES_7 = {
   necro_tech: {
     id:'necro_tech', name:'The Undying Machine', icon:'💀',
     tagline:'The machine never lived. It cannot die. These statements are compatible.',
-    color:'#3c9988', element:'techghost', rarity:'epic',
+    color:'#3c9988', element:'ghost', elementFlavor:'techghost', rarity:'epic',
     fusedFrom:['necromancer','techsavant'],
     stats:{hp:75,maxHp:75,mp:108,maxMp:108,atk:10,def:6,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -510,7 +510,7 @@ const FUSION_CLASSES_7 = {
   necro_magnetist: {
     id:'necro_magnetist', name:'The Iron Dead', icon:'💀',
     tagline:'The skeleton rattles for a reason. The reason is magnetic.',
-    color:'#44a288', element:'magnetghost', rarity:'epic',
+    color:'#44a288', element:'ghost', elementFlavor:'magnetghost', rarity:'epic',
     fusedFrom:['necromancer','magnetist'],
     stats:{hp:78,maxHp:78,mp:103,maxMp:103,atk:11,def:7,spd:11,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:10},
@@ -524,7 +524,7 @@ const FUSION_CLASSES_7 = {
   necro_crystal: {
     id:'necro_crystal', name:'The Crystal Tomb', icon:'💀',
     tagline:'The crystal preserves the dead perfectly. They are preserved indefinitely.',
-    color:'#5eb3b3', element:'crystalghost', rarity:'legendary',
+    color:'#5eb3b3', element:'ghost', elementFlavor:'crystalghost', rarity:'legendary',
     fusedFrom:['necromancer','crystalmancer'],
     stats:{hp:70,maxHp:70,mp:110,maxMp:110,atk:12,def:6,spd:12,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
@@ -538,7 +538,7 @@ const FUSION_CLASSES_7 = {
   necro_war: {
     id:'necro_war', name:'The Endless Legion', icon:'💀',
     tagline:'The army that replenishes itself from its own casualties is the only army that cannot be routed.',
-    color:'#807733', element:'warsoul', rarity:'rare',
+    color:'#807733', element:'ghost', elementFlavor:'warsoul', rarity:'rare',
     fusedFrom:['necromancer','warlord'],
     stats:{hp:95,maxHp:95,mp:88,maxMp:88,atk:13,def:9,spd:11,crit:11},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:6,MP:8},
@@ -552,7 +552,7 @@ const FUSION_CLASSES_7 = {
   necro_spirit: {
     id:'necro_spirit', name:'The Ancestor Choir', icon:'💀',
     tagline:'The dead speak. The necromancer has given them a great deal to say.',
-    color:'#3caa77', element:'spiritghost', rarity:'epic',
+    color:'#3caa77', element:'ghost', elementFlavor:'spiritghost', rarity:'epic',
     fusedFrom:['necromancer','spiritwalker'],
     stats:{hp:80,maxHp:80,mp:103,maxMp:103,atk:10,def:7,spd:12,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},

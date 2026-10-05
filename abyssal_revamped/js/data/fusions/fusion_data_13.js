@@ -14,7 +14,7 @@ const FUSION_RECIPES_13 = {
   'doomcaster+plaguedoctor': 'plague_doom',
   'arcanist+plaguedoctor': 'plague_arcanist',
   'plaguedoctor+sentinel': 'plague_sentinel',
-  'phantom+plaguedoctor': 'plague_phantom',
+  'phantom+plaguedoctor': 'pestilent_specter',
   'geomancer+lightbringer': 'geo_lightbringer',
   'beastmaster+geomancer': 'geo_beast',
   'geomancer+techsavant': 'geo_tech',
@@ -46,7 +46,7 @@ const FUSION_CLASSES_13 = {
   plague_magnetist: {
     id:'plague_magnetist', name:'The Iron Contagion', icon:'🩺',
     tagline:'The disease rides the magnetic field. The field is everywhere.',
-    color:'#4d7788', element:'magnetplague', rarity:'epic',
+    color:'#4d7788', element:'poison', elementFlavor:'magnetplague', rarity:'epic',
     fusedFrom:['plaguedoctor','magnetist'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_13 = {
   plague_crystal: {
     id:'plague_crystal', name:'The Crystalline Plague', icon:'🩺',
     tagline:'The crystal is beautiful. The crystal is also growing inside the host.',
-    color:'#88aa66', element:'crystalplague', rarity:'epic',
+    color:'#88aa66', element:'poison', elementFlavor:'crystalplague', rarity:'epic',
     fusedFrom:['plaguedoctor','crystalmancer'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:12,def:7,spd:12,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_13 = {
   plague_war: {
     id:'plague_war', name:'The Biological Campaign', icon:'🩺',
     tagline:'The most effective siege weapon is patience. The plague has infinite patience.',
-    color:'#887755', element:'plaguewar', rarity:'rare',
+    color:'#887755', element:'poison', elementFlavor:'plaguewar', rarity:'rare',
     fusedFrom:['plaguedoctor','warlord'],
     stats:{hp:90,maxHp:90,mp:80,maxMp:80,atk:12,def:9,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:6,MP:8},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_13 = {
   plague_spirit: {
     id:'plague_spirit', name:'The Plague Ghost', icon:'🩺',
     tagline:'The spirit carries disease between worlds. Both worlds suffer.',
-    color:'#668877', element:'plaguespirit', rarity:'epic',
+    color:'#668877', element:'poison', elementFlavor:'plaguespirit', rarity:'epic',
     fusedFrom:['plaguedoctor','spiritwalker'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:11,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:7,MP:8},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_13 = {
   plague_hex: {
     id:'plague_hex', name:'The Cursed Infection', icon:'🩺',
     tagline:'The curse weakens the immune system. The plague exploits the weakness. This is intentional.',
-    color:'#7755aa', element:'hexplague', rarity:'epic',
+    color:'#7755aa', element:'poison', elementFlavor:'hexplague', rarity:'epic',
     fusedFrom:['plaguedoctor','hexblade'],
     stats:{hp:80,maxHp:80,mp:92,maxMp:92,atk:12,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_13 = {
   plague_cosmo: {
     id:'plague_cosmo', name:'The Stellar Pathogen', icon:'🩺',
     tagline:'Life exists elsewhere. So does disease. This one came from further away.',
-    color:'#5566aa', element:'cosmoplague', rarity:'legendary',
+    color:'#5566aa', element:'poison', elementFlavor:'cosmoplague', rarity:'legendary',
     fusedFrom:['plaguedoctor','cosmomancer'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:11,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_13 = {
   plague_pestilence: {
     id:'plague_pestilence', name:'The Compound Plague', icon:'🩺',
     tagline:'Two experts in the same field, working together. The field is death.',
-    color:'#558855', element:'fullplague', rarity:'legendary',
+    color:'#558855', element:'poison', elementFlavor:'fullplague', rarity:'legendary',
     fusedFrom:['plaguedoctor','pestilencelord'],
     stats:{hp:80,maxHp:80,mp:98,maxMp:98,atk:12,def:8,spd:11,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:6,MP:9},
@@ -144,7 +144,7 @@ const FUSION_CLASSES_13 = {
   plague_wind: {
     id:'plague_wind', name:'The Airborne', icon:'🩺',
     tagline:'The wind carries everything. The plaguedoctor optimized for this.',
-    color:'#88aa44', element:'windplague', rarity:'rare',
+    color:'#88aa44', element:'poison', elementFlavor:'windplague', rarity:'rare',
     fusedFrom:['plaguedoctor','windwalker'],
     stats:{hp:80,maxHp:80,mp:82,maxMp:82,atk:12,def:7,spd:15,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_13 = {
   plague_doom: {
     id:'plague_doom', name:'The Terminal Diagnosis', icon:'🩺',
     tagline:'The diagnosis is terminal. The doom confirms it. This is now a formality.',
-    color:'#667766', element:'doomplague', rarity:'legendary',
+    color:'#667766', element:'poison', elementFlavor:'doomplague', rarity:'legendary',
     fusedFrom:['plaguedoctor','doomcaster'],
     stats:{hp:75,maxHp:75,mp:103,maxMp:103,atk:10,def:6,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_13 = {
   plague_arcanist: {
     id:'plague_arcanist', name:'The Theoretical Pathogen', icon:'🩺',
     tagline:'The disease derived mathematically is more efficient than one evolved naturally.',
-    color:'#6677aa', element:'arcaneplague', rarity:'legendary',
+    color:'#6677aa', element:'poison', elementFlavor:'arcaneplague', rarity:'legendary',
     fusedFrom:['plaguedoctor','arcanist'],
     stats:{hp:73,maxHp:73,mp:108,maxMp:108,atk:10,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_13 = {
   plague_sentinel: {
     id:'plague_sentinel', name:'The Quarantine Wall', icon:'🩺',
     tagline:'Nothing comes in. Nothing goes out. The disease inside is not your concern. Yet.',
-    color:'#668866', element:'plaguewall', rarity:'uncommon',
+    color:'#668866', element:'poison', elementFlavor:'plaguewall', rarity:'uncommon',
     fusedFrom:['plaguedoctor','sentinel'],
     stats:{hp:118,maxHp:118,mp:70,maxMp:70,atk:9,def:14,spd:8,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:7},
@@ -197,10 +197,10 @@ const FUSION_CLASSES_13 = {
     lore:'Quarantine requires enforcement. The plaguedoctor needed to seal perimeters. The sentinel was the best available perimeter-sealer. The Quarantine Wall operates as both: the sentinel holds the wall that ensures quarantine holds, and the disease inside the wall operates on its own schedule undisturbed by the usual factors that limit pathogen progression.'
   },
 
-  plague_phantom: {
-    id:'plague_phantom', name:'The Pestilent Specter', icon:'🩺',
+  pestilent_specter: {
+    id:'pestilent_specter', name:'The Pestilent Specter', icon:'🩺',
     tagline:'The ghost of a plague victim carries the plague. This was predictable.',
-    color:'#6699aa', element:'plagueghost', rarity:'legendary',
+    color:'#6699aa', element:'poison', elementFlavor:'plagueghost', rarity:'legendary',
     fusedFrom:['plaguedoctor','phantom'],
     stats:{hp:78,maxHp:78,mp:88,maxMp:88,atk:13,def:6,spd:15,crit:18},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_13 = {
   geo_lightbringer: {
     id:'geo_lightbringer', name:'The Illuminated Stone', icon:'🗿',
     tagline:'Light through crystal. The mountain does not mind the glow.',
-    color:'#ccaa55', element:'lightearth', rarity:'rare',
+    color:'#ccaa55', element:'ground', elementFlavor:'lightearth', rarity:'rare',
     fusedFrom:['geomancer','lightbringer'],
     stats:{hp:90,maxHp:90,mp:85,maxMp:85,atk:12,def:10,spd:10,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:6,MP:8},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_13 = {
   geo_beast: {
     id:'geo_beast', name:'The Earthborn Pack', icon:'🗿',
     tagline:'The animals that live in stone are not slower. They are denser.',
-    color:'#887755', element:'earthbeast', rarity:'uncommon',
+    color:'#887755', element:'ground', elementFlavor:'earthbeast', rarity:'uncommon',
     fusedFrom:['geomancer','beastmaster'],
     stats:{hp:100,maxHp:100,mp:68,maxMp:68,atk:13,def:12,spd:10,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:6},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_13 = {
   geo_tech: {
     id:'geo_tech', name:'The Mining Engine', icon:'🗿',
     tagline:'The machine that cuts stone is the most powerful machine. This one was upgraded.',
-    color:'#887766', element:'earthtech', rarity:'epic',
+    color:'#887766', element:'ground', elementFlavor:'earthtech', rarity:'epic',
     fusedFrom:['geomancer','techsavant'],
     stats:{hp:90,maxHp:90,mp:85,maxMp:85,atk:12,def:10,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:6,MP:8},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_13 = {
   geo_grave: {
     id:'geo_grave', name:'The Stone Tomb', icon:'🗿',
     tagline:'The stone remembered. The dead are part of the stone now.',
-    color:'#776655', element:'earthgrave', rarity:'rare',
+    color:'#776655', element:'ground', elementFlavor:'earthgrave', rarity:'rare',
     fusedFrom:['geomancer','gravewarden'],
     stats:{hp:105,maxHp:105,mp:70,maxMp:70,atk:11,def:13,spd:8,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:9,SPD:5},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_13 = {
   geo_magnetist: {
     id:'geo_magnetist', name:'The Lodestone Peak', icon:'🗿',
     tagline:'The magnetic mountain pulls iron from all directions. Stand near iron carefully.',
-    color:'#7788aa', element:'earthmagnet', rarity:'rare',
+    color:'#7788aa', element:'ground', elementFlavor:'earthmagnet', rarity:'rare',
     fusedFrom:['geomancer','magnetist'],
     stats:{hp:95,maxHp:95,mp:75,maxMp:75,atk:12,def:11,spd:9,crit:11},
     statDisplay:{HP:6,ATK:8,DEF:8,SPD:5,MP:7},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_13 = {
   geo_crystal: {
     id:'geo_crystal', name:'The Crystal Cavern', icon:'🗿',
     tagline:'The cave grew them over millennia. They are ready now.',
-    color:'#99aacc', element:'earthcrystal', rarity:'epic',
+    color:'#99aacc', element:'ground', elementFlavor:'earthcrystal', rarity:'epic',
     fusedFrom:['geomancer','crystalmancer'],
     stats:{hp:88,maxHp:88,mp:88,maxMp:88,atk:12,def:10,spd:10,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:6,MP:8},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_13 = {
   geo_war: {
     id:'geo_war', name:'The Siege Mountain', icon:'🗿',
     tagline:'The mountain does not move. The army that holds the mountain does not need to.',
-    color:'#998866', element:'earthwar', rarity:'rare',
+    color:'#998866', element:'ground', elementFlavor:'earthwar', rarity:'rare',
     fusedFrom:['geomancer','warlord'],
     stats:{hp:105,maxHp:105,mp:70,maxMp:70,atk:13,def:13,spd:9,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:9,SPD:5},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_13 = {
   geo_spirit: {
     id:'geo_spirit', name:'The Stone Memory', icon:'🗿',
     tagline:'The stone has been here longer than anything that died here. It remembers all of it.',
-    color:'#99aa88', element:'earthspirit', rarity:'epic',
+    color:'#99aa88', element:'ground', elementFlavor:'earthspirit', rarity:'epic',
     fusedFrom:['geomancer','spiritwalker'],
     stats:{hp:92,maxHp:92,mp:82,maxMp:82,atk:11,def:11,spd:9,crit:11},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:5,MP:8},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_13 = {
   geo_hex: {
     id:'geo_hex', name:'The Cursed Stone', icon:'🗿',
     tagline:'The hex was carved into the stone centuries ago. The stone has been waiting.',
-    color:'#887799', element:'earthhex', rarity:'epic',
+    color:'#887799', element:'ground', elementFlavor:'earthhex', rarity:'epic',
     fusedFrom:['geomancer','hexblade'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:12,def:10,spd:10,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:6,MP:8},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_13 = {
   geo_cosmo: {
     id:'geo_cosmo', name:'The Planetary Core', icon:'🗿',
     tagline:'Planets are made of stone. The force at their center is significant.',
-    color:'#778899', element:'earthcosmo', rarity:'legendary',
+    color:'#778899', element:'ground', elementFlavor:'earthcosmo', rarity:'legendary',
     fusedFrom:['geomancer','cosmomancer'],
     stats:{hp:85,maxHp:85,mp:95,maxMp:95,atk:11,def:10,spd:10,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:7,SPD:6,MP:9},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_13 = {
   geo_pestilence: {
     id:'geo_pestilence', name:'The Contaminated Earth', icon:'🗿',
     tagline:'The soil is sick. The sickness goes down as far as the stone. Which is all the way down.',
-    color:'#778855', element:'earthplague', rarity:'epic',
+    color:'#778855', element:'ground', elementFlavor:'earthplague', rarity:'epic',
     fusedFrom:['geomancer','pestilencelord'],
     stats:{hp:90,maxHp:90,mp:80,maxMp:80,atk:12,def:10,spd:9,crit:11},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:5,MP:8},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_13 = {
   geo_wind: {
     id:'geo_wind', name:'The Sandstorm', icon:'🗿',
     tagline:'The stone that becomes airborne is still stone. It moves faster now.',
-    color:'#ccaa77', element:'earthwind', rarity:'rare',
+    color:'#ccaa77', element:'ground', elementFlavor:'earthwind', rarity:'rare',
     fusedFrom:['geomancer','windwalker'],
     stats:{hp:88,maxHp:88,mp:75,maxMp:75,atk:13,def:9,spd:14,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:7},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_13 = {
   geo_doom: {
     id:'geo_doom', name:'The Collapsing World', icon:'🗿',
     tagline:'The doom makes the stone fall. The stone was always going to fall. The doom simply confirmed when.',
-    color:'#776655', element:'earthdoom', rarity:'legendary',
+    color:'#776655', element:'ground', elementFlavor:'earthdoom', rarity:'legendary',
     fusedFrom:['geomancer','doomcaster'],
     stats:{hp:88,maxHp:88,mp:88,maxMp:88,atk:12,def:9,spd:9,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:5,MP:8},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_13 = {
   geo_arcanist: {
     id:'geo_arcanist', name:'The Runic Earth', icon:'🗿',
     tagline:'The oldest writing was carved in stone. This is the original arcane tradition.',
-    color:'#8899aa', element:'eartharcane', rarity:'legendary',
+    color:'#8899aa', element:'ground', elementFlavor:'eartharcane', rarity:'legendary',
     fusedFrom:['geomancer','arcanist'],
     stats:{hp:85,maxHp:85,mp:98,maxMp:98,atk:11,def:9,spd:10,crit:14},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:6,MP:9},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_13 = {
   geo_sentinel: {
     id:'geo_sentinel', name:'The Mountain Hold', icon:'🗿',
     tagline:'The mountain does not decide to hold. It simply is held.',
-    color:'#99aa99', element:'earthwall', rarity:'uncommon',
+    color:'#99aa99', element:'ground', elementFlavor:'earthwall', rarity:'uncommon',
     fusedFrom:['geomancer','sentinel'],
     stats:{hp:135,maxHp:135,mp:55,maxMp:55,atk:10,def:16,spd:7,crit:8},
     statDisplay:{HP:9,ATK:7,DEF:10,SPD:4},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_13 = {
   geo_phantom: {
     id:'geo_phantom', name:'The Stone Ghost', icon:'🗿',
     tagline:'The ghost passed through the wall. The wall came with it.',
-    color:'#aabbcc', element:'earthghost', rarity:'legendary',
+    color:'#aabbcc', element:'ground', elementFlavor:'earthghost', rarity:'legendary',
     fusedFrom:['geomancer','phantom'],
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:13,def:8,spd:13,crit:16},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_beast: {
     id:'lightbringer_beast', name:'The Radiant Pack', icon:'☀️',
     tagline:'The pack that moves in its own light leaves no shadows for enemies to use.',
-    color:'#ddcc66', element:'lightbeast', rarity:'rare',
+    color:'#ddcc66', element:'light', elementFlavor:'lightbeast', rarity:'rare',
     fusedFrom:['lightbringer','beastmaster'],
     stats:{hp:90,maxHp:90,mp:78,maxMp:78,atk:13,def:9,spd:14,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:7},
@@ -452,7 +452,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_tech: {
     id:'lightbringer_tech', name:'The Solar Engine', icon:'☀️',
     tagline:'Light is energy. This one converts it efficiently.',
-    color:'#ddbb44', element:'lighttech', rarity:'epic',
+    color:'#ddbb44', element:'light', elementFlavor:'lighttech', rarity:'epic',
     fusedFrom:['lightbringer','techsavant'],
     stats:{hp:82,maxHp:82,mp:90,maxMp:90,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_grave: {
     id:'lightbringer_grave', name:'The Sanctified Ground', icon:'☀️',
     tagline:'The light consecrates the grave. What rests there rests in peace. Peace is not the same as inactivity.',
-    color:'#ccbb77', element:'lightgrave', rarity:'rare',
+    color:'#ccbb77', element:'light', elementFlavor:'lightgrave', rarity:'rare',
     fusedFrom:['lightbringer','gravewarden'],
     stats:{hp:95,maxHp:95,mp:80,maxMp:80,atk:11,def:11,spd:10,crit:11},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:6,MP:8},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_magnetist: {
     id:'lightbringer_magnetist', name:'The Polar Light', icon:'☀️',
     tagline:'The aurora is magnetic light. This one has opinions.',
-    color:'#bbdd88', element:'lightmagnet', rarity:'epic',
+    color:'#bbdd88', element:'light', elementFlavor:'lightmagnet', rarity:'epic',
     fusedFrom:['lightbringer','magnetist'],
     stats:{hp:82,maxHp:82,mp:88,maxMp:88,atk:12,def:8,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:8},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_crystal: {
     id:'lightbringer_crystal', name:'The Prism Saint', icon:'☀️',
     tagline:'White light contains all light. The crystal separates what was always there.',
-    color:'#ddeebb', element:'lightcrystal', rarity:'legendary',
+    color:'#ddeebb', element:'light', elementFlavor:'lightcrystal', rarity:'legendary',
     fusedFrom:['lightbringer','crystalmancer'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:13,def:7,spd:13,crit:17},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:7,MP:9},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_war: {
     id:'lightbringer_war', name:'The Holy Crusade', icon:'☀️',
     tagline:'The warlord who fights for something is harder to stop than one who fights for nothing.',
-    color:'#ddbb55', element:'lightwar', rarity:'rare',
+    color:'#ddbb55', element:'light', elementFlavor:'lightwar', rarity:'rare',
     fusedFrom:['lightbringer','warlord'],
     stats:{hp:98,maxHp:98,mp:72,maxMp:72,atk:14,def:10,spd:12,crit:12},
     statDisplay:{HP:6,ATK:10,DEF:7,SPD:7,MP:7},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_spirit: {
     id:'lightbringer_spirit', name:'The Luminous Soul', icon:'☀️',
     tagline:'The spirit that carries light is visible to the living and the dead.',
-    color:'#ddddaa', element:'lightspirit', rarity:'epic',
+    color:'#ddddaa', element:'light', elementFlavor:'lightspirit', rarity:'epic',
     fusedFrom:['lightbringer','spiritwalker'],
     stats:{hp:85,maxHp:85,mp:88,maxMp:88,atk:11,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:7,MP:8},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_hex: {
     id:'lightbringer_hex', name:'The Divine Curse', icon:'☀️',
     tagline:'The holy curse is the most judgmental curse.',
-    color:'#ccbb44', element:'lighthex', rarity:'epic',
+    color:'#ccbb44', element:'light', elementFlavor:'lighthex', rarity:'epic',
     fusedFrom:['lightbringer','hexblade'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:12,def:8,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_13 = {
   lightbringer_cosmo: {
     id:'lightbringer_cosmo', name:'The Stellar Light', icon:'☀️',
     tagline:'Stars are light. The light from all stars at once is significant.',
-    color:'#ddeeff', element:'lightcosmo', rarity:'legendary',
+    color:'#ddeeff', element:'light', elementFlavor:'lightcosmo', rarity:'legendary',
     fusedFrom:['lightbringer','cosmomancer'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:10},

@@ -46,7 +46,7 @@ const FUSION_CLASSES_11 = {
   gravitist_magnetist: {
     id:'gravitist_magnetist', name:'The Iron Horizon', icon:'⚫',
     tagline:'Gravity pulls down. Magnetism pulls sideways. Between them, nothing stays where it was.',
-    color:'#4d7788', element:'magnetgrav', rarity:'epic',
+    color:'#4d7788', element:'magnet', elementFlavor:'magnetgrav', rarity:'epic',
     fusedFrom:['gravitist','magnetist'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:12,def:8,spd:12,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_11 = {
   gravitist_crystal: {
     id:'gravitist_crystal', name:'The Collapsed Lattice', icon:'⚫',
     tagline:'Crystal under sufficient gravitational pressure does not shatter. It becomes something denser.',
-    color:'#6688b3', element:'crystalgrav', rarity:'legendary',
+    color:'#6688b3', element:'gravity', elementFlavor:'crystalgrav', rarity:'legendary',
     fusedFrom:['gravitist','crystalmancer'],
     stats:{hp:73,maxHp:73,mp:98,maxMp:98,atk:12,def:6,spd:13,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:9},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_11 = {
   gravitist_war: {
     id:'gravitist_war', name:'The Weight of War', icon:'⚫',
     tagline:'The heaviest blow wins. This one has gravitational amplification.',
-    color:'#884d33', element:'warcrush', rarity:'epic',
+    color:'#884d33', element:'gravity', elementFlavor:'warcrush', rarity:'epic',
     fusedFrom:['gravitist','warlord'],
     stats:{hp:98,maxHp:98,mp:75,maxMp:75,atk:13,def:9,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:7},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_11 = {
   gravitist_spirit: {
     id:'gravitist_spirit', name:'The Gravity Well Soul', icon:'⚫',
     tagline:'The soul has weight. This one has considerably more than most.',
-    color:'#448077', element:'spiritgrav', rarity:'legendary',
+    color:'#448077', element:'gravity', elementFlavor:'spiritgrav', rarity:'legendary',
     fusedFrom:['gravitist','spiritwalker'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:10,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:7,MP:9},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_11 = {
   gravitist_hex: {
     id:'gravitist_hex', name:'The Crushing Curse', icon:'⚫',
     tagline:'The hex adds weight. The weight adds to the hex. The target goes down.',
-    color:'#663c77', element:'voidblood', rarity:'legendary',
+    color:'#663c77', element:'gravity', elementFlavor:'voidblood', rarity:'legendary',
     fusedFrom:['gravitist','hexblade'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_11 = {
   gravitist_cosmo: {
     id:'gravitist_cosmo', name:'The Event Horizon', icon:'⚫',
     tagline:'Nothing that crosses it returns. This is its defining property.',
-    color:'#444488', element:'cosmicgrav', rarity:'mythical',
+    color:'#444488', element:'gravity', elementFlavor:'cosmicgrav', rarity:'mythical',
     fusedFrom:['gravitist','cosmomancer'],
     stats:{hp:73,maxHp:73,mp:105,maxMp:105,atk:10,def:6,spd:12,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_11 = {
   gravitist_pestilence: {
     id:'gravitist_pestilence', name:'The Dense Contagion', icon:'⚫',
     tagline:'Gravitational compression concentrates disease. Dense disease spreads faster.',
-    color:'#4d6f33', element:'graveplague', rarity:'legendary',
+    color:'#4d6f33', element:'gravity', elementFlavor:'graveplague', rarity:'legendary',
     fusedFrom:['gravitist','pestilencelord'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:11,def:7,spd:11,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:9},
@@ -144,7 +144,7 @@ const FUSION_CLASSES_11 = {
   gravitist_wind: {
     id:'gravitist_wind', name:'The Vortex Collapse', icon:'⚫',
     tagline:'Wind orbits gravity. At sufficient speed, the orbit becomes an infall.',
-    color:'#669188', element:'windgrav', rarity:'epic',
+    color:'#669188', element:'gravity', elementFlavor:'windgrav', rarity:'epic',
     fusedFrom:['gravitist','windwalker'],
     stats:{hp:78,maxHp:78,mp:83,maxMp:83,atk:12,def:6,spd:16,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:8},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_11 = {
   gravitist_doom: {
     id:'gravitist_doom', name:'The Gravitational Doom', icon:'⚫',
     tagline:'Doom falls. Gravity ensures everything falls toward doom.',
-    color:'#55444d', element:'voidblood', rarity:'mythical',
+    color:'#55444d', element:'gravity', elementFlavor:'voidblood', rarity:'mythical',
     fusedFrom:['gravitist','doomcaster'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:10,def:5,spd:12,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_11 = {
   gravitist_arcanist: {
     id:'gravitist_arcanist', name:'The Grand Unified Theory', icon:'⚫',
     tagline:'The formula that unifies all forces is the most powerful formula. This is an early draft.',
-    color:'#4d4499', element:'mindcrush', rarity:'legendary',
+    color:'#4d4499', element:'gravity', elementFlavor:'mindcrush', rarity:'legendary',
     fusedFrom:['gravitist','arcanist'],
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:10,def:5,spd:13,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_11 = {
   gravitist_sentinel: {
     id:'gravitist_sentinel', name:'The Gravity Bastion', icon:'⚫',
     tagline:'The heaviest position is the most defensible position. Mass is defense.',
-    color:'#666f77', element:'gravisteel', rarity:'rare',
+    color:'#666f77', element:'gravity', elementFlavor:'gravisteel', rarity:'rare',
     fusedFrom:['gravitist','sentinel'],
     stats:{hp:118,maxHp:118,mp:68,maxMp:68,atk:9,def:13,spd:9,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:6},
@@ -200,7 +200,7 @@ const FUSION_CLASSES_11 = {
   gravitist_phantom: {
     id:'gravitist_phantom', name:'The Singularity Ghost', icon:'⚫',
     tagline:'A ghost with gravitational mass is functionally a black hole with opinions.',
-    color:'#667791', element:'gravesoul', rarity:'mythical',
+    color:'#667791', element:'gravity', elementFlavor:'gravesoul', rarity:'mythical',
     fusedFrom:['gravitist','phantom'],
     stats:{hp:73,maxHp:73,mp:88,maxMp:88,atk:12,def:5,spd:15,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_chrono: {
     id:'soundbreaker_chrono', name:'The Temporal Resonance', icon:'🔊',
     tagline:'Sound travels through time. The frequency determines the direction.',
-    color:'#c499aa', element:'resonanttime', rarity:'epic',
+    color:'#c499aa', element:'sound', elementFlavor:'resonanttime', rarity:'epic',
     fusedFrom:['soundbreaker','chronomancer'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:12,def:6,spd:15,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_spellsword: {
     id:'soundbreaker_spellsword', name:'The Psychic Frequency', icon:'🔊',
     tagline:'The mind resonates at a specific frequency. This one found it.',
-    color:'#c47780', element:'sonicmind', rarity:'epic',
+    color:'#c47780', element:'sound', elementFlavor:'sonicmind', rarity:'epic',
     fusedFrom:['soundbreaker','spellsword'],
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:13,def:7,spd:14,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:8,MP:8},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_plague: {
     id:'soundbreaker_plague', name:'The Carrier Wave', icon:'🔊',
     tagline:'Sound carries the disease. The disease vibrates. The vibration spreads.',
-    color:'#b3aa44', element:'toxicsound', rarity:'epic',
+    color:'#b3aa44', element:'sound', elementFlavor:'toxicsound', rarity:'epic',
     fusedFrom:['soundbreaker','plaguedoctor'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:12,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_geo: {
     id:'soundbreaker_geo', name:'The Seismic Voice', icon:'🔊',
     tagline:'The voice that moves mountains is not metaphorical. It is a precise seismic frequency.',
-    color:'#c49955', element:'seismicwave', rarity:'rare',
+    color:'#c49955', element:'sound', elementFlavor:'seismicwave', rarity:'rare',
     fusedFrom:['soundbreaker','geomancer'],
     stats:{hp:90,maxHp:90,mp:78,maxMp:78,atk:13,def:9,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_lightbringer: {
     id:'soundbreaker_lightbringer', name:'The Shining Chord', icon:'🔊',
     tagline:'Sound and light travel at different speeds. They arrive together anyway.',
-    color:'#eec44d', element:'radiantsound', rarity:'epic',
+    color:'#eec44d', element:'sound', elementFlavor:'radiantsound', rarity:'epic',
     fusedFrom:['soundbreaker','lightbringer'],
     stats:{hp:83,maxHp:83,mp:85,maxMp:85,atk:13,def:8,spd:15,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_beast: {
     id:'soundbreaker_beast', name:'The Pack Howl', icon:'🔊',
     tagline:'Pack coordination through frequency. The frequency is uncomfortable for non-members.',
-    color:'#b3b34d', element:'runesound', rarity:'rare',
+    color:'#b3b34d', element:'sound', elementFlavor:'runesound', rarity:'rare',
     fusedFrom:['soundbreaker','beastmaster'],
     stats:{hp:88,maxHp:88,mp:75,maxMp:75,atk:14,def:8,spd:15,crit:14},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:7},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_tech: {
     id:'soundbreaker_tech', name:'The Acoustic Overload', icon:'🔊',
     tagline:'Every machine has a resonant frequency. This one found all of them.',
-    color:'#919980', element:'techsound', rarity:'epic',
+    color:'#919980', element:'sound', elementFlavor:'techsound', rarity:'epic',
     fusedFrom:['soundbreaker','techsavant'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:13,def:7,spd:15,crit:15},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:8,MP:9},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_grave: {
     id:'soundbreaker_grave', name:'The Death Rattle', icon:'🔊',
     tagline:'The last sound a body makes is specific. This one reproduces it for effect.',
-    color:'#99886f', element:'wailsoul', rarity:'rare',
+    color:'#99886f', element:'sound', elementFlavor:'wailsoul', rarity:'rare',
     fusedFrom:['soundbreaker','gravewarden'],
     stats:{hp:98,maxHp:98,mp:75,maxMp:75,atk:13,def:10,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:7,SPD:7,MP:7},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_magnetist: {
     id:'soundbreaker_magnetist', name:'The Electromagnetic Pulse', icon:'🔊',
     tagline:'Sound waves and electromagnetic waves are both waves. The distinction blurs at high energy.',
-    color:'#99a280', element:'magnetsound', rarity:'epic',
+    color:'#99a280', element:'sound', elementFlavor:'magnetsound', rarity:'epic',
     fusedFrom:['soundbreaker','magnetist'],
     stats:{hp:83,maxHp:83,mp:85,maxMp:85,atk:13,def:8,spd:14,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_crystal: {
     id:'soundbreaker_crystal', name:'The Crystal Resonance', icon:'🔊',
     tagline:'Every crystal sings at a specific frequency. This is that frequency, amplified.',
-    color:'#b3b3aa', element:'crystalsound', rarity:'legendary',
+    color:'#b3b3aa', element:'sound', elementFlavor:'crystalsound', rarity:'legendary',
     fusedFrom:['soundbreaker','crystalmancer'],
     stats:{hp:75,maxHp:75,mp:93,maxMp:93,atk:14,def:6,spd:15,crit:18},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:9},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_war: {
     id:'soundbreaker_war', name:'The War Cry', icon:'🔊',
     tagline:'The war cry that breaks morale is the war cry that also breaks walls.',
-    color:'#d5772b', element:'warcry', rarity:'rare',
+    color:'#d5772b', element:'sound', elementFlavor:'warcry', rarity:'rare',
     fusedFrom:['soundbreaker','warlord'],
     stats:{hp:100,maxHp:100,mp:70,maxMp:70,atk:15,def:9,spd:14,crit:13},
     statDisplay:{HP:6,ATK:11,DEF:6,SPD:8,MP:7},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_spirit: {
     id:'soundbreaker_spirit', name:'The Spirit Chord', icon:'🔊',
     tagline:'Spirits respond to specific frequencies. These are those frequencies.',
-    color:'#91aa6f', element:'spiritsound', rarity:'epic',
+    color:'#91aa6f', element:'sound', elementFlavor:'spiritsound', rarity:'epic',
     fusedFrom:['soundbreaker','spiritwalker'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:12,def:8,spd:15,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_hex: {
     id:'soundbreaker_hex', name:'The Cursed Frequency', icon:'🔊',
     tagline:'The curse that travels at the speed of sound arrives before the target can retreat.',
-    color:'#b3666f', element:'wailblood', rarity:'epic',
+    color:'#b3666f', element:'sound', elementFlavor:'wailblood', rarity:'epic',
     fusedFrom:['soundbreaker','hexblade'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:13,def:7,spd:15,crit:15},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:8,MP:8},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_cosmo: {
     id:'soundbreaker_cosmo', name:'The Cosmic Frequency', icon:'🔊',
     tagline:'The universe has a fundamental frequency. This one found it empirically.',
-    color:'#916f80', element:'cosmicsound', rarity:'legendary',
+    color:'#916f80', element:'sound', elementFlavor:'cosmicsound', rarity:'legendary',
     fusedFrom:['soundbreaker','cosmomancer'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:12,def:6,spd:14,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_pestilence: {
     id:'soundbreaker_pestilence', name:'The Plague Broadcast', icon:'🔊',
     tagline:'The announcement and the disease arrive simultaneously.',
-    color:'#99992b', element:'toxicsound', rarity:'legendary',
+    color:'#99992b', element:'sound', elementFlavor:'toxicsound', rarity:'legendary',
     fusedFrom:['soundbreaker','pestilencelord'],
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:13,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:7,MP:9},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_wind: {
     id:'soundbreaker_wind', name:'The Banshee Gale', icon:'🔊',
     tagline:'The wind that screams is screaming for a reason. The reason is you.',
-    color:'#b3bb80', element:'windwave', rarity:'rare',
+    color:'#b3bb80', element:'sound', elementFlavor:'windwave', rarity:'rare',
     fusedFrom:['soundbreaker','windwalker'],
     stats:{hp:80,maxHp:80,mp:78,maxMp:78,atk:13,def:6,spd:18,crit:17},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:7},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_doom: {
     id:'soundbreaker_doom', name:'The Last Sound', icon:'🔊',
     tagline:'Everything ends with a sound. This one makes it happen on schedule.',
-    color:'#a26f44', element:'wailblood', rarity:'legendary',
+    color:'#a26f44', element:'sound', elementFlavor:'wailblood', rarity:'legendary',
     fusedFrom:['soundbreaker','doomcaster'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:12,def:5,spd:14,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -452,7 +452,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_arcanist: {
     id:'soundbreaker_arcanist', name:'The Harmonic Formula', icon:'🔊',
     tagline:'The formula expressed as sound is understood by the universe without translation.',
-    color:'#996f91', element:'sonicmind', rarity:'legendary',
+    color:'#996f91', element:'sound', elementFlavor:'sonicmind', rarity:'legendary',
     fusedFrom:['soundbreaker','arcanist'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:12,def:5,spd:15,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_sentinel: {
     id:'soundbreaker_sentinel', name:'The Resonant Wall', icon:'🔊',
     tagline:'The wall holds and also vibrates. The vibration is not accidental.',
-    color:'#b3996f', element:'resonantsteel', rarity:'rare',
+    color:'#b3996f', element:'sound', elementFlavor:'resonantsteel', rarity:'rare',
     fusedFrom:['soundbreaker','sentinel'],
     stats:{hp:120,maxHp:120,mp:63,maxMp:63,atk:11,def:13,spd:11,crit:10},
     statDisplay:{HP:8,ATK:8,DEF:9,SPD:6,MP:6},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_11 = {
   soundbreaker_phantom: {
     id:'soundbreaker_phantom', name:'The Silent Scream', icon:'🔊',
     tagline:'The loudest sound and the deepest silence are neighbors.',
-    color:'#b3a288', element:'wailsoul', rarity:'mythical',
+    color:'#b3a288', element:'sound', elementFlavor:'wailsoul', rarity:'mythical',
     fusedFrom:['soundbreaker','phantom'],
     stats:{hp:75,maxHp:75,mp:83,maxMp:83,atk:14,def:5,spd:17,crit:21},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:9,MP:8},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_11 = {
   chrono_spellsword: {
     id:'chrono_spellsword', name:'The Temporal Blade', icon:'⏳',
     tagline:'The strike has already landed. This is just the visual confirmation.',
-    color:'#aa66d5', element:'timemind', rarity:'epic',
+    color:'#aa66d5', element:'time', elementFlavor:'timemind', rarity:'epic',
     fusedFrom:['chronomancer','spellsword'],
     stats:{hp:80,maxHp:80,mp:95,maxMp:95,atk:12,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_11 = {
   chrono_plague: {
     id:'chrono_plague', name:'The Incubation', icon:'⏳',
     tagline:'The plague has been present since before the fight started. It activates now.',
-    color:'#999999', element:'timeplague', rarity:'legendary',
+    color:'#999999', element:'time', elementFlavor:'timeplague', rarity:'legendary',
     fusedFrom:['chronomancer','plaguedoctor'],
     stats:{hp:73,maxHp:73,mp:105,maxMp:105,atk:10,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_11 = {
   chrono_geo: {
     id:'chrono_geo', name:'The Geological Archive', icon:'⏳',
     tagline:'Stone remembers every moment it has experienced. This reads those moments as weapons.',
-    color:'#aa88aa', element:'timeearth', rarity:'rare',
+    color:'#aa88aa', element:'time', elementFlavor:'timeearth', rarity:'rare',
     fusedFrom:['chronomancer','geomancer'],
     stats:{hp:85,maxHp:85,mp:90,maxMp:90,atk:11,def:9,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:6,MP:9},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_11 = {
   chrono_lightbringer: {
     id:'chrono_lightbringer', name:'The Ancient Light', icon:'⏳',
     tagline:'The light from distant stars is old light. This one is older.',
-    color:'#d5b3a2', element:'timelight', rarity:'epic',
+    color:'#d5b3a2', element:'time', elementFlavor:'timelight', rarity:'epic',
     fusedFrom:['chronomancer','lightbringer'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:12,def:8,spd:14,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:8,MP:9},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_11 = {
   chrono_beast: {
     id:'chrono_beast', name:'The Primordial Pack', icon:'⏳',
     tagline:'The oldest predators are extinct. This one disagrees.',
-    color:'#99a2a2', element:'runetime', rarity:'rare',
+    color:'#99a2a2', element:'time', elementFlavor:'runetime', rarity:'rare',
     fusedFrom:['chronomancer','beastmaster'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:12,def:8,spd:14,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},

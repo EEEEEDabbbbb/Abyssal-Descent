@@ -505,7 +505,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   vine_horror:{
-    id:'vine_horror', name:'Vine Horror', icon:'🌱', element:'nature',
+    id:'vine_horror', name:'Vine Horror', icon:'🌱', element:'grass',
     title:'It grew in the dark for a hundred years.',
     hp:42, maxHp:42, atk:9, def:4, spd:6, xp:17, gold:[3,9], loot:0.38,
     patterns:['entangle','basic','entangle','heavy'],
@@ -554,7 +554,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   thunder_crab:{
-    id:'thunder_crab', name:'Thunder Crab', icon:'🦀', element:'lightning',
+    id:'thunder_crab', name:'Thunder Crab', icon:'🦀', element:'electric',
     title:'The shell conducts. You will find out.',
     hp:58, maxHp:58, atk:13, def:8, spd:6, xp:21, gold:[5,13], loot:0.4,
     patterns:['thunder_clap','heavy','basic','acid_spray'],
@@ -622,7 +622,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   thunder_hawk:{
-    id:'thunder_hawk', name:'Thunder Hawk', icon:'🦅', element:'lightning',
+    id:'thunder_hawk', name:'Thunder Hawk', icon:'🦅', element:'electric',
     title:'The storm follows where it flies.',
     hp:75, maxHp:75, atk:21, def:5, spd:18, xp:44, gold:[13,24], loot:0.52,
     patterns:['thunder_clap','double','talon_rake','basic'],
@@ -636,7 +636,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   fungal_shaman:{
-    id:'fungal_shaman', name:'Fungal Shaman', icon:'🍄', element:'nature',
+    id:'fungal_shaman', name:'Fungal Shaman', icon:'🍄', element:'grass',
     title:'The spores do the thinking now.',
     hp:80, maxHp:80, atk:15, def:7, spd:10, xp:38, gold:[11,20], loot:0.5,
     patterns:['spore_cloud','basic','summon_ally','poison_spit'],
@@ -664,14 +664,14 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   storm_elemental:{
-    id:'storm_elemental', name:'Storm Elemental', icon:'⛈️', element:'lightning',
+    id:'storm_elemental', name:'Storm Elemental', icon:'⛈️', element:'electric',
     title:'Pure static given terrible will.',
     hp:85, maxHp:85, atk:24, def:4, spd:17, xp:50, gold:[15,28], loot:0.58,
     patterns:['thunder_clap','lightning_chain','basic','thunder_clap'],
     status:[],patternIndex:0
   },
   bog_troll:{
-    id:'bog_troll', name:'Bog Troll', icon:'👹', element:'nature',
+    id:'bog_troll', name:'Bog Troll', icon:'👹', element:'grass',
     title:'Ugliness that learned to fight.',
     hp:115, maxHp:115, atk:21, def:12, spd:7, xp:48, gold:[14,25], loot:0.52,
     patterns:['heavy','entangle','drain','basic'],
@@ -823,7 +823,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   storm_giant:{
-    id:'storm_giant', name:'Storm Giant', icon:'⛈️', element:'lightning',
+    id:'storm_giant', name:'Storm Giant', icon:'⛈️', element:'electric',
     title:'Thunder is just its footsteps.',
     hp:190, maxHp:190, atk:38, def:18, spd:10, xp:125, gold:[44,75], loot:0.73,
     patterns:['thunder_clap','earthshatter','lightning_chain','heavy'],
@@ -865,7 +865,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   verdant_colossus:{
-    id:'verdant_colossus', name:'Verdant Colossus', icon:'🌳', element:'nature',
+    id:'verdant_colossus', name:'Verdant Colossus', icon:'🌳', element:'grass',
     title:'The forest grew a fist and aimed it at you.',
     hp:210, maxHp:210, atk:33, def:20, spd:6, xp:118, gold:[40,70], loot:0.72,
     patterns:['entangle','heavy','spore_cloud','earthshatter'],
@@ -886,7 +886,7 @@ const ENEMY_POOL = {
     status:[],patternIndex:0
   },
   tempest_wyrm:{
-    id:'tempest_wyrm', name:'Tempest Wyrm', icon:'🐉', element:'lightning',
+    id:'tempest_wyrm', name:'Tempest Wyrm', icon:'🐉', element:'electric',
     title:'It breathes lightning. Lucky you.',
     hp:175, maxHp:175, atk:38, def:17, spd:13, xp:120, gold:[43,72], loot:0.73,
     patterns:['lightning_chain','charge','thunder_clap','double'],
@@ -1151,6 +1151,9 @@ function getFloorTier(floor) {
 // spawn, and the stat multiplier applied on top of normal floor scaling.
 const ELITE_CHANCE    = 12;
 const ELITE_STAT_MULT = 1.4;
+
+// New Game+: each cycle makes every enemy 30% stronger (HP and ATK)
+function getNgPlusMult() { return 1 + (G.meta.ngPlus || 0) * 0.3; }
 
 function getFloorStatMult(floor) {
   const tier = getFloorTier(floor);

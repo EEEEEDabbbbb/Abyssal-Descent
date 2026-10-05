@@ -79,6 +79,7 @@ function showScreen(id) {
     }
   }
   if (id === 'fusion-lab-screen')   renderFusionLab();
+  if (id === 'settings-screen')     renderSettingsScreen();
 }
 
 
@@ -86,9 +87,13 @@ function renderTitleScreen() {
   const m = G.meta;
   const conquered = m.conquestRewards?.conquered;
 
-  // Show continue button only if run is in progress
-  const continueBtn = document.getElementById('continue-btn');
-  if (continueBtn) continueBtn.style.display = G.inProgress ? '' : 'none';
+  // Continue: any saved run. New Game+: unlocked by beating floor 50.
+  _updateContinueBtn();
+  const ngBtn = document.getElementById('ngplus-btn');
+  if (ngBtn) {
+    ngBtn.style.display = m.conquestRewards?.ngPlusUnlocked ? '' : 'none';
+    ngBtn.textContent = m.ngPlus > 0 ? `🔄 New Game+ (now NG+${m.ngPlus})` : '🔄 New Game+';
+  }
 
   // Update flavor quote if player has conquered the abyss
   const flavor = document.querySelector('.title-flavor em');
@@ -259,10 +264,15 @@ function selectLoadout(id) {
 
 // ── Game Over ─────────────────────────────────────────────────
 function gameOver() {
+  // Can be reached from several places in the same frame (combat end, UI
+  // refresh) — the run only ends, and pays out, once.
+  if (G._gameOverShown || !G.player) return;
+  G._gameOverShown = true;
   G.inCombat = false;
+  G.phase = 'gameover';
   // Run is over — clear the save slot so it doesn't show as continuable
-  if (typeof clearActiveRunSave === 'function') clearActiveRunSave();
-  if (typeof _updateContinueBtn === 'function') _updateContinueBtn();
+  clearActiveRunSave();
+  _updateContinueBtn();
   const p           = G.player;
   const floorReached = G.floor;
   const shards = Math.max(1, Math.round(floorReached * 1.5 + (p.level - 1) * 2));
@@ -276,8 +286,8 @@ function gameOver() {
   document.getElementById('game-over-best').textContent   = G.meta.maxFloor;
 
   // ── Class identity block ──────────────────────────────────
-  const classId  = G.selectedClass;
-  const cls      = classId ? (CLASSES[classId] || FUSION_CLASSES?.[classId]) : null;
+  const classId  = p.classId;
+  const cls      = getClassData(classId);
   const elData   = cls ? (ELEMENTS[cls.element] || null) : null;
   const clsColor = cls?.color || 'var(--text-mid)';
 
@@ -341,8 +351,10 @@ function gameOver() {
   if (atMax) {
     hintEl.innerHTML = `<button class="title-btn fusion-lab-btn" style="margin-top:0.4rem;width:100%" onclick="openFusionModal()">⚗ Fuse Now</button>`;
   } else {
-    const runsEst = Math.max(1, Math.ceil((xpNeeded - classXP) / (10 + G.floor * 2) / 8));
-    hintEl.textContent = `~${runsEst} more run${runsEst > 1 ? 's' : ''} to reach level ${classLevel + 1}`;
+    // Estimate from what this run actually earned
+    const perRun  = Math.max(1, p._classXpGained || (10 + G.floor * 2));
+    const runsEst = Math.max(1, Math.ceil((xpNeeded - classXP) / perRun));
+    hintEl.textContent = `+${p._classXpGained || 0} class XP this run · ~${runsEst} more run${runsEst > 1 ? 's' : ''} like this to reach level ${classLevel + 1}`;
     hintEl.style.color = 'var(--text-dim)';
   }
 
@@ -361,6 +373,7 @@ function showPauseMenu() {
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal()">Resume</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();showTalentTree()">🌟 Talents${G.player?.talentPoints?` (${G.player.talentPoints})`:''}</button>
       <button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();openSettings()">⚙ Settings</button>
+      ${G.inCombat ? '' : `<button class="title-btn" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();saveAndQuit()">💾 Save &amp; Quit to Title</button>`}
       <button class="title-btn danger" style="min-width:0;max-width:100%;font-size:0.8rem;padding:0.5rem 1rem" onclick="closeModal();confirmAbandon()">↩ Abandon Run</button>
     </div>`;
   showModal(html);
@@ -377,15 +390,24 @@ function confirmAbandon() {
 }
 
 function abandonRun() {
-  if (G.player) {
+  if (G.player && !G._gameOverShown) {
     const shards = Math.max(0, Math.round(G.floor * 1.5));
     G.meta.soulShards += shards;
     saveMeta();
   }
-  G.player = null; G.enemy = null; G.map = null;
-  G.inCombat = false;
+  // An abandoned run is over: its save must not stay continuable
+  clearActiveRunSave();
+  resetRunState();
+  G.phase = 'title';
   document.getElementById('overlay').classList.remove('active');
   showScreen('title-screen');
+}
+
+function saveAndQuit() {
+  if (!G.player || G.inCombat) return;
+  if (G._runSaveSlot === null || G._runSaveSlot === undefined) { showSaveSlotPicker(true); return; }
+  saveRun();
+  returnToTitle();
 }
 
 // ── Settings screen ───────────────────────────────────────────

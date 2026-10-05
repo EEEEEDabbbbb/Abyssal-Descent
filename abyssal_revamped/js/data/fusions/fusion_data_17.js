@@ -8,7 +8,7 @@
   FUSION_LOADED_FILES.add(17);
 
   // ── RECIPE KEYS ──
-  DUAL_FUSIONS['arcanist+nullbringer']    = 'void_arcanist';
+  DUAL_FUSIONS['arcanist+nullbringer']    = 'unwritten_law';
   DUAL_FUSIONS['beastmaster+nullbringer'] = 'null_beast';
   DUAL_FUSIONS['bloodknight+nullbringer'] = 'blood_null';
   DUAL_FUSIONS['chronomancer+nullbringer']= 'null_chronomancer';
@@ -47,10 +47,10 @@
   // ── FUSION CLASS DEFINITIONS ──
   Object.assign(FUSION_CLASSES, {
 
-    void_arcanist: {
-      id:'void_arcanist', name:'The Unwritten Law', icon:'🌑',
+    unwritten_law: {
+      id:'unwritten_law', name:'The Unwritten Law', icon:'🌑',
       tagline:'Every formula has an axiom. This one removed the axiom and found the formula still ran.',
-      color:'#88ffff', element:'voidpsychic', rarity:'divine',
+      color:'#88ffff', element:'void', elementFlavor:'voidpsychic', rarity:'divine',
       fusedFrom:['nullbringer','arcanist'],
       stats:{hp:86,maxHp:86,mp:124,maxMp:124,atk:11,def:5,spd:12,crit:16},
       statDisplay:{HP:6,ATK:7,DEF:3,SPD:6,MP:10},
@@ -64,7 +64,7 @@
     null_beast: {
       id:'null_beast', name:'The Erasing Hunt', icon:'🌑',
       tagline:'The pack that hunts to eliminate, not to eat.',
-      color:'#ffaa00', element:'voidnature', rarity:'legendary',
+      color:'#ffaa00', element:'void', elementFlavor:'voidnature', rarity:'legendary',
       fusedFrom:['nullbringer','beastmaster'],
       stats:{hp:111,maxHp:111,mp:92,maxMp:92,atk:14,def:8,spd:14,crit:15},
       statDisplay:{HP:8,ATK:9,DEF:5,SPD:7,MP:8},
@@ -78,7 +78,7 @@
     blood_null: {
       id:'blood_null', name:'The Hemorrhaging Void', icon:'🌑',
       tagline:'Pain feeds the bloodknight. The void feeds on what the bloodknight becomes.',
-      color:'#cc2244', element:'voidblood', rarity:'legendary',
+      color:'#cc2244', element:'void', elementFlavor:'voidblood', rarity:'legendary',
       fusedFrom:['nullbringer','bloodknight'],
       stats:{hp:116,maxHp:116,mp:89,maxMp:89,atk:14,def:9,spd:11,crit:12},
       statDisplay:{HP:8,ATK:9,DEF:6,SPD:6,MP:7},
@@ -92,7 +92,7 @@
     null_chronomancer: {
       id:'null_chronomancer', name:'The Suspended Erasure', icon:'🌑',
       tagline:'Time was stopped so the Sunder could finish. Time does not restart the same.',
-      color:'#aaffcc', element:'voidtime', rarity:'mythical',
+      color:'#aaffcc', element:'void', elementFlavor:'voidtime', rarity:'mythical',
       fusedFrom:['nullbringer','chronomancer'],
       stats:{hp:89,maxHp:89,mp:116,maxMp:116,atk:12,def:6,spd:13,crit:14},
       statDisplay:{HP:6,ATK:8,DEF:4,SPD:7,MP:10},
@@ -106,7 +106,7 @@
     cosmic_null: {
       id:'cosmic_null', name:'The Void Between Stars', icon:'🌑',
       tagline:'Space is mostly nothing. This is the nothing between the somethings.',
-      color:'#2222aa', element:'voidcosmic', rarity:'divine',
+      color:'#2222aa', element:'void', elementFlavor:'voidcosmic', rarity:'divine',
       fusedFrom:['nullbringer','cosmomancer'],
       stats:{hp:86,maxHp:86,mp:124,maxMp:124,atk:11,def:5,spd:11,crit:16},
       statDisplay:{HP:6,ATK:7,DEF:3,SPD:6,MP:10},
@@ -120,7 +120,7 @@
     null_crystal: {
       id:'null_crystal', name:'The Shattering Nothing', icon:'🌑',
       tagline:'The crystal focuses the void to a point. The point is precise.',
-      color:'#aaccff', element:'voidcrystal', rarity:'divine',
+      color:'#aaccff', element:'void', elementFlavor:'voidcrystal', rarity:'divine',
       fusedFrom:['nullbringer','crystalmancer'],
       stats:{hp:90,maxHp:90,mp:115,maxMp:115,atk:12,def:6,spd:12,crit:17},
       statDisplay:{HP:6,ATK:8,DEF:4,SPD:7,MP:10},
@@ -134,7 +134,7 @@
     doom_null: {
       id:'doom_null', name:'The Foreclosed Existence', icon:'🌑',
       tagline:'The doom sealed the fate. The null erases what the doom sealed.',
-      color:'#330033', element:'voiddoom', rarity:'divine',
+      color:'#330033', element:'void', elementFlavor:'voiddoom', rarity:'divine',
       fusedFrom:['nullbringer','doomcaster'],
       stats:{hp:85,maxHp:85,mp:127,maxMp:127,atk:11,def:5,spd:11,crit:16},
       statDisplay:{HP:6,ATK:7,DEF:3,SPD:6,MP:11},
@@ -148,7 +148,7 @@
     null_dragon: {
       id:'null_dragon', name:'The Unscaled Wyrm', icon:'🌑',
       tagline:'The dragon that has had its nature removed is still the largest predator in the room.',
-      color:'#664400', element:'voiddrgaon', rarity:'mythical',
+      color:'#664400', element:'void', elementFlavor:'voiddrgaon', rarity:'mythical',
       fusedFrom:['nullbringer','dragonknight'],
       stats:{hp:113,maxHp:113,mp:97,maxMp:97,atk:15,def:9,spd:12,crit:13},
       statDisplay:{HP:8,ATK:10,DEF:6,SPD:7,MP:8},
@@ -162,7 +162,7 @@
     null_frost: {
       id:'null_frost', name:'The Absolute Cold', icon:'🌑',
       tagline:'Absolute zero is the temperature at which molecular motion ceases. The Sunder addresses what remains.',
-      color:'#88eeee', element:'voidice', rarity:'mythical',
+      color:'#88eeee', element:'void', elementFlavor:'voidice', rarity:'mythical',
       fusedFrom:['nullbringer','frostweaver'],
       stats:{hp:90,maxHp:90,mp:113,maxMp:113,atk:12,def:6,spd:11,crit:15},
       statDisplay:{HP:6,ATK:8,DEF:4,SPD:6,MP:10},
@@ -176,7 +176,7 @@
     null_earth: {
       id:'null_earth', name:'The Ungrounded', icon:'🌑',
       tagline:'The stone that forgets it is stone is no longer a foundation. It is rubble that has not fallen yet.',
-      color:'#887755', element:'voidearth', rarity:'legendary',
+      color:'#887755', element:'void', elementFlavor:'voidearth', rarity:'legendary',
       fusedFrom:['nullbringer','geomancer'],
       stats:{hp:119,maxHp:119,mp:92,maxMp:92,atk:12,def:11,spd:10,crit:11},
       statDisplay:{HP:8,ATK:8,DEF:7,SPD:6,MP:8},
@@ -190,7 +190,7 @@
     grave_null: {
       id:'grave_null', name:'The Open Grave', icon:'🌑',
       tagline:'The grave that waited. The null that fills it with something that was not ready.',
-      color:'#557755', element:'voidgrave', rarity:'legendary',
+      color:'#557755', element:'void', elementFlavor:'voidgrave', rarity:'legendary',
       fusedFrom:['nullbringer','gravewarden'],
       stats:{hp:99,maxHp:99,mp:105,maxMp:105,atk:12,def:8,spd:11,crit:13},
       statDisplay:{HP:7,ATK:8,DEF:6,SPD:6,MP:9},
@@ -204,7 +204,7 @@
     null_gravity: {
       id:'null_gravity', name:'The Crushing Absence', icon:'🌑',
       tagline:'Gravity pulls toward mass. The null is the absence of mass. Both collapse.',
-      color:'#444466', element:'voidgravity', rarity:'mythical',
+      color:'#444466', element:'void', elementFlavor:'voidgravity', rarity:'mythical',
       fusedFrom:['nullbringer','gravitist'],
       stats:{hp:88,maxHp:88,mp:119,maxMp:119,atk:13,def:6,spd:11,crit:15},
       statDisplay:{HP:6,ATK:9,DEF:4,SPD:6,MP:10},
@@ -218,7 +218,7 @@
     null_hexblade: {
       id:'null_hexblade', name:'The Unmaking Curse', icon:'🌑',
       tagline:'The curse removes resistance. The Sunder removes what was resisting.',
-      color:'#663388', element:'voidhex', rarity:'mythical',
+      color:'#663388', element:'void', elementFlavor:'voidhex', rarity:'mythical',
       fusedFrom:['nullbringer','hexblade'],
       stats:{hp:96,maxHp:96,mp:105,maxMp:105,atk:14,def:7,spd:12,crit:16},
       statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:9},
@@ -232,7 +232,7 @@
     null_vanguard: {
       id:'null_vanguard', name:'The Iron Unmaking', icon:'🌑',
       tagline:'The armor held. The Sunder addressed what the armor was protecting.',
-      color:'#667799', element:'voidsteel', rarity:'legendary',
+      color:'#667799', element:'void', elementFlavor:'voidsteel', rarity:'legendary',
       fusedFrom:['nullbringer','ironclad'],
       stats:{hp:127,maxHp:127,mp:84,maxMp:84,atk:11,def:11,spd:10,crit:10},
       statDisplay:{HP:9,ATK:7,DEF:7,SPD:6,MP:7},
@@ -246,7 +246,7 @@
     light_null: {
       id:'light_null', name:'The Sacred Erasure', icon:'🌑',
       tagline:'The light judges. The null carries out the judgment.',
-      color:'#ffffaa', element:'voidlight', rarity:'mythical',
+      color:'#ffffaa', element:'void', elementFlavor:'voidlight', rarity:'mythical',
       fusedFrom:['nullbringer','lightbringer'],
       stats:{hp:108,maxHp:108,mp:103,maxMp:103,atk:12,def:9,spd:11,crit:13},
       statDisplay:{HP:7,ATK:8,DEF:6,SPD:6,MP:9},
@@ -260,7 +260,7 @@
     null_magnetist: {
       id:'null_magnetist', name:'The Magnetic Disassembly', icon:'🌑',
       tagline:'The field pulls components apart. The Sunder addresses what the field separated.',
-      color:'#5599bb', element:'voidmagnet', rarity:'mythical',
+      color:'#5599bb', element:'void', elementFlavor:'voidmagnet', rarity:'mythical',
       fusedFrom:['nullbringer','magnetist'],
       stats:{hp:94,maxHp:94,mp:108,maxMp:108,atk:13,def:7,spd:12,crit:14},
       statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:9},
@@ -274,7 +274,7 @@
     null_necromancer: {
       id:'null_necromancer', name:'The Final Death', icon:'🌑',
       tagline:'The necromancer raises the dead. The null ensures they do not rise again.',
-      color:'#334433', element:'voidnecro', rarity:'mythical',
+      color:'#334433', element:'void', elementFlavor:'voidnecro', rarity:'mythical',
       fusedFrom:['nullbringer','necromancer'],
       stats:{hp:89,maxHp:89,mp:127,maxMp:127,atk:11,def:6,spd:11,crit:13},
       statDisplay:{HP:6,ATK:7,DEF:4,SPD:6,MP:10},
@@ -288,7 +288,7 @@
     null_paladin: {
       id:'null_paladin', name:'The Void Crusader', icon:'🌑',
       tagline:'The holy warrior\'s conviction, directed at something the holy books do not name.',
-      color:'#887799', element:'voidholy', rarity:'mythical',
+      color:'#887799', element:'void', elementFlavor:'voidholy', rarity:'mythical',
       fusedFrom:['nullbringer','paladin'],
       stats:{hp:122,maxHp:122,mp:94,maxMp:94,atk:12,def:10,spd:10,crit:11},
       statDisplay:{HP:8,ATK:8,DEF:7,SPD:6,MP:8},
@@ -302,7 +302,7 @@
     null_plague_lord: {
       id:'null_plague_lord', name:'The Plague of Ending', icon:'🌑',
       tagline:'The disease that dismantles rather than merely kills.',
-      color:'#446644', element:'voidplague', rarity:'divine',
+      color:'#446644', element:'void', elementFlavor:'voidplague', rarity:'divine',
       fusedFrom:['nullbringer','pestilencelord'],
       stats:{hp:88,maxHp:88,mp:119,maxMp:119,atk:11,def:6,spd:11,crit:13},
       statDisplay:{HP:6,ATK:7,DEF:4,SPD:6,MP:10},
@@ -316,7 +316,7 @@
     phantom_null: {
       id:'phantom_null', name:'The Nothing That Strikes', icon:'🌑',
       tagline:'You did not see it. You felt the Sunder. The sequence is correct.',
-      color:'#558888', element:'voidghost', rarity:'divine',
+      color:'#558888', element:'void', elementFlavor:'voidghost', rarity:'divine',
       fusedFrom:['nullbringer','phantom'],
       stats:{hp:88,maxHp:88,mp:110,maxMp:110,atk:12,def:5,spd:16,crit:19},
       statDisplay:{HP:6,ATK:8,DEF:3,SPD:8,MP:9},
@@ -330,7 +330,7 @@
     null_doctor: {
       id:'null_doctor', name:'The Terminal Prognosis', icon:'🌑',
       tagline:'The plaguedoctor knows where the body fails. The nullbringer addresses those locations precisely.',
-      color:'#668855', element:'voidmed', rarity:'mythical',
+      color:'#668855', element:'void', elementFlavor:'voidmed', rarity:'mythical',
       fusedFrom:['nullbringer','plaguedoctor'],
       stats:{hp:90,maxHp:90,mp:113,maxMp:113,atk:12,def:6,spd:11,crit:14},
       statDisplay:{HP:6,ATK:8,DEF:4,SPD:6,MP:10},
@@ -344,7 +344,7 @@
     null_flame: {
       id:'null_flame', name:'The Unburning', icon:'🌑',
       tagline:'The fire that does not consume. The Sunder that fire was preparing for.',
-      color:'#ff5500', element:'voidfire', rarity:'legendary',
+      color:'#ff5500', element:'void', elementFlavor:'voidfire', rarity:'legendary',
       fusedFrom:['nullbringer','pyromancer'],
       stats:{hp:92,maxHp:92,mp:111,maxMp:111,atk:10,def:6,spd:12,crit:14},
       statDisplay:{HP:6,ATK:7,DEF:4,SPD:7,MP:10},
@@ -358,7 +358,7 @@
     null_runeblade: {
       id:'null_runeblade', name:'The Unscribed Blade', icon:'🌑',
       tagline:'The rune that inscribes Sunder into every strike.',
-      color:'#8855aa', element:'voidrune', rarity:'legendary',
+      color:'#8855aa', element:'void', elementFlavor:'voidrune', rarity:'legendary',
       fusedFrom:['nullbringer','runeblade'],
       stats:{hp:105,maxHp:105,mp:100,maxMp:100,atk:13,def:8,spd:12,crit:14},
       statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:9},
@@ -372,7 +372,7 @@
     null_sentinel: {
       id:'null_sentinel', name:'The Immovable Erasure', icon:'🌑',
       tagline:'It holds the position. The position it holds is the one where you are being Sundered.',
-      color:'#667788', element:'voidwall', rarity:'legendary',
+      color:'#667788', element:'void', elementFlavor:'voidwall', rarity:'legendary',
       fusedFrom:['nullbringer','sentinel'],
       stats:{hp:130,maxHp:130,mp:86,maxMp:86,atk:12,def:12,spd:10,crit:11},
       statDisplay:{HP:9,ATK:8,DEF:8,SPD:6,MP:7},
@@ -386,7 +386,7 @@
     null_shadow: {
       id:'null_shadow', name:'The Void Blade', icon:'🌑',
       tagline:'The shadow kills. The null ensures nothing remains to prove it happened.',
-      color:'#222233', element:'voidshadow', rarity:'legendary',
+      color:'#222233', element:'void', elementFlavor:'voidshadow', rarity:'legendary',
       fusedFrom:['nullbringer','shadowblade'],
       stats:{hp:94,maxHp:94,mp:94,maxMp:94,atk:14,def:6,spd:15,crit:18},
       statDisplay:{HP:6,ATK:10,DEF:4,SPD:8,MP:8},
@@ -400,7 +400,7 @@
     null_soulweaver: {
       id:'null_soulweaver', name:'The Soul Unraveling', icon:'🌑',
       tagline:'The soul is not exempt. The Sunder reaches everything.',
-      color:'#6644aa', element:'voidsoul', rarity:'mythical',
+      color:'#6644aa', element:'void', elementFlavor:'voidsoul', rarity:'mythical',
       fusedFrom:['nullbringer','soulweaver'],
       stats:{hp:89,maxHp:89,mp:116,maxMp:116,atk:11,def:6,spd:11,crit:13},
       statDisplay:{HP:6,ATK:7,DEF:4,SPD:6,MP:10},
@@ -414,7 +414,7 @@
     null_resonance: {
       id:'null_resonance', name:'The Resonant Void', icon:'🌑',
       tagline:'The frequency at which something ceases to exist.',
-      color:'#5588aa', element:'voidsound', rarity:'mythical',
+      color:'#5588aa', element:'void', elementFlavor:'voidsound', rarity:'mythical',
       fusedFrom:['nullbringer','soundbreaker'],
       stats:{hp:96,maxHp:96,mp:106,maxMp:106,atk:14,def:6,spd:14,crit:16},
       statDisplay:{HP:6,ATK:9,DEF:4,SPD:8,MP:9},
@@ -428,7 +428,7 @@
     null_spellsword: {
       id:'null_spellsword', name:'The Psionic Unmaking', icon:'🌑',
       tagline:'The mind that holds the sword that holds the Sunder.',
-      color:'#6677cc', element:'voidpsion', rarity:'mythical',
+      color:'#6677cc', element:'void', elementFlavor:'voidpsion', rarity:'mythical',
       fusedFrom:['nullbringer','spellsword'],
       stats:{hp:103,maxHp:103,mp:103,maxMp:103,atk:14,def:8,spd:13,crit:15},
       statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:9},
@@ -442,7 +442,7 @@
     null_spiritwalker: {
       id:'null_spiritwalker', name:'The Haunted Unmaking', icon:'🌑',
       tagline:'The spirit confirmed what the nullbringer suspected: there is no part of the target that is exempt.',
-      color:'#559966', element:'voidspirit', rarity:'mythical',
+      color:'#559966', element:'void', elementFlavor:'voidspirit', rarity:'mythical',
       fusedFrom:['nullbringer','spiritwalker'],
       stats:{hp:99,maxHp:99,mp:108,maxMp:108,atk:12,def:8,spd:12,crit:13},
       statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
@@ -456,7 +456,7 @@
     null_storm: {
       id:'null_storm', name:'The Thundering Void', icon:'🌑',
       tagline:'Lightning is fast. The Sunder is what it was fast enough to deliver.',
-      color:'#4466aa', element:'voidstorm', rarity:'legendary',
+      color:'#4466aa', element:'void', elementFlavor:'voidstorm', rarity:'legendary',
       fusedFrom:['nullbringer','stormcaller'],
       stats:{hp:97,maxHp:97,mp:105,maxMp:105,atk:12,def:7,spd:14,crit:16},
       statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
@@ -470,7 +470,7 @@
     null_savant: {
       id:'null_savant', name:'The Null Protocol', icon:'🌑',
       tagline:'The code that runs the Sunder. The system that the Sunder runs on.',
-      color:'#335577', element:'voidtech', rarity:'mythical',
+      color:'#335577', element:'void', elementFlavor:'voidtech', rarity:'mythical',
       fusedFrom:['nullbringer','techsavant'],
       stats:{hp:93,maxHp:93,mp:111,maxMp:111,atk:13,def:7,spd:13,crit:15},
       statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:10},
@@ -484,7 +484,7 @@
     null_tide: {
       id:'null_tide', name:'The Voiding Current', icon:'🌑',
       tagline:'The tide wears everything down. The Sunder finishes what the tide started.',
-      color:'#3366aa', element:'voidwater', rarity:'legendary',
+      color:'#3366aa', element:'void', elementFlavor:'voidwater', rarity:'legendary',
       fusedFrom:['nullbringer','tidecaller'],
       stats:{hp:93,maxHp:93,mp:110,maxMp:110,atk:12,def:7,spd:12,crit:14},
       statDisplay:{HP:6,ATK:8,DEF:5,SPD:7,MP:9},
@@ -498,7 +498,7 @@
     void_null: {
       id:'void_null', name:'The Deepest Absence', icon:'🌑',
       tagline:'The void looked at the null and recognized itself.',
-      color:'#110011', element:'voidvoid', rarity:'mythical',
+      color:'#110011', element:'void', elementFlavor:'voidvoid', rarity:'mythical',
       fusedFrom:['nullbringer','voidmancer'],
       stats:{hp:86,maxHp:86,mp:122,maxMp:122,atk:11,def:5,spd:11,crit:15},
       statDisplay:{HP:6,ATK:7,DEF:3,SPD:6,MP:10},
@@ -512,7 +512,7 @@
     null_warlord: {
       id:'null_warlord', name:'The Erasing Campaign', icon:'🌑',
       tagline:'The warlord who wins by leaving nothing to oppose them.',
-      color:'#554433', element:'voidwar', rarity:'legendary',
+      color:'#554433', element:'void', elementFlavor:'voidwar', rarity:'legendary',
       fusedFrom:['nullbringer','warlord'],
       stats:{hp:122,maxHp:122,mp:92,maxMp:92,atk:14,def:10,spd:11,crit:12},
       statDisplay:{HP:8,ATK:10,DEF:7,SPD:6,MP:8},
@@ -526,7 +526,7 @@
     null_wind: {
       id:'null_wind', name:'The Erasing Gale', icon:'🌑',
       tagline:'The wind removes everything it passes through. The Sunder is specific about what it removes.',
-      color:'#446655', element:'voidwind', rarity:'legendary',
+      color:'#446655', element:'void', elementFlavor:'voidwind', rarity:'legendary',
       fusedFrom:['nullbringer','windwalker'],
       stats:{hp:92,maxHp:92,mp:104,maxMp:104,atk:13,def:6,spd:16,crit:17},
       statDisplay:{HP:6,ATK:9,DEF:4,SPD:9,MP:9},

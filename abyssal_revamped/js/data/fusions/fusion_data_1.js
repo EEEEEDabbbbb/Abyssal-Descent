@@ -49,7 +49,7 @@ const FUSION_CLASSES_1 = {
   darkguard: {
     id:'darkguard', name:'Darkguard', icon:'🌑',
     tagline:'Shadow and steel. One hides. One holds.',
-    color:'#556699', element:'voidsteel', rarity:'uncommon',
+    color:'#556699', element:'shadow', elementFlavor:'voidsteel', rarity:'uncommon',
     fusedFrom:['shadowblade','ironclad'],
     stats:{hp:110,maxHp:110,mp:50,maxMp:50,atk:13,def:10,spd:13,crit:14},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:8},
@@ -63,7 +63,7 @@ const FUSION_CLASSES_1 = {
   shade_reaper: {
     id:'shade_reaper', name:'Shade Reaper', icon:'🌙',
     tagline:'The soul slips out before the body knows it.',
-    color:'#557788', element:'wraith', rarity:'rare',
+    color:'#557788', element:'shadow', elementFlavor:'wraith', rarity:'rare',
     fusedFrom:['shadowblade','soulweaver'],
     stats:{hp:75,maxHp:75,mp:80,maxMp:80,atk:12,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
@@ -77,7 +77,7 @@ const FUSION_CLASSES_1 = {
   ashstalker: {
     id:'ashstalker', name:'Ashstalker', icon:'🔥',
     tagline:'The kill is quick. The burning is not.',
-    color:'#aa3311', element:'cindershadow', rarity:'uncommon',
+    color:'#aa3311', element:'shadow', elementFlavor:'cindershadow', rarity:'uncommon',
     fusedFrom:['shadowblade','pyromancer'],
     stats:{hp:78,maxHp:78,mp:75,maxMp:75,atk:12,def:5,spd:14,crit:18},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:7},
@@ -91,7 +91,7 @@ const FUSION_CLASSES_1 = {
   thundershade: {
     id:'thundershade', name:'Thundershade', icon:'⚡',
     tagline:'You were never there. The lightning was.',
-    color:'#5566aa', element:'stormshade', rarity:'uncommon',
+    color:'#5566aa', element:'electric', elementFlavor:'stormshade', rarity:'uncommon',
     fusedFrom:['shadowblade','stormcaller'],
     stats:{hp:83,maxHp:83,mp:70,maxMp:70,atk:14,def:6,spd:16,crit:19},
     statDisplay:{HP:6,ATK:10,DEF:4,SPD:9,MP:7},
@@ -105,7 +105,7 @@ const FUSION_CLASSES_1 = {
   crimson_phantom: {
     id:'crimson_phantom', name:'Crimson Phantom', icon:'🩸',
     tagline:'Pain is the knife. Blood is the shadow.',
-    color:'#882233', element:'abyssblade', rarity:'uncommon',
+    color:'#882233', element:'shadow', elementFlavor:'abyssblade', rarity:'uncommon',
     fusedFrom:['shadowblade','bloodknight'],
     stats:{hp:100,maxHp:100,mp:55,maxMp:55,atk:15,def:8,spd:13,crit:15},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:8},
@@ -133,7 +133,7 @@ const FUSION_CLASSES_1 = {
   runic_shadow: {
     id:'runic_shadow', name:'Runic Shadow', icon:'🔱',
     tagline:'The rune is carved in darkness. The blade remembers.',
-    color:'#886622', element:'runeshadow', rarity:'uncommon',
+    color:'#886622', element:'normal', elementFlavor:'runeshadow', rarity:'uncommon',
     fusedFrom:['shadowblade','runeblade'],
     stats:{hp:90,maxHp:90,mp:65,maxMp:65,atk:14,def:7,spd:15,crit:18},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:9,MP:6},
@@ -147,7 +147,7 @@ const FUSION_CLASSES_1 = {
   death_stalker: {
     id:'death_stalker', name:'Death Stalker', icon:'💀',
     tagline:'The plague spreads from shadow. The corpse never saw you.',
-    color:'#337722', element:'wraith', rarity:'rare',
+    color:'#337722', element:'shadow', elementFlavor:'wraith', rarity:'rare',
     fusedFrom:['shadowblade','necromancer'],
     stats:{hp:75,maxHp:75,mp:90,maxMp:90,atk:12,def:5,spd:13,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -161,7 +161,7 @@ const FUSION_CLASSES_1 = {
   dusk_templar: {
     id:'dusk_templar', name:'Dusk Templar', icon:'⚜️',
     tagline:'The light casts a shadow. Walk in both.',
-    color:'#886633', element:'dusklight', rarity:'rare',
+    color:'#886633', element:'shadow', elementFlavor:'dusklight', rarity:'rare',
     fusedFrom:['shadowblade','paladin'],
     stats:{hp:105,maxHp:105,mp:60,maxMp:60,atk:14,def:9,spd:13,crit:15},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:8,MP:6},
@@ -175,7 +175,7 @@ const FUSION_CLASSES_1 = {
   frostshade: {
     id:'frostshade', name:'Frostshade', icon:'❄️',
     tagline:'Cold as shadow. Sharp as ice.',
-    color:'#5577aa', element:'frostshadow', rarity:'rare',
+    color:'#5577aa', element:'shadow', elementFlavor:'frostshadow', rarity:'rare',
     fusedFrom:['shadowblade','frostweaver'],
     stats:{hp:80,maxHp:80,mp:73,maxMp:73,atk:13,def:7,spd:15,crit:19},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:9,MP:7},
@@ -189,7 +189,7 @@ const FUSION_CLASSES_1 = {
   shadow_drake: {
     id:'shadow_drake', name:'Shadow Drake', icon:'🐉',
     tagline:'The dragon does not announce itself.',
-    color:'#664422', element:'shadowdrake', rarity:'rare',
+    color:'#664422', element:'shadow', elementFlavor:'shadowdrake', rarity:'rare',
     fusedFrom:['shadowblade','dragonknight'],
     stats:{hp:105,maxHp:105,mp:55,maxMp:55,atk:16,def:9,spd:14,crit:17},
     statDisplay:{HP:7,ATK:11,DEF:6,SPD:8},
@@ -203,7 +203,7 @@ const FUSION_CLASSES_1 = {
   tide_shade: {
     id:'tide_shade', name:'Tide Shade', icon:'🌊',
     tagline:'Beneath the tide, in the dark, something waits.',
-    color:'#335566', element:'mireshadow', rarity:'uncommon',
+    color:'#335566', element:'water', elementFlavor:'mireshadow', rarity:'uncommon',
     fusedFrom:['shadowblade','tidecaller'],
     stats:{hp:83,maxHp:83,mp:75,maxMp:75,atk:13,def:7,spd:15,crit:17},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:9,MP:7},
@@ -217,7 +217,7 @@ const FUSION_CLASSES_1 = {
   gravity_wraith: {
     id:'gravity_wraith', name:'Gravity Wraith', icon:'⚫',
     tagline:'Even light cannot escape the hunt.',
-    color:'#443366', element:'gravshade', rarity:'rare',
+    color:'#443366', element:'shadow', elementFlavor:'gravshade', rarity:'rare',
     fusedFrom:['shadowblade','gravitist'],
     stats:{hp:78,maxHp:78,mp:78,maxMp:78,atk:13,def:6,spd:14,crit:18},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -231,7 +231,7 @@ const FUSION_CLASSES_1 = {
   silent_shatter: {
     id:'silent_shatter', name:'Silent Shatter', icon:'🔇',
     tagline:'You hear nothing. Then everything breaks.',
-    color:'#665544', element:'silentwave', rarity:'rare',
+    color:'#665544', element:'shadow', elementFlavor:'silentwave', rarity:'rare',
     fusedFrom:['shadowblade','soundbreaker'],
     stats:{hp:80,maxHp:80,mp:73,maxMp:73,atk:14,def:6,spd:16,crit:19},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:9,MP:7},
@@ -245,7 +245,7 @@ const FUSION_CLASSES_1 = {
   temporal_shade: {
     id:'temporal_shade', name:'Temporal Shade', icon:'⏳',
     tagline:'The shadow arrives before you do.',
-    color:'#665588', element:'timeshade', rarity:'rare',
+    color:'#665588', element:'shadow', elementFlavor:'timeshade', rarity:'rare',
     fusedFrom:['shadowblade','chronomancer'],
     stats:{hp:75,maxHp:75,mp:85,maxMp:85,atk:13,def:6,spd:15,crit:18},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:8},
@@ -259,7 +259,7 @@ const FUSION_CLASSES_1 = {
   spell_phantom: {
     id:'spell_phantom', name:'Spell Phantom', icon:'🔮',
     tagline:'The blade casts spells. The shadow casts doubt.',
-    color:'#775566', element:'spellshadow', rarity:'rare',
+    color:'#775566', element:'shadow', elementFlavor:'spellshadow', rarity:'rare',
     fusedFrom:['shadowblade','spellsword'],
     stats:{hp:85,maxHp:85,mp:70,maxMp:70,atk:14,def:7,spd:15,crit:19},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:9,MP:7},
@@ -273,7 +273,7 @@ const FUSION_CLASSES_1 = {
   plague_shade: {
     id:'plague_shade', name:'Plague Shade', icon:'🩺',
     tagline:'The infection arrived with the shadow.',
-    color:'#556633', element:'plagueshadow', rarity:'rare',
+    color:'#556633', element:'shadow', elementFlavor:'plagueshadow', rarity:'rare',
     fusedFrom:['shadowblade','plaguedoctor'],
     stats:{hp:78,maxHp:78,mp:80,maxMp:80,atk:13,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -287,7 +287,7 @@ const FUSION_CLASSES_1 = {
   dust_wraith: {
     id:'dust_wraith', name:'Dust Wraith', icon:'🪨',
     tagline:'It rose from the stone. It killed from the dark.',
-    color:'#665544', element:'dustshade', rarity:'uncommon',
+    color:'#665544', element:'shadow', elementFlavor:'dustshade', rarity:'uncommon',
     fusedFrom:['shadowblade','geomancer'],
     stats:{hp:90,maxHp:90,mp:65,maxMp:65,atk:14,def:9,spd:13,crit:16},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:6},
@@ -301,7 +301,7 @@ const FUSION_CLASSES_1 = {
   eclipse_blade: {
     id:'eclipse_blade', name:'Eclipse Blade', icon:'🌗',
     tagline:'The light does not scare the shadow. It sharpens it.',
-    color:'#997722', element:'eclipseblade', rarity:'rare',
+    color:'#997722', element:'shadow', elementFlavor:'eclipseblade', rarity:'rare',
     fusedFrom:['shadowblade','lightbringer'],
     stats:{hp:83,maxHp:83,mp:73,maxMp:73,atk:14,def:7,spd:15,crit:18},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:9,MP:7},
@@ -315,7 +315,7 @@ const FUSION_CLASSES_1 = {
   night_predator: {
     id:'night_predator', name:'Night Predator', icon:'🐾',
     tagline:'Feral in the dark. Lethal in the silence.',
-    color:'#554422', element:'runeshadow', rarity:'uncommon',
+    color:'#554422', element:'normal', elementFlavor:'runeshadow', rarity:'uncommon',
     fusedFrom:['shadowblade','beastmaster'],
     stats:{hp:88,maxHp:88,mp:63,maxMp:63,atk:15,def:7,spd:16,crit:18},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:9,MP:6},
@@ -329,7 +329,7 @@ const FUSION_CLASSES_1 = {
   ghost_protocol: {
     id:'ghost_protocol', name:'Ghost Protocol', icon:'⚙️',
     tagline:'The system never detected the intrusion.',
-    color:'#445566', element:'ghosttech', rarity:'rare',
+    color:'#445566', element:'shadow', elementFlavor:'ghosttech', rarity:'rare',
     fusedFrom:['shadowblade','techsavant'],
     stats:{hp:80,maxHp:80,mp:78,maxMp:78,atk:14,def:6,spd:16,crit:18},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:9,MP:8},
@@ -343,7 +343,7 @@ const FUSION_CLASSES_1 = {
   grave_phantom: {
     id:'grave_phantom', name:'Grave Phantom', icon:'🪦',
     tagline:'It walks between graves. Both kinds.',
-    color:'#446655', element:'wraith', rarity:'uncommon',
+    color:'#446655', element:'shadow', elementFlavor:'wraith', rarity:'uncommon',
     fusedFrom:['shadowblade','gravewarden'],
     stats:{hp:98,maxHp:98,mp:63,maxMp:63,atk:14,def:9,spd:13,crit:16},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:8,MP:6},
@@ -357,7 +357,7 @@ const FUSION_CLASSES_1 = {
   iron_ghost: {
     id:'iron_ghost', name:'Iron Ghost', icon:'🧲',
     tagline:'The blades gather themselves. Then vanish.',
-    color:'#556677', element:'ironshadow', rarity:'rare',
+    color:'#556677', element:'shadow', elementFlavor:'ironshadow', rarity:'rare',
     fusedFrom:['shadowblade','magnetist'],
     stats:{hp:83,maxHp:83,mp:73,maxMp:73,atk:14,def:7,spd:14,crit:18},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:8,MP:7},
@@ -371,7 +371,7 @@ const FUSION_CLASSES_1 = {
   prism_shade: {
     id:'prism_shade', name:'Prism Shade', icon:'💎',
     tagline:'Refracted shadow hits from every angle.',
-    color:'#7766aa', element:'prismshade', rarity:'epic',
+    color:'#7766aa', element:'shadow', elementFlavor:'prismshade', rarity:'epic',
     fusedFrom:['shadowblade','crystalmancer'],
     stats:{hp:75,maxHp:75,mp:80,maxMp:80,atk:15,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:9,MP:8},
@@ -385,7 +385,7 @@ const FUSION_CLASSES_1 = {
   war_phantom: {
     id:'war_phantom', name:'War Phantom', icon:'⚔️',
     tagline:'The warlord who is never seen coming.',
-    color:'#774422', element:'warshadow', rarity:'uncommon',
+    color:'#774422', element:'shadow', elementFlavor:'warshadow', rarity:'uncommon',
     fusedFrom:['shadowblade','warlord'],
     stats:{hp:100,maxHp:100,mp:58,maxMp:58,atk:16,def:9,spd:14,crit:17},
     statDisplay:{HP:7,ATK:11,DEF:6,SPD:8,MP:6},
@@ -399,7 +399,7 @@ const FUSION_CLASSES_1 = {
   spirit_stalker: {
     id:'spirit_stalker', name:'Spirit Stalker', icon:'🌿',
     tagline:'The spirit hunts. The shadow carries the blade.',
-    color:'#447755', element:'spiritshadow', rarity:'rare',
+    color:'#447755', element:'shadow', elementFlavor:'spiritshadow', rarity:'rare',
     fusedFrom:['shadowblade','spiritwalker'],
     stats:{hp:85,maxHp:85,mp:73,maxMp:73,atk:13,def:7,spd:15,crit:18},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:9,MP:7},
@@ -413,7 +413,7 @@ const FUSION_CLASSES_1 = {
   cursed_phantom: {
     id:'cursed_phantom', name:'Cursed Phantom', icon:'🔮',
     tagline:'The curse arrives before the assassin does.',
-    color:'#774488', element:'abyssblade', rarity:'rare',
+    color:'#774488', element:'shadow', elementFlavor:'abyssblade', rarity:'rare',
     fusedFrom:['shadowblade','hexblade'],
     stats:{hp:80,maxHp:80,mp:75,maxMp:75,atk:14,def:6,spd:15,crit:19},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:9,MP:7},
@@ -427,7 +427,7 @@ const FUSION_CLASSES_1 = {
   starstalker: {
     id:'starstalker', name:'Starstalker', icon:'🌌',
     tagline:'It hunts between stars. Between moments.',
-    color:'#334477', element:'starshadow', rarity:'epic',
+    color:'#334477', element:'shadow', elementFlavor:'starshadow', rarity:'epic',
     fusedFrom:['shadowblade','cosmomancer'],
     stats:{hp:75,maxHp:75,mp:88,maxMp:88,atk:13,def:5,spd:15,crit:19},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:8},
@@ -441,7 +441,7 @@ const FUSION_CLASSES_1 = {
   plague_phantom: {
     id:'plague_phantom', name:'Plague Phantom', icon:'☣️',
     tagline:'The plague does not announce its arrival.',
-    color:'#556633', element:'plagueshadow', rarity:'epic',
+    color:'#556633', element:'shadow', elementFlavor:'plagueshadow', rarity:'epic',
     fusedFrom:['shadowblade','pestilencelord'],
     stats:{hp:80,maxHp:80,mp:80,maxMp:80,atk:14,def:6,spd:14,crit:18},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:8},
@@ -455,7 +455,7 @@ const FUSION_CLASSES_1 = {
   storm_shade: {
     id:'storm_shade', name:'Storm Shade', icon:'💨',
     tagline:'Faster than the wind. Quieter than the shadow.',
-    color:'#557766', element:'windshade', rarity:'uncommon',
+    color:'#557766', element:'shadow', elementFlavor:'windshade', rarity:'uncommon',
     fusedFrom:['shadowblade','windwalker'],
     stats:{hp:80,maxHp:80,mp:65,maxMp:65,atk:14,def:6,spd:19,crit:20},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:11,MP:6},
@@ -469,7 +469,7 @@ const FUSION_CLASSES_1 = {
   doom_shade: {
     id:'doom_shade', name:'Doom Shade', icon:'💣',
     tagline:'The doom arrives on silent feet.',
-    color:'#554433', element:'abyssblade', rarity:'epic',
+    color:'#554433', element:'shadow', elementFlavor:'abyssblade', rarity:'epic',
     fusedFrom:['shadowblade','doomcaster'],
     stats:{hp:75,maxHp:75,mp:85,maxMp:85,atk:13,def:5,spd:15,crit:19},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:8},
@@ -483,7 +483,7 @@ const FUSION_CLASSES_1 = {
   arcane_phantom: {
     id:'arcane_phantom', name:'Arcane Phantom', icon:'📚',
     tagline:'The spells are invisible. The death is not.',
-    color:'#5544aa', element:'spellshadow', rarity:'epic',
+    color:'#5544aa', element:'shadow', elementFlavor:'spellshadow', rarity:'epic',
     fusedFrom:['shadowblade','arcanist'],
     stats:{hp:73,maxHp:73,mp:90,maxMp:90,atk:13,def:5,spd:15,crit:20},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:9},
@@ -497,7 +497,7 @@ const FUSION_CLASSES_1 = {
   shadow_warden: {
     id:'shadow_warden', name:'Shadow Warden', icon:'🏰',
     tagline:'Even fortresses cast shadows.',
-    color:'#556688', element:'voidsteel', rarity:'uncommon',
+    color:'#556688', element:'shadow', elementFlavor:'voidsteel', rarity:'uncommon',
     fusedFrom:['shadowblade','sentinel'],
     stats:{hp:120,maxHp:120,mp:50,maxMp:50,atk:12,def:12,spd:12,crit:13},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:7},
@@ -511,7 +511,7 @@ const FUSION_CLASSES_1 = {
   abyssal_specter: {
     id:'abyssal_specter', name:'Abyssal Specter', icon:'👻',
     tagline:'Not a shadow. Not a ghost. Neither. Both.',
-    color:'#7755bb', element:'wraith', rarity:'legendary',
+    color:'#7755bb', element:'shadow', elementFlavor:'wraith', rarity:'legendary',
     fusedFrom:['shadowblade','phantom'],
     stats:{hp:75,maxHp:75,mp:70,maxMp:70,atk:15,def:5,spd:18,crit:25},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:10,MP:7},
@@ -525,7 +525,7 @@ const FUSION_CLASSES_1 = {
   soul_sentinel: {
     id:'soul_sentinel', name:'Soul Sentinel', icon:'🛡️',
     tagline:'The steel remembers every blow. The soul drinks them.',
-    color:'#4a8899', element:'soulsteel', rarity:'rare',
+    color:'#4a8899', element:'ghost', elementFlavor:'soulsteel', rarity:'rare',
     fusedFrom:['ironclad','soulweaver'],
     stats:{hp:105,maxHp:105,mp:70,maxMp:70,atk:9,def:11,spd:9,crit:8},
     statDisplay:{HP:7,ATK:6,DEF:8,SPD:5,MP:7},
@@ -539,7 +539,7 @@ const FUSION_CLASSES_1 = {
   magmaclad: {
     id:'magmaclad', name:'Magmaclad', icon:'🌋',
     tagline:'The shield burns. Everything that touches it learns.',
-    color:'#cc5500', element:'molten', rarity:'uncommon',
+    color:'#cc5500', element:'steel', elementFlavor:'molten', rarity:'uncommon',
     fusedFrom:['ironclad','pyromancer'],
     stats:{hp:108,maxHp:108,mp:65,maxMp:65,atk:9,def:10,spd:10,crit:9},
     statDisplay:{HP:7,ATK:6,DEF:7,SPD:6,MP:6},
@@ -553,7 +553,7 @@ const FUSION_CLASSES_1 = {
   stormwall: {
     id:'stormwall', name:'Stormwall', icon:'⛈️',
     tagline:'Lightning does not care about armor. Until it is the armor.',
-    color:'#4466bb', element:'stormsteel', rarity:'uncommon',
+    color:'#4466bb', element:'steel', elementFlavor:'stormsteel', rarity:'uncommon',
     fusedFrom:['ironclad','stormcaller'],
     stats:{hp:113,maxHp:113,mp:60,maxMp:60,atk:11,def:11,spd:12,crit:11},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:7,MP:6},
@@ -567,7 +567,7 @@ const FUSION_CLASSES_1 = {
   iron_tyrant: {
     id:'iron_tyrant', name:'Iron Tyrant', icon:'⚔️',
     tagline:'The armor bleeds. So does everything else.',
-    color:'#882211', element:'bloodsteel', rarity:'uncommon',
+    color:'#882211', element:'steel', elementFlavor:'bloodsteel', rarity:'uncommon',
     fusedFrom:['ironclad','bloodknight'],
     stats:{hp:130,maxHp:130,mp:45,maxMp:45,atk:12,def:13,spd:9,crit:7},
     statDisplay:{HP:9,ATK:8,DEF:9,SPD:5},

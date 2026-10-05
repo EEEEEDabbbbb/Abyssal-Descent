@@ -40,7 +40,7 @@ test('players never get duplicate ability buttons', async () => {
 test('every class element is a real element', async () => {
   const bad = await ctx.page.evaluate(() =>
     [...Object.values(CLASSES), ...Object.values(FUSION_CLASSES)]
-      .filter(c => !ELEMENTS[c.element]).map(c => `${c.id}:${c.element}`));
+      .filter(c => c.element !== null && !ELEMENTS[c.element]).map(c => `${c.id}:${c.element}`)); // null = deliberately elementless
   assert.deepEqual(bad, []);
 });
 

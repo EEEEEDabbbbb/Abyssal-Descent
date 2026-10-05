@@ -46,7 +46,7 @@ const FUSION_CLASSES_10 = {
   dragon_pestilence: {
     id:'dragon_pestilence', name:'The Plague Wyrm', icon:'🐉',
     tagline:'The dragon carries every disease it has ever survived. It has survived many.',
-    color:'#997700', element:'venomdrake', rarity:'legendary',
+    color:'#997700', element:'dragon', elementFlavor:'venomdrake', rarity:'legendary',
     fusedFrom:['dragonknight','pestilencelord'],
     stats:{hp:105,maxHp:105,mp:75,maxMp:75,atk:14,def:10,spd:11,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:7,SPD:6,MP:7},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_10 = {
   dragon_wind: {
     id:'dragon_wind', name:'The Storm Drake', icon:'🐉',
     tagline:'A dragon that flies fast enough creates its own weather. This one does it deliberately.',
-    color:'#b39955', element:'stormdrake', rarity:'rare',
+    color:'#b39955', element:'dragon', elementFlavor:'stormdrake', rarity:'rare',
     fusedFrom:['dragonknight','windwalker'],
     stats:{hp:105,maxHp:105,mp:60,maxMp:60,atk:15,def:9,spd:16,crit:14},
     statDisplay:{HP:7,ATK:11,DEF:6,SPD:9,MP:6},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_10 = {
   dragon_doom: {
     id:'dragon_doom', name:'The Doomed Wyrm', icon:'🐉',
     tagline:'The dragon is doomed. So is everything near it.',
-    color:'#a24d1a', element:'blooddrake', rarity:'legendary',
+    color:'#a24d1a', element:'dragon', elementFlavor:'blooddrake', rarity:'legendary',
     fusedFrom:['dragonknight','doomcaster'],
     stats:{hp:100,maxHp:100,mp:80,maxMp:80,atk:14,def:8,spd:12,crit:14},
     statDisplay:{HP:7,ATK:10,DEF:5,SPD:7,MP:8},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_10 = {
   dragon_arcanist: {
     id:'dragon_arcanist', name:'The Mage Drake', icon:'🐉',
     tagline:'The most powerful arcane practitioner is also the largest one in the room.',
-    color:'#994d66', element:'minddrake', rarity:'legendary',
+    color:'#994d66', element:'dragon', elementFlavor:'minddrake', rarity:'legendary',
     fusedFrom:['dragonknight','arcanist'],
     stats:{hp:98,maxHp:98,mp:85,maxMp:85,atk:13,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:8},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_10 = {
   dragon_sentinel: {
     id:'dragon_sentinel', name:'The Dragon Fortress', icon:'🐉',
     tagline:'The wall holds. The wall breathes fire. These are both accurate statements.',
-    color:'#b37744', element:'dragonforge', rarity:'rare',
+    color:'#b37744', element:'dragon', elementFlavor:'dragonforge', rarity:'rare',
     fusedFrom:['dragonknight','sentinel'],
     stats:{hp:145,maxHp:145,mp:45,maxMp:45,atk:13,def:16,spd:8,crit:8},
     statDisplay:{HP:10,ATK:9,DEF:10,SPD:4},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_10 = {
   dragon_phantom: {
     id:'dragon_phantom', name:'The Spectral Wyrm', icon:'🐉',
     tagline:'A ghost that is also a dragon. The size does not diminish in death.',
-    color:'#b3805e', element:'dragonspirit', rarity:'mythical',
+    color:'#b3805e', element:'dragon', elementFlavor:'dragonspirit', rarity:'mythical',
     fusedFrom:['dragonknight','phantom'],
     stats:{hp:100,maxHp:100,mp:65,maxMp:65,atk:15,def:8,spd:15,crit:19},
     statDisplay:{HP:7,ATK:11,DEF:5,SPD:8,MP:6},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_10 = {
   tide_gravitist: {
     id:'tide_gravitist', name:'The Deep Pull', icon:'🌊',
     tagline:'The ocean floor is the gravitationally densest point of the ocean. This brings that force upward.',
-    color:'#447799', element:'vortex', rarity:'epic',
+    color:'#447799', element:'water', elementFlavor:'vortex', rarity:'epic',
     fusedFrom:['tidecaller','gravitist'],
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:10,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -144,7 +144,7 @@ const FUSION_CLASSES_10 = {
   tide_soundbreaker: {
     id:'tide_soundbreaker', name:'The Tsunami Bell', icon:'🌊',
     tagline:'Sound carries further in water. The bell rings below the surface. Everything above hears it.',
-    color:'#91a291', element:'resonantwave', rarity:'rare',
+    color:'#91a291', element:'water', elementFlavor:'resonantwave', rarity:'rare',
     fusedFrom:['tidecaller','soundbreaker'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:12,def:7,spd:14,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:8},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_10 = {
   tide_chrono: {
     id:'tide_chrono', name:'The Eternal Tide', icon:'🌊',
     tagline:'The tide always returns. This one returns on a schedule only it controls.',
-    color:'#7791e6', element:'tidaltime', rarity:'epic',
+    color:'#7791e6', element:'water', elementFlavor:'tidaltime', rarity:'epic',
     fusedFrom:['tidecaller','chronomancer'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:10,def:7,spd:13,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_10 = {
   tide_spellsword: {
     id:'tide_spellsword', name:'The Riptide Mind', icon:'🌊',
     tagline:'The current pulls in the direction of the thought. The thought is aggressive.',
-    color:'#776fbb', element:'mindwave', rarity:'rare',
+    color:'#776fbb', element:'water', elementFlavor:'mindwave', rarity:'rare',
     fusedFrom:['tidecaller','spellsword'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:12,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_10 = {
   tide_plague: {
     id:'tide_plague', name:'The Miasmic Tide', icon:'🌊',
     tagline:'The water is already carrying something. You are already in the water.',
-    color:'#66a280', element:'toxictide', rarity:'epic',
+    color:'#66a280', element:'water', elementFlavor:'toxictide', rarity:'epic',
     fusedFrom:['tidecaller','plaguedoctor'],
     stats:{hp:80,maxHp:80,mp:95,maxMp:95,atk:10,def:8,spd:12,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:7,MP:9},
@@ -200,7 +200,7 @@ const FUSION_CLASSES_10 = {
   tide_geo: {
     id:'tide_geo', name:'The Undertow', icon:'🌊',
     tagline:'The sea takes the shore slowly. This one takes it all at once.',
-    color:'#779191', element:'mudslide', rarity:'uncommon',
+    color:'#779191', element:'water', elementFlavor:'mudslide', rarity:'uncommon',
     fusedFrom:['tidecaller','geomancer'],
     stats:{hp:93,maxHp:93,mp:80,maxMp:80,atk:12,def:11,spd:11,crit:11},
     statDisplay:{HP:6,ATK:8,DEF:8,SPD:6,MP:8},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_10 = {
   tide_lightbringer: {
     id:'tide_lightbringer', name:'The Bioluminescent', icon:'🌊',
     tagline:'The deep sea glows. What glows in the deep is not always friendly.',
-    color:'#a2bb88', element:'holytide', rarity:'rare',
+    color:'#a2bb88', element:'water', elementFlavor:'holytide', rarity:'rare',
     fusedFrom:['tidecaller','lightbringer'],
     stats:{hp:85,maxHp:85,mp:88,maxMp:88,atk:12,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_10 = {
   tide_beast: {
     id:'tide_beast', name:'The Sea Pack', icon:'🌊',
     tagline:'The ocean has predators. They learned to work together. It took geological time.',
-    color:'#66aa88', element:'runetide', rarity:'uncommon',
+    color:'#66aa88', element:'water', elementFlavor:'runetide', rarity:'uncommon',
     fusedFrom:['tidecaller','beastmaster'],
     stats:{hp:90,maxHp:90,mp:78,maxMp:78,atk:13,def:9,spd:14,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:7},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_10 = {
   tide_tech: {
     id:'tide_tech', name:'The Hydro Engine', icon:'🌊',
     tagline:'Water is the original power source. This one has been considerably upgraded.',
-    color:'#4491bb', element:'aquatech', rarity:'epic',
+    color:'#4491bb', element:'water', elementFlavor:'aquatech', rarity:'epic',
     fusedFrom:['tidecaller','techsavant'],
     stats:{hp:83,maxHp:83,mp:93,maxMp:93,atk:12,def:8,spd:14,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:9},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_10 = {
   tide_grave: {
     id:'tide_grave', name:'The Drowned Shore', icon:'🌊',
     tagline:'The sea swallows graves. Eventually it swallows everything. This one does not wait.',
-    color:'#4d80aa', element:'tidesoul', rarity:'rare',
+    color:'#4d80aa', element:'water', elementFlavor:'tidesoul', rarity:'rare',
     fusedFrom:['tidecaller','gravewarden'],
     stats:{hp:100,maxHp:100,mp:78,maxMp:78,atk:12,def:11,spd:11,crit:11},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:6,MP:7},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_10 = {
   tide_magnetist: {
     id:'tide_magnetist', name:'The Magnetic Current', icon:'🌊',
     tagline:'Salt water conducts. The current that flows through it has opinions.',
-    color:'#4d99bb', element:'magnetwave', rarity:'rare',
+    color:'#4d99bb', element:'water', elementFlavor:'magnetwave', rarity:'rare',
     fusedFrom:['tidecaller','magnetist'],
     stats:{hp:85,maxHp:85,mp:88,maxMp:88,atk:12,def:9,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_10 = {
   tide_crystal: {
     id:'tide_crystal', name:'The Crystal Tide', icon:'🌊',
     tagline:'The water grew them. They grew through the water. Now both go where they choose.',
-    color:'#66aae6', element:'crystalwave', rarity:'epic',
+    color:'#66aae6', element:'water', elementFlavor:'crystalwave', rarity:'epic',
     fusedFrom:['tidecaller','crystalmancer'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:13,def:7,spd:14,crit:16},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:8,MP:9},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_10 = {
   tide_war: {
     id:'tide_war', name:'The Naval Siege', icon:'🌊',
     tagline:'The warlord\'s favorite terrain is one the enemy cannot cross. The ocean qualifies.',
-    color:'#886f66', element:'watertide', rarity:'rare',
+    color:'#886f66', element:'water', elementFlavor:'watertide', rarity:'rare',
     fusedFrom:['tidecaller','warlord'],
     stats:{hp:103,maxHp:103,mp:73,maxMp:73,atk:14,def:11,spd:12,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_10 = {
   tide_spirit: {
     id:'tide_spirit', name:'The Ocean\'s Memory', icon:'🌊',
     tagline:'The ocean remembers every ship it has taken. It shares this history freely.',
-    color:'#44a2aa', element:'spiritwave', rarity:'epic',
+    color:'#44a2aa', element:'water', elementFlavor:'spiritwave', rarity:'epic',
     fusedFrom:['tidecaller','spiritwalker'],
     stats:{hp:88,maxHp:88,mp:88,maxMp:88,atk:11,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:7,MP:8},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_10 = {
   tide_hex: {
     id:'tide_hex', name:'The Binding Current', icon:'🌊',
     tagline:'The current sets the direction. The hex sets the destination.',
-    color:'#665eaa', element:'bloodtide', rarity:'epic',
+    color:'#665eaa', element:'water', elementFlavor:'bloodtide', rarity:'epic',
     fusedFrom:['tidecaller','hexblade'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_10 = {
   tide_cosmo: {
     id:'tide_cosmo', name:'The Cosmic Ocean', icon:'🌊',
     tagline:'The ocean covers most of the planet. Space covers everything else. Together: everything.',
-    color:'#4466bb', element:'cosmicwave', rarity:'legendary',
+    color:'#4466bb', element:'water', elementFlavor:'cosmicwave', rarity:'legendary',
     fusedFrom:['tidecaller','cosmomancer'],
     stats:{hp:78,maxHp:78,mp:103,maxMp:103,atk:11,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_10 = {
   tide_pestilence: {
     id:'tide_pestilence', name:'The Red Tide', icon:'🌊',
     tagline:'The color is a warning. The tide does not wait for warnings to be processed.',
-    color:'#4d9166', element:'toxictide', rarity:'epic',
+    color:'#4d9166', element:'water', elementFlavor:'toxictide', rarity:'epic',
     fusedFrom:['tidecaller','pestilencelord'],
     stats:{hp:83,maxHp:83,mp:95,maxMp:95,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_10 = {
   tide_wind: {
     id:'tide_wind', name:'The Typhoon', icon:'🌊',
     tagline:'The typhoon is wind and water at 17 SPD. Neither is negotiable.',
-    color:'#66b3bb', element:'typhoon', rarity:'rare',
+    color:'#66b3bb', element:'water', elementFlavor:'typhoon', rarity:'rare',
     fusedFrom:['tidecaller','windwalker'],
     stats:{hp:83,maxHp:83,mp:80,maxMp:80,atk:12,def:7,spd:17,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:9,MP:8},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_10 = {
   tide_doom: {
     id:'tide_doom', name:'The Drowning Sentence', icon:'🌊',
     tagline:'The doom is already in the water. You are already in the water.',
-    color:'#556680', element:'bloodtide', rarity:'legendary',
+    color:'#556680', element:'water', elementFlavor:'bloodtide', rarity:'legendary',
     fusedFrom:['tidecaller','doomcaster'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:11,def:6,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_10 = {
   tide_arcanist: {
     id:'tide_arcanist', name:'The Formless Theorem', icon:'🌊',
     tagline:'Water has no fixed shape. The formula it carries does.',
-    color:'#4d66cc', element:'mindwave', rarity:'epic',
+    color:'#4d66cc', element:'water', elementFlavor:'mindwave', rarity:'epic',
     fusedFrom:['tidecaller','arcanist'],
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:10,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_10 = {
   tide_sentinel: {
     id:'tide_sentinel', name:'The Sea Wall', icon:'🌊',
     tagline:'The sea wall does not move. The sea behind it is another matter.',
-    color:'#6691aa', element:'tidewall', rarity:'uncommon',
+    color:'#6691aa', element:'water', elementFlavor:'tidewall', rarity:'uncommon',
     fusedFrom:['tidecaller','sentinel'],
     stats:{hp:123,maxHp:123,mp:65,maxMp:65,atk:10,def:14,spd:9,crit:8},
     statDisplay:{HP:8,ATK:7,DEF:9,SPD:5,MP:6},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_10 = {
   tide_phantom: {
     id:'tide_phantom', name:'The Deepwater Haunt', icon:'🌊',
     tagline:'The ghost in the water is older than the shore.',
-    color:'#6699c4', element:'tidesoul', rarity:'legendary',
+    color:'#6699c4', element:'water', elementFlavor:'tidesoul', rarity:'legendary',
     fusedFrom:['tidecaller','phantom'],
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:13,def:6,spd:16,crit:20},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_10 = {
   gravitist_soundbreaker: {
     id:'gravitist_soundbreaker', name:'The Resonant Crush', icon:'⚫',
     tagline:'Sound at the resonant frequency of gravity is not sound. It is structure failure.',
-    color:'#91805e', element:'gravitysound', rarity:'epic',
+    color:'#91805e', element:'gravity', elementFlavor:'gravitysound', rarity:'epic',
     fusedFrom:['gravitist','soundbreaker'],
     stats:{hp:78,maxHp:78,mp:90,maxMp:90,atk:12,def:6,spd:14,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -452,7 +452,7 @@ const FUSION_CLASSES_10 = {
   gravitist_chrono: {
     id:'gravitist_chrono', name:'The Time Dilation Engine', icon:'⚫',
     tagline:'Mass slows time. This mass slows time intentionally.',
-    color:'#776fb3', element:'timedilation', rarity:'legendary',
+    color:'#776fb3', element:'gravity', elementFlavor:'timedilation', rarity:'legendary',
     fusedFrom:['gravitist','chronomancer'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:10,def:6,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_10 = {
   gravitist_spellsword: {
     id:'gravitist_spellsword', name:'The Mind Crush', icon:'⚫',
     tagline:'Gravity on the mind is not metaphorical. It is gravitational force applied to the mind.',
-    color:'#774d88', element:'mindcrush', rarity:'epic',
+    color:'#774d88', element:'gravity', elementFlavor:'mindcrush', rarity:'epic',
     fusedFrom:['gravitist','spellsword'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:12,def:7,spd:12,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:7,MP:8},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_10 = {
   gravitist_plague: {
     id:'gravitist_plague', name:'The Gravity Plague', icon:'⚫',
     tagline:'Gravity compresses bodies. Compressed bodies are more susceptible to infection. This is a feedback loop.',
-    color:'#66804d', element:'graveplague', rarity:'legendary',
+    color:'#66804d', element:'gravity', elementFlavor:'graveplague', rarity:'legendary',
     fusedFrom:['gravitist','plaguedoctor'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:10,def:7,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:6,MP:9},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_10 = {
   gravitist_geo: {
     id:'gravitist_geo', name:'The Singularity Point', icon:'⚫',
     tagline:'The densest point in the dungeon is here. Everything else falls toward it.',
-    color:'#776f5e', element:'singularity', rarity:'rare',
+    color:'#776f5e', element:'gravity', elementFlavor:'singularity', rarity:'rare',
     fusedFrom:['gravitist','geomancer'],
     stats:{hp:88,maxHp:88,mp:83,maxMp:83,atk:11,def:9,spd:10,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:6,MP:8},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_10 = {
   gravitist_lightbringer: {
     id:'gravitist_lightbringer', name:'The Heavy Light', icon:'⚫',
     tagline:'Light has mass. Enough light in one place has significant mass. This is that place.',
-    color:'#a29955', element:'lightheavy', rarity:'epic',
+    color:'#a29955', element:'light', elementFlavor:'lightheavy', rarity:'epic',
     fusedFrom:['gravitist','lightbringer'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:12,def:8,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_10 = {
   gravitist_beast: {
     id:'gravitist_beast', name:'The Heavy Pack', icon:'⚫',
     tagline:'The pack that weighs more hits harder. This is basic physics applied to predators.',
-    color:'#668855', element:'runeweight', rarity:'rare',
+    color:'#668855', element:'gravity', elementFlavor:'runeweight', rarity:'rare',
     fusedFrom:['gravitist','beastmaster'],
     stats:{hp:85,maxHp:85,mp:80,maxMp:80,atk:12,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_10 = {
   gravitist_tech: {
     id:'gravitist_tech', name:'The Gravity Engine', icon:'⚫',
     tagline:'Gravity is free energy if you know how to extract it. This one knows how.',
-    color:'#446f88', element:'techgrav', rarity:'legendary',
+    color:'#446f88', element:'gravity', elementFlavor:'techgrav', rarity:'legendary',
     fusedFrom:['gravitist','techsavant'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:11,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_10 = {
   gravitist_grave: {
     id:'gravitist_grave', name:'The Gravity Tomb', icon:'⚫',
     tagline:'Everything falls into the grave. Gravity ensures the grave is always below.',
-    color:'#4d5e77', element:'gravesoul', rarity:'epic',
+    color:'#4d5e77', element:'gravity', elementFlavor:'gravesoul', rarity:'epic',
     fusedFrom:['gravitist','gravewarden'],
     stats:{hp:95,maxHp:95,mp:80,maxMp:80,atk:11,def:10,spd:10,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:6,MP:8},

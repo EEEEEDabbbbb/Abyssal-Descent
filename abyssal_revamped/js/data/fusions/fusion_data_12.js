@@ -46,7 +46,7 @@ const FUSION_CLASSES_12 = {
   chrono_tech: {
     id:'chrono_tech', name:'The Clockwork', icon:'⏳',
     tagline:'Machines that can predict the future maintain themselves perfectly.',
-    color:'#7788d5', element:'timetech', rarity:'legendary',
+    color:'#7788d5', element:'time', elementFlavor:'timetech', rarity:'legendary',
     fusedFrom:['chronomancer','techsavant'],
     stats:{hp:75,maxHp:75,mp:103,maxMp:103,atk:11,def:7,spd:14,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:8,MP:10},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_12 = {
   chrono_grave: {
     id:'chrono_grave', name:'The Grave of Times', icon:'⏳',
     tagline:'Every moment that has passed is buried. This one digs them up.',
-    color:'#8077c4', element:'timeghost', rarity:'epic',
+    color:'#8077c4', element:'time', elementFlavor:'timeghost', rarity:'epic',
     fusedFrom:['chronomancer','gravewarden'],
     stats:{hp:93,maxHp:93,mp:88,maxMp:88,atk:11,def:10,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:6,MP:8},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_12 = {
   chrono_magnetist: {
     id:'chrono_magnetist', name:'The Temporal Lodestone', icon:'⏳',
     tagline:'Magnetic fields persist through time. The lodestone left in a room centuries ago is still attracting.',
-    color:'#8091d5', element:'timemagnet', rarity:'epic',
+    color:'#8091d5', element:'time', elementFlavor:'timemagnet', rarity:'epic',
     fusedFrom:['chronomancer','magnetist'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_12 = {
   chrono_crystal: {
     id:'chrono_crystal', name:'The Timekeeper\'s Crystal', icon:'⏳',
     tagline:'Quartz measures time. This crystal measures everything else.',
-    color:'#99a2ff', element:'timecrystal', rarity:'legendary',
+    color:'#99a2ff', element:'time', elementFlavor:'timecrystal', rarity:'legendary',
     fusedFrom:['chronomancer','crystalmancer'],
     stats:{hp:70,maxHp:70,mp:105,maxMp:105,atk:12,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_12 = {
   chrono_war: {
     id:'chrono_war', name:'The Inevitable Victory', icon:'⏳',
     tagline:'The battle plan accounts for the future. The future has already confirmed the outcome.',
-    color:'#bb6680', element:'timewar', rarity:'epic',
+    color:'#bb6680', element:'time', elementFlavor:'timewar', rarity:'epic',
     fusedFrom:['chronomancer','warlord'],
     stats:{hp:95,maxHp:95,mp:83,maxMp:83,atk:13,def:9,spd:13,crit:12},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_12 = {
   chrono_spirit: {
     id:'chrono_spirit', name:'The Ancestral Timeline', icon:'⏳',
     tagline:'Every ancestor exists simultaneously in the timeline. This calls them all.',
-    color:'#7799c4', element:'timespirit', rarity:'legendary',
+    color:'#7799c4', element:'time', elementFlavor:'timespirit', rarity:'legendary',
     fusedFrom:['chronomancer','spiritwalker'],
     stats:{hp:80,maxHp:80,mp:98,maxMp:98,atk:10,def:8,spd:14,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:8,MP:9},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_12 = {
   chrono_hex: {
     id:'chrono_hex', name:'The Retroactive Curse', icon:'⏳',
     tagline:'The hex was placed before the fight began. You have been cursed since you arrived.',
-    color:'#9955c4', element:'doomtime', rarity:'legendary',
+    color:'#9955c4', element:'time', elementFlavor:'doomtime', rarity:'legendary',
     fusedFrom:['chronomancer','hexblade'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:12,def:7,spd:14,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:10},
@@ -144,7 +144,7 @@ const FUSION_CLASSES_12 = {
   chrono_cosmo: {
     id:'chrono_cosmo', name:'The Spacetime Convergence', icon:'⏳',
     tagline:'Space and time are one thing. This is that one thing.',
-    color:'#775ed5', element:'spacetime', rarity:'mythical',
+    color:'#775ed5', element:'time', elementFlavor:'spacetime', rarity:'mythical',
     fusedFrom:['chronomancer','cosmomancer'],
     stats:{hp:70,maxHp:70,mp:113,maxMp:113,atk:10,def:6,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:11},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_12 = {
   chrono_pestilence: {
     id:'chrono_pestilence', name:'The Long Plague', icon:'⏳',
     tagline:'The disease that has been running for a thousand years arrives at full progression.',
-    color:'#808880', element:'timeplague', rarity:'legendary',
+    color:'#808880', element:'time', elementFlavor:'timeplague', rarity:'legendary',
     fusedFrom:['chronomancer','pestilencelord'],
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_12 = {
   chrono_wind: {
     id:'chrono_wind', name:'The Temporal Gale', icon:'⏳',
     tagline:'The wind blew through here. The wind blows through here. The wind will blow through here. Simultaneously.',
-    color:'#99aad5', element:'timewind', rarity:'epic',
+    color:'#99aad5', element:'time', elementFlavor:'timewind', rarity:'epic',
     fusedFrom:['chronomancer','windwalker'],
     stats:{hp:75,maxHp:75,mp:90,maxMp:90,atk:12,def:6,spd:17,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:9},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_12 = {
   chrono_doom: {
     id:'chrono_doom', name:'The Inescapable Hour', icon:'⏳',
     tagline:'Every path through the timeline ends here. The chronomancer confirmed this.',
-    color:'#885e99', element:'doomtime', rarity:'mythical',
+    color:'#885e99', element:'time', elementFlavor:'doomtime', rarity:'mythical',
     fusedFrom:['chronomancer','doomcaster'],
     stats:{hp:70,maxHp:70,mp:110,maxMp:110,atk:10,def:5,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:11},
@@ -200,7 +200,7 @@ const FUSION_CLASSES_12 = {
   chrono_arcanist: {
     id:'chrono_arcanist', name:'The Absolute Formula', icon:'⏳',
     tagline:'The formula that was true at the beginning of time is still true. It has had time to prove itself.',
-    color:'#805ee6', element:'timemind', rarity:'legendary',
+    color:'#805ee6', element:'time', elementFlavor:'timemind', rarity:'legendary',
     fusedFrom:['chronomancer','arcanist'],
     stats:{hp:68,maxHp:68,mp:115,maxMp:115,atk:10,def:5,spd:14,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:11},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_12 = {
   chrono_sentinel: {
     id:'chrono_sentinel', name:'The Eternal Post', icon:'⏳',
     tagline:'The sentinel has held this position since before the dungeon was built. They were here first.',
-    color:'#9988c4', element:'timesteel', rarity:'rare',
+    color:'#9988c4', element:'time', elementFlavor:'timesteel', rarity:'rare',
     fusedFrom:['chronomancer','sentinel'],
     stats:{hp:115,maxHp:115,mp:75,maxMp:75,atk:9,def:13,spd:10,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:6,MP:7},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_12 = {
   chrono_phantom: {
     id:'chrono_phantom', name:'The Timeline Ghost', icon:'⏳',
     tagline:'The ghost exists in every moment of its death simultaneously.',
-    color:'#9991dd', element:'timeghost', rarity:'mythical',
+    color:'#9991dd', element:'time', elementFlavor:'timeghost', rarity:'mythical',
     fusedFrom:['chronomancer','phantom'],
     stats:{hp:70,maxHp:70,mp:95,maxMp:95,atk:12,def:5,spd:16,crit:20},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_12 = {
   spellsword_plague: {
     id:'spellsword_plague', name:'The Cognitive Infection', icon:'🗡️',
     tagline:'The disease that starts in the mind spreads to the body on its own schedule.',
-    color:'#99776f', element:'mindplague', rarity:'epic',
+    color:'#99776f', element:'psychic', elementFlavor:'mindplague', rarity:'epic',
     fusedFrom:['spellsword','plaguedoctor'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_12 = {
   spellsword_geo: {
     id:'spellsword_geo', name:'The Stone Mind', icon:'🗡️',
     tagline:'The mind of stone is patient. The blade of stone is patient and extremely hard.',
-    color:'#aa6680', element:'mindearth', rarity:'rare',
+    color:'#aa6680', element:'psychic', elementFlavor:'mindearth', rarity:'rare',
     fusedFrom:['spellsword','geomancer'],
     stats:{hp:95,maxHp:95,mp:75,maxMp:75,atk:13,def:11,spd:11,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:8,SPD:6,MP:7},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_12 = {
   spellsword_lightbringer: {
     id:'spellsword_lightbringer', name:'The Illuminated Mind', icon:'🗡️',
     tagline:'The mind that carries light cannot be deceived by darkness.',
-    color:'#d59177', element:'holypsychic', rarity:'epic',
+    color:'#d59177', element:'psychic', elementFlavor:'holypsychic', rarity:'epic',
     fusedFrom:['spellsword','lightbringer'],
     stats:{hp:88,maxHp:88,mp:83,maxMp:83,atk:13,def:9,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_12 = {
   spellsword_beast: {
     id:'spellsword_beast', name:'The Feral Intellect', icon:'🗡️',
     tagline:'Instinct and intellect are not opposites. They are collaborative.',
-    color:'#998077', element:'runepsychic', rarity:'rare',
+    color:'#998077', element:'psychic', elementFlavor:'runepsychic', rarity:'rare',
     fusedFrom:['spellsword','beastmaster'],
     stats:{hp:93,maxHp:93,mp:73,maxMp:73,atk:14,def:9,spd:14,crit:14},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:7},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_12 = {
   spellsword_tech: {
     id:'spellsword_tech', name:'The Neural Interface', icon:'🗡️',
     tagline:'The mind and the machine are already speaking. This introduced them properly.',
-    color:'#7766aa', element:'techpsychic', rarity:'epic',
+    color:'#7766aa', element:'psychic', elementFlavor:'techpsychic', rarity:'epic',
     fusedFrom:['spellsword','techsavant'],
     stats:{hp:85,maxHp:85,mp:88,maxMp:88,atk:13,def:8,spd:14,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_12 = {
   spellsword_grave: {
     id:'spellsword_grave', name:'The Haunted Blade', icon:'🗡️',
     tagline:'The blade remembers every enemy it has killed. They provide tactical advice.',
-    color:'#805599', element:'mindghost', rarity:'rare',
+    color:'#805599', element:'psychic', elementFlavor:'mindghost', rarity:'rare',
     fusedFrom:['spellsword','gravewarden'],
     stats:{hp:103,maxHp:103,mp:73,maxMp:73,atk:13,def:11,spd:11,crit:13},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:6,MP:7},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_12 = {
   spellsword_magnetist: {
     id:'spellsword_magnetist', name:'The Telekinetic', icon:'🗡️',
     tagline:'The mind and the magnet both move things without touching them. This one does both.',
-    color:'#806faa', element:'magnetmind', rarity:'epic',
+    color:'#806faa', element:'psychic', elementFlavor:'magnetmind', rarity:'epic',
     fusedFrom:['spellsword','magnetist'],
     stats:{hp:88,maxHp:88,mp:83,maxMp:83,atk:13,def:9,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_12 = {
   spellsword_crystal: {
     id:'spellsword_crystal', name:'The Crystal Mind', icon:'🗡️',
     tagline:'The crystal holds thought perfectly. The thoughts it holds are dangerous.',
-    color:'#9980d5', element:'crystalmind', rarity:'legendary',
+    color:'#9980d5', element:'psychic', elementFlavor:'crystalmind', rarity:'legendary',
     fusedFrom:['spellsword','crystalmancer'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:14,def:7,spd:14,crit:18},
     statDisplay:{HP:5,ATK:10,DEF:5,SPD:8,MP:9},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_12 = {
   spellsword_war: {
     id:'spellsword_war', name:'The Strategic Mind', icon:'🗡️',
     tagline:'The warlord who can read thoughts does not need scouts.',
-    color:'#bb4455', element:'warpsychic', rarity:'rare',
+    color:'#bb4455', element:'psychic', elementFlavor:'warpsychic', rarity:'rare',
     fusedFrom:['spellsword','warlord'],
     stats:{hp:105,maxHp:105,mp:68,maxMp:68,atk:15,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:11,DEF:8,SPD:7,MP:6},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_12 = {
   spellsword_spirit: {
     id:'spellsword_spirit', name:'The Mindwalker', icon:'🗡️',
     tagline:'The gap between the living mind and the spirit world is narrower than it appears.',
-    color:'#777799', element:'spiritmind', rarity:'epic',
+    color:'#777799', element:'psychic', elementFlavor:'spiritmind', rarity:'epic',
     fusedFrom:['spellsword','spiritwalker'],
     stats:{hp:90,maxHp:90,mp:83,maxMp:83,atk:12,def:9,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_12 = {
   spellsword_hex: {
     id:'spellsword_hex', name:'The Psionic Hex', icon:'🗡️',
     tagline:'The curse delivered by thought is already inside the target before they know it arrived.',
-    color:'#993399', element:'doompsychic', rarity:'epic',
+    color:'#993399', element:'psychic', elementFlavor:'doompsychic', rarity:'epic',
     fusedFrom:['spellsword','hexblade'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:13,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_12 = {
   spellsword_cosmo: {
     id:'spellsword_cosmo', name:'The Cosmic Intellect', icon:'🗡️',
     tagline:'The mind that thinks at cosmic scale has perspective advantages.',
-    color:'#773caa', element:'cosmicmind', rarity:'legendary',
+    color:'#773caa', element:'psychic', elementFlavor:'cosmicmind', rarity:'legendary',
     fusedFrom:['spellsword','cosmomancer'],
     stats:{hp:80,maxHp:80,mp:98,maxMp:98,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:10},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_12 = {
   spellsword_pestilence: {
     id:'spellsword_pestilence', name:'The Thought Plague', icon:'🗡️',
     tagline:'Ideas spread like diseases. This one made that literal.',
-    color:'#806655', element:'mindplague', rarity:'legendary',
+    color:'#806655', element:'psychic', elementFlavor:'mindplague', rarity:'legendary',
     fusedFrom:['spellsword','pestilencelord'],
     stats:{hp:85,maxHp:85,mp:90,maxMp:90,atk:13,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:9},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_12 = {
   spellsword_wind: {
     id:'spellsword_wind', name:'The Gale Mind', icon:'🗡️',
     tagline:'The mind moves faster than wind. The mind that also moves as wind moves fastest.',
-    color:'#9988aa', element:'mindwind', rarity:'rare',
+    color:'#9988aa', element:'psychic', elementFlavor:'mindwind', rarity:'rare',
     fusedFrom:['spellsword','windwalker'],
     stats:{hp:85,maxHp:85,mp:75,maxMp:75,atk:13,def:7,spd:17,crit:17},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:9,MP:7},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_12 = {
   spellsword_doom: {
     id:'spellsword_doom', name:'The Doomed Thought', icon:'🗡️',
     tagline:'The thought that leads to doom is the doom. This one makes them simultaneous.',
-    color:'#883c6f', element:'doompsychic', rarity:'legendary',
+    color:'#883c6f', element:'psychic', elementFlavor:'doompsychic', rarity:'legendary',
     fusedFrom:['spellsword','doomcaster'],
     stats:{hp:80,maxHp:80,mp:95,maxMp:95,atk:12,def:6,spd:13,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:9},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_12 = {
   spellsword_sentinel: {
     id:'spellsword_sentinel', name:'The Psychic Bastion', icon:'🗡️',
     tagline:'The wall you cannot see is harder to pass than the wall you can.',
-    color:'#996699', element:'spellsteel', rarity:'rare',
+    color:'#996699', element:'psychic', elementFlavor:'spellsteel', rarity:'rare',
     fusedFrom:['spellsword','sentinel'],
     stats:{hp:125,maxHp:125,mp:60,maxMp:60,atk:11,def:14,spd:9,crit:10},
     statDisplay:{HP:8,ATK:8,DEF:9,SPD:5,MP:6},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_12 = {
   spellsword_phantom: {
     id:'spellsword_phantom', name:'The Psionic Specter', icon:'🗡️',
     tagline:'The ghost that thinks clearly is the ghost that targets precisely.',
-    color:'#996fb3', element:'mindghost', rarity:'mythical',
+    color:'#996fb3', element:'psychic', elementFlavor:'mindghost', rarity:'mythical',
     fusedFrom:['spellsword','phantom'],
     stats:{hp:80,maxHp:80,mp:80,maxMp:80,atk:14,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:8},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_12 = {
   plague_geo: {
     id:'plague_geo', name:'The Miasmic Earth', icon:'🩺',
     tagline:'The soil is sick. Everything planted in it inherits the condition.',
-    color:'#999944', element:'plagueearth', rarity:'rare',
+    color:'#999944', element:'poison', elementFlavor:'plagueearth', rarity:'rare',
     fusedFrom:['plaguedoctor','geomancer'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:11,def:10,spd:9,crit:11},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:5,MP:8},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_12 = {
   plague_lightbringer: {
     id:'plague_lightbringer', name:'The Purifier', icon:'🩺',
     tagline:'The light that kills disease also kills what carries it. The distinction is the plaguedoctor\'s job.',
-    color:'#c4c43c', element:'holypoison', rarity:'epic',
+    color:'#c4c43c', element:'poison', elementFlavor:'holypoison', rarity:'epic',
     fusedFrom:['plaguedoctor','lightbringer'],
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_12 = {
   plague_beast: {
     id:'plague_beast', name:'The Infested Pack', icon:'🩺',
     tagline:'The animals carry disease. The disease made them easier to find.',
-    color:'#88b33c', element:'runeplague', rarity:'rare',
+    color:'#88b33c', element:'poison', elementFlavor:'runeplague', rarity:'rare',
     fusedFrom:['plaguedoctor','beastmaster'],
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_12 = {
   plague_tech: {
     id:'plague_tech', name:'The Pathogen Engine', icon:'🩺',
     tagline:'Disease production at industrial scale. This is the factory.',
-    color:'#66996f', element:'techpoison', rarity:'legendary',
+    color:'#66996f', element:'poison', elementFlavor:'techpoison', rarity:'legendary',
     fusedFrom:['plaguedoctor','techsavant'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:11,def:7,spd:13,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_12 = {
   plague_grave: {
     id:'plague_grave', name:'The Plague Keeper', icon:'🩺',
     tagline:'The dead carry disease longer than the living. They have more patience for it.',
-    color:'#6f885e', element:'plaguesoul', rarity:'epic',
+    color:'#6f885e', element:'poison', elementFlavor:'plaguesoul', rarity:'epic',
     fusedFrom:['plaguedoctor','gravewarden'],
     stats:{hp:95,maxHp:95,mp:83,maxMp:83,atk:11,def:11,spd:9,crit:11},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:5,MP:8},

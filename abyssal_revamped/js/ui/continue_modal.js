@@ -56,21 +56,26 @@ async function continueRun(slotIndex) {
 
   const ok = await loadRun(slotIndex);
   if (!ok) {
-    // Corrupt or version-mismatch — bail back to title
+    // Corrupt, from an older version, or class data failed to load — keep the
+    // save (it may load fine after a reload) but offer to delete it.
+    resetRunState();
+    G.phase = 'title';
     showScreen('title-screen');
     showModal(`
-      <div class="modal-title" style="color:var(--accent-crimson)">Save Corrupted</div>
+      <div class="modal-title" style="color:var(--accent-crimson)">Couldn't Load Save</div>
       <div style="text-align:center;color:var(--text-mid);margin:1rem 0">
-        This save could not be loaded. It may be from an older version.
+        This save could not be loaded. It may be from an older version of the game.
       </div>
-      <button class="title-btn" style="width:100%" onclick="closeModal()">OK</button>
+      <div style="display:flex;gap:0.5rem">
+        <button class="title-btn" style="flex:1;min-width:0" onclick="closeModal()">Keep it</button>
+        <button class="title-btn danger" style="flex:1;min-width:0" onclick="deleteRunSlot(${slotIndex});closeModal();_updateContinueBtn()">Delete save</button>
+      </div>
     `);
-    deleteRunSlot(slotIndex);
-    _updateContinueBtn();
     return;
   }
 
   logEntry('system', `↺ Run resumed — Floor ${G.floor}.`);
+  showScreen('game-screen');
   updateUI();
   _updateContinueBtn();
 }
@@ -110,7 +115,41 @@ function _flashSaveIndicator() {
   el._fadeTimer = setTimeout(() => { el.style.opacity = '0'; }, 2000);
 }
 
-// Called by saveRun() wrapper that also updates the UI
+// 💾 Save button
 function saveRunWithFeedback() {
+  if (!G.player) return;
+  if (G.inCombat) { logEntry('system', "You can't save in the middle of a fight."); updateUI(); return; }
+  if (G._runSaveSlot === null || G._runSaveSlot === undefined) { showSaveSlotPicker(false); return; }
   if (saveRun()) _flashSaveIndicator();
+}
+
+// showSaveSlotPicker — lets a run without a slot pick one (all slots full)
+function showSaveSlotPicker(quitAfter) {
+  const rows = getRunSlots().map((slot, i) => `
+    <div class="continue-slot ${slot ? 'filled' : 'empty'}">
+      <div class="continue-slot-main" onclick="saveIntoSlot(${i}, ${!!quitAfter})">
+        <div class="continue-slot-icon">${slot ? slot.classIcon : '＋'}</div>
+        <div class="continue-slot-info">
+          <div class="continue-slot-name">${slot ? slot.className : `Empty Slot ${i + 1}`}</div>
+          <div class="continue-slot-floor">${slot ? 'Floor ' + slot.floor : ''}</div>
+        </div>
+        <div class="continue-slot-action">${slot ? 'Overwrite' : 'Save here'}</div>
+      </div>
+    </div>`).join('');
+  showModal(`
+    <div class="modal-title" style="color:var(--accent-gold)">💾 Choose a Save Slot</div>
+    <div style="font-size:0.72rem;color:var(--text-dim);text-align:center;margin-bottom:1rem">
+      Overwriting a slot deletes the run saved there.
+    </div>
+    <div class="continue-slots-list">${rows}</div>
+    <button class="title-btn" style="margin-top:1rem;width:100%" onclick="closeModal()">Cancel</button>
+  `);
+}
+
+function saveIntoSlot(slotIndex, quitAfter) {
+  closeModal();
+  if (!saveRun(slotIndex)) return;
+  _flashSaveIndicator();
+  logEntry('system', `💾 Run saved to slot ${slotIndex + 1}. It will auto-save there from now on.`);
+  if (quitAfter) returnToTitle(); else updateUI();
 }

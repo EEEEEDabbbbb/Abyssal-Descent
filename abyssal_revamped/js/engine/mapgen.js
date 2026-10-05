@@ -597,24 +597,29 @@ function getValidMoves() {
 }
 
 function movePlayer(dx, dy) {
-  if (G.phase==='combat') return;
+  if (G.phase !== 'explore' || G.inCombat || !G.map || !G.player) return;
   const nx=G.playerPos.x+dx, ny=G.playerPos.y+dy;
   if (nx<0||nx>=G.mapW||ny<0||ny>=G.mapH) return;
   const cell=G.map[ny][nx];
   if (cell.type==='wall') return;
   if (cell.content==='exit_locked'||cell.content==='boss_exit') {
     logEntry('system','🔒 The way forward is sealed. Defeat the guardian first.');
+    updateUI();
     return;
   }
   G.map[G.playerPos.y][G.playerPos.x].visited=true;
+  G._prevPlayerPos = { ...G.playerPos };
   G.playerPos={x:nx,y:ny};
   revealAround(G.map, nx, ny);
 
-  // Secret room discovery — 15% chance on first entry
+  // Secret room discovery — the first time you step inside
   if (cell.secret && !cell.secretRevealed) {
-    cell.secretRevealed = true;
+    markSecretRoomRevealed(cell.room);
     logEntry('system','✦ You discover a secret room!');
   }
+
+  // Items left on the ground (dropped, or overflow from a full pack)
+  if (cell.droppedItems && cell.droppedItems.length) pickUpDroppedItems(cell);
 
   // Check nearby secret hints (adjacent wall with secretHint)
   checkSecretHints(nx, ny);
@@ -626,6 +631,10 @@ function movePlayer(dx, dy) {
   triggerBiomeEffect();
 
   updateUI();
+}
+
+function markSecretRoomRevealed(roomId) {
+  G.map.forEach(row => row.forEach(c => { if (c.secret && c.room === roomId) c.secretRevealed = true; }));
 }
 
 function checkSecretHints(x, y) {
@@ -655,6 +664,7 @@ function handleCellContent(cell, x, y) {
     }
     case 'treasure':
       if(cell.item){
+        if (inventoryFull()) { logEntry('system','🎒 Your pack is full — the chest stays closed until you make room.'); break; }
         const foundItem=cell.item;
         logEntry('reward',`◆ Chest opened: ${foundItem.name}!`);
         addToInventory(cloneItem(foundItem));

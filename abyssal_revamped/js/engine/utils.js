@@ -264,6 +264,7 @@ function loadMeta() {
 function logEntry(type, msg) {
   G.log.unshift({ type, msg });
   if (G.log.length > 100) G.log.pop();
+  G._logVersion = (G._logVersion || 0) + 1; // render.js redraws the log when this changes
 }
 
 function xpForLevel(lvl) { return Math.round(50 * Math.pow(1.4, lvl - 1)); }

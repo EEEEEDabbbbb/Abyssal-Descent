@@ -46,7 +46,7 @@ const FUSION_CLASSES_14 = {
   lightbringer_pestilence: {
     id:'lightbringer_pestilence', name:'The Purifying Plague', icon:'☀️',
     tagline:'The light that burns out disease also burns out what the disease was living in.',
-    color:'#bbcc55', element:'lightplague', rarity:'legendary',
+    color:'#bbcc55', element:'light', elementFlavor:'lightplague', rarity:'legendary',
     fusedFrom:['lightbringer','pestilencelord'],
     stats:{hp:80,maxHp:80,mp:95,maxMp:95,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_14 = {
   lightbringer_wind: {
     id:'lightbringer_wind', name:'The Storm of Heaven', icon:'☀️',
     tagline:'The wind carries the light to every corner. Every corner is lit.',
-    color:'#eedd88', element:'lightwind', rarity:'rare',
+    color:'#eedd88', element:'light', elementFlavor:'lightwind', rarity:'rare',
     fusedFrom:['lightbringer','windwalker'],
     stats:{hp:82,maxHp:82,mp:80,maxMp:80,atk:12,def:7,spd:16,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:9,MP:8},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_14 = {
   lightbringer_doom: {
     id:'lightbringer_doom', name:'The Final Judgment', icon:'☀️',
     tagline:'The judgment is divine. The doom is the sentence. This is the execution.',
-    color:'#cc9944', element:'lightdoom', rarity:'legendary',
+    color:'#cc9944', element:'light', elementFlavor:'lightdoom', rarity:'legendary',
     fusedFrom:['lightbringer','doomcaster'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:11,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_14 = {
   lightbringer_arcanist: {
     id:'lightbringer_arcanist', name:'The Illuminated Formula', icon:'☀️',
     tagline:'The formula written in light is self-proving.',
-    color:'#ddcc99', element:'lightarcane', rarity:'legendary',
+    color:'#ddcc99', element:'light', elementFlavor:'lightarcane', rarity:'legendary',
     fusedFrom:['lightbringer','arcanist'],
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_14 = {
   lightbringer_sentinel: {
     id:'lightbringer_sentinel', name:'The Radiant Bastion', icon:'☀️',
     tagline:'The bastion holds. The bastion glows. Approaching it requires addressing both.',
-    color:'#eedd99', element:'lightwall', rarity:'rare',
+    color:'#eedd99', element:'light', elementFlavor:'lightwall', rarity:'rare',
     fusedFrom:['lightbringer','sentinel'],
     stats:{hp:118,maxHp:118,mp:68,maxMp:68,atk:10,def:14,spd:9,crit:10},
     statDisplay:{HP:8,ATK:7,DEF:9,SPD:5,MP:6},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_14 = {
   lightbringer_phantom: {
     id:'lightbringer_phantom', name:'The Shining Specter', icon:'☀️',
     tagline:'The ghost that glows cannot hide. It compensates with intensity.',
-    color:'#eeeebb', element:'lightghost', rarity:'mythical',
+    color:'#eeeebb', element:'light', elementFlavor:'lightghost', rarity:'mythical',
     fusedFrom:['lightbringer','phantom'],
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:13,def:6,spd:15,crit:20},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_14 = {
   beast_tech: {
     id:'beast_tech', name:'The Augmented Beast', icon:'🐾',
     tagline:'The animal was already effective. The upgrades are optional but present.',
-    color:'#887755', element:'techbeast', rarity:'epic',
+    color:'#887755', element:'normal', elementFlavor:'techbeast', rarity:'epic',
     fusedFrom:['beastmaster','techsavant'],
     stats:{hp:90,maxHp:90,mp:83,maxMp:83,atk:13,def:9,spd:14,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -144,7 +144,7 @@ const FUSION_CLASSES_14 = {
   beast_grave: {
     id:'beast_grave', name:'The Boneherd', icon:'🐾',
     tagline:'Dead animals are still animals. They simply have different maintenance requirements.',
-    color:'#998877', element:'gravebeast', rarity:'rare',
+    color:'#998877', element:'normal', elementFlavor:'gravebeast', rarity:'rare',
     fusedFrom:['beastmaster','gravewarden'],
     stats:{hp:98,maxHp:98,mp:72,maxMp:72,atk:12,def:11,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:8,SPD:6,MP:7},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_14 = {
   beast_magnetist: {
     id:'beast_magnetist', name:'The Magnetic Pack', icon:'🐾',
     tagline:'The predator that senses magnetic fields hunts without error.',
-    color:'#778899', element:'magnetbeast', rarity:'rare',
+    color:'#778899', element:'normal', elementFlavor:'magnetbeast', rarity:'rare',
     fusedFrom:['beastmaster','magnetist'],
     stats:{hp:90,maxHp:90,mp:75,maxMp:75,atk:13,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:7},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_14 = {
   beast_crystal: {
     id:'beast_crystal', name:'The Crystal Menagerie', icon:'🐾',
     tagline:'The animals grew the crystal. The crystal grew the animals. Causality is secondary.',
-    color:'#aabbcc', element:'crystalbeast', rarity:'epic',
+    color:'#aabbcc', element:'normal', elementFlavor:'crystalbeast', rarity:'epic',
     fusedFrom:['beastmaster','crystalmancer'],
     stats:{hp:88,maxHp:88,mp:82,maxMp:82,atk:13,def:9,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_14 = {
   beast_war: {
     id:'beast_war', name:'The War Pack', icon:'🐾',
     tagline:'The warlord who commands animals has soldiers who do not question orders.',
-    color:'#997755', element:'warbeast', rarity:'rare',
+    color:'#997755', element:'normal', elementFlavor:'warbeast', rarity:'rare',
     fusedFrom:['beastmaster','warlord'],
     stats:{hp:98,maxHp:98,mp:70,maxMp:70,atk:14,def:10,spd:13,crit:12},
     statDisplay:{HP:6,ATK:10,DEF:7,SPD:7,MP:7},
@@ -200,7 +200,7 @@ const FUSION_CLASSES_14 = {
   beast_spirit: {
     id:'beast_spirit', name:'The Spirit Animal', icon:'🐾',
     tagline:'Every animal has a spirit. Some have more than one.',
-    color:'#99aa88', element:'spiritbeast', rarity:'epic',
+    color:'#99aa88', element:'normal', elementFlavor:'spiritbeast', rarity:'epic',
     fusedFrom:['beastmaster','spiritwalker'],
     stats:{hp:90,maxHp:90,mp:82,maxMp:82,atk:12,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_14 = {
   beast_hex: {
     id:'beast_hex', name:'The Hexbound Pack', icon:'🐾',
     tagline:'The curse travels with the animal. The animal goes everywhere.',
-    color:'#9977aa', element:'hexbeast', rarity:'epic',
+    color:'#9977aa', element:'normal', elementFlavor:'hexbeast', rarity:'epic',
     fusedFrom:['beastmaster','hexblade'],
     stats:{hp:88,maxHp:88,mp:82,maxMp:82,atk:13,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_14 = {
   beast_cosmo: {
     id:'beast_cosmo', name:'The Starborn', icon:'🐾',
     tagline:'The animals that fell from the sky. They adjusted.',
-    color:'#7788bb', element:'cosmobeast', rarity:'legendary',
+    color:'#7788bb', element:'normal', elementFlavor:'cosmobeast', rarity:'legendary',
     fusedFrom:['beastmaster','cosmomancer'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:13,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_14 = {
   beast_pestilence: {
     id:'beast_pestilence', name:'The Plague Herd', icon:'🐾',
     tagline:'The animals spread it faster than the doctor does. They cover more ground.',
-    color:'#88aa55', element:'plaguebeast', rarity:'epic',
+    color:'#88aa55', element:'normal', elementFlavor:'plaguebeast', rarity:'epic',
     fusedFrom:['beastmaster','pestilencelord'],
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:13,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_14 = {
   beast_wind: {
     id:'beast_wind', name:'The Storm Flock', icon:'🐾',
     tagline:'The flock that rides the wind arrives everywhere at once.',
-    color:'#aabb77', element:'windbeast', rarity:'rare',
+    color:'#aabb77', element:'normal', elementFlavor:'windbeast', rarity:'rare',
     fusedFrom:['beastmaster','windwalker'],
     stats:{hp:85,maxHp:85,mp:75,maxMp:75,atk:13,def:8,spd:16,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:9,MP:7},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_14 = {
   beast_doom: {
     id:'beast_doom', name:'The Doomed Hunt', icon:'🐾',
     tagline:'The prey is doomed. The predator ensures it.',
-    color:'#776655', element:'doombeast', rarity:'legendary',
+    color:'#776655', element:'normal', elementFlavor:'doombeast', rarity:'legendary',
     fusedFrom:['beastmaster','doomcaster'],
     stats:{hp:88,maxHp:88,mp:82,maxMp:82,atk:13,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_14 = {
   beast_arcanist: {
     id:'beast_arcanist', name:'The Arcane Beast', icon:'🐾',
     tagline:'The animal that understands the formula is the most dangerous animal.',
-    color:'#8877aa', element:'arcanebeast', rarity:'legendary',
+    color:'#8877aa', element:'normal', elementFlavor:'arcanebeast', rarity:'legendary',
     fusedFrom:['arcanist','beastmaster'],
     stats:{hp:88,maxHp:88,mp:88,maxMp:88,atk:13,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_14 = {
   beast_sentinel: {
     id:'beast_sentinel', name:'The Guardian Pack', icon:'🐾',
     tagline:'The pack that guards holds more ground than the soldier who guards.',
-    color:'#998877', element:'guardbeast', rarity:'rare',
+    color:'#998877', element:'normal', elementFlavor:'guardbeast', rarity:'rare',
     fusedFrom:['beastmaster','sentinel'],
     stats:{hp:120,maxHp:120,mp:62,maxMp:62,atk:11,def:13,spd:10,crit:10},
     statDisplay:{HP:8,ATK:8,DEF:9,SPD:6},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_14 = {
   beast_phantom: {
     id:'beast_phantom', name:'The Ghost Pack', icon:'🐾',
     tagline:'The predators that cannot be touched still touch you.',
-    color:'#aabbaa', element:'ghostbeast', rarity:'mythical',
+    color:'#aabbaa', element:'normal', elementFlavor:'ghostbeast', rarity:'mythical',
     fusedFrom:['beastmaster','phantom'],
     stats:{hp:83,maxHp:83,mp:80,maxMp:80,atk:14,def:6,spd:16,crit:20},
     statDisplay:{HP:5,ATK:10,DEF:4,SPD:8,MP:8},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_14 = {
   tech_grave: {
     id:'tech_grave', name:'The Undying Machine', icon:'⚙️',
     tagline:'The machine that repairs itself from its own wreckage is difficult to destroy permanently.',
-    color:'#778888', element:'gravtech', rarity:'epic',
+    color:'#778888', element:'tech', elementFlavor:'gravtech', rarity:'epic',
     fusedFrom:['techsavant','gravewarden'],
     stats:{hp:98,maxHp:98,mp:80,maxMp:80,atk:11,def:11,spd:11,crit:11},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:6,MP:8},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_14 = {
   tech_magnetist: {
     id:'tech_magnetist', name:'The Electromagnetic Forge', icon:'⚙️',
     tagline:'Every machine uses electromagnetism. This one uses a lot of it.',
-    color:'#5588aa', element:'magnettech', rarity:'epic',
+    color:'#5588aa', element:'tech', elementFlavor:'magnettech', rarity:'epic',
     fusedFrom:['techsavant','magnetist'],
     stats:{hp:82,maxHp:82,mp:90,maxMp:90,atk:13,def:8,spd:13,crit:14},
     statDisplay:{HP:5,ATK:9,DEF:6,SPD:7,MP:9},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_14 = {
   tech_crystal: {
     id:'tech_crystal', name:'The Crystal Processor', icon:'⚙️',
     tagline:'Quartz is already a computer. This one is a better computer.',
-    color:'#88aacc', element:'crystaltech', rarity:'legendary',
+    color:'#88aacc', element:'tech', elementFlavor:'crystaltech', rarity:'legendary',
     fusedFrom:['techsavant','crystalmancer'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:12,def:7,spd:14,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:10},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_14 = {
   tech_war: {
     id:'tech_war', name:'The War Machine', icon:'⚙️',
     tagline:'The warlord\'s strategy. The techsavant\'s execution. The dungeon\'s problem.',
-    color:'#998855', element:'wartech', rarity:'rare',
+    color:'#998855', element:'tech', elementFlavor:'wartech', rarity:'rare',
     fusedFrom:['techsavant','warlord'],
     stats:{hp:98,maxHp:98,mp:75,maxMp:75,atk:14,def:10,spd:12,crit:12},
     statDisplay:{HP:6,ATK:10,DEF:7,SPD:7,MP:7},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_14 = {
   tech_spirit: {
     id:'tech_spirit', name:'The Ghost in the Machine', icon:'⚙️',
     tagline:'The spirit found the machine comfortable. The machine became more interesting.',
-    color:'#88aaaa', element:'spirittech', rarity:'epic',
+    color:'#88aaaa', element:'tech', elementFlavor:'spirittech', rarity:'epic',
     fusedFrom:['techsavant','spiritwalker'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:11,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:7,MP:8},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_14 = {
   tech_hex: {
     id:'tech_hex', name:'The Hex Code', icon:'⚙️',
     tagline:'The curse was compiled. It runs on everything.',
-    color:'#9977bb', element:'hextech', rarity:'epic',
+    color:'#9977bb', element:'tech', elementFlavor:'hextech', rarity:'epic',
     fusedFrom:['techsavant','hexblade'],
     stats:{hp:80,maxHp:80,mp:92,maxMp:92,atk:12,def:7,spd:14,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:9},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_14 = {
   tech_cosmo: {
     id:'tech_cosmo', name:'The Cosmic Engine', icon:'⚙️',
     tagline:'The machine that understands the universe can use the universe as a power source.',
-    color:'#5566bb', element:'cosmotech', rarity:'legendary',
+    color:'#5566bb', element:'tech', elementFlavor:'cosmotech', rarity:'legendary',
     fusedFrom:['techsavant','cosmomancer'],
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:6,spd:14,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:10},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_14 = {
   tech_pestilence: {
     id:'tech_pestilence', name:'The Pathogen Compiler', icon:'⚙️',
     tagline:'The disease as executable code. The body as the target system.',
-    color:'#669966', element:'techplague', rarity:'epic',
+    color:'#669966', element:'tech', elementFlavor:'techplague', rarity:'epic',
     fusedFrom:['techsavant','pestilencelord'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:12,def:7,spd:13,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_14 = {
   tech_wind: {
     id:'tech_wind', name:'The Aerodynamic Weapon', icon:'⚙️',
     tagline:'The projectile that is also the storm is hard to dodge.',
-    color:'#99bbaa', element:'windtech', rarity:'rare',
+    color:'#99bbaa', element:'tech', elementFlavor:'windtech', rarity:'rare',
     fusedFrom:['techsavant','windwalker'],
     stats:{hp:80,maxHp:80,mp:82,maxMp:82,atk:13,def:7,spd:16,crit:14},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:9,MP:8},
@@ -452,7 +452,7 @@ const FUSION_CLASSES_14 = {
   tech_doom: {
     id:'tech_doom', name:'The Doomsday Device', icon:'⚙️',
     tagline:'The machine that ends everything does not need to be subtle about it.',
-    color:'#776688', element:'techvoid', rarity:'legendary',
+    color:'#776688', element:'tech', elementFlavor:'techvoid', rarity:'legendary',
     fusedFrom:['techsavant','doomcaster'],
     stats:{hp:75,maxHp:75,mp:103,maxMp:103,atk:11,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_14 = {
   tech_arcanist: {
     id:'tech_arcanist', name:'The Arcane Engine', icon:'⚙️',
     tagline:'The formula and the function are the same thing now.',
-    color:'#7766cc', element:'techarcane', rarity:'legendary',
+    color:'#7766cc', element:'tech', elementFlavor:'techarcane', rarity:'legendary',
     fusedFrom:['arcanist','techsavant'],
     stats:{hp:73,maxHp:73,mp:110,maxMp:110,atk:11,def:5,spd:14,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:11},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_14 = {
   tech_sentinel: {
     id:'tech_sentinel', name:'The Automated Fortress', icon:'⚙️',
     tagline:'The fortress that operates itself does not require a garrison.',
-    color:'#8899aa', element:'techwall', rarity:'rare',
+    color:'#8899aa', element:'tech', elementFlavor:'techwall', rarity:'rare',
     fusedFrom:['techsavant','sentinel'],
     stats:{hp:122,maxHp:122,mp:65,maxMp:65,atk:9,def:14,spd:9,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:6},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_14 = {
   tech_phantom: {
     id:'tech_phantom', name:'The Ghost Protocol', icon:'⚙️',
     tagline:'The system that cannot be detected cannot be countered.',
-    color:'#8899bb', element:'techghost', rarity:'mythical',
+    color:'#8899bb', element:'tech', elementFlavor:'techghost', rarity:'mythical',
     fusedFrom:['techsavant','phantom'],
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:13,def:5,spd:16,crit:21},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_14 = {
   grave_magnetist: {
     id:'grave_magnetist', name:'The Iron Grave', icon:'💀',
     tagline:'Metal remembers where it has been. So do graves.',
-    color:'#557788', element:'gravemagnet', rarity:'epic',
+    color:'#557788', element:'ghost', elementFlavor:'gravemagnet', rarity:'epic',
     fusedFrom:['gravewarden','magnetist'],
     stats:{hp:92,maxHp:92,mp:80,maxMp:80,atk:11,def:11,spd:10,crit:12},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:6,MP:8},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_14 = {
   grave_crystal: {
     id:'grave_crystal', name:'The Crystal Tomb', icon:'💀',
     tagline:'Preserved in crystal. Visible but untouchable. Permanent.',
-    color:'#8899bb', element:'gravecrystal', rarity:'epic',
+    color:'#8899bb', element:'ghost', elementFlavor:'gravecrystal', rarity:'epic',
     fusedFrom:['gravewarden','crystalmancer'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:11,def:11,spd:10,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:6,MP:8},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_14 = {
   grave_war: {
     id:'grave_war', name:'The Army of the Fallen', icon:'💀',
     tagline:'Every soldier who has died in this dungeon fought for the warlord now.',
-    color:'#887766', element:'gravewar', rarity:'legendary',
+    color:'#887766', element:'ghost', elementFlavor:'gravewar', rarity:'legendary',
     fusedFrom:['gravewarden','warlord'],
     stats:{hp:103,maxHp:103,mp:73,maxMp:73,atk:12,def:12,spd:10,crit:11},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:6,MP:7},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_14 = {
   grave_spirit: {
     id:'grave_spirit', name:'The Ancestral Grave', icon:'💀',
     tagline:'The spiritwalker speaks to the dead. The gravewarden keeps them.',
-    color:'#778877', element:'gravespirit', rarity:'epic',
+    color:'#778877', element:'ghost', elementFlavor:'gravespirit', rarity:'epic',
     fusedFrom:['gravewarden','spiritwalker'],
     stats:{hp:95,maxHp:95,mp:82,maxMp:82,atk:10,def:11,spd:11,crit:12},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:6,MP:8},

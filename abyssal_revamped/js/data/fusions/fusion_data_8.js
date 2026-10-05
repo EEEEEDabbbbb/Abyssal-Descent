@@ -48,7 +48,7 @@ const FUSION_CLASSES_8 = {
   necro_hex: {
     id:'necro_hex', name:'The Cursed Grave', icon:'💀',
     tagline:'The hex outlasts the hexed. The grave holds both.',
-    color:'#5e6677', element:'deathblood', rarity:'epic',
+    color:'#5e6677', element:'ghost', elementFlavor:'deathblood', rarity:'epic',
     fusedFrom:['necromancer','hexblade'],
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:6,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -62,7 +62,7 @@ const FUSION_CLASSES_8 = {
   necro_cosmo: {
     id:'necro_cosmo', name:'The Stellar Necropolis', icon:'💀',
     tagline:'Dead stars. Dead planets. Dead everything, at sufficient scale.',
-    color:'#3c6f88', element:'cosmicghost', rarity:'legendary',
+    color:'#3c6f88', element:'ghost', elementFlavor:'cosmicghost', rarity:'legendary',
     fusedFrom:['necromancer','cosmomancer'],
     stats:{hp:70,maxHp:70,mp:118,maxMp:118,atk:10,def:5,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:6,MP:11},
@@ -76,7 +76,7 @@ const FUSION_CLASSES_8 = {
   necro_pestilence: {
     id:'necro_pestilence', name:'The Blighted Host', icon:'💀',
     tagline:'The undead carry disease without suffering from it. They are perfect hosts.',
-    color:'#449933', element:'plaguesoul', rarity:'legendary',
+    color:'#449933', element:'ghost', elementFlavor:'plaguesoul', rarity:'legendary',
     fusedFrom:['necromancer','pestilencelord'],
     stats:{hp:75,maxHp:75,mp:110,maxMp:110,atk:10,def:6,spd:10,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:5,MP:11},
@@ -90,7 +90,7 @@ const FUSION_CLASSES_8 = {
   necro_wind: {
     id:'necro_wind', name:'The Wailing Gale', icon:'💀',
     tagline:'The wind carries screams. At a certain speed, the wind is the scream.',
-    color:'#5ebb88', element:'windghost', rarity:'rare',
+    color:'#5ebb88', element:'ghost', elementFlavor:'windghost', rarity:'rare',
     fusedFrom:['necromancer','windwalker'],
     stats:{hp:75,maxHp:75,mp:95,maxMp:95,atk:11,def:6,spd:15,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:9},
@@ -104,7 +104,7 @@ const FUSION_CLASSES_8 = {
   necro_doom: {
     id:'necro_doom', name:'The Inevitable End', icon:'💀',
     tagline:'Doom says: you will die. The undead army says: we will be there when you do.',
-    color:'#4d6f4d', element:'deathblood', rarity:'legendary',
+    color:'#4d6f4d', element:'ghost', elementFlavor:'deathblood', rarity:'legendary',
     fusedFrom:['necromancer','doomcaster'],
     stats:{hp:70,maxHp:70,mp:115,maxMp:115,atk:10,def:5,spd:11,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:6,MP:11},
@@ -118,7 +118,7 @@ const FUSION_CLASSES_8 = {
   necro_arcanist: {
     id:'necro_arcanist', name:'The Lich Scholar', icon:'💀',
     tagline:'The search for perfect knowledge required outliving imperfect mortality.',
-    color:'#446f99', element:'mindghost', rarity:'legendary',
+    color:'#446f99', element:'ghost', elementFlavor:'mindghost', rarity:'legendary',
     fusedFrom:['necromancer','arcanist'],
     stats:{hp:68,maxHp:68,mp:120,maxMp:120,atk:9,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:11},
@@ -132,7 +132,7 @@ const FUSION_CLASSES_8 = {
   necro_sentinel: {
     id:'necro_sentinel', name:'The Undying Wall', icon:'💀',
     tagline:'The wall holds. The wall has always held. The wall cannot stop holding.',
-    color:'#5e9977', element:'soulsteel', rarity:'rare',
+    color:'#5e9977', element:'ghost', elementFlavor:'soulsteel', rarity:'rare',
     fusedFrom:['necromancer','sentinel'],
     stats:{hp:115,maxHp:115,mp:80,maxMp:80,atk:9,def:12,spd:8,crit:8},
     statDisplay:{HP:8,ATK:6,DEF:8,SPD:5,MP:8},
@@ -160,7 +160,7 @@ const FUSION_CLASSES_8 = {
   paladin_frost: {
     id:'paladin_frost', name:'The Winter Covenant', icon:'⚜️',
     tagline:'Holy ground stays holy in winter. It just becomes considerably more dangerous.',
-    color:'#b3d5aa', element:'holyice', rarity:'epic',
+    color:'#b3d5aa', element:'fairy', elementFlavor:'holyice', rarity:'epic',
     fusedFrom:['paladin','frostweaver'],
     stats:{hp:105,maxHp:105,mp:73,maxMp:73,atk:12,def:11,spd:11,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:7},
@@ -174,7 +174,7 @@ const FUSION_CLASSES_8 = {
   paladin_dragon: {
     id:'paladin_dragon', name:'The Sacred Drake', icon:'⚜️',
     tagline:'The divine mandate is now significantly larger and has more teeth.',
-    color:'#dd992b', element:'holydrake', rarity:'epic',
+    color:'#dd992b', element:'fairy', elementFlavor:'holydrake', rarity:'epic',
     fusedFrom:['paladin','dragonknight'],
     stats:{hp:130,maxHp:130,mp:55,maxMp:55,atk:14,def:13,spd:9,crit:9},
     statDisplay:{HP:9,ATK:10,DEF:9,SPD:5},
@@ -188,7 +188,7 @@ const FUSION_CLASSES_8 = {
   paladin_tide: {
     id:'paladin_tide', name:'The Consecrated Tide', icon:'⚜️',
     tagline:'Holy water applied at tidal scale.',
-    color:'#91b391', element:'holytide', rarity:'rare',
+    color:'#91b391', element:'fairy', elementFlavor:'holytide', rarity:'rare',
     fusedFrom:['paladin','tidecaller'],
     stats:{hp:108,maxHp:108,mp:75,maxMp:75,atk:12,def:11,spd:11,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:7},
@@ -202,7 +202,7 @@ const FUSION_CLASSES_8 = {
   paladin_gravitist: {
     id:'paladin_gravitist', name:'The Divine Weight', icon:'⚜️',
     tagline:'Divine judgment is heavy. This is literal.',
-    color:'#91915e', element:'holygrav', rarity:'epic',
+    color:'#91915e', element:'fairy', elementFlavor:'holygrav', rarity:'epic',
     fusedFrom:['paladin','gravitist'],
     stats:{hp:103,maxHp:103,mp:78,maxMp:78,atk:11,def:10,spd:10,crit:11},
     statDisplay:{HP:7,ATK:8,DEF:7,SPD:6,MP:7},
@@ -216,7 +216,7 @@ const FUSION_CLASSES_8 = {
   paladin_soundbreaker: {
     id:'paladin_soundbreaker', name:'The Penitent Choir', icon:'⚜️',
     tagline:'The voice of divine authority carries. This one carries further.',
-    color:'#ddbb55', element:'radiantsound', rarity:'epic',
+    color:'#ddbb55', element:'fairy', elementFlavor:'radiantsound', rarity:'epic',
     fusedFrom:['paladin','soundbreaker'],
     stats:{hp:105,maxHp:105,mp:73,maxMp:73,atk:13,def:10,spd:12,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:7,MP:7},
@@ -230,7 +230,7 @@ const FUSION_CLASSES_8 = {
   paladin_chrono: {
     id:'paladin_chrono', name:'The Eternal Judgment', icon:'⚜️',
     tagline:'Divine law does not expire. It operates on its own schedule.',
-    color:'#c4aaaa', element:'timelight', rarity:'epic',
+    color:'#c4aaaa', element:'time', elementFlavor:'timelight', rarity:'epic',
     fusedFrom:['paladin','chronomancer'],
     stats:{hp:100,maxHp:100,mp:85,maxMp:85,atk:11,def:10,spd:11,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:7,SPD:6,MP:8},
@@ -244,7 +244,7 @@ const FUSION_CLASSES_8 = {
   paladin_spellsword: {
     id:'paladin_spellsword', name:'The Righteous Blade', icon:'⚜️',
     tagline:'The holy sword and the holy spell are the same holy thing.',
-    color:'#c48880', element:'holypsychic', rarity:'epic',
+    color:'#c48880', element:'fairy', elementFlavor:'holypsychic', rarity:'epic',
     fusedFrom:['paladin','spellsword'],
     stats:{hp:110,maxHp:110,mp:70,maxMp:70,atk:13,def:11,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:7},
@@ -258,7 +258,7 @@ const FUSION_CLASSES_8 = {
   paladin_plague: {
     id:'paladin_plague', name:'The Purifying Plague', icon:'⚜️',
     tagline:'Disease is a test. The holy plague ensures everyone passes it immediately.',
-    color:'#b3bb44', element:'holypoison', rarity:'epic',
+    color:'#b3bb44', element:'fairy', elementFlavor:'holypoison', rarity:'epic',
     fusedFrom:['paladin','plaguedoctor'],
     stats:{hp:103,maxHp:103,mp:80,maxMp:80,atk:11,def:11,spd:9,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:5,MP:8},
@@ -272,7 +272,7 @@ const FUSION_CLASSES_8 = {
   paladin_geo: {
     id:'paladin_geo', name:'The Sacred Ground', icon:'⚜️',
     tagline:'Holy earth is hard to move. This becomes someone else\'s problem.',
-    color:'#c4aa55', element:'earthlight', rarity:'rare',
+    color:'#c4aa55', element:'fairy', elementFlavor:'earthlight', rarity:'rare',
     fusedFrom:['paladin','geomancer'],
     stats:{hp:115,maxHp:115,mp:65,maxMp:65,atk:12,def:13,spd:8,crit:9},
     statDisplay:{HP:8,ATK:9,DEF:9,SPD:5,MP:6},
@@ -286,7 +286,7 @@ const FUSION_CLASSES_8 = {
   paladin_lightbringer: {
     id:'paladin_lightbringer', name:'The Solar Crusade', icon:'⚜️',
     tagline:'The divine light and the worldly light are the same light. Both are weapons.',
-    color:'#eed54d', element:'radiance', rarity:'epic',
+    color:'#eed54d', element:'light', elementFlavor:'radiance', rarity:'epic',
     fusedFrom:['paladin','lightbringer'],
     stats:{hp:108,maxHp:108,mp:73,maxMp:73,atk:13,def:12,spd:11,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:7},
@@ -300,7 +300,7 @@ const FUSION_CLASSES_8 = {
   paladin_beast: {
     id:'paladin_beast', name:'The Holy Hunt', icon:'⚜️',
     tagline:'The sacred pursuit does not end. It is a calling, not a task.',
-    color:'#b3c44d', element:'runelight', rarity:'rare',
+    color:'#b3c44d', element:'fairy', elementFlavor:'runelight', rarity:'rare',
     fusedFrom:['paladin','beastmaster'],
     stats:{hp:113,maxHp:113,mp:63,maxMp:63,atk:13,def:12,spd:12,crit:10},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:6},
@@ -314,7 +314,7 @@ const FUSION_CLASSES_8 = {
   paladin_tech: {
     id:'paladin_tech', name:'The Holy Engine', icon:'⚜️',
     tagline:'Divine purpose optimized through engineering. The divine endorses this.',
-    color:'#91aa80', element:'techlight', rarity:'epic',
+    color:'#91aa80', element:'fairy', elementFlavor:'techlight', rarity:'epic',
     fusedFrom:['paladin','techsavant'],
     stats:{hp:105,maxHp:105,mp:78,maxMp:78,atk:12,def:11,spd:12,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:7},
@@ -328,7 +328,7 @@ const FUSION_CLASSES_8 = {
   paladin_grave: {
     id:'paladin_grave', name:'The Holy Sepulchre', icon:'⚜️',
     tagline:'The sacred grave does not release its occupants. It is a very specific kind of rest.',
-    color:'#99996f', element:'sacredsoul', rarity:'rare',
+    color:'#99996f', element:'fairy', elementFlavor:'sacredsoul', rarity:'rare',
     fusedFrom:['paladin','gravewarden'],
     stats:{hp:123,maxHp:123,mp:63,maxMp:63,atk:12,def:14,spd:8,crit:9},
     statDisplay:{HP:8,ATK:9,DEF:9,SPD:5,MP:6},
@@ -342,7 +342,7 @@ const FUSION_CLASSES_8 = {
   paladin_magnetist: {
     id:'paladin_magnetist', name:'The Magnetic Covenant', icon:'⚜️',
     tagline:'Holy force draws the righteous near and holds the wicked in place.',
-    color:'#99b380', element:'magnetlight', rarity:'epic',
+    color:'#99b380', element:'fairy', elementFlavor:'magnetlight', rarity:'epic',
     fusedFrom:['paladin','magnetist'],
     stats:{hp:108,maxHp:108,mp:73,maxMp:73,atk:13,def:12,spd:10,crit:10},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:6,MP:7},
@@ -356,7 +356,7 @@ const FUSION_CLASSES_8 = {
   paladin_crystal: {
     id:'paladin_crystal', name:'The Crystal Shrine', icon:'⚜️',
     tagline:'The shrine refracts the divine light everywhere at once. There is no shadow.',
-    color:'#b3c4aa', element:'crystallight', rarity:'legendary',
+    color:'#b3c4aa', element:'fairy', elementFlavor:'crystallight', rarity:'legendary',
     fusedFrom:['paladin','crystalmancer'],
     stats:{hp:100,maxHp:100,mp:80,maxMp:80,atk:13,def:10,spd:12,crit:14},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:7,MP:8},
@@ -370,7 +370,7 @@ const FUSION_CLASSES_8 = {
   paladin_war: {
     id:'paladin_war', name:'The Righteous Army', icon:'⚜️',
     tagline:'The divine mandate includes a tactical map. Enemies are marked on it.',
-    color:'#d5882b', element:'holywar', rarity:'rare',
+    color:'#d5882b', element:'fairy', elementFlavor:'holywar', rarity:'rare',
     fusedFrom:['paladin','warlord'],
     stats:{hp:125,maxHp:125,mp:58,maxMp:58,atk:14,def:13,spd:10,crit:9},
     statDisplay:{HP:8,ATK:10,DEF:9,SPD:6},
@@ -384,7 +384,7 @@ const FUSION_CLASSES_8 = {
   paladin_spirit: {
     id:'paladin_spirit', name:'The Ascendant', icon:'⚜️',
     tagline:'The divine and the spiritual are different names for the same summit.',
-    color:'#91bb6f', element:'ascendant', rarity:'epic',
+    color:'#91bb6f', element:'fairy', elementFlavor:'ascendant', rarity:'epic',
     fusedFrom:['paladin','spiritwalker'],
     stats:{hp:110,maxHp:110,mp:73,maxMp:73,atk:12,def:12,spd:11,crit:10},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:6,MP:7},
@@ -398,7 +398,7 @@ const FUSION_CLASSES_8 = {
   paladin_hex: {
     id:'paladin_hex', name:'The Inquisitor\'s Mark', icon:'⚜️',
     tagline:'The holy curse is still a curse. The target will not find the theological distinction comforting.',
-    color:'#b3776f', element:'fallenlight', rarity:'epic',
+    color:'#b3776f', element:'fairy', elementFlavor:'fallenlight', rarity:'epic',
     fusedFrom:['paladin','hexblade'],
     stats:{hp:105,maxHp:105,mp:75,maxMp:75,atk:13,def:11,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:7},
@@ -412,7 +412,7 @@ const FUSION_CLASSES_8 = {
   paladin_cosmo: {
     id:'paladin_cosmo', name:'The Divine Cosmos', icon:'⚜️',
     tagline:'The universe was made with purpose. That purpose is currently expressed at close range.',
-    color:'#918080', element:'cosmiclight', rarity:'legendary',
+    color:'#918080', element:'cosmic', elementFlavor:'cosmiclight', rarity:'legendary',
     fusedFrom:['paladin','cosmomancer'],
     stats:{hp:100,maxHp:100,mp:88,maxMp:88,atk:12,def:9,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:6,MP:8},
@@ -426,7 +426,7 @@ const FUSION_CLASSES_8 = {
   paladin_pestilence: {
     id:'paladin_pestilence', name:'The Sanctified Plague', icon:'⚜️',
     tagline:'The holy disease does not hurt the righteous. The distinction is enforced rigorously.',
-    color:'#99aa2b', element:'holypoison', rarity:'legendary',
+    color:'#99aa2b', element:'fairy', elementFlavor:'holypoison', rarity:'legendary',
     fusedFrom:['paladin','pestilencelord'],
     stats:{hp:105,maxHp:105,mp:80,maxMp:80,atk:12,def:11,spd:9,crit:10},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:5,MP:8},
@@ -440,7 +440,7 @@ const FUSION_CLASSES_8 = {
   paladin_wind: {
     id:'paladin_wind', name:'The Crusader\'s Wind', icon:'⚜️',
     tagline:'Divine purpose has velocity. At 15 SPD, considerable velocity.',
-    color:'#b3cc80', element:'windlight', rarity:'rare',
+    color:'#b3cc80', element:'fairy', elementFlavor:'windlight', rarity:'rare',
     fusedFrom:['paladin','windwalker'],
     stats:{hp:105,maxHp:105,mp:65,maxMp:65,atk:13,def:10,spd:15,crit:13},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:8,MP:6},
@@ -454,7 +454,7 @@ const FUSION_CLASSES_8 = {
   paladin_doom: {
     id:'paladin_doom', name:'The Last Rite', icon:'⚜️',
     tagline:'The divine sentence was passed before the battle began. It is now being executed.',
-    color:'#a28044', element:'fallenlight', rarity:'legendary',
+    color:'#a28044', element:'fairy', elementFlavor:'fallenlight', rarity:'legendary',
     fusedFrom:['paladin','doomcaster'],
     stats:{hp:100,maxHp:100,mp:85,maxMp:85,atk:12,def:9,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:6,MP:8},
@@ -468,7 +468,7 @@ const FUSION_CLASSES_8 = {
   paladin_arcanist: {
     id:'paladin_arcanist', name:'The Theologian', icon:'⚜️',
     tagline:'The proof of divine law can be expressed mathematically. The math is very clear on the outcome.',
-    color:'#998091', element:'holypsychic', rarity:'legendary',
+    color:'#998091', element:'fairy', elementFlavor:'holypsychic', rarity:'legendary',
     fusedFrom:['paladin','arcanist'],
     stats:{hp:98,maxHp:98,mp:90,maxMp:90,atk:11,def:9,spd:11,crit:13},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:6,MP:9},
@@ -482,7 +482,7 @@ const FUSION_CLASSES_8 = {
   paladin_sentinel: {
     id:'paladin_sentinel', name:'The Sacred Fortification', icon:'⚜️',
     tagline:'This ground is holy. Nothing crosses it. These are the same statement.',
-    color:'#b3aa6f', element:'sacredsteel', rarity:'rare',
+    color:'#b3aa6f', element:'fairy', elementFlavor:'sacredsteel', rarity:'rare',
     fusedFrom:['paladin','sentinel'],
     stats:{hp:145,maxHp:145,mp:50,maxMp:50,atk:10,def:16,spd:7,crit:6},
     statDisplay:{HP:10,ATK:7,DEF:10,SPD:4},
@@ -496,7 +496,7 @@ const FUSION_CLASSES_8 = {
   paladin_phantom: {
     id:'paladin_phantom', name:'The Holy Specter', icon:'⚜️',
     tagline:'The divine manifests through the threshold. It does not need a door.',
-    color:'#b3b388', element:'sacredsoul', rarity:'mythical',
+    color:'#b3b388', element:'fairy', elementFlavor:'sacredsoul', rarity:'mythical',
     fusedFrom:['paladin','phantom'],
     stats:{hp:100,maxHp:100,mp:70,maxMp:70,atk:13,def:9,spd:14,crit:18},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:8,MP:7},
@@ -510,7 +510,7 @@ const FUSION_CLASSES_8 = {
   frost_dragon: {
     id:'frost_dragon', name:'Glacial Wyrm', icon:'❄️',
     tagline:'The cold-blooded dragon was always going to end up here.',
-    color:'#b3a280', element:'frostdrake', rarity:'epic',
+    color:'#b3a280', element:'ice', elementFlavor:'frostdrake', rarity:'epic',
     fusedFrom:['frostweaver','dragonknight'],
     stats:{hp:105,maxHp:105,mp:68,maxMp:68,atk:14,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -524,7 +524,7 @@ const FUSION_CLASSES_8 = {
   frost_tide: {
     id:'frost_tide', name:'The Frozen Shore', icon:'❄️',
     tagline:'Where the cold sea meets the cold land, everything stops.',
-    color:'#66bbe6', element:'glacier', rarity:'rare',
+    color:'#66bbe6', element:'ice', elementFlavor:'glacier', rarity:'rare',
     fusedFrom:['frostweaver','tidecaller'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:11,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -538,7 +538,7 @@ const FUSION_CLASSES_8 = {
   frost_gravitist: {
     id:'frost_gravitist', name:'The Cold Singularity', icon:'❄️',
     tagline:'Absolute zero is the point where molecules stop moving. This accelerates arrival at that point.',
-    color:'#6699b3', element:'frozencore', rarity:'epic',
+    color:'#6699b3', element:'ice', elementFlavor:'frozencore', rarity:'epic',
     fusedFrom:['frostweaver','gravitist'],
     stats:{hp:78,maxHp:78,mp:90,maxMp:90,atk:10,def:7,spd:12,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -552,7 +552,7 @@ const FUSION_CLASSES_8 = {
   frost_soundbreaker: {
     id:'frost_soundbreaker', name:'The Frozen Frequency', icon:'❄️',
     tagline:'Sound slows in cold air. At absolute zero, it stops entirely. So does everything else.',
-    color:'#b3c4aa', element:'frostsound', rarity:'epic',
+    color:'#b3c4aa', element:'ice', elementFlavor:'frostsound', rarity:'epic',
     fusedFrom:['frostweaver','soundbreaker'],
     stats:{hp:80,maxHp:80,mp:85,maxMp:85,atk:12,def:7,spd:14,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:8},

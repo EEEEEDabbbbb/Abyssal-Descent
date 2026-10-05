@@ -49,7 +49,7 @@ const FUSION_CLASSES_2 = {
   void_warden: {
     id:'void_warden', name:'Void Warden', icon:'🌀',
     tagline:'The armor does not stop the void. It becomes the void.',
-    color:'#6644aa', element:'voidsteel', rarity:'rare',
+    color:'#6644aa', element:'steel', elementFlavor:'voidsteel', rarity:'rare',
     fusedFrom:['ironclad','voidmancer'],
     stats:{hp:103,maxHp:103,mp:75,maxMp:75,atk:10,def:9,spd:9,crit:10},
     statDisplay:{HP:7,ATK:7,DEF:6,SPD:5,MP:7},
@@ -63,7 +63,7 @@ const FUSION_CLASSES_2 = {
   runeguard: {
     id:'runeguard', name:'Runeguard', icon:'🔱',
     tagline:'Inscribed in iron. The runes do not break.',
-    color:'#7755aa', element:'runeforge', rarity:'uncommon',
+    color:'#7755aa', element:'steel', elementFlavor:'runeforge', rarity:'uncommon',
     fusedFrom:['ironclad','runeblade'],
     stats:{hp:120,maxHp:120,mp:55,maxMp:55,atk:12,def:12,spd:11,crit:9},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:7},
@@ -77,7 +77,7 @@ const FUSION_CLASSES_2 = {
   bone_fortress: {
     id:'bone_fortress', name:'Bone Fortress', icon:'🦴',
     tagline:'The dead do not tire. The fortress does not fall.',
-    color:'#558866', element:'soulsteel', rarity:'rare',
+    color:'#558866', element:'ghost', elementFlavor:'soulsteel', rarity:'rare',
     fusedFrom:['ironclad','necromancer'],
     stats:{hp:105,maxHp:105,mp:80,maxMp:80,atk:9,def:10,spd:9,crit:8},
     statDisplay:{HP:7,ATK:6,DEF:7,SPD:5,MP:8},
@@ -91,7 +91,7 @@ const FUSION_CLASSES_2 = {
   sacred_guardian: {
     id:'sacred_guardian', name:'Sacred Guardian', icon:'⚜️',
     tagline:'Holy steel does not bend. Neither do its convictions.',
-    color:'#bbaa33', element:'sacredsteel', rarity:'rare',
+    color:'#bbaa33', element:'steel', elementFlavor:'sacredsteel', rarity:'rare',
     fusedFrom:['ironclad','paladin'],
     stats:{hp:135,maxHp:135,mp:50,maxMp:50,atk:11,def:14,spd:8,crit:7},
     statDisplay:{HP:9,ATK:8,DEF:10,SPD:5},
@@ -105,7 +105,7 @@ const FUSION_CLASSES_2 = {
   glacial_vanguard: {
     id:'glacial_vanguard', name:'Glacial Vanguard', icon:'🧊',
     tagline:'A wall of ice. A thousand ways to die on it.',
-    color:'#88ddff', element:'glacialsteel', rarity:'rare',
+    color:'#88ddff', element:'ice', elementFlavor:'glacialsteel', rarity:'rare',
     fusedFrom:['ironclad','frostweaver'],
     stats:{hp:110,maxHp:110,mp:63,maxMp:63,atk:10,def:12,spd:11,crit:10},
     statDisplay:{HP:7,ATK:7,DEF:8,SPD:7,MP:6},
@@ -119,7 +119,7 @@ const FUSION_CLASSES_2 = {
   dragon_fortress: {
     id:'dragon_fortress', name:'Dragon Fortress', icon:'🐉',
     tagline:'A fortress that breathes fire. A dragon that refuses to fall.',
-    color:'#886622', element:'dragonforge', rarity:'rare',
+    color:'#886622', element:'steel', elementFlavor:'dragonforge', rarity:'rare',
     fusedFrom:['ironclad','dragonknight'],
     stats:{hp:135,maxHp:135,mp:45,maxMp:45,atk:13,def:14,spd:9,crit:8},
     statDisplay:{HP:9,ATK:9,DEF:10,SPD:5},
@@ -133,7 +133,7 @@ const FUSION_CLASSES_2 = {
   tide_bastion: {
     id:'tide_bastion', name:'Tide Bastion', icon:'🌊',
     tagline:'The sea breaks on the fortress. The fortress endures.',
-    color:'#3377aa', element:'tidewall', rarity:'uncommon',
+    color:'#3377aa', element:'steel', elementFlavor:'tidewall', rarity:'uncommon',
     fusedFrom:['ironclad','tidecaller'],
     stats:{hp:113,maxHp:113,mp:65,maxMp:65,atk:10,def:12,spd:11,crit:9},
     statDisplay:{HP:8,ATK:7,DEF:8,SPD:7,MP:6},
@@ -147,7 +147,7 @@ const FUSION_CLASSES_2 = {
   gravity_fortress: {
     id:'gravity_fortress', name:'Gravity Fortress', icon:'⚫',
     tagline:'The weight of the fortress bends reality.',
-    color:'#445577', element:'gravisteel', rarity:'rare',
+    color:'#445577', element:'gravity', elementFlavor:'gravisteel', rarity:'rare',
     fusedFrom:['ironclad','gravitist'],
     stats:{hp:108,maxHp:108,mp:68,maxMp:68,atk:10,def:11,spd:10,crit:10},
     statDisplay:{HP:7,ATK:7,DEF:8,SPD:6,MP:7},
@@ -161,7 +161,7 @@ const FUSION_CLASSES_2 = {
   resonant_fortress: {
     id:'resonant_fortress', name:'Resonant Fortress', icon:'🔊',
     tagline:'The fortress shakes the earth with its voice.',
-    color:'#6677aa', element:'resonantsteel', rarity:'rare',
+    color:'#6677aa', element:'sound', elementFlavor:'resonantsteel', rarity:'rare',
     fusedFrom:['ironclad','soundbreaker'],
     stats:{hp:110,maxHp:110,mp:63,maxMp:63,atk:12,def:11,spd:12,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:6},
@@ -175,7 +175,7 @@ const FUSION_CLASSES_2 = {
   timeless_vanguard: {
     id:'timeless_vanguard', name:'Timeless Vanguard', icon:'⏳',
     tagline:'The fortress that has always stood. Will always stand.',
-    color:'#7766aa', element:'timesteel', rarity:'rare',
+    color:'#7766aa', element:'time', elementFlavor:'timesteel', rarity:'rare',
     fusedFrom:['ironclad','chronomancer'],
     stats:{hp:105,maxHp:105,mp:75,maxMp:75,atk:10,def:11,spd:11,crit:9},
     statDisplay:{HP:7,ATK:7,DEF:8,SPD:7,MP:7},
@@ -189,7 +189,7 @@ const FUSION_CLASSES_2 = {
   arcane_vanguard: {
     id:'arcane_vanguard', name:'Arcane Vanguard', icon:'🗡️',
     tagline:'The spells are in the armor.',
-    color:'#6644aa', element:'spellsteel', rarity:'rare',
+    color:'#6644aa', element:'psychic', elementFlavor:'spellsteel', rarity:'rare',
     fusedFrom:['ironclad','spellsword'],
     stats:{hp:115,maxHp:115,mp:60,maxMp:60,atk:12,def:12,spd:11,crit:10},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:7,MP:6},
@@ -203,7 +203,7 @@ const FUSION_CLASSES_2 = {
   plague_bulwark: {
     id:'plague_bulwark', name:'Plague Bulwark', icon:'🩺',
     tagline:'The fortress that infects everything it touches.',
-    color:'#558844', element:'plagueiron', rarity:'rare',
+    color:'#558844', element:'poison', elementFlavor:'plagueiron', rarity:'rare',
     fusedFrom:['ironclad','plaguedoctor'],
     stats:{hp:108,maxHp:108,mp:70,maxMp:70,atk:10,def:11,spd:9,crit:9},
     statDisplay:{HP:7,ATK:7,DEF:8,SPD:5,MP:7},
@@ -217,7 +217,7 @@ const FUSION_CLASSES_2 = {
   earthen_colossus: {
     id:'earthen_colossus', name:'Earthen Colossus', icon:'🪨',
     tagline:'Built from the mountain. Part of it now.',
-    color:'#886644', element:'earthensteel', rarity:'uncommon',
+    color:'#886644', element:'steel', elementFlavor:'earthensteel', rarity:'uncommon',
     fusedFrom:['ironclad','geomancer'],
     stats:{hp:120,maxHp:120,mp:55,maxMp:55,atk:11,def:14,spd:8,crit:8},
     statDisplay:{HP:8,ATK:8,DEF:10,SPD:5},
@@ -231,7 +231,7 @@ const FUSION_CLASSES_2 = {
   divine_vanguard: {
     id:'divine_vanguard', name:'Divine Vanguard', icon:'☀️',
     tagline:'Holy light inside iron will. Neither yields.',
-    color:'#ccbb44', element:'divinesteel', rarity:'rare',
+    color:'#ccbb44', element:'light', elementFlavor:'divinesteel', rarity:'rare',
     fusedFrom:['ironclad','lightbringer'],
     stats:{hp:113,maxHp:113,mp:63,maxMp:63,atk:12,def:12,spd:11,crit:10},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:7,MP:6},
@@ -245,7 +245,7 @@ const FUSION_CLASSES_2 = {
   iron_predator: {
     id:'iron_predator', name:'Iron Predator', icon:'🐾',
     tagline:'Armored fury. Primal and unyielding.',
-    color:'#776644', element:'runeforge', rarity:'uncommon',
+    color:'#776644', element:'steel', elementFlavor:'runeforge', rarity:'uncommon',
     fusedFrom:['ironclad','beastmaster'],
     stats:{hp:118,maxHp:118,mp:53,maxMp:53,atk:12,def:12,spd:12,crit:9},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:7},
@@ -259,7 +259,7 @@ const FUSION_CLASSES_2 = {
   iron_automaton: {
     id:'iron_automaton', name:'Iron Automaton', icon:'⚙️',
     tagline:'The machine wears the armor. Or the armor is the machine.',
-    color:'#4477aa', element:'irontech', rarity:'rare',
+    color:'#4477aa', element:'steel', elementFlavor:'irontech', rarity:'rare',
     fusedFrom:['ironclad','techsavant'],
     stats:{hp:110,maxHp:110,mp:68,maxMp:68,atk:11,def:11,spd:12,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:7},
@@ -273,7 +273,7 @@ const FUSION_CLASSES_2 = {
   undying_fortress: {
     id:'undying_fortress', name:'Undying Fortress', icon:'🪦',
     tagline:'It does not fall. It has decided.',
-    color:'#556677', element:'soulsteel', rarity:'uncommon',
+    color:'#556677', element:'ghost', elementFlavor:'soulsteel', rarity:'uncommon',
     fusedFrom:['ironclad','gravewarden'],
     stats:{hp:128,maxHp:128,mp:53,maxMp:53,atk:11,def:14,spd:8,crit:8},
     statDisplay:{HP:8,ATK:8,DEF:10,SPD:5},
@@ -287,7 +287,7 @@ const FUSION_CLASSES_2 = {
   magnetic_colossus: {
     id:'magnetic_colossus', name:'Magnetic Colossus', icon:'🧲',
     tagline:'Iron attracts iron. Then crushes it.',
-    color:'#446688', element:'magnetiron', rarity:'rare',
+    color:'#446688', element:'steel', elementFlavor:'magnetiron', rarity:'rare',
     fusedFrom:['ironclad','magnetist'],
     stats:{hp:113,maxHp:113,mp:63,maxMp:63,atk:12,def:12,spd:10,crit:9},
     statDisplay:{HP:8,ATK:8,DEF:8,SPD:6,MP:6},
@@ -301,7 +301,7 @@ const FUSION_CLASSES_2 = {
   crystal_bastion: {
     id:'crystal_bastion', name:'Crystal Bastion', icon:'💎',
     tagline:'The crystal fortress refracts all damage.',
-    color:'#88aacc', element:'crystalsteel', rarity:'epic',
+    color:'#88aacc', element:'crystal', elementFlavor:'crystalsteel', rarity:'epic',
     fusedFrom:['ironclad','crystalmancer'],
     stats:{hp:105,maxHp:105,mp:70,maxMp:70,atk:12,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:7},
@@ -315,7 +315,7 @@ const FUSION_CLASSES_2 = {
   iron_warlord: {
     id:'iron_warlord', name:'Iron Warlord', icon:'⚔️',
     tagline:'Offense and defense, indistinguishable.',
-    color:'#886633', element:'warlordsteel', rarity:'uncommon',
+    color:'#886633', element:'steel', elementFlavor:'warlordsteel', rarity:'uncommon',
     fusedFrom:['ironclad','warlord'],
     stats:{hp:130,maxHp:130,mp:48,maxMp:48,atk:13,def:14,spd:10,crit:8},
     statDisplay:{HP:9,ATK:9,DEF:10,SPD:6},
@@ -329,7 +329,7 @@ const FUSION_CLASSES_2 = {
   spirit_fortress: {
     id:'spirit_fortress', name:'Spirit Fortress', icon:'🌿',
     tagline:'The fortress that mends itself. Endlessly.',
-    color:'#557766', element:'spiritfort', rarity:'rare',
+    color:'#557766', element:'steel', elementFlavor:'spiritfort', rarity:'rare',
     fusedFrom:['ironclad','spiritwalker'],
     stats:{hp:115,maxHp:115,mp:63,maxMp:63,atk:10,def:12,spd:11,crit:9},
     statDisplay:{HP:8,ATK:7,DEF:8,SPD:7,MP:6},
@@ -343,7 +343,7 @@ const FUSION_CLASSES_2 = {
   hexed_iron: {
     id:'hexed_iron', name:'Hexed Iron', icon:'🔮',
     tagline:'Cursed armor. Even worse to hit than to avoid.',
-    color:'#775588', element:'bloodsteel', rarity:'rare',
+    color:'#775588', element:'dark', elementFlavor:'bloodsteel', rarity:'rare',
     fusedFrom:['ironclad','hexblade'],
     stats:{hp:110,maxHp:110,mp:65,maxMp:65,atk:12,def:11,spd:11,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:6},
@@ -357,7 +357,7 @@ const FUSION_CLASSES_2 = {
   cosmic_vanguard: {
     id:'cosmic_vanguard', name:'Cosmic Vanguard', icon:'🌌',
     tagline:'The fortress at the edge of reality. And just past it.',
-    color:'#4455aa', element:'cosmifort', rarity:'epic',
+    color:'#4455aa', element:'cosmic', elementFlavor:'cosmifort', rarity:'epic',
     fusedFrom:['ironclad','cosmomancer'],
     stats:{hp:105,maxHp:105,mp:78,maxMp:78,atk:10,def:10,spd:11,crit:10},
     statDisplay:{HP:7,ATK:7,DEF:7,SPD:7,MP:8},
@@ -371,7 +371,7 @@ const FUSION_CLASSES_2 = {
   plague_colossus: {
     id:'plague_colossus', name:'Plague Colossus', icon:'☣️',
     tagline:'Touch the fortress. Inherit the plague.',
-    color:'#557744', element:'plagueiron', rarity:'epic',
+    color:'#557744', element:'steel', elementFlavor:'plagueiron', rarity:'epic',
     fusedFrom:['ironclad','pestilencelord'],
     stats:{hp:110,maxHp:110,mp:70,maxMp:70,atk:11,def:11,spd:9,crit:9},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:5,MP:7},
@@ -385,7 +385,7 @@ const FUSION_CLASSES_2 = {
   gale_vanguard: {
     id:'gale_vanguard', name:'Gale Vanguard', icon:'💨',
     tagline:'The fortress moves faster than it has any right to.',
-    color:'#5577aa', element:'galevanguard', rarity:'uncommon',
+    color:'#5577aa', element:'steel', elementFlavor:'galevanguard', rarity:'uncommon',
     fusedFrom:['ironclad','windwalker'],
     stats:{hp:110,maxHp:110,mp:55,maxMp:55,atk:12,def:11,spd:15,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:9},
@@ -399,7 +399,7 @@ const FUSION_CLASSES_2 = {
   doom_fortress: {
     id:'doom_fortress', name:'Doom Fortress', icon:'💣',
     tagline:'Everything that approaches it is already doomed.',
-    color:'#664433', element:'bloodsteel', rarity:'epic',
+    color:'#664433', element:'steel', elementFlavor:'bloodsteel', rarity:'epic',
     fusedFrom:['ironclad','doomcaster'],
     stats:{hp:105,maxHp:105,mp:75,maxMp:75,atk:10,def:9,spd:11,crit:11},
     statDisplay:{HP:7,ATK:7,DEF:6,SPD:7,MP:7},
@@ -413,7 +413,7 @@ const FUSION_CLASSES_2 = {
   arcane_bulwark: {
     id:'arcane_bulwark', name:'Arcane Bulwark', icon:'📚',
     tagline:'Spells and shields are the same language.',
-    color:'#5544bb', element:'spellsteel', rarity:'epic',
+    color:'#5544bb', element:'psychic', elementFlavor:'spellsteel', rarity:'epic',
     fusedFrom:['ironclad','arcanist'],
     stats:{hp:103,maxHp:103,mp:80,maxMp:80,atk:10,def:9,spd:11,crit:12},
     statDisplay:{HP:7,ATK:7,DEF:6,SPD:7,MP:8},
@@ -441,7 +441,7 @@ const FUSION_CLASSES_2 = {
   iron_specter: {
     id:'iron_specter', name:'Iron Specter', icon:'👻',
     tagline:'The ghost inside the armor refuses to leave.',
-    color:'#6677aa', element:'soulsteel', rarity:'legendary',
+    color:'#6677aa', element:'ghost', elementFlavor:'soulsteel', rarity:'legendary',
     fusedFrom:['ironclad','phantom'],
     stats:{hp:105,maxHp:105,mp:60,maxMp:60,atk:12,def:9,spd:14,crit:17},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:8,MP:6},
@@ -455,7 +455,7 @@ const FUSION_CLASSES_2 = {
   soulfire_channeler: {
     id:'soulfire_channeler', name:'Soulfire Channeler', icon:'🔥',
     tagline:'The flame that feeds on souls, not wood.',
-    color:'#cc5588', element:'soulfire', rarity:'rare',
+    color:'#cc5588', element:'ghost', elementFlavor:'soulfire', rarity:'rare',
     fusedFrom:['soulweaver','pyromancer'],
     stats:{hp:73,maxHp:73,mp:95,maxMp:95,atk:8,def:6,spd:11,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:9},
@@ -469,7 +469,7 @@ const FUSION_CLASSES_2 = {
   storm_soul: {
     id:'storm_soul', name:'Storm Soul', icon:'⚡',
     tagline:'The storm that remembers every life it took.',
-    color:'#5577cc', element:'stormsoul', rarity:'rare',
+    color:'#5577cc', element:'ghost', elementFlavor:'stormsoul', rarity:'rare',
     fusedFrom:['soulweaver','stormcaller'],
     stats:{hp:78,maxHp:78,mp:90,maxMp:90,atk:10,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:8,MP:9},
@@ -483,7 +483,7 @@ const FUSION_CLASSES_2 = {
   blood_weaver: {
     id:'blood_weaver', name:'Blood Weaver', icon:'🩸',
     tagline:'Life and death flow in the same current.',
-    color:'#882244', element:'deathblood', rarity:'rare',
+    color:'#882244', element:'ghost', elementFlavor:'deathblood', rarity:'rare',
     fusedFrom:['soulweaver','bloodknight'],
     stats:{hp:95,maxHp:95,mp:75,maxMp:75,atk:12,def:9,spd:10,crit:10},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:6,MP:7},
@@ -497,7 +497,7 @@ const FUSION_CLASSES_2 = {
   void_weaver: {
     id:'void_weaver', name:'Void Weaver', icon:'🌀',
     tagline:'The void does not consume the soul. It becomes it.',
-    color:'#554488', element:'wraith', rarity:'epic',
+    color:'#554488', element:'ghost', elementFlavor:'wraith', rarity:'epic',
     fusedFrom:['soulweaver','voidmancer'],
     stats:{hp:68,maxHp:68,mp:105,maxMp:105,atk:9,def:5,spd:11,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -511,7 +511,7 @@ const FUSION_CLASSES_2 = {
   soul_runeweaver: {
     id:'soul_runeweaver', name:'Soul Runeweaver', icon:'🔱',
     tagline:'The runes are written in something older than ink.',
-    color:'#887733', element:'runesoul', rarity:'rare',
+    color:'#887733', element:'ghost', elementFlavor:'runesoul', rarity:'rare',
     fusedFrom:['soulweaver','runeblade'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:11,def:8,spd:12,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -539,7 +539,7 @@ const FUSION_CLASSES_2 = {
   sacred_soul: {
     id:'sacred_soul', name:'Sacred Soul', icon:'⚜️',
     tagline:'The divine light and the restless soul, made whole.',
-    color:'#ccbb55', element:'sacredsoul', rarity:'epic',
+    color:'#ccbb55', element:'ghost', elementFlavor:'sacredsoul', rarity:'epic',
     fusedFrom:['soulweaver','paladin'],
     stats:{hp:100,maxHp:100,mp:80,maxMp:80,atk:10,def:10,spd:9,crit:9},
     statDisplay:{HP:7,ATK:7,DEF:7,SPD:5,MP:8},
@@ -553,7 +553,7 @@ const FUSION_CLASSES_2 = {
   frost_soul: {
     id:'frost_soul', name:'Frost Soul', icon:'❄️',
     tagline:'The soul frozen in place. Still dangerous. More dangerous.',
-    color:'#77aacc', element:'frosted_ghost', rarity:'epic',
+    color:'#77aacc', element:'ice', elementFlavor:'frosted_ghost', rarity:'epic',
     fusedFrom:['soulweaver','frostweaver'],
     stats:{hp:75,maxHp:75,mp:93,maxMp:93,atk:10,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -567,7 +567,7 @@ const FUSION_CLASSES_2 = {
   dragon_spirit: {
     id:'dragon_spirit', name:'Dragon Spirit', icon:'🐉',
     tagline:'The dragon\'s fire is also its soul. Both are available for harvest.',
-    color:'#aa7733', element:'dragonspirit', rarity:'epic',
+    color:'#aa7733', element:'ghost', elementFlavor:'dragonspirit', rarity:'epic',
     fusedFrom:['soulweaver','dragonknight'],
     stats:{hp:100,maxHp:100,mp:75,maxMp:75,atk:13,def:9,spd:11,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:7},

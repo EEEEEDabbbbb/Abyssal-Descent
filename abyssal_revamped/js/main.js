@@ -1,10 +1,10 @@
 // ══════════════════════════════════════════════════════════════
 // MAIN  (js/main.js)
 //
-// Entry point. init() called from index.html onload.
+// Entry point. init() called from index.html on load.
 //
 // GLOBAL STATE: G (defined in state.js)
-//   G.player, G.enemy, G.map, G.floor, G.phase, G.inCombat, G.turn
+//   G.player, G.enemy/G.enemies, G.map, G.floor, G.phase, G.inCombat, G.turn
 //   G.meta — persistent data saved to localStorage (see saveMeta/loadMeta in utils.js)
 //   G.worldGen — { roomCount, difficulty, enemyDensity, treasureRate, mapSize }
 //   G.selectedClass — classId chosen on class select screen
@@ -14,102 +14,134 @@
 //   init() → title-screen → class-select-screen → [world gen modal] → game-screen
 //   game-screen → game-over-screen → title-screen or class-select-screen
 //
-// startRun() — async! Fusion classes need their data file loaded before createPlayer().
-//   If G.selectedClass is NOT in CLASSES (i.e. it's a fusion), awaits loadFusionFile(n)
-//   for all files that could contain that class (via FUSION_FILE_LOOKUP).
-//   ⚠️ If you make startRun synchronous again, fusion class stats will be NaN.
+// startRun() — async: fusion classes need their data file loaded before
+//   createPlayer() (ensureClassLoaded in run_save.js).
 //
-// KEYBOARD SHORTCUTS (handleKeyDown):
-//   1-5     — ability slots
-//   Q       — attack
-//   E       — defend
-//   R       — open item menu
-//   F       — flee
-//   Space   — burst
-//   Arrows/WASD — movement (explore phase only, handled in second keydown listener)
-//   Escape  — close modal or open pause menu
-//
-// PUBLIC FUNCTIONS wired to HTML buttons (onclick):
-//   openTalentTree, openShardEmporium, openSettings, returnFromSettings
-//   returnToTitle, newRun, retryRun, showClassSelect, showContinue
+// KEYBOARD (handleKeyDown) — only on the game screen, never while a dialog is open:
+//   1-9          — ability slots
+//   Q / E / R / F — attack / defend / item / flee
+//   Space        — burst
+//   Arrows/WASD  — movement (exploration only)
+//   Escape       — close a closeable dialog, otherwise open the pause menu
 // ══════════════════════════════════════════════════════════════
 
 function init() {
   loadMeta();
   loadSettings();
+  applyAllSettings();
   showScreen('title-screen');
-  // Keyboard movement
   document.addEventListener('keydown', handleKeyDown);
-  // Scroll map viewport with arrow keys
-  document.addEventListener('keydown', e => {
-    if (G.phase==='explore'&&!G.inCombat) {
-      const map={ArrowUp:[0,-1],ArrowDown:[0,1],ArrowLeft:[-1,0],ArrowRight:[1,0],
-                 w:[0,-1],s:[0,1],a:[-1,0],d:[1,0]};
-      const dir=map[e.key];
-      if(dir){e.preventDefault();movePlayer(dir[0],dir[1]);}
-    }
-    if (e.key==='Escape') {
-      const overlay=document.getElementById('overlay');
-      if(overlay.classList.contains('active')) closeModal();
-      else if(G.phase!=='title'&&G.player) showPauseMenu();
-    }
-  });
-  console.log('Abyssal Descent v2.0 — Pass 4 — Initialized');
+  window.addEventListener('resize', () => { if (isScreenActive('game-screen')) renderCenterPanel(); });
+  // Save on tab close / hide so progress since the last fight isn't lost
+  const flushSave = () => { if (G.player && !G.inCombat) autoSaveRun(); };
+  window.addEventListener('pagehide', flushSave);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushSave(); });
+}
+
+function isScreenActive(id) {
+  const el = document.getElementById(id);
+  return !!(el && el.classList.contains('active'));
+}
+
+function isModalOpen() {
+  return document.getElementById('overlay').classList.contains('active');
+}
+
+// resetRunState — clears everything that belongs to a single run
+function resetRunState() {
+  G.player     = null;
+  G.enemy      = null;
+  G.map        = null;
+  G.floor      = 1;
+  G.inCombat   = false;
+  G.killedBoss = false;
+  G.phase      = 'explore';
+  G.turn       = 'player';
+  G.combatRound = 0;
+  G.log        = [];
+  _lastLogLength = -1;
+  G._currentEvent = null;
+  G._rewardChoices = null;
+  G._pendingSecretBoss = null;
+  G._secretBossCell = null;
+  G._secretBossTriggeredThisRun = false;
+  G._gameOverShown = false;
+  G._saveFailWarned = false;
 }
 
 function startRun() {
   if (!G.selectedClass) return;
+  const classId = G.selectedClass;
   showWorldGenModal(async () => {
-    G.floor     = 1;
-    G.map       = null;
-    G.inCombat  = false;
-    G.killedBoss= false;
-    G.phase     = 'explore';
-    G.turn      = 'player';
-    G.log       = [];
-    _lastLogLength = 0;
-    G.enemy     = null;
-    G._currentEvent = null;
-
-    // If selected class is a fusion, ensure its data file is loaded before createPlayer
-    if (!CLASSES[G.selectedClass] && typeof FUSION_FILE_LOOKUP !== 'undefined') {
-      const fileNums = new Set();
-      for (const [key, fileNum] of Object.entries(FUSION_FILE_LOOKUP)) {
-        if (key.split('+').includes(G.selectedClass)) fileNums.add(fileNum);
-      }
-      await Promise.all([...fileNums].map(n => loadFusionFile(n)));
+    resetRunState();
+    G.selectedClass = classId;
+    try {
+      await ensureClassLoaded(classId);
+      G.player = createPlayer(classId);
+    } catch (err) {
+      console.error(err);
+      showModal(`<div class="modal-title" style="color:var(--accent-crimson)">Could not start the run</div>
+        <div style="text-align:center;color:var(--text-mid);margin:1rem 0">The data for this class failed to load. Try reloading the page.</div>
+        <button class="title-btn" style="width:100%" onclick="closeModal()">OK</button>`);
+      return;
     }
-
-    G.player = createPlayer(G.selectedClass);
+    assignRunSlot();
     applyLoadout(G.player);
     G.map = generateMap(G.floor);
+    applyBiomeTheme(G.floor);
 
     if (G.meta.ngPlus > 0) {
-      logEntry('system', `▶ NG+ Cycle ${G.meta.ngPlus} — Enemies are ${Math.round((1+G.meta.ngPlus*0.3)*100)}% stronger.`);
+      logEntry('system', `▶ NG+ Cycle ${G.meta.ngPlus} — Enemies are ${Math.round(getNgPlusMult()*100)}% as strong as normal.`);
     }
-    const tier = getFloorTier(G.floor);
+    const biome = getBiomeForFloor(G.floor);
     logEntry('system', `══ Abyssal Descent: Floor ${G.floor} ══`);
     logEntry('system', `You descend as the ${G.player.name}.`);
+    logEntry('system', `🗺 Entering ${biome.name}.`);
 
     showScreen('game-screen');
+    autoSaveRun();
     updateUI();
   });
 }
 
+const MOVE_KEYS = {
+  arrowup:[0,-1], arrowdown:[0,1], arrowleft:[-1,0], arrowright:[1,0],
+  w:[0,-1], s:[0,1], a:[-1,0], d:[1,0],
+};
+
 function handleKeyDown(e) {
-  // Abilities 1-5 (classes now have up to 5 active abilities)
-  if (G.inCombat && G.turn==='player' && !e.ctrlKey && !e.altKey) {
-    const keys = {'1':0,'2':1,'3':2,'4':3,'5':4};
-    if (e.key in keys && G.player.abilities[keys[e.key]]) {
-      e.preventDefault();
-      playerAction('ability', G.player.abilities[keys[e.key]]);
+  if (e.ctrlKey || e.altKey || e.metaKey) return;
+  const tag = (e.target && e.target.tagName) || '';
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  const key = e.key.length === 1 ? e.key.toLowerCase() : e.key.toLowerCase();
+
+  if (key === 'escape') {
+    if (isModalOpen()) {
+      // Only dialogs with a ✕ can be dismissed (events, rewards etc. need a choice)
+      if (document.querySelector('#overlay-content .modal-close-btn')) closeModal();
+    } else if (isScreenActive('game-screen') && G.player) {
+      showPauseMenu();
+    }
+    return;
+  }
+
+  if (!isScreenActive('game-screen') || !G.player || isModalOpen()) return;
+
+  if (G.inCombat) {
+    if (G.turn !== 'player') return;
+    if (/^[1-9]$/.test(key)) {
+      const abId = G.player.abilities[Number(key) - 1];
+      if (abId) { e.preventDefault(); playerAction('ability', abId); }
       return;
     }
-    if (e.key==='q'||e.key==='Q') { e.preventDefault(); playerAction('attack');  return; }
-    if (e.key==='e'||e.key==='E') { e.preventDefault(); playerAction('defend');  return; }
-    if (e.key==='r'||e.key==='R') { e.preventDefault(); playerAction('item');    return; }
-    if (e.key==='f'||e.key==='F') { e.preventDefault(); playerAction('flee');    return; }
-    if (e.key===' ')              { e.preventDefault(); playerAction('burst');   return; }
+    const actions = { q:'attack', e:'defend', r:'item', f:'flee', ' ':'burst' };
+    if (actions[key]) { e.preventDefault(); playerAction(actions[key]); }
+    return;
+  }
+
+  if (G.phase === 'explore' && MOVE_KEYS[key]) {
+    e.preventDefault();
+    movePlayer(MOVE_KEYS[key][0], MOVE_KEYS[key][1]);
   }
 }
 
@@ -125,6 +157,11 @@ function returnFromSettings() {
   G._prevScreen = null;
   showScreen(prev);
 }
-function returnToTitle()      { G.player = null; G.enemy = null; G.inCombat = false; showScreen('title-screen'); }
-function newRun()             { G.selectedClass=null; showScreen('class-select-screen'); }
-function retryRun()           { G.selectedClass=null; showScreen('class-select-screen'); }
+function returnToTitle() {
+  if (G.player && isScreenActive('game-screen')) autoSaveRun();
+  resetRunState();
+  G.phase = 'title';
+  showScreen('title-screen');
+}
+function newRun()   { resetRunState(); G.phase = 'title'; G.selectedClass = null; showScreen('class-select-screen'); }
+function retryRun() { newRun(); }

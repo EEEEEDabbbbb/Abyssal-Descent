@@ -48,7 +48,7 @@ const FUSION_CLASSES_5 = {
   storm_spirit: {
     id:'storm_spirit', name:'The Charged Soul', icon:'⚡',
     tagline:'The spirit takes what form the storm gives it.',
-    color:'#4da2b3', element:'spiritbolt', rarity:'epic',
+    color:'#4da2b3', element:'spirit', elementFlavor:'spiritbolt', rarity:'epic',
     fusedFrom:['stormcaller','spiritwalker'],
     stats:{hp:88,maxHp:88,mp:83,maxMp:83,atk:12,def:8,spd:14,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -62,7 +62,7 @@ const FUSION_CLASSES_5 = {
   storm_hex: {
     id:'storm_hex', name:'Cursed Lightning', icon:'🔮',
     tagline:'The hex rides the bolt. It arrives before the target can respond.',
-    color:'#6f5eb3', element:'stormblood', rarity:'epic',
+    color:'#6f5eb3', element:'dark', elementFlavor:'stormblood', rarity:'epic',
     fusedFrom:['stormcaller','hexblade'],
     stats:{hp:83,maxHp:83,mp:85,maxMp:85,atk:13,def:7,spd:14,crit:16},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:8,MP:8},
@@ -76,7 +76,7 @@ const FUSION_CLASSES_5 = {
   storm_cosmo: {
     id:'storm_cosmo', name:'The Cosmic Tempest', icon:'🌌',
     tagline:'The universe is mostly lightning. The rest is just waiting.',
-    color:'#4d66c4', element:'cosmicstorm', rarity:'legendary',
+    color:'#4d66c4', element:'electric', elementFlavor:'cosmicstorm', rarity:'legendary',
     fusedFrom:['stormcaller','cosmomancer'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:12,def:6,spd:14,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -90,7 +90,7 @@ const FUSION_CLASSES_5 = {
   storm_pestilence: {
     id:'storm_pestilence', name:'The Plague Front', icon:'🌧️',
     tagline:'When the storm breaks, it rains something worse than water.',
-    color:'#55916f', element:'toxicstorm', rarity:'epic',
+    color:'#55916f', element:'poison', elementFlavor:'toxicstorm', rarity:'epic',
     fusedFrom:['stormcaller','pestilencelord'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:9},
@@ -104,7 +104,7 @@ const FUSION_CLASSES_5 = {
   storm_wind: {
     id:'storm_wind', name:'The Hurricane', icon:'🌪️',
     tagline:'The eye is calm. Everything surrounding it is not.',
-    color:'#6fb3c4', element:'tempest', rarity:'rare',
+    color:'#6fb3c4', element:'wind', elementFlavor:'tempest', rarity:'rare',
     fusedFrom:['stormcaller','windwalker'],
     stats:{hp:83,maxHp:83,mp:75,maxMp:75,atk:13,def:7,spd:18,crit:17},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:10,MP:7},
@@ -118,7 +118,7 @@ const FUSION_CLASSES_5 = {
   storm_doom: {
     id:'storm_doom', name:'The Final Storm', icon:'⚡',
     tagline:'Doom is just a storm that knows where to aim.',
-    color:'#5e6688', element:'stormblood', rarity:'legendary',
+    color:'#5e6688', element:'electric', elementFlavor:'stormblood', rarity:'legendary',
     fusedFrom:['stormcaller','doomcaster'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:12,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -132,7 +132,7 @@ const FUSION_CLASSES_5 = {
   storm_arcanist: {
     id:'storm_arcanist', name:'The Psionic Tempest', icon:'🧠',
     tagline:'The mind moves at the speed of thought. Lightning is faster. Together they argue about which matters.',
-    color:'#5566d5', element:'psiblast', rarity:'epic',
+    color:'#5566d5', element:'psychic', elementFlavor:'psiblast', rarity:'epic',
     fusedFrom:['stormcaller','arcanist'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:11,def:6,spd:14,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -146,7 +146,7 @@ const FUSION_CLASSES_5 = {
   storm_sentinel: {
     id:'storm_sentinel', name:'The Living Bulwark', icon:'🏰',
     tagline:'The wall that strikes back at the speed of light.',
-    color:'#6f91b3', element:'stormsteel', rarity:'uncommon',
+    color:'#6f91b3', element:'electric', elementFlavor:'stormsteel', rarity:'uncommon',
     fusedFrom:['stormcaller','sentinel'],
     stats:{hp:123,maxHp:123,mp:60,maxMp:60,atk:10,def:13,spd:11,crit:10},
     statDisplay:{HP:8,ATK:7,DEF:9,SPD:7,MP:6},
@@ -160,7 +160,7 @@ const FUSION_CLASSES_5 = {
   storm_phantom: {
     id:'storm_phantom', name:'The Thunderghost', icon:'👻',
     tagline:'The ghost rides the lightning. The lightning is the ghost.',
-    color:'#6f99cc', element:'stormsoul', rarity:'legendary',
+    color:'#6f99cc', element:'ghost', elementFlavor:'stormsoul', rarity:'legendary',
     fusedFrom:['stormcaller','phantom'],
     stats:{hp:78,maxHp:78,mp:80,maxMp:80,atk:13,def:6,spd:17,crit:22},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:10,MP:8},
@@ -174,7 +174,7 @@ const FUSION_CLASSES_5 = {
   blood_void: {
     id:'blood_void', name:'The Exsanguination', icon:'🩸',
     tagline:'The void does not consume. The blood does. The void is the vessel.',
-    color:'#912b66', element:'abyssblade', rarity:'epic',
+    color:'#912b66', element:'dark', elementFlavor:'abyssblade', rarity:'epic',
     fusedFrom:['bloodknight','voidmancer'],
     stats:{hp:93,maxHp:93,mp:80,maxMp:80,atk:12,def:8,spd:10,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:6,MP:8},
@@ -188,7 +188,7 @@ const FUSION_CLASSES_5 = {
   blood_rune: {
     id:'blood_rune', name:'Bloodscribed', icon:'🔱',
     tagline:'Every rune carved in flesh is a promise. Every promise is power.',
-    color:'#c45e1a', element:'bloodrune', rarity:'rare',
+    color:'#c45e1a', element:'dark', elementFlavor:'bloodrune', rarity:'rare',
     fusedFrom:['bloodknight','runeblade'],
     stats:{hp:110,maxHp:110,mp:60,maxMp:60,atk:14,def:11,spd:11,crit:11},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:6},
@@ -202,7 +202,7 @@ const FUSION_CLASSES_5 = {
   blood_necro: {
     id:'blood_necro', name:'The Crimson Lich', icon:'💀',
     tagline:'Death is just blood that has stopped moving. Move it again.',
-    color:'#6f5e3c', element:'deathblood', rarity:'rare',
+    color:'#6f5e3c', element:'dark', elementFlavor:'deathblood', rarity:'rare',
     fusedFrom:['bloodknight','necromancer'],
     stats:{hp:95,maxHp:95,mp:85,maxMp:85,atk:12,def:8,spd:9,crit:10},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:5,MP:8},
@@ -216,7 +216,7 @@ const FUSION_CLASSES_5 = {
   blood_paladin: {
     id:'blood_paladin', name:'The Fallen Crusade', icon:'⚜️',
     tagline:'Holy blood spilled for a cause becomes something else entirely.',
-    color:'#c46f33', element:'fallenlight', rarity:'rare',
+    color:'#c46f33', element:'dark', elementFlavor:'fallenlight', rarity:'rare',
     fusedFrom:['bloodknight','paladin'],
     stats:{hp:125,maxHp:125,mp:55,maxMp:55,atk:13,def:13,spd:9,crit:8},
     statDisplay:{HP:8,ATK:9,DEF:9,SPD:5},
@@ -230,7 +230,7 @@ const FUSION_CLASSES_5 = {
   blood_frost: {
     id:'blood_frost', name:'Iceblood', icon:'❄️',
     tagline:'Blood freezes at the right temperature. It does not stop being dangerous.',
-    color:'#997788', element:'bloodfrost', rarity:'rare',
+    color:'#997788', element:'dark', elementFlavor:'bloodfrost', rarity:'rare',
     fusedFrom:['bloodknight','frostweaver'],
     stats:{hp:100,maxHp:100,mp:68,maxMp:68,atk:13,def:10,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:7,MP:7},
@@ -244,7 +244,7 @@ const FUSION_CLASSES_5 = {
   blood_dragon: {
     id:'blood_dragon', name:'The Sanguine Drake', icon:'🐉',
     tagline:'Dragons bleed fire. This one bleeds and it feeds the fire.',
-    color:'#c43c09', element:'blooddrake', rarity:'rare',
+    color:'#c43c09', element:'dark', elementFlavor:'blooddrake', rarity:'rare',
     fusedFrom:['bloodknight','dragonknight'],
     stats:{hp:125,maxHp:125,mp:50,maxMp:50,atk:15,def:12,spd:10,crit:10},
     statDisplay:{HP:8,ATK:10,DEF:8,SPD:6},
@@ -258,7 +258,7 @@ const FUSION_CLASSES_5 = {
   blood_tide: {
     id:'blood_tide', name:'The Bleeding Sea', icon:'🌊',
     tagline:'The tide comes in red. It does not ask why.',
-    color:'#77556f', element:'bloodtide', rarity:'rare',
+    color:'#77556f', element:'dark', elementFlavor:'bloodtide', rarity:'rare',
     fusedFrom:['bloodknight','tidecaller'],
     stats:{hp:103,maxHp:103,mp:70,maxMp:70,atk:13,def:10,spd:11,crit:10},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:7,MP:7},
@@ -272,7 +272,7 @@ const FUSION_CLASSES_5 = {
   blood_gravitist: {
     id:'blood_gravitist', name:'Hemorrhage Well', icon:'⚫',
     tagline:'Blood falls toward the center. Everything does, eventually.',
-    color:'#77333c', element:'voidblood', rarity:'epic',
+    color:'#77333c', element:'dark', elementFlavor:'voidblood', rarity:'epic',
     fusedFrom:['bloodknight','gravitist'],
     stats:{hp:98,maxHp:98,mp:73,maxMp:73,atk:12,def:9,spd:11,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:7,MP:7},
@@ -286,7 +286,7 @@ const FUSION_CLASSES_5 = {
   blood_soundbreaker: {
     id:'blood_soundbreaker', name:'The Sanguine Scream', icon:'💥',
     tagline:'The sound that ruptures vessels. Specifically those ones.',
-    color:'#c45e33', element:'wailblood', rarity:'rare',
+    color:'#c45e33', element:'dark', elementFlavor:'wailblood', rarity:'rare',
     fusedFrom:['bloodknight','soundbreaker'],
     stats:{hp:100,maxHp:100,mp:68,maxMp:68,atk:14,def:9,spd:13,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:8,MP:7},
@@ -300,7 +300,7 @@ const FUSION_CLASSES_5 = {
   blood_chrono: {
     id:'blood_chrono', name:'The Expirant', icon:'⏳',
     tagline:'Every heartbeat is a countdown. It accelerates the count.',
-    color:'#aa4d88', element:'doomtime', rarity:'epic',
+    color:'#aa4d88', element:'dark', elementFlavor:'doomtime', rarity:'epic',
     fusedFrom:['bloodknight','chronomancer'],
     stats:{hp:95,maxHp:95,mp:80,maxMp:80,atk:12,def:9,spd:12,crit:11},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -314,7 +314,7 @@ const FUSION_CLASSES_5 = {
   blood_spellsword: {
     id:'blood_spellsword', name:'Crimson Arcanist', icon:'🗡️',
     tagline:'The blood is also a spell. Every spell costs blood. Good.',
-    color:'#aa2b5e', element:'doompsychic', rarity:'rare',
+    color:'#aa2b5e', element:'dark', elementFlavor:'doompsychic', rarity:'rare',
     fusedFrom:['bloodknight','spellsword'],
     stats:{hp:105,maxHp:105,mp:65,maxMp:65,atk:14,def:10,spd:11,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:7,SPD:7,MP:6},
@@ -328,7 +328,7 @@ const FUSION_CLASSES_5 = {
   blood_plague: {
     id:'blood_plague', name:'The Virulent Tide', icon:'🩸',
     tagline:'The plague spreads through blood. The blood spreads everywhere.',
-    color:'#995e22', element:'deathcurse', rarity:'epic',
+    color:'#995e22', element:'dark', elementFlavor:'deathcurse', rarity:'epic',
     fusedFrom:['bloodknight','plaguedoctor'],
     stats:{hp:98,maxHp:98,mp:75,maxMp:75,atk:12,def:9,spd:10,crit:10},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:6,MP:7},
@@ -342,7 +342,7 @@ const FUSION_CLASSES_5 = {
   blood_geo: {
     id:'blood_geo', name:'Red Earth', icon:'🪨',
     tagline:'The ground runs red. It has absorbed too many battles to be surprised.',
-    color:'#aa4d33', element:'tombstone', rarity:'uncommon',
+    color:'#aa4d33', element:'dark', elementFlavor:'tombstone', rarity:'uncommon',
     fusedFrom:['bloodknight','geomancer'],
     stats:{hp:110,maxHp:110,mp:60,maxMp:60,atk:13,def:12,spd:9,crit:9},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:5,MP:6},
@@ -356,7 +356,7 @@ const FUSION_CLASSES_5 = {
   blood_lightbringer: {
     id:'blood_lightbringer', name:'The Martyrs\' Light', icon:'🕯️',
     tagline:'The light is brighter when it costs something.',
-    color:'#d5772b', element:'fallenlight', rarity:'rare',
+    color:'#d5772b', element:'dark', elementFlavor:'fallenlight', rarity:'rare',
     fusedFrom:['bloodknight','lightbringer'],
     stats:{hp:103,maxHp:103,mp:68,maxMp:68,atk:14,def:11,spd:12,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -370,7 +370,7 @@ const FUSION_CLASSES_5 = {
   blood_beast: {
     id:'blood_beast', name:'The Hunger', icon:'🐺',
     tagline:'The pack does not stop when it has enough. There is no enough.',
-    color:'#99662b', element:'bloodrune', rarity:'uncommon',
+    color:'#99662b', element:'dark', elementFlavor:'bloodrune', rarity:'uncommon',
     fusedFrom:['bloodknight','beastmaster'],
     stats:{hp:108,maxHp:108,mp:58,maxMp:58,atk:14,def:11,spd:12,crit:11},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:6},
@@ -384,7 +384,7 @@ const FUSION_CLASSES_5 = {
   blood_tech: {
     id:'blood_tech', name:'Vital Algorithm', icon:'💉',
     tagline:'The body is a system. Systems can be optimized. Especially other ones.',
-    color:'#774d5e', element:'techdark', rarity:'epic',
+    color:'#774d5e', element:'dark', elementFlavor:'techdark', rarity:'epic',
     fusedFrom:['bloodknight','techsavant'],
     stats:{hp:100,maxHp:100,mp:73,maxMp:73,atk:13,def:9,spd:12,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:7},
@@ -398,7 +398,7 @@ const FUSION_CLASSES_5 = {
   blood_grave: {
     id:'blood_grave', name:'The Sanguine Warden', icon:'🪦',
     tagline:'The grave is not empty. It is full of what was taken.',
-    color:'#803c4d', element:'deathblood', rarity:'rare',
+    color:'#803c4d', element:'dark', elementFlavor:'deathblood', rarity:'rare',
     fusedFrom:['bloodknight','gravewarden'],
     stats:{hp:118,maxHp:118,mp:58,maxMp:58,atk:13,def:13,spd:9,crit:9},
     statDisplay:{HP:8,ATK:9,DEF:9,SPD:5,MP:6},
@@ -412,7 +412,7 @@ const FUSION_CLASSES_5 = {
   blood_magnetist: {
     id:'blood_magnetist', name:'Ferrous Sanguine', icon:'🧲',
     tagline:'Blood is iron. Iron is magnetic. The equation is straightforward.',
-    color:'#80555e', element:'magnetdark', rarity:'rare',
+    color:'#80555e', element:'dark', elementFlavor:'magnetdark', rarity:'rare',
     fusedFrom:['bloodknight','magnetist'],
     stats:{hp:103,maxHp:103,mp:68,maxMp:68,atk:14,def:11,spd:11,crit:11},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -426,7 +426,7 @@ const FUSION_CLASSES_5 = {
   blood_crystal: {
     id:'blood_crystal', name:'The Crystallized Heart', icon:'💎',
     tagline:'Blood crystallizes at the extremes. Both extremes. Neither is comfortable.',
-    color:'#996688', element:'crystaldark', rarity:'epic',
+    color:'#996688', element:'dark', elementFlavor:'crystaldark', rarity:'epic',
     fusedFrom:['bloodknight','crystalmancer'],
     stats:{hp:95,maxHp:95,mp:75,maxMp:75,atk:14,def:9,spd:12,crit:14},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:7,MP:7},
@@ -440,7 +440,7 @@ const FUSION_CLASSES_5 = {
   blood_war: {
     id:'blood_war', name:'The Crimson Warlord', icon:'⚔️',
     tagline:'The warlord who fights with every wound is not warlord for long, or forever.',
-    color:'#bb2b09', element:'warblood', rarity:'rare',
+    color:'#bb2b09', element:'dark', elementFlavor:'warblood', rarity:'rare',
     fusedFrom:['bloodknight','warlord'],
     stats:{hp:120,maxHp:120,mp:53,maxMp:53,atk:15,def:12,spd:11,crit:10},
     statDisplay:{HP:8,ATK:10,DEF:8,SPD:7},
@@ -454,7 +454,7 @@ const FUSION_CLASSES_5 = {
   blood_spirit: {
     id:'blood_spirit', name:'The Life Offering', icon:'🌿',
     tagline:'The spirit accepts the blood. The blood accepts the spirit. Neither was lost.',
-    color:'#775e4d', element:'spiritdark', rarity:'epic',
+    color:'#775e4d', element:'dark', elementFlavor:'spiritdark', rarity:'epic',
     fusedFrom:['bloodknight','spiritwalker'],
     stats:{hp:105,maxHp:105,mp:68,maxMp:68,atk:13,def:11,spd:12,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:8,SPD:7,MP:7},
@@ -482,7 +482,7 @@ const FUSION_CLASSES_5 = {
   blood_cosmo: {
     id:'blood_cosmo', name:'The Cosmic Offering', icon:'🌌',
     tagline:'The universe is built from stardust and sacrifice. Both are available.',
-    color:'#77225e', element:'cosmicdark', rarity:'legendary',
+    color:'#77225e', element:'dark', elementFlavor:'cosmicdark', rarity:'legendary',
     fusedFrom:['bloodknight','cosmomancer'],
     stats:{hp:95,maxHp:95,mp:83,maxMp:83,atk:13,def:8,spd:11,crit:12},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -496,7 +496,7 @@ const FUSION_CLASSES_5 = {
   blood_pestilence: {
     id:'blood_pestilence', name:'The Bleeding Plague', icon:'☣️',
     tagline:'The plague makes wounds. The wounds make more plague. The math is simple.',
-    color:'#804d09', element:'deathcurse', rarity:'epic',
+    color:'#804d09', element:'dark', elementFlavor:'deathcurse', rarity:'epic',
     fusedFrom:['bloodknight','pestilencelord'],
     stats:{hp:100,maxHp:100,mp:75,maxMp:75,atk:13,def:9,spd:10,crit:11},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:6,MP:7},
@@ -510,7 +510,7 @@ const FUSION_CLASSES_5 = {
   blood_wind: {
     id:'blood_wind', name:'The Red Gale', icon:'💨',
     tagline:'The wind carries what it passes through. It has passed through a lot.',
-    color:'#996f5e', element:'deathwind', rarity:'rare',
+    color:'#996f5e', element:'dark', elementFlavor:'deathwind', rarity:'rare',
     fusedFrom:['bloodknight','windwalker'],
     stats:{hp:100,maxHp:100,mp:60,maxMp:60,atk:14,def:9,spd:15,crit:13},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:9,MP:6},
@@ -538,7 +538,7 @@ const FUSION_CLASSES_5 = {
   blood_arcanist: {
     id:'blood_arcanist', name:'The Sanguine Formula', icon:'📚',
     tagline:'Blood is just chemistry. All chemistry has a formula.',
-    color:'#80226f', element:'doompsychic', rarity:'epic',
+    color:'#80226f', element:'dark', elementFlavor:'doompsychic', rarity:'epic',
     fusedFrom:['bloodknight','arcanist'],
     stats:{hp:93,maxHp:93,mp:85,maxMp:85,atk:12,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -552,7 +552,7 @@ const FUSION_CLASSES_5 = {
   blood_sentinel: {
     id:'blood_sentinel', name:'The Crimson Bastion', icon:'🛡️',
     tagline:'It holds the line. The line is red.',
-    color:'#994d4d', element:'bloodsteel', rarity:'uncommon',
+    color:'#994d4d', element:'dark', elementFlavor:'bloodsteel', rarity:'uncommon',
     fusedFrom:['bloodknight','sentinel'],
     stats:{hp:140,maxHp:140,mp:45,maxMp:45,atk:12,def:15,spd:8,crit:7},
     statDisplay:{HP:9,ATK:8,DEF:10,SPD:5},

@@ -22,13 +22,14 @@
   <div class="title-menu">
     <button class="title-btn primary" onclick="showClassSelect()">⚔ Begin Descent</button>
     <button class="title-btn" onclick="showContinue()" id="continue-btn" style="display:none">↺ Continue Run</button>
+    <button class="title-btn" onclick="showNGPlusModal()" id="ngplus-btn" style="display:none">🔄 New Game+</button>
     <button class="title-btn" onclick="showShardShop()">⚗ Shard Emporium</button>
     <button class="title-btn" onclick="showScreen('fusion-lab-screen')">⚗ Fusion Lab</button>
     <button class="title-btn" onclick="showScreen('collection-screen')">📖 Class Collection</button>
     <button class="title-btn" onclick="showLoadoutSelect()">🎒 Choose Loadout</button>
-    <button class="title-btn" onclick="showTalentTree()">✦ Relics &amp; Legacy</button>
+    <button class="title-btn" onclick="showTalentTree()">✦ Talent Tree</button>
     <button class="title-btn" onclick="showHowToPlay()">? How To Play</button>
-    <button class="title-btn" onclick="showScreen('settings-screen')">⚙ Settings</button>
+    <button class="title-btn" onclick="openSettings()">⚙ Settings</button>
   </div>
   <div class="title-flavor">
     <em>"Below lies a darkness older than memory.<br>
@@ -171,7 +172,7 @@
     <div class="panel" style="flex-shrink:0;max-height:42%;overflow-y:auto">
       <div style="display:flex;gap:0.4rem;align-items:flex-start">
         <div style="flex:1;min-width:0">
-          <div class="panel-label">Abilities <span style="font-size:0.6rem;color:var(--text-dim)">(1-4 or click)</span></div>
+          <div class="panel-label">Abilities <span style="font-size:0.6rem;color:var(--text-dim)">(1-9 or click)</span></div>
           <div id="abilities-grid"></div>
         </div>
         <div style="width:140px;flex-shrink:0">
@@ -262,7 +263,7 @@
 <div id="settings-screen" class="screen">
   <div style="max-width:480px;margin:0 auto;padding:1rem;width:100%;overflow-y:auto;height:100%">
     <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
-      <button class="title-btn" style="padding:4px 10px" onclick="returnToTitle()">← Back</button>
+      <button class="title-btn" style="padding:4px 10px" onclick="returnFromSettings()">← Back</button>
       <h2 style="font-size:1rem;color:var(--accent-violet-bright)">⚙ Settings</h2>
     </div>
 
@@ -341,7 +342,7 @@
     <!-- Danger zone -->
     <div class="settings-group" style="border-color:var(--accent-crimson)">
       <h3 style="color:var(--accent-crimson)">Data</h3>
-      <button class="title-btn danger" style="width:100%" onclick="if(confirm('Reset ALL save data?')){localStorage.clear();location.reload()}">Reset All Save Data</button>
+      <button class="title-btn danger" style="width:100%" onclick="confirmResetAllSaveData()">Reset All Save Data</button>
     </div>
   </div>
 </div>
@@ -500,139 +501,15 @@
 
 <!-- Main -->
 <script src="js/main.js"></script>
-<script src="js/dev_console.js"></script>
-<script src="js/devtest.js"></script>
 
 <script>
-  // Boot
-  window.addEventListener('load', () => {
-    init();
-    // Settings screen needs post-init render
-    document.getElementById('settings-screen').addEventListener('transitionend', renderSettingsScreen, {once:true});
-    document.querySelectorAll('.screen').forEach(s=>{
-      const obs=new MutationObserver(()=>{
-        if(s.id==='settings-screen'&&s.classList.contains('active')) renderSettingsScreen();
-      });
-      obs.observe(s,{attributeFilter:['class']});
+  // Developer tools (cheat console, self-test, call logger) only load with ?dev=1
+  if (/[?&]dev=1/.test(location.search)) {
+    ['js/dev_console.js', 'js/devtest.js', 'js/debug_logger.js'].forEach(src => {
+      const s = document.createElement('script'); s.src = src; s.async = false; document.body.appendChild(s);
     });
-    // Show NG+ button if unlocked
-    if(G.meta.conquestRewards?.ngPlusUnlocked) document.getElementById('ngplus-btn').style.display='';
-    // Show Continue button if there's a saved run
-    if(typeof _updateContinueBtn === 'function') _updateContinueBtn();
-  });
-</script>
-
-
-
-
-
-<script id="debug-logger">
-(function() {
-  var LOG = [];
-  var START = Date.now();
-
-  function dbg(cat, msg, data) {
-    var ts = '[+' + (Date.now()-START) + 'ms]';
-    var entry = ts + '[' + cat + '] ' + msg + (data !== undefined ? ' => ' + JSON.stringify(data) : '');
-    LOG.push(entry);
-    console.log(entry);
   }
-
-  function safe(fn, name, args) {
-    try { return fn.apply(this, args); }
-    catch(e) { dbg('ERROR', name + ' THREW: ' + e.message, {stack: e.stack}); throw e; }
-  }
-
-  function wrap(obj, name, category) {
-    if (!obj || typeof obj[name] !== 'function') return;
-    var orig = obj[name];
-    obj[name] = function() {
-      var args = Array.from(arguments);
-      var preview = args.map(function(a) {
-        if (a === null) return 'null';
-        if (a === undefined) return 'undefined';
-        if (typeof a === 'object') {
-          try { return JSON.stringify(a).slice(0,80); } catch(e) { return '[obj]'; }
-        }
-        return String(a).slice(0,80);
-      });
-      dbg(category, name + '(' + preview.join(', ') + ')');
-      var result;
-      try { result = orig.apply(this, arguments); }
-      catch(e) { dbg('ERROR', name + ' THREW: ' + e.message); throw e; }
-      if (result !== undefined && result !== null && typeof result !== 'object') {
-        dbg(category, name + ' returned: ' + result);
-      }
-      return result;
-    };
-  }
-
-  window.addEventListener('load', function() {
-    dbg('BOOT', 'Wrapping all game functions...');
-
-    // === COMBAT ===
-    wrap(window, 'dealDmgToEnemy',   'COMBAT');
-    wrap(window, 'dealDmgToPlayer',  'COMBAT');
-    wrap(window, 'startCombat',      'COMBAT');
-    wrap(window, 'playerAction',     'COMBAT');
-    wrap(window, 'endPlayerTurn',    'COMBAT');
-    wrap(window, 'enemyTurn',        'COMBAT');
-    wrap(window, 'checkBossPhase',   'COMBAT');
-    wrap(window, 'checkBossEnrage',  'COMBAT');
-    wrap(window, 'checkCombatEnd',   'COMBAT');
-    wrap(window, 'winCombat',        'COMBAT');
-    wrap(window, 'endCombat',        'COMBAT');
-
-    // === MAP / MOVEMENT ===
-    wrap(window, 'movePlayer',       'MAP');
-    wrap(window, 'handleCellContent','MAP');
-    wrap(window, 'nextFloor',        'MAP');
-    wrap(window, 'getValidMoves',    'MAP');
-
-    // === PLAYER ===
-    wrap(window, 'gainXP',           'PLAYER');
-    wrap(window, 'gainClassXP',      'PLAYER');
-    wrap(window, 'addToInventory',   'PLAYER');
-    wrap(window, 'useItem',          'PLAYER');
-    wrap(window, 'equipItem',        'PLAYER');
-
-    // === UI ===
-    wrap(window, 'updateUI',         'UI');
-    wrap(window, 'renderCenterPanel','UI');
-    wrap(window, 'closeModal',       'UI');
-
-    // === STATE SNAPSHOTS on winCombat ===
-    var origWin = window.winCombat;
-    window.winCombat = function() {
-      var e = G.enemy;
-      dbg('COMBAT', 'winCombat: enemy snapshot', {
-        name: e ? e.name : null,
-        isBoss: e ? e.isBoss : null,
-        isGuardian: e ? e.isGuardian : null,
-        isFinalBoss: e ? e.isFinalBoss : null
-      });
-      dbg('COMBAT', 'winCombat: G.exitPos', G.exitPos);
-      var result = origWin.apply(this, arguments);
-      dbg('COMBAT', 'winCombat: exit cell after', G.exitPos ? G.map[G.exitPos.y][G.exitPos.x] : 'no exitPos');
-      return result;
-    };
-
-    // === CLICK logger ===
-    document.addEventListener('click', function(e) {
-      var btn = e.target.closest('button,[onclick]');
-      if (btn) dbg('CLICK', '"' + btn.textContent.trim().slice(0,40) + '" onclick="' + (btn.getAttribute('onclick')||'').slice(0,80) + '"');
-    }, true);
-
-    // === JS errors ===
-    window.addEventListener('error', function(e) {
-      dbg('JS-ERROR', e.message, {file: e.filename, line: e.lineno});
-    });
-
-    dbg('BOOT', 'All functions wrapped. Ready.');
-  });
-
-  dbg('BOOT', 'Debug logger installed');
-})();
+  window.addEventListener('load', init);
 </script>
 </body>
 </html>

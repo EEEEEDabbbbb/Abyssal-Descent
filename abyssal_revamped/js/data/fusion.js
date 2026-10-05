@@ -95,22 +95,31 @@ const FUSION_LOADED_FILES = new Set();
 //
 // ⚠️  MODDING: if you add new fusion recipes, add them to a fusion_data_N.js
 //     file and register the recipe key → file number in fusion_lookup.js.
-//     The key format is: sorted class IDs joined by '_' e.g. 'chronomancer_spellsword'
+//     The key format is: sorted class IDs joined by '+' e.g. 'chronomancer+spellsword'.
+//     Then run `node tools/build_fusion_index.js` to rebuild FUSION_CLASS_FILE.
 //
 // ⚠️  RENDERING BUG RISK: if you call renderClassSelect() or renderCollection()
 //     before fusion files are loaded, classes show as raw IDs with no data.
 //     Always go through showScreen() which calls preloadPlayerFusions() first.
 // Inject a <script> tag for fusion_data_N.js and wait for it.
 // Returns a Promise that resolves when the file registers itself.
+const _fusionFileLoads = {};
 function loadFusionFile(fileNum) {
-  return new Promise((resolve, reject) => {
-    if (FUSION_LOADED_FILES.has(fileNum)) { resolve(); return; }
+  if (FUSION_LOADED_FILES.has(fileNum)) return Promise.resolve();
+  // Concurrent callers share one <script> load
+  if (_fusionFileLoads[fileNum]) return _fusionFileLoads[fileNum];
+  _fusionFileLoads[fileNum] = new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = `js/data/fusions/fusion_data_${fileNum}.js`;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error(`Failed to load fusion_data_${fileNum}.js`));
+    script.onerror = () => {
+      delete _fusionFileLoads[fileNum];
+      script.remove();
+      reject(new Error(`Failed to load fusion_data_${fileNum}.js`));
+    };
     document.head.appendChild(script);
   });
+  return _fusionFileLoads[fileNum];
 }
 
 // ── ENSURE RECIPE IS LOADED ───────────────────────────────────
@@ -296,12 +305,6 @@ function getFusionKey(classIds) {
 function getDualFusion(classA, classB) {
   const key = getFusionKey([classA, classB]);
   return DUAL_FUSIONS[key] || null;
-}
-
-// Check if a triple fusion is available given three class IDs
-function getTripleFusion(classA, classB, classC) {
-  const key = getFusionKey([classA, classB, classC]);
-  return TRIPLE_FUSIONS[key] || null;
 }
 
 // Get the fusion class definition (works for both fusion and base classes)

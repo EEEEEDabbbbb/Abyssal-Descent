@@ -39,7 +39,7 @@ const FUSION_RECIPES_9 = {
   'dragonknight+magnetist': 'dragon_magnetist',
   'crystalmancer+dragonknight': 'dragon_crystal',
   'dragonknight+warlord': 'dragon_war',
-  'dragonknight+spiritwalker': 'dragon_spirit',
+  'dragonknight+spiritwalker': 'dragon_ancestor',
   'dragonknight+hexblade': 'dragon_hex',
   'cosmomancer+dragonknight': 'dragon_cosmo'
 };
@@ -48,7 +48,7 @@ const FUSION_CLASSES_9 = {
   frost_chrono: {
     id:'frost_chrono', name:'The Stillness', icon:'❄️',
     tagline:'Time frozen is not time stopped. It is time held still for examination.',
-    color:'#99b3ff', element:'frozentime', rarity:'epic',
+    color:'#99b3ff', element:'ice', elementFlavor:'frozentime', rarity:'epic',
     fusedFrom:['frostweaver','chronomancer'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:10,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -62,7 +62,7 @@ const FUSION_CLASSES_9 = {
   frost_spellsword: {
     id:'frost_spellsword', name:'The Winter Blade', icon:'❄️',
     tagline:'The cold spell and the cold sword are the same cold applied twice.',
-    color:'#9991d5', element:'frostmind', rarity:'epic',
+    color:'#9991d5', element:'ice', elementFlavor:'frostmind', rarity:'epic',
     fusedFrom:['frostweaver','spellsword'],
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:12,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -76,7 +76,7 @@ const FUSION_CLASSES_9 = {
   frost_plague: {
     id:'frost_plague', name:'The Frozen Sickness', icon:'❄️',
     tagline:'Cold slows metabolism. Cold slows the disease. Cold also extends how long the target experiences it.',
-    color:'#88c499', element:'frostedplague', rarity:'epic',
+    color:'#88c499', element:'ice', elementFlavor:'frostedplague', rarity:'epic',
     fusedFrom:['frostweaver','plaguedoctor'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:10,def:8,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:7,MP:9},
@@ -90,7 +90,7 @@ const FUSION_CLASSES_9 = {
   frost_geo: {
     id:'frost_geo', name:'The Permafrost', icon:'❄️',
     tagline:'The frozen ground holds forever. It was the temporary ground that was the anomaly.',
-    color:'#99b3aa', element:'permafrost', rarity:'rare',
+    color:'#99b3aa', element:'ice', elementFlavor:'permafrost', rarity:'rare',
     fusedFrom:['frostweaver','geomancer'],
     stats:{hp:90,maxHp:90,mp:78,maxMp:78,atk:12,def:11,spd:11,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:8,SPD:6,MP:8},
@@ -104,7 +104,7 @@ const FUSION_CLASSES_9 = {
   frost_lightbringer: {
     id:'frost_lightbringer', name:'The Aurora', icon:'❄️',
     tagline:'The coldest lights are the oldest lights. They have learned patience.',
-    color:'#c4dda2', element:'holyice', rarity:'epic',
+    color:'#c4dda2', element:'ice', elementFlavor:'holyice', rarity:'epic',
     fusedFrom:['frostweaver','lightbringer'],
     stats:{hp:83,maxHp:83,mp:85,maxMp:85,atk:12,def:9,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -118,7 +118,7 @@ const FUSION_CLASSES_9 = {
   frost_beast: {
     id:'frost_beast', name:'The Arctic Pack', icon:'❄️',
     tagline:'Cold-weather predators do not slow in winter. Everything else does.',
-    color:'#88cca2', element:'frostrune', rarity:'rare',
+    color:'#88cca2', element:'ice', elementFlavor:'frostrune', rarity:'rare',
     fusedFrom:['frostweaver','beastmaster'],
     stats:{hp:88,maxHp:88,mp:75,maxMp:75,atk:13,def:9,spd:14,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:7},
@@ -132,7 +132,7 @@ const FUSION_CLASSES_9 = {
   frost_tech: {
     id:'frost_tech', name:'Cryogenic Systems', icon:'❄️',
     tagline:'Cooling is a technical problem. This one is solved permanently and applied offensively.',
-    color:'#66b3d5', element:'cryotech', rarity:'epic',
+    color:'#66b3d5', element:'ice', elementFlavor:'cryotech', rarity:'epic',
     fusedFrom:['frostweaver','techsavant'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:12,def:8,spd:14,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:9},
@@ -146,7 +146,7 @@ const FUSION_CLASSES_9 = {
   frost_grave: {
     id:'frost_grave', name:'The Glacier Tomb', icon:'❄️',
     tagline:'The glaciers preserve everything they consume. They are very patient about it.',
-    color:'#6fa2c4', element:'frosted_ghost', rarity:'rare',
+    color:'#6fa2c4', element:'ice', elementFlavor:'frosted_ghost', rarity:'rare',
     fusedFrom:['frostweaver','gravewarden'],
     stats:{hp:98,maxHp:98,mp:75,maxMp:75,atk:12,def:11,spd:11,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:8,SPD:7,MP:7},
@@ -160,7 +160,7 @@ const FUSION_CLASSES_9 = {
   frost_magnetist: {
     id:'frost_magnetist', name:'The Magnetic Glacier', icon:'❄️',
     tagline:'Ice is diamagnetic. At scale, this becomes interesting.',
-    color:'#6fbbd5', element:'magnestice', rarity:'epic',
+    color:'#6fbbd5', element:'ice', elementFlavor:'magnestice', rarity:'epic',
     fusedFrom:['frostweaver','magnetist'],
     stats:{hp:83,maxHp:83,mp:85,maxMp:85,atk:12,def:9,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -174,7 +174,7 @@ const FUSION_CLASSES_9 = {
   frost_crystal: {
     id:'frost_crystal', name:'The Ice Lattice', icon:'❄️',
     tagline:'Perfect ice is perfect crystal. This is the perfect ice.',
-    color:'#88ccff', element:'crystalice', rarity:'legendary',
+    color:'#88ccff', element:'ice', elementFlavor:'crystalice', rarity:'legendary',
     fusedFrom:['frostweaver','crystalmancer'],
     stats:{hp:75,maxHp:75,mp:93,maxMp:93,atk:13,def:7,spd:14,crit:18},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:8,MP:9},
@@ -188,7 +188,7 @@ const FUSION_CLASSES_9 = {
   frost_war: {
     id:'frost_war', name:'The Frozen Campaign', icon:'❄️',
     tagline:'Winter campaigns fail. This is the winter commanding the campaign.',
-    color:'#aa9180', element:'frostwar', rarity:'rare',
+    color:'#aa9180', element:'ice', elementFlavor:'frostwar', rarity:'rare',
     fusedFrom:['frostweaver','warlord'],
     stats:{hp:100,maxHp:100,mp:70,maxMp:70,atk:14,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -202,7 +202,7 @@ const FUSION_CLASSES_9 = {
   frost_spirit: {
     id:'frost_spirit', name:'The Winter Spirit', icon:'❄️',
     tagline:'The oldest spirits lived through the ice age. They remember.',
-    color:'#66c4c4', element:'frostspirit', rarity:'epic',
+    color:'#66c4c4', element:'ice', elementFlavor:'frostspirit', rarity:'epic',
     fusedFrom:['frostweaver','spiritwalker'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:11,def:9,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -216,7 +216,7 @@ const FUSION_CLASSES_9 = {
   frost_hex: {
     id:'frost_hex', name:'The Winter Curse', icon:'❄️',
     tagline:'Cold curses last longer. Everything in cold lasts longer. This is the problem.',
-    color:'#8880c4', element:'bloodfrost', rarity:'epic',
+    color:'#8880c4', element:'ice', elementFlavor:'bloodfrost', rarity:'epic',
     fusedFrom:['frostweaver','hexblade'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:12,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -230,7 +230,7 @@ const FUSION_CLASSES_9 = {
   frost_cosmo: {
     id:'frost_cosmo', name:'The Cold Between Stars', icon:'❄️',
     tagline:'The temperature of the universe is three degrees above absolute zero. This is closer.',
-    color:'#6688d5', element:'cosmicice', rarity:'legendary',
+    color:'#6688d5', element:'ice', elementFlavor:'cosmicice', rarity:'legendary',
     fusedFrom:['frostweaver','cosmomancer'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:11,def:7,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -244,7 +244,7 @@ const FUSION_CLASSES_9 = {
   frost_pestilence: {
     id:'frost_pestilence', name:'The Preserved Contagion', icon:'❄️',
     tagline:'The frozen plague does not spread. It detonates.',
-    color:'#6fb380', element:'frostedplague', rarity:'legendary',
+    color:'#6fb380', element:'ice', elementFlavor:'frostedplague', rarity:'legendary',
     fusedFrom:['frostweaver','pestilencelord'],
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:12,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
@@ -258,7 +258,7 @@ const FUSION_CLASSES_9 = {
   frost_wind: {
     id:'frost_wind', name:'The Blizzard', icon:'❄️',
     tagline:'Wind and cold are inseparable at sufficient intensity. This is sufficient intensity.',
-    color:'#88d5d5', element:'blizzard', rarity:'rare',
+    color:'#88d5d5', element:'ice', elementFlavor:'blizzard', rarity:'rare',
     fusedFrom:['frostweaver','windwalker'],
     stats:{hp:80,maxHp:80,mp:78,maxMp:78,atk:12,def:7,spd:17,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:9,MP:7},
@@ -272,7 +272,7 @@ const FUSION_CLASSES_9 = {
   frost_doom: {
     id:'frost_doom', name:'The Frozen Sentence', icon:'❄️',
     tagline:'Doom preserved in ice does not expire. The target does.',
-    color:'#778899', element:'bloodfrost', rarity:'legendary',
+    color:'#778899', element:'ice', elementFlavor:'bloodfrost', rarity:'legendary',
     fusedFrom:['frostweaver','doomcaster'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:11,def:6,spd:13,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:9},
@@ -286,7 +286,7 @@ const FUSION_CLASSES_9 = {
   frost_arcanist: {
     id:'frost_arcanist', name:'The Cold Formula', icon:'❄️',
     tagline:'Every system behaves predictably at low temperature. The formula is simple.',
-    color:'#6f88e6', element:'frostmind', rarity:'legendary',
+    color:'#6f88e6', element:'ice', elementFlavor:'frostmind', rarity:'legendary',
     fusedFrom:['frostweaver','arcanist'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:10,def:6,spd:13,crit:17},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -300,7 +300,7 @@ const FUSION_CLASSES_9 = {
   frost_sentinel: {
     id:'frost_sentinel', name:'The Glacial Wall', icon:'❄️',
     tagline:'The wall is ice. The ice is also a wall. Both are several meters thick.',
-    color:'#88b3c4', element:'glacialsteel', rarity:'rare',
+    color:'#88b3c4', element:'ice', elementFlavor:'glacialsteel', rarity:'rare',
     fusedFrom:['frostweaver','sentinel'],
     stats:{hp:120,maxHp:120,mp:63,maxMp:63,atk:10,def:14,spd:9,crit:10},
     statDisplay:{HP:8,ATK:7,DEF:9,SPD:5,MP:6},
@@ -314,7 +314,7 @@ const FUSION_CLASSES_9 = {
   frost_phantom: {
     id:'frost_phantom', name:'The Frost Wraith', icon:'❄️',
     tagline:'The coldest ghosts are the ones that were ice before they were anything else.',
-    color:'#88bbdd', element:'frosted_ghost', rarity:'mythical',
+    color:'#88bbdd', element:'ice', elementFlavor:'frosted_ghost', rarity:'mythical',
     fusedFrom:['frostweaver','phantom'],
     stats:{hp:75,maxHp:75,mp:83,maxMp:83,atk:13,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:9,MP:8},
@@ -328,7 +328,7 @@ const FUSION_CLASSES_9 = {
   dragon_tide: {
     id:'dragon_tide', name:'Sea Serpent', icon:'🐉',
     tagline:'The ocean has always had dragons. They just stayed at the bottom.',
-    color:'#918066', element:'tidewyrm', rarity:'rare',
+    color:'#918066', element:'dragon', elementFlavor:'tidewyrm', rarity:'rare',
     fusedFrom:['dragonknight','tidecaller'],
     stats:{hp:108,maxHp:108,mp:70,maxMp:70,atk:14,def:11,spd:12,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -342,7 +342,7 @@ const FUSION_CLASSES_9 = {
   dragon_gravitist: {
     id:'dragon_gravitist', name:'The Gravity Drake', icon:'🐉',
     tagline:'Large mass creates gravitational pull. This drake is aware of this.',
-    color:'#915e33', element:'heavenwyrm', rarity:'epic',
+    color:'#915e33', element:'dragon', elementFlavor:'heavenwyrm', rarity:'epic',
     fusedFrom:['dragonknight','gravitist'],
     stats:{hp:103,maxHp:103,mp:73,maxMp:73,atk:13,def:9,spd:11,crit:13},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:6,MP:7},
@@ -356,7 +356,7 @@ const FUSION_CLASSES_9 = {
   dragon_soundbreaker: {
     id:'dragon_soundbreaker', name:'The Roar', icon:'🐉',
     tagline:'The sound of a dragon is already a weapon. This is that, tuned for maximum delivery.',
-    color:'#dd882b', element:'dragonroar', rarity:'epic',
+    color:'#dd882b', element:'dragon', elementFlavor:'dragonroar', rarity:'epic',
     fusedFrom:['dragonknight','soundbreaker'],
     stats:{hp:105,maxHp:105,mp:68,maxMp:68,atk:15,def:9,spd:13,crit:13},
     statDisplay:{HP:7,ATK:11,DEF:6,SPD:7,MP:7},
@@ -370,7 +370,7 @@ const FUSION_CLASSES_9 = {
   dragon_chrono: {
     id:'dragon_chrono', name:'The Ancient Drake', icon:'🐉',
     tagline:'The oldest dragons remember the first age. They operate on its timeline.',
-    color:'#c47780', element:'timedrake', rarity:'epic',
+    color:'#c47780', element:'dragon', elementFlavor:'timedrake', rarity:'epic',
     fusedFrom:['dragonknight','chronomancer'],
     stats:{hp:100,maxHp:100,mp:80,maxMp:80,atk:13,def:9,spd:12,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:8},
@@ -384,7 +384,7 @@ const FUSION_CLASSES_9 = {
   dragon_spellsword: {
     id:'dragon_spellsword', name:'The Arcane Wyrm', icon:'🐉',
     tagline:'Dragonfire is already magic. This is the academic version.',
-    color:'#c45555', element:'minddrake', rarity:'epic',
+    color:'#c45555', element:'dragon', elementFlavor:'minddrake', rarity:'epic',
     fusedFrom:['dragonknight','spellsword'],
     stats:{hp:110,maxHp:110,mp:65,maxMp:65,atk:15,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:11,DEF:8,SPD:7,MP:6},
@@ -398,7 +398,7 @@ const FUSION_CLASSES_9 = {
   dragon_plague: {
     id:'dragon_plague', name:'The Venom Drake', icon:'🐉',
     tagline:'Dragon venom is already a disease vector. The plaguedoctor just improved the formula.',
-    color:'#b3881a', element:'venomdrake', rarity:'epic',
+    color:'#b3881a', element:'dragon', elementFlavor:'venomdrake', rarity:'epic',
     fusedFrom:['dragonknight','plaguedoctor'],
     stats:{hp:103,maxHp:103,mp:75,maxMp:75,atk:13,def:10,spd:11,crit:12},
     statDisplay:{HP:7,ATK:9,DEF:7,SPD:6,MP:7},
@@ -412,7 +412,7 @@ const FUSION_CLASSES_9 = {
   dragon_geo: {
     id:'dragon_geo', name:'The Stone Wyrm', icon:'🐉',
     tagline:'The mountain does not move. The dragon that lives inside it occasionally does.',
-    color:'#c4772b', element:'earthdrake', rarity:'rare',
+    color:'#c4772b', element:'dragon', elementFlavor:'earthdrake', rarity:'rare',
     fusedFrom:['dragonknight','geomancer'],
     stats:{hp:115,maxHp:115,mp:60,maxMp:60,atk:14,def:13,spd:9,crit:10},
     statDisplay:{HP:8,ATK:10,DEF:9,SPD:5,MP:6},
@@ -426,7 +426,7 @@ const FUSION_CLASSES_9 = {
   dragon_lightbringer: {
     id:'dragon_lightbringer', name:'Radiant Drake', icon:'🐉',
     tagline:'The divine fire is already fire. The distinction is principally moral.',
-    color:'#eea222', element:'holydrake', rarity:'epic',
+    color:'#eea222', element:'dragon', elementFlavor:'holydrake', rarity:'epic',
     fusedFrom:['dragonknight','lightbringer'],
     stats:{hp:108,maxHp:108,mp:68,maxMp:68,atk:15,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:11,DEF:8,SPD:7,MP:7},
@@ -440,7 +440,7 @@ const FUSION_CLASSES_9 = {
   dragon_beast: {
     id:'dragon_beast', name:'The Apex Predator', icon:'🐉',
     tagline:'At the top of the food chain, there is the dragon. Above that, nothing. This is the dragon aware of that.',
-    color:'#b39122', element:'runedrake', rarity:'rare',
+    color:'#b39122', element:'dragon', elementFlavor:'runedrake', rarity:'rare',
     fusedFrom:['dragonknight','beastmaster'],
     stats:{hp:113,maxHp:113,mp:58,maxMp:58,atk:15,def:11,spd:13,crit:12},
     statDisplay:{HP:7,ATK:11,DEF:8,SPD:7,MP:6},
@@ -454,7 +454,7 @@ const FUSION_CLASSES_9 = {
   dragon_tech: {
     id:'dragon_tech', name:'The Mechanical Drake', icon:'🐉',
     tagline:'The biological and mechanical are both machines. The dragon has more moving parts.',
-    color:'#917755', element:'mechdrake', rarity:'epic',
+    color:'#917755', element:'dragon', elementFlavor:'mechdrake', rarity:'epic',
     fusedFrom:['dragonknight','techsavant'],
     stats:{hp:105,maxHp:105,mp:73,maxMp:73,atk:14,def:10,spd:13,crit:13},
     statDisplay:{HP:7,ATK:10,DEF:7,SPD:7,MP:7},
@@ -468,7 +468,7 @@ const FUSION_CLASSES_9 = {
   dragon_grave: {
     id:'dragon_grave', name:'The Undying Drake', icon:'🐉',
     tagline:'The dragon that dies here has died before. It is aware of the pattern.',
-    color:'#996644', element:'dragonspirit', rarity:'rare',
+    color:'#996644', element:'dragon', elementFlavor:'dragonspirit', rarity:'rare',
     fusedFrom:['dragonknight','gravewarden'],
     stats:{hp:123,maxHp:123,mp:58,maxMp:58,atk:14,def:13,spd:9,crit:10},
     statDisplay:{HP:8,ATK:10,DEF:9,SPD:5,MP:6},
@@ -482,7 +482,7 @@ const FUSION_CLASSES_9 = {
   dragon_magnetist: {
     id:'dragon_magnetist', name:'The Lodestone Wyrm', icon:'🐉',
     tagline:'A magnetic dragon finds that its scales are the most useful feature.',
-    color:'#998055', element:'irondrake', rarity:'epic',
+    color:'#998055', element:'dragon', elementFlavor:'irondrake', rarity:'epic',
     fusedFrom:['dragonknight','magnetist'],
     stats:{hp:108,maxHp:108,mp:68,maxMp:68,atk:15,def:11,spd:11,crit:12},
     statDisplay:{HP:7,ATK:11,DEF:8,SPD:6,MP:7},
@@ -496,7 +496,7 @@ const FUSION_CLASSES_9 = {
   dragon_crystal: {
     id:'dragon_crystal', name:'The Crystal Drake', icon:'🐉',
     tagline:'The dragon grew the crystal. The crystal grew around the dragon. It is both now.',
-    color:'#b39180', element:'crystaldrake', rarity:'legendary',
+    color:'#b39180', element:'dragon', elementFlavor:'crystaldrake', rarity:'legendary',
     fusedFrom:['dragonknight','crystalmancer'],
     stats:{hp:100,maxHp:100,mp:75,maxMp:75,atk:15,def:9,spd:13,crit:15},
     statDisplay:{HP:7,ATK:11,DEF:6,SPD:7,MP:7},
@@ -510,7 +510,7 @@ const FUSION_CLASSES_9 = {
   dragon_war: {
     id:'dragon_war', name:'The Warlord\'s Drake', icon:'🐉',
     tagline:'The warlord needed a strategy that was also a weapon the size of a building.',
-    color:'#d55500', element:'wardrake', rarity:'rare',
+    color:'#d55500', element:'dragon', elementFlavor:'wardrake', rarity:'rare',
     fusedFrom:['dragonknight','warlord'],
     stats:{hp:125,maxHp:125,mp:53,maxMp:53,atk:17,def:13,spd:11,crit:11},
     statDisplay:{HP:8,ATK:12,DEF:9,SPD:6},
@@ -521,10 +521,10 @@ const FUSION_CLASSES_9 = {
     lore:'Warlords traditionally command from behind the lines. The Warlord\'s Drake found that commanding from above the lines, on top of a dragon, combines strategic overview with the ability to personally ensure compliance. The resulting command style is not subtle but is extremely effective.'
   },
 
-  dragon_spirit: {
-    id:'dragon_spirit', name:'The Dragon Ancestor', icon:'🐉',
+  dragon_ancestor: {
+    id:'dragon_ancestor', name:'The Dragon Ancestor', icon:'🐉',
     tagline:'The ancient dragons passed something down. This is the something.',
-    color:'#918844', element:'spiritdrake', rarity:'epic',
+    color:'#918844', element:'dragon', elementFlavor:'spiritdrake', rarity:'epic',
     fusedFrom:['dragonknight','spiritwalker'],
     stats:{hp:110,maxHp:110,mp:68,maxMp:68,atk:14,def:11,spd:12,crit:12},
     statDisplay:{HP:7,ATK:10,DEF:8,SPD:7,MP:7},
@@ -538,7 +538,7 @@ const FUSION_CLASSES_9 = {
   dragon_hex: {
     id:'dragon_hex', name:'The Cursed Drake', icon:'🐉',
     tagline:'Dragon curses last until the dragon decides otherwise. Dragons are patient.',
-    color:'#b34444', element:'blooddrake', rarity:'epic',
+    color:'#b34444', element:'dragon', elementFlavor:'blooddrake', rarity:'epic',
     fusedFrom:['dragonknight','hexblade'],
     stats:{hp:105,maxHp:105,mp:70,maxMp:70,atk:15,def:10,spd:12,crit:13},
     statDisplay:{HP:7,ATK:11,DEF:7,SPD:7,MP:7},
@@ -552,7 +552,7 @@ const FUSION_CLASSES_9 = {
   dragon_cosmo: {
     id:'dragon_cosmo', name:'The Void Wyrm', icon:'🐉',
     tagline:'Between stars, there are no dragons. This one found the way there and came back.',
-    color:'#914d55', element:'cosmicdrake', rarity:'legendary',
+    color:'#914d55', element:'dragon', elementFlavor:'cosmicdrake', rarity:'legendary',
     fusedFrom:['dragonknight','cosmomancer'],
     stats:{hp:100,maxHp:100,mp:83,maxMp:83,atk:14,def:9,spd:12,crit:13},
     statDisplay:{HP:7,ATK:10,DEF:6,SPD:7,MP:8},

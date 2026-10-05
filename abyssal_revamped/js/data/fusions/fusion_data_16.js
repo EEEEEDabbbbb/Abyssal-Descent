@@ -3,7 +3,7 @@
 // ══════════════════════════════════════════════════════════════
 
 const FUSION_RECIPES_16 = {
-  'phantom+warlord': 'war_phantom',
+  'phantom+warlord': 'ghost_campaign',
   'hexblade+spiritwalker': 'spirit_hex',
   'cosmomancer+spiritwalker': 'spirit_cosmo',
   'pestilencelord+spiritwalker': 'spirit_pestilence',
@@ -43,10 +43,10 @@ const FUSION_RECIPES_16 = {
 };
 
 const FUSION_CLASSES_16 = {
-  war_phantom: {
-    id:'war_phantom', name:'The Ghost Campaign', icon:'⚔️',
+  ghost_campaign: {
+    id:'ghost_campaign', name:'The Ghost Campaign', icon:'⚔️',
     tagline:'The warlord whose army cannot be seen cannot be countered.',
-    color:'#998899', element:'warghost', rarity:'mythical',
+    color:'#998899', element:'fighting', elementFlavor:'warghost', rarity:'mythical',
     fusedFrom:['warlord','phantom'],
     stats:{hp:92,maxHp:92,mp:80,maxMp:80,atk:14,def:7,spd:16,crit:20},
     statDisplay:{HP:6,ATK:10,DEF:5,SPD:8,MP:8},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_16 = {
   spirit_hex: {
     id:'spirit_hex', name:'The Cursed Spirit', icon:'👻',
     tagline:'The spirit that carries a curse carries it further than any living thing.',
-    color:'#9977bb', element:'spirithex', rarity:'epic',
+    color:'#9977bb', element:'spirit', elementFlavor:'spirithex', rarity:'epic',
     fusedFrom:['spiritwalker','hexblade'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:8,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:9},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_16 = {
   spirit_cosmo: {
     id:'spirit_cosmo', name:'The Stellar Spirit', icon:'👻',
     tagline:'The spirits of those who died under stars become part of the stars. This one came back.',
-    color:'#7788cc', element:'spiritcosmo', rarity:'legendary',
+    color:'#7788cc', element:'spirit', elementFlavor:'spiritcosmo', rarity:'legendary',
     fusedFrom:['spiritwalker','cosmomancer'],
     stats:{hp:80,maxHp:80,mp:97,maxMp:97,atk:11,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_16 = {
   spirit_pestilence: {
     id:'spirit_pestilence', name:'The Plague Spirit', icon:'👻',
     tagline:'The ghost of a plague carries the plague. The ghost also carries a grudge.',
-    color:'#779955', element:'spiritplague', rarity:'epic',
+    color:'#779955', element:'spirit', elementFlavor:'spiritplague', rarity:'epic',
     fusedFrom:['spiritwalker','pestilencelord'],
     stats:{hp:82,maxHp:82,mp:88,maxMp:88,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_16 = {
   spirit_wind: {
     id:'spirit_wind', name:'The Wandering Dead', icon:'👻',
     tagline:'The wind takes everything everywhere. The dead have nowhere else to be.',
-    color:'#aabb88', element:'spiritwind', rarity:'rare',
+    color:'#aabb88', element:'spirit', elementFlavor:'spiritwind', rarity:'rare',
     fusedFrom:['spiritwalker','windwalker'],
     stats:{hp:82,maxHp:82,mp:82,maxMp:82,atk:11,def:7,spd:16,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:9,MP:8},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_16 = {
   spirit_doom: {
     id:'spirit_doom', name:'The Doomed Soul', icon:'👻',
     tagline:'The doom follows the spirit. Spirits go everywhere. The doom goes everywhere.',
-    color:'#775566', element:'spiritdoom', rarity:'legendary',
+    color:'#775566', element:'spirit', elementFlavor:'spiritdoom', rarity:'legendary',
     fusedFrom:['spiritwalker','doomcaster'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:11,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_16 = {
   spirit_arcanist: {
     id:'spirit_arcanist', name:'The Formula of Souls', icon:'👻',
     tagline:'The arcanist who derived the equation for spiritual existence changed what was possible on both sides of death.',
-    color:'#8899bb', element:'spiritarcane', rarity:'legendary',
+    color:'#8899bb', element:'spirit', elementFlavor:'spiritarcane', rarity:'legendary',
     fusedFrom:['spiritwalker','arcanist'],
     stats:{hp:75,maxHp:75,mp:105,maxMp:105,atk:11,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -144,7 +144,7 @@ const FUSION_CLASSES_16 = {
   spirit_sentinel: {
     id:'spirit_sentinel', name:'The Ancestral Guard', icon:'👻',
     tagline:'The dead who stand watch have been watching longer than the living can imagine.',
-    color:'#99aa99', element:'spiritwall', rarity:'rare',
+    color:'#99aa99', element:'spirit', elementFlavor:'spiritwall', rarity:'rare',
     fusedFrom:['spiritwalker','sentinel'],
     stats:{hp:120,maxHp:120,mp:68,maxMp:68,atk:9,def:14,spd:9,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:6},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_16 = {
   spirit_phantom: {
     id:'spirit_phantom', name:'The Deep Haunting', icon:'👻',
     tagline:'Two orders of the unseen, working together. The dungeon has no response to this.',
-    color:'#aabbcc', element:'spiritghost', rarity:'mythical',
+    color:'#aabbcc', element:'spirit', elementFlavor:'spiritghost', rarity:'mythical',
     fusedFrom:['spiritwalker','phantom'],
     stats:{hp:78,maxHp:78,mp:85,maxMp:85,atk:12,def:6,spd:16,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_16 = {
   hex_cosmo: {
     id:'hex_cosmo', name:'The Cosmic Curse', icon:'🔮',
     tagline:'A hex placed by the stars is difficult to appeal.',
-    color:'#5566cc', element:'hexcosmo', rarity:'legendary',
+    color:'#5566cc', element:'dark', elementFlavor:'hexcosmo', rarity:'legendary',
     fusedFrom:['hexblade','cosmomancer'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:12,def:6,spd:13,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_16 = {
   hex_pestilence: {
     id:'hex_pestilence', name:'The Plague Hex', icon:'🔮',
     tagline:'The curse suppresses resistance. The plague is already through the door.',
-    color:'#778844', element:'hexplague', rarity:'epic',
+    color:'#778844', element:'dark', elementFlavor:'hexplague', rarity:'epic',
     fusedFrom:['hexblade','pestilencelord'],
     stats:{hp:78,maxHp:78,mp:92,maxMp:92,atk:12,def:7,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -200,7 +200,7 @@ const FUSION_CLASSES_16 = {
   hex_wind: {
     id:'hex_wind', name:'The Wandering Curse', icon:'🔮',
     tagline:'The curse that blows on the wind needs no caster nearby.',
-    color:'#aabb55', element:'hexwind', rarity:'rare',
+    color:'#aabb55', element:'dark', elementFlavor:'hexwind', rarity:'rare',
     fusedFrom:['hexblade','windwalker'],
     stats:{hp:75,maxHp:75,mp:85,maxMp:85,atk:12,def:6,spd:15,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_16 = {
   hex_doom: {
     id:'hex_doom', name:'The Inevitable Curse', icon:'🔮',
     tagline:'The hex weakens. The doom arrives into weakness. Nothing remains.',
-    color:'#665577', element:'hexdoom', rarity:'legendary',
+    color:'#665577', element:'dark', elementFlavor:'hexdoom', rarity:'legendary',
     fusedFrom:['hexblade','doomcaster'],
     stats:{hp:72,maxHp:72,mp:103,maxMp:103,atk:11,def:5,spd:13,crit:16},
     statDisplay:{HP:4,ATK:7,DEF:4,SPD:7,MP:10},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_16 = {
   hex_arcanist: {
     id:'hex_arcanist', name:'The Formulaic Curse', icon:'🔮',
     tagline:'The hex derived mathematically is the most comprehensive hex. No gap in the formula means no gap in the curse.',
-    color:'#7766cc', element:'hexarcane', rarity:'legendary',
+    color:'#7766cc', element:'dark', elementFlavor:'hexarcane', rarity:'legendary',
     fusedFrom:['hexblade','arcanist'],
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:11,def:5,spd:13,crit:17},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:7,MP:11},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_16 = {
   hex_sentinel: {
     id:'hex_sentinel', name:'The Cursed Fortification', icon:'🔮',
     tagline:'The wall is cursed. The curse holds the wall. The wall holds the curse.',
-    color:'#998877', element:'hexwall', rarity:'epic',
+    color:'#998877', element:'dark', elementFlavor:'hexwall', rarity:'epic',
     fusedFrom:['hexblade','sentinel'],
     stats:{hp:115,maxHp:115,mp:72,maxMp:72,atk:9,def:14,spd:9,crit:11},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:7},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_16 = {
   hex_phantom: {
     id:'hex_phantom', name:'The Haunting Hex', icon:'🔮',
     tagline:'The curse you cannot see is the curse you cannot remove.',
-    color:'#9988bb', element:'hexghost', rarity:'mythical',
+    color:'#9988bb', element:'dark', elementFlavor:'hexghost', rarity:'mythical',
     fusedFrom:['hexblade','phantom'],
     stats:{hp:72,maxHp:72,mp:88,maxMp:88,atk:13,def:5,spd:16,crit:21},
     statDisplay:{HP:4,ATK:9,DEF:4,SPD:8,MP:8},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_16 = {
   cosmo_pestilence: {
     id:'cosmo_pestilence', name:'The Cosmic Plague', icon:'🌌',
     tagline:'Disease evolved in conditions you cannot imagine, for hosts you will never meet. You will meet it, though.',
-    color:'#556699', element:'cosmoplague', rarity:'legendary',
+    color:'#556699', element:'cosmic', elementFlavor:'cosmoplague', rarity:'legendary',
     fusedFrom:['cosmomancer','pestilencelord'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:11,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_16 = {
   cosmo_wind: {
     id:'cosmo_wind', name:'The Solar Wind', icon:'🌌',
     tagline:'Stars have wind. It travels farther than dungeon wind does.',
-    color:'#88aadd', element:'cosmowind', rarity:'rare',
+    color:'#88aadd', element:'cosmic', elementFlavor:'cosmowind', rarity:'rare',
     fusedFrom:['cosmomancer','windwalker'],
     stats:{hp:73,maxHp:73,mp:88,maxMp:88,atk:12,def:5,spd:17,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:9},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_16 = {
   cosmo_doom: {
     id:'cosmo_doom', name:'The Heat Death', icon:'🌌',
     tagline:'The universe ends eventually. This accelerates the schedule for one participant.',
-    color:'#334466', element:'cosmodoom', rarity:'legendary',
+    color:'#334466', element:'cosmic', elementFlavor:'cosmodoom', rarity:'legendary',
     fusedFrom:['cosmomancer','doomcaster'],
     stats:{hp:70,maxHp:70,mp:107,maxMp:107,atk:10,def:5,spd:12,crit:15},
     statDisplay:{HP:4,ATK:6,DEF:4,SPD:7,MP:11},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_16 = {
   cosmo_arcanist: {
     id:'cosmo_arcanist', name:'The Grand Unified Theory', icon:'🌌',
     tagline:'The formula that describes everything can do everything.',
-    color:'#5566bb', element:'cosmoarcane', rarity:'legendary',
+    color:'#5566bb', element:'cosmic', elementFlavor:'cosmoarcane', rarity:'legendary',
     fusedFrom:['arcanist','cosmomancer'],
     stats:{hp:68,maxHp:68,mp:115,maxMp:115,atk:11,def:4,spd:13,crit:17},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:7,MP:11},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_16 = {
   cosmo_sentinel: {
     id:'cosmo_sentinel', name:'The Stellar Fortress', icon:'🌌',
     tagline:'The fortress at the center of a star is defended by the star.',
-    color:'#6688aa', element:'cosmowall', rarity:'epic',
+    color:'#6688aa', element:'cosmic', elementFlavor:'cosmowall', rarity:'epic',
     fusedFrom:['cosmomancer','sentinel'],
     stats:{hp:110,maxHp:110,mp:78,maxMp:78,atk:9,def:13,spd:9,crit:11},
     statDisplay:{HP:7,ATK:6,DEF:9,SPD:6,MP:8},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_16 = {
   cosmo_phantom: {
     id:'cosmo_phantom', name:'The Dark Matter', icon:'🌌',
     tagline:'It accounts for most of the universe\'s mass. No one has ever seen it. You will not see this one either.',
-    color:'#222244', element:'cosmoghost', rarity:'mythical',
+    color:'#222244', element:'cosmic', elementFlavor:'cosmoghost', rarity:'mythical',
     fusedFrom:['cosmomancer','phantom'],
     stats:{hp:70,maxHp:70,mp:95,maxMp:95,atk:13,def:4,spd:16,crit:22},
     statDisplay:{HP:4,ATK:9,DEF:3,SPD:8,MP:9},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_16 = {
   pestilence_wind: {
     id:'pestilence_wind', name:'The Airborne Apocalypse', icon:'☣️',
     tagline:'The wind carries everything to everyone. The pestilencelord considers this optimal delivery.',
-    color:'#99bb44', element:'windplague', rarity:'epic',
+    color:'#99bb44', element:'poison', elementFlavor:'windplague', rarity:'epic',
     fusedFrom:['pestilencelord','windwalker'],
     stats:{hp:78,maxHp:78,mp:88,maxMp:88,atk:12,def:6,spd:15,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_16 = {
   pestilence_doom: {
     id:'pestilence_doom', name:'The Terminal Pandemic', icon:'☣️',
     tagline:'The disease is survivable. The doom ensures it is not survived.',
-    color:'#557744', element:'plaguedoom', rarity:'legendary',
+    color:'#557744', element:'poison', elementFlavor:'plaguedoom', rarity:'legendary',
     fusedFrom:['pestilencelord','doomcaster'],
     stats:{hp:73,maxHp:73,mp:100,maxMp:100,atk:11,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_16 = {
   pestilence_arcanist: {
     id:'pestilence_arcanist', name:'The Theoretical Maximum', icon:'☣️',
     tagline:'The most lethal disease possible, derived mathematically. The pestilencelord is satisfied.',
-    color:'#668833', element:'plaguearcane', rarity:'legendary',
+    color:'#668833', element:'poison', elementFlavor:'plaguearcane', rarity:'legendary',
     fusedFrom:['arcanist','pestilencelord'],
     stats:{hp:70,maxHp:70,mp:107,maxMp:107,atk:11,def:4,spd:13,crit:15},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:7,MP:10},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_16 = {
   pestilence_sentinel: {
     id:'pestilence_sentinel', name:'The Plague Ward', icon:'☣️',
     tagline:'The wall seals the plague in. The plague is doing exactly what the pestilencelord intended.',
-    color:'#669944', element:'plaguewall', rarity:'rare',
+    color:'#669944', element:'poison', elementFlavor:'plaguewall', rarity:'rare',
     fusedFrom:['pestilencelord','sentinel'],
     stats:{hp:115,maxHp:115,mp:70,maxMp:70,atk:9,def:14,spd:8,crit:10},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:7},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_16 = {
   pestilence_phantom: {
     id:'pestilence_phantom', name:'The Specter of Plague', icon:'☣️',
     tagline:'The ghost that carries disease. The disease that cannot be avoided. This is not a coincidence.',
-    color:'#77aa55', element:'plagueghost', rarity:'legendary',
+    color:'#77aa55', element:'poison', elementFlavor:'plagueghost', rarity:'legendary',
     fusedFrom:['pestilencelord','phantom'],
     stats:{hp:73,maxHp:73,mp:90,maxMp:90,atk:13,def:5,spd:15,crit:19},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:9},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_16 = {
   wind_doom: {
     id:'wind_doom', name:'The Approaching Storm', icon:'💨',
     tagline:'The doom arrives on the wind. You can hear it before it reaches you. This does not help.',
-    color:'#88aa66', element:'winddoom', rarity:'legendary',
+    color:'#88aa66', element:'wind', elementFlavor:'winddoom', rarity:'legendary',
     fusedFrom:['windwalker','doomcaster'],
     stats:{hp:73,maxHp:73,mp:98,maxMp:98,atk:12,def:5,spd:16,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:9},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_16 = {
   wind_arcanist: {
     id:'wind_arcanist', name:'The Living Theorem', icon:'💨',
     tagline:'The formula expressed in wind is a formula that moves.',
-    color:'#aabb88', element:'windarcane', rarity:'legendary',
+    color:'#aabb88', element:'wind', elementFlavor:'windarcane', rarity:'legendary',
     fusedFrom:['windwalker','arcanist'],
     stats:{hp:68,maxHp:68,mp:108,maxMp:108,atk:11,def:4,spd:16,crit:17},
     statDisplay:{HP:4,ATK:7,DEF:3,SPD:9,MP:11},
@@ -452,7 +452,7 @@ const FUSION_CLASSES_16 = {
   wind_sentinel: {
     id:'wind_sentinel', name:'The Gale Wall', icon:'💨',
     tagline:'The wall you cannot see is a wall made of air moving fast enough to be a wall.',
-    color:'#bbdd88', element:'windwall', rarity:'rare',
+    color:'#bbdd88', element:'wind', elementFlavor:'windwall', rarity:'rare',
     fusedFrom:['windwalker','sentinel'],
     stats:{hp:108,maxHp:108,mp:70,maxMp:70,atk:10,def:13,spd:14,crit:10},
     statDisplay:{HP:7,ATK:7,DEF:9,SPD:8,MP:7},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_16 = {
   wind_phantom: {
     id:'wind_phantom', name:'The Invisible Gale', icon:'💨',
     tagline:'The wind you cannot see. The wind you cannot touch. The wind that touches you.',
-    color:'#cceebb', element:'windghost', rarity:'mythical',
+    color:'#cceebb', element:'wind', elementFlavor:'windghost', rarity:'mythical',
     fusedFrom:['windwalker','phantom'],
     stats:{hp:70,maxHp:70,mp:82,maxMp:82,atk:13,def:4,spd:18,crit:21},
     statDisplay:{HP:4,ATK:9,DEF:3,SPD:9,MP:8},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_16 = {
   doom_arcanist: {
     id:'doom_arcanist', name:'The Equation of Endings', icon:'⏳',
     tagline:'The formula with only one solution, and the solution is the end.',
-    color:'#554466', element:'doomarcane', rarity:'legendary',
+    color:'#554466', element:'dark', elementFlavor:'doomarcane', rarity:'legendary',
     fusedFrom:['doomcaster','arcanist'],
     stats:{hp:65,maxHp:65,mp:115,maxMp:115,atk:10,def:4,spd:12,crit:18},
     statDisplay:{HP:4,ATK:6,DEF:3,SPD:7,MP:11},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_16 = {
   doom_sentinel: {
     id:'doom_sentinel', name:'The Last Wall', icon:'⏳',
     tagline:'The wall that holds until the doom activates is the last wall anyone will see.',
-    color:'#556677', element:'doomwall', rarity:'epic',
+    color:'#556677', element:'dark', elementFlavor:'doomwall', rarity:'epic',
     fusedFrom:['doomcaster','sentinel'],
     stats:{hp:115,maxHp:115,mp:75,maxMp:75,atk:9,def:15,spd:8,crit:11},
     statDisplay:{HP:8,ATK:6,DEF:10,SPD:5,MP:7},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_16 = {
   doom_phantom: {
     id:'doom_phantom', name:'The Sealed Shade', icon:'⏳',
     tagline:'The phantom carries the doom. The doom cannot be avoided because the carrier cannot be detected.',
-    color:'#445566', element:'doomghost', rarity:'mythical',
+    color:'#445566', element:'dark', elementFlavor:'doomghost', rarity:'mythical',
     fusedFrom:['doomcaster','phantom'],
     stats:{hp:68,maxHp:68,mp:92,maxMp:92,atk:12,def:4,spd:16,crit:22},
     statDisplay:{HP:4,ATK:8,DEF:3,SPD:8,MP:9},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_16 = {
   arcanist_sentinel: {
     id:'arcanist_sentinel', name:'The Runic Bastion', icon:'📜',
     tagline:'The formula that holds the wall is a better wall than the wall.',
-    color:'#7788aa', element:'arcanewall', rarity:'epic',
+    color:'#7788aa', element:'psychic', elementFlavor:'arcanewall', rarity:'epic',
     fusedFrom:['arcanist','sentinel'],
     stats:{hp:113,maxHp:113,mp:80,maxMp:80,atk:9,def:14,spd:9,crit:12},
     statDisplay:{HP:7,ATK:6,DEF:9,SPD:6,MP:8},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_16 = {
   arcanist_phantom: {
     id:'arcanist_phantom', name:'The Invisible Theorem', icon:'📜',
     tagline:'The formula that operates from outside observation space operates without constraint.',
-    color:'#8899cc', element:'arcaneghost', rarity:'mythical',
+    color:'#8899cc', element:'psychic', elementFlavor:'arcaneghost', rarity:'mythical',
     fusedFrom:['arcanist','phantom'],
     stats:{hp:65,maxHp:65,mp:108,maxMp:108,atk:12,def:4,spd:15,crit:22},
     statDisplay:{HP:4,ATK:8,DEF:3,SPD:8,MP:11},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_16 = {
   sentinel_phantom: {
     id:'sentinel_phantom', name:'The Unbreachable Shadow', icon:'🛡️',
     tagline:'The wall you cannot touch and cannot go around. Both properties are real.',
-    color:'#778899', element:'ghostwall', rarity:'mythical',
+    color:'#778899', element:'steel', elementFlavor:'ghostwall', rarity:'mythical',
     fusedFrom:['sentinel','phantom'],
     stats:{hp:112,maxHp:112,mp:72,maxMp:72,atk:11,def:15,spd:13,crit:17},
     statDisplay:{HP:7,ATK:7,DEF:10,SPD:7,MP:7},

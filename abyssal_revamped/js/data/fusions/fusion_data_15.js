@@ -10,7 +10,7 @@ const FUSION_RECIPES_15 = {
   'doomcaster+gravewarden': 'grave_doom',
   'arcanist+gravewarden': 'grave_arcanist',
   'gravewarden+sentinel': 'grave_sentinel',
-  'gravewarden+phantom': 'grave_phantom',
+  'gravewarden+phantom': 'restless_dead',
   'crystalmancer+magnetist': 'magnetist_crystal',
   'magnetist+warlord': 'magnetist_war',
   'magnetist+spiritwalker': 'magnetist_spirit',
@@ -46,7 +46,7 @@ const FUSION_CLASSES_15 = {
   grave_hex: {
     id:'grave_hex', name:'The Hexed Grave', icon:'💀',
     tagline:'The curse was buried here. It has been growing.',
-    color:'#776688', element:'hexgrave', rarity:'epic',
+    color:'#776688', element:'ghost', elementFlavor:'hexgrave', rarity:'epic',
     fusedFrom:['gravewarden','hexblade'],
     stats:{hp:88,maxHp:88,mp:85,maxMp:85,atk:11,def:10,spd:11,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:7,SPD:6,MP:8},
@@ -60,7 +60,7 @@ const FUSION_CLASSES_15 = {
   grave_cosmo: {
     id:'grave_cosmo', name:'The Cosmic Grave', icon:'💀',
     tagline:'The universe buries its dead in nebulae. This works at smaller scale.',
-    color:'#5566aa', element:'gravecosmo', rarity:'legendary',
+    color:'#5566aa', element:'ghost', elementFlavor:'gravecosmo', rarity:'legendary',
     fusedFrom:['gravewarden','cosmomancer'],
     stats:{hp:88,maxHp:88,mp:90,maxMp:90,atk:11,def:10,spd:11,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:7,SPD:6,MP:9},
@@ -74,7 +74,7 @@ const FUSION_CLASSES_15 = {
   grave_pestilence: {
     id:'grave_pestilence', name:'The Plague Pit', icon:'💀',
     tagline:'The mass grave is also a bioreactor. This is not intentional. It is efficient.',
-    color:'#668855', element:'graveplague', rarity:'epic',
+    color:'#668855', element:'ghost', elementFlavor:'graveplague', rarity:'epic',
     fusedFrom:['gravewarden','pestilencelord'],
     stats:{hp:92,maxHp:92,mp:82,maxMp:82,atk:11,def:11,spd:9,crit:12},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:5,MP:8},
@@ -88,7 +88,7 @@ const FUSION_CLASSES_15 = {
   grave_wind: {
     id:'grave_wind', name:'The Haunted Gale', icon:'💀',
     tagline:'The wind that moves through the graveyard carries what the graveyard holds.',
-    color:'#889977', element:'gravewind', rarity:'rare',
+    color:'#889977', element:'ghost', elementFlavor:'gravewind', rarity:'rare',
     fusedFrom:['gravewarden','windwalker'],
     stats:{hp:88,maxHp:88,mp:75,maxMp:75,atk:12,def:9,spd:14,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:7},
@@ -102,7 +102,7 @@ const FUSION_CLASSES_15 = {
   grave_doom: {
     id:'grave_doom', name:'The Sealed Burial', icon:'💀',
     tagline:'The grave that cannot be escaped. The doom ensures this.',
-    color:'#665566', element:'graved doom', rarity:'legendary',
+    color:'#665566', element:'ghost', elementFlavor:'graved doom', rarity:'legendary',
     fusedFrom:['gravewarden','doomcaster'],
     stats:{hp:90,maxHp:90,mp:88,maxMp:88,atk:11,def:11,spd:10,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:8,SPD:6,MP:8},
@@ -116,7 +116,7 @@ const FUSION_CLASSES_15 = {
   grave_arcanist: {
     id:'grave_arcanist', name:'The Inscribed Tomb', icon:'💀',
     tagline:'The formula on the tomb is not decorative.',
-    color:'#778899', element:'gravearcane', rarity:'legendary',
+    color:'#778899', element:'ghost', elementFlavor:'gravearcane', rarity:'legendary',
     fusedFrom:['gravewarden','arcanist'],
     stats:{hp:85,maxHp:85,mp:98,maxMp:98,atk:10,def:10,spd:11,crit:14},
     statDisplay:{HP:6,ATK:7,DEF:7,SPD:6,MP:9},
@@ -130,7 +130,7 @@ const FUSION_CLASSES_15 = {
   grave_sentinel: {
     id:'grave_sentinel', name:'The Graveyard Watch', icon:'💀',
     tagline:'The sentinel who guards the dead does not tire. Neither do the dead.',
-    color:'#889988', element:'gravewall', rarity:'uncommon',
+    color:'#889988', element:'ghost', elementFlavor:'gravewall', rarity:'uncommon',
     fusedFrom:['gravewarden','sentinel'],
     stats:{hp:128,maxHp:128,mp:60,maxMp:60,atk:9,def:15,spd:7,crit:8},
     statDisplay:{HP:9,ATK:6,DEF:10,SPD:4},
@@ -141,10 +141,10 @@ const FUSION_CLASSES_15 = {
     lore:'The sentinel held a position. Graveyards have positions to hold. The Graveyard Watch combined these and found that a sentinel guarding a graveyard has two responsibilities simultaneously: keeping enemies out and keeping the dead in, and that both are served by the same immovable presence at the perimeter. The dead, for their part, seem to appreciate the consistency.'
   },
 
-  grave_phantom: {
-    id:'grave_phantom', name:'The Restless Dead', icon:'💀',
+  restless_dead: {
+    id:'restless_dead', name:'The Restless Dead', icon:'💀',
     tagline:'The grave\'s ghost refuses the grave. The gravewarden finds this professionally vexing.',
-    color:'#8899aa', element:'graveghost', rarity:'mythical',
+    color:'#8899aa', element:'ghost', elementFlavor:'graveghost', rarity:'mythical',
     fusedFrom:['gravewarden','phantom'],
     stats:{hp:80,maxHp:80,mp:83,maxMp:83,atk:12,def:7,spd:15,crit:20},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
@@ -158,7 +158,7 @@ const FUSION_CLASSES_15 = {
   magnetist_crystal: {
     id:'magnetist_crystal', name:'The Crystalline Field', icon:'🧲',
     tagline:'Crystal conducts the field. The field shapes the crystal. Both grow.',
-    color:'#88aadd', element:'magnetcrystal', rarity:'legendary',
+    color:'#88aadd', element:'magnet', elementFlavor:'magnetcrystal', rarity:'legendary',
     fusedFrom:['magnetist','crystalmancer'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:12,def:7,spd:13,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -172,7 +172,7 @@ const FUSION_CLASSES_15 = {
   magnetist_war: {
     id:'magnetist_war', name:'The Iron Legion', icon:'🧲',
     tagline:'The warlord who controls the battlefield\'s iron controls the battlefield.',
-    color:'#886655', element:'magnetwar', rarity:'rare',
+    color:'#886655', element:'magnet', elementFlavor:'magnetwar', rarity:'rare',
     fusedFrom:['magnetist','warlord'],
     stats:{hp:98,maxHp:98,mp:72,maxMp:72,atk:13,def:11,spd:11,crit:12},
     statDisplay:{HP:6,ATK:9,DEF:8,SPD:6,MP:7},
@@ -186,7 +186,7 @@ const FUSION_CLASSES_15 = {
   magnetist_spirit: {
     id:'magnetist_spirit', name:'The Spirit Compass', icon:'🧲',
     tagline:'Spirits navigate by magnetic fields. This one navigates spirits.',
-    color:'#7799aa', element:'magnetspirit', rarity:'epic',
+    color:'#7799aa', element:'magnet', elementFlavor:'magnetspirit', rarity:'epic',
     fusedFrom:['magnetist','spiritwalker'],
     stats:{hp:82,maxHp:82,mp:88,maxMp:88,atk:11,def:9,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:7,MP:8},
@@ -200,7 +200,7 @@ const FUSION_CLASSES_15 = {
   magnetist_hex: {
     id:'magnetist_hex', name:'The Magnetic Curse', icon:'🧲',
     tagline:'The curse pulls at the same frequency as the field. Neither lets go.',
-    color:'#887799', element:'magnethex', rarity:'epic',
+    color:'#887799', element:'magnet', elementFlavor:'magnethex', rarity:'epic',
     fusedFrom:['magnetist','hexblade'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:12,def:8,spd:12,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -214,7 +214,7 @@ const FUSION_CLASSES_15 = {
   magnetist_cosmo: {
     id:'magnetist_cosmo', name:'The Magnetar', icon:'🧲',
     tagline:'The most magnetic objects in the universe are also among the most dangerous.',
-    color:'#4455aa', element:'cosmomagnet', rarity:'legendary',
+    color:'#4455aa', element:'magnet', elementFlavor:'cosmomagnet', rarity:'legendary',
     fusedFrom:['magnetist','cosmomancer'],
     stats:{hp:75,maxHp:75,mp:103,maxMp:103,atk:11,def:6,spd:12,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -228,7 +228,7 @@ const FUSION_CLASSES_15 = {
   magnetist_pestilence: {
     id:'magnetist_pestilence', name:'The Magnetic Plague', icon:'🧲',
     tagline:'The field carries the plague. The plague carries iron. The iron carries the field.',
-    color:'#558866', element:'magnetplague', rarity:'epic',
+    color:'#558866', element:'magnet', elementFlavor:'magnetplague', rarity:'epic',
     fusedFrom:['magnetist','pestilencelord'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:12,def:8,spd:11,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:6,MP:8},
@@ -242,7 +242,7 @@ const FUSION_CLASSES_15 = {
   magnetist_wind: {
     id:'magnetist_wind', name:'The Electromagnetic Storm', icon:'🧲',
     tagline:'Electromagnetic fields and wind fields are both fields. At high enough energy, they merge.',
-    color:'#7799bb', element:'magnetwind', rarity:'rare',
+    color:'#7799bb', element:'magnet', elementFlavor:'magnetwind', rarity:'rare',
     fusedFrom:['magnetist','windwalker'],
     stats:{hp:80,maxHp:80,mp:80,maxMp:80,atk:12,def:7,spd:15,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
@@ -256,7 +256,7 @@ const FUSION_CLASSES_15 = {
   magnetist_doom: {
     id:'magnetist_doom', name:'The Gravitational Doom Pole', icon:'🧲',
     tagline:'The field pulls everything toward the doom.',
-    color:'#664477', element:'magnetdoom', rarity:'legendary',
+    color:'#664477', element:'magnet', elementFlavor:'magnetdoom', rarity:'legendary',
     fusedFrom:['magnetist','doomcaster'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:11,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:9},
@@ -270,7 +270,7 @@ const FUSION_CLASSES_15 = {
   magnetist_arcanist: {
     id:'magnetist_arcanist', name:'The Arcane Lodestone', icon:'🧲',
     tagline:'The formula that controls the field is more powerful than the field alone.',
-    color:'#5566bb', element:'magnetarcane', rarity:'legendary',
+    color:'#5566bb', element:'magnet', elementFlavor:'magnetarcane', rarity:'legendary',
     fusedFrom:['arcanist','magnetist'],
     stats:{hp:72,maxHp:72,mp:108,maxMp:108,atk:11,def:5,spd:13,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -284,7 +284,7 @@ const FUSION_CLASSES_15 = {
   magnetist_sentinel: {
     id:'magnetist_sentinel', name:'The Magnetic Wall', icon:'🧲',
     tagline:'The wall that deflects metal attacks does not need to be thick.',
-    color:'#778899', element:'magnetwall', rarity:'rare',
+    color:'#778899', element:'magnet', elementFlavor:'magnetwall', rarity:'rare',
     fusedFrom:['magnetist','sentinel'],
     stats:{hp:120,maxHp:120,mp:63,maxMp:63,atk:9,def:14,spd:9,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:6},
@@ -298,7 +298,7 @@ const FUSION_CLASSES_15 = {
   magnetist_phantom: {
     id:'magnetist_phantom', name:'The Magnetic Ghost', icon:'🧲',
     tagline:'The ghost in the machine is also the machine.',
-    color:'#6677aa', element:'magnetghost', rarity:'mythical',
+    color:'#6677aa', element:'magnet', elementFlavor:'magnetghost', rarity:'mythical',
     fusedFrom:['magnetist','phantom'],
     stats:{hp:73,maxHp:73,mp:88,maxMp:88,atk:12,def:5,spd:15,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:8},
@@ -312,7 +312,7 @@ const FUSION_CLASSES_15 = {
   crystal_war: {
     id:'crystal_war', name:'The Crystal Legion', icon:'💎',
     tagline:'The soldiers made of crystal do not break morale. They break structurally, which is worse.',
-    color:'#aabbcc', element:'crystalwar', rarity:'rare',
+    color:'#aabbcc', element:'crystal', elementFlavor:'crystalwar', rarity:'rare',
     fusedFrom:['crystalmancer','warlord'],
     stats:{hp:98,maxHp:98,mp:73,maxMp:73,atk:13,def:10,spd:11,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:7,SPD:6,MP:7},
@@ -326,7 +326,7 @@ const FUSION_CLASSES_15 = {
   crystal_spirit: {
     id:'crystal_spirit', name:'The Crystal Oracle', icon:'💎',
     tagline:'The crystal holds the spirit. The spirit reads the crystal.',
-    color:'#bbccee', element:'crystalspirit', rarity:'epic',
+    color:'#bbccee', element:'crystal', elementFlavor:'crystalspirit', rarity:'epic',
     fusedFrom:['crystalmancer','spiritwalker'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:11,def:9,spd:12,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:7,MP:9},
@@ -340,7 +340,7 @@ const FUSION_CLASSES_15 = {
   crystal_hex: {
     id:'crystal_hex', name:'The Cursed Prism', icon:'💎',
     tagline:'The crystal refracts the curse in every direction. All directions. Simultaneously.',
-    color:'#cc99ee', element:'crystalhex', rarity:'epic',
+    color:'#cc99ee', element:'crystal', elementFlavor:'crystalhex', rarity:'epic',
     fusedFrom:['crystalmancer','hexblade'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:12,def:7,spd:13,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -354,7 +354,7 @@ const FUSION_CLASSES_15 = {
   crystal_cosmo: {
     id:'crystal_cosmo', name:'The Cosmic Lens', icon:'💎',
     tagline:'The crystal that focuses starlight focuses it to the temperature of a star.',
-    color:'#99aaff', element:'crystalcosmo', rarity:'legendary',
+    color:'#99aaff', element:'crystal', elementFlavor:'crystalcosmo', rarity:'legendary',
     fusedFrom:['crystalmancer','cosmomancer'],
     stats:{hp:72,maxHp:72,mp:105,maxMp:105,atk:12,def:6,spd:13,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
@@ -368,7 +368,7 @@ const FUSION_CLASSES_15 = {
   crystal_pestilence: {
     id:'crystal_pestilence', name:'The Plague Crystal', icon:'💎',
     tagline:'The plague grew beautiful in the crystal. It is still a plague.',
-    color:'#99cc88', element:'crystalplague', rarity:'epic',
+    color:'#99cc88', element:'crystal', elementFlavor:'crystalplague', rarity:'epic',
     fusedFrom:['crystalmancer','pestilencelord'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:12,def:7,spd:12,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -382,7 +382,7 @@ const FUSION_CLASSES_15 = {
   crystal_wind: {
     id:'crystal_wind', name:'The Glass Storm', icon:'💎',
     tagline:'Crystal at wind velocity is not wind. It is a different category of problem.',
-    color:'#cceeff', element:'crystalwind', rarity:'rare',
+    color:'#cceeff', element:'crystal', elementFlavor:'crystalwind', rarity:'rare',
     fusedFrom:['crystalmancer','windwalker'],
     stats:{hp:78,maxHp:78,mp:82,maxMp:82,atk:13,def:7,spd:16,crit:16},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:9,MP:8},
@@ -396,7 +396,7 @@ const FUSION_CLASSES_15 = {
   crystal_doom: {
     id:'crystal_doom', name:'The Crystal Doom', icon:'💎',
     tagline:'The doom was sealed in crystal. Crystal is very difficult to unseal.',
-    color:'#aa88cc', element:'crystaldoom', rarity:'legendary',
+    color:'#aa88cc', element:'crystal', elementFlavor:'crystaldoom', rarity:'legendary',
     fusedFrom:['crystalmancer','doomcaster'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:11,def:6,spd:13,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -410,7 +410,7 @@ const FUSION_CLASSES_15 = {
   crystal_arcanist: {
     id:'crystal_arcanist', name:'The Living Formula', icon:'💎',
     tagline:'The formula grown in three dimensions does things the written formula does not.',
-    color:'#aabbff', element:'crystalarcane', rarity:'legendary',
+    color:'#aabbff', element:'crystal', elementFlavor:'crystalarcane', rarity:'legendary',
     fusedFrom:['arcanist','crystalmancer'],
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:11,def:5,spd:13,crit:17},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:11},
@@ -424,7 +424,7 @@ const FUSION_CLASSES_15 = {
   crystal_sentinel: {
     id:'crystal_sentinel', name:'The Crystal Fortress', icon:'💎',
     tagline:'The wall made of crystal is transparent and extremely hard. Enemies can see it coming.',
-    color:'#cceeff', element:'crystalwall', rarity:'rare',
+    color:'#cceeff', element:'crystal', elementFlavor:'crystalwall', rarity:'rare',
     fusedFrom:['crystalmancer','sentinel'],
     stats:{hp:122,maxHp:122,mp:62,maxMp:62,atk:10,def:15,spd:8,crit:9},
     statDisplay:{HP:8,ATK:7,DEF:10,SPD:5},
@@ -438,7 +438,7 @@ const FUSION_CLASSES_15 = {
   crystal_phantom: {
     id:'crystal_phantom', name:'The Glass Ghost', icon:'💎',
     tagline:'A ghost made of crystal is both invisible and very sharp.',
-    color:'#ddeeff', element:'crystalghost', rarity:'mythical',
+    color:'#ddeeff', element:'crystal', elementFlavor:'crystalghost', rarity:'mythical',
     fusedFrom:['crystalmancer','phantom'],
     stats:{hp:73,maxHp:73,mp:85,maxMp:85,atk:13,def:5,spd:15,crit:21},
     statDisplay:{HP:5,ATK:9,DEF:4,SPD:8,MP:8},
@@ -452,7 +452,7 @@ const FUSION_CLASSES_15 = {
   war_spirit: {
     id:'war_spirit', name:'The Spirit of War', icon:'⚔️',
     tagline:'The war that has ended is still remembered by everyone who survived it. The spirit ensures they do not forget.',
-    color:'#aa8855', element:'warspirit', rarity:'epic',
+    color:'#aa8855', element:'fighting', elementFlavor:'warspirit', rarity:'epic',
     fusedFrom:['warlord','spiritwalker'],
     stats:{hp:95,maxHp:95,mp:82,maxMp:82,atk:13,def:9,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -466,7 +466,7 @@ const FUSION_CLASSES_15 = {
   war_hex: {
     id:'war_hex', name:'The Cursed Warlord', icon:'⚔️',
     tagline:'The warlord who curses enemies before engaging them is the warlord who wins before the battle starts.',
-    color:'#996677', element:'warhex', rarity:'epic',
+    color:'#996677', element:'fighting', elementFlavor:'warhex', rarity:'epic',
     fusedFrom:['warlord','hexblade'],
     stats:{hp:95,maxHp:95,mp:80,maxMp:80,atk:14,def:9,spd:12,crit:14},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:7,MP:8},
@@ -480,7 +480,7 @@ const FUSION_CLASSES_15 = {
   war_cosmo: {
     id:'war_cosmo', name:'The Cosmic Warlord', icon:'⚔️',
     tagline:'The warlord who commands the stars commands everything beneath them.',
-    color:'#6677aa', element:'warcosmo', rarity:'legendary',
+    color:'#6677aa', element:'fighting', elementFlavor:'warcosmo', rarity:'legendary',
     fusedFrom:['warlord','cosmomancer'],
     stats:{hp:93,maxHp:93,mp:82,maxMp:82,atk:13,def:8,spd:12,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -494,7 +494,7 @@ const FUSION_CLASSES_15 = {
   war_pestilence: {
     id:'war_pestilence', name:'The Plague General', icon:'⚔️',
     tagline:'The general who adds biological warfare to tactical doctrine wins wars at lower personal cost.',
-    color:'#778855', element:'warplague', rarity:'epic',
+    color:'#778855', element:'fighting', elementFlavor:'warplague', rarity:'epic',
     fusedFrom:['warlord','pestilencelord'],
     stats:{hp:93,maxHp:93,mp:78,maxMp:78,atk:13,def:9,spd:11,crit:12},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:6,MP:8},
@@ -508,7 +508,7 @@ const FUSION_CLASSES_15 = {
   war_wind: {
     id:'war_wind', name:'The Storm General', icon:'⚔️',
     tagline:'The warlord who controls the weather controls the terrain. Terrain is everything.',
-    color:'#aabb77', element:'warwind', rarity:'rare',
+    color:'#aabb77', element:'fighting', elementFlavor:'warwind', rarity:'rare',
     fusedFrom:['warlord','windwalker'],
     stats:{hp:93,maxHp:93,mp:72,maxMp:72,atk:14,def:9,spd:14,crit:13},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:7},
@@ -522,7 +522,7 @@ const FUSION_CLASSES_15 = {
   war_doom: {
     id:'war_doom', name:'The Death Command', icon:'⚔️',
     tagline:'The warlord orders death. The doomcaster ensures it.',
-    color:'#774455', element:'wardoom', rarity:'legendary',
+    color:'#774455', element:'fighting', elementFlavor:'wardoom', rarity:'legendary',
     fusedFrom:['warlord','doomcaster'],
     stats:{hp:90,maxHp:90,mp:85,maxMp:85,atk:13,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -536,7 +536,7 @@ const FUSION_CLASSES_15 = {
   war_arcanist: {
     id:'war_arcanist', name:'The Arcane General', icon:'⚔️',
     tagline:'The formula for winning is: know more than the enemy. This one does.',
-    color:'#6655aa', element:'wararcane', rarity:'legendary',
+    color:'#6655aa', element:'fighting', elementFlavor:'wararcane', rarity:'legendary',
     fusedFrom:['arcanist','warlord'],
     stats:{hp:88,maxHp:88,mp:90,maxMp:90,atk:13,def:7,spd:12,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:7,MP:9},
@@ -550,7 +550,7 @@ const FUSION_CLASSES_15 = {
   war_sentinel: {
     id:'war_sentinel', name:'The Unbreakable Line', icon:'⚔️',
     tagline:'The line holds. This has been confirmed by everyone who tried to break it.',
-    color:'#997755', element:'warwall', rarity:'uncommon',
+    color:'#997755', element:'fighting', elementFlavor:'warwall', rarity:'uncommon',
     fusedFrom:['warlord','sentinel'],
     stats:{hp:130,maxHp:130,mp:55,maxMp:55,atk:12,def:16,spd:8,crit:9},
     statDisplay:{HP:9,ATK:8,DEF:10,SPD:4},

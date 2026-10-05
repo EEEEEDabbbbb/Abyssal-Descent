@@ -26,7 +26,7 @@ const FUSION_RECIPES_3 = {
   'soulweaver+windwalker': 'soul_wind',
   'doomcaster+soulweaver': 'soul_doom',
   'arcanist+soulweaver': 'soul_arcanist',
-  'sentinel+soulweaver': 'soul_sentinel',
+  'sentinel+soulweaver': 'undying_wall',
   'phantom+soulweaver': 'soul_phantom',
   'pyromancer+stormcaller': 'pyro_storm',
   'bloodknight+pyromancer': 'pyro_blood',
@@ -49,7 +49,7 @@ const FUSION_CLASSES_3 = {
   soul_tide: {
     id:'soul_tide', name:'Drowned Oracle', icon:'🌊',
     tagline:'It hears the dead in the water. It answers them.',
-    color:'#37a2bc', element:'tidesoul', rarity:'rare',
+    color:'#37a2bc', element:'ghost', elementFlavor:'tidesoul', rarity:'rare',
     fusedFrom:['soulweaver','tidecaller'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:10,def:7,spd:12,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -63,7 +63,7 @@ const FUSION_CLASSES_3 = {
   soul_gravitist: {
     id:'soul_gravitist', name:'Singularity Monk', icon:'⚫',
     tagline:'The soul is heavy. It falls toward its own end.',
-    color:'#378089', element:'gravesoul', rarity:'epic',
+    color:'#378089', element:'gravity', elementFlavor:'gravesoul', rarity:'epic',
     fusedFrom:['soulweaver','gravitist'],
     stats:{hp:73,maxHp:73,mp:98,maxMp:98,atk:9,def:6,spd:11,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:9},
@@ -77,7 +77,7 @@ const FUSION_CLASSES_3 = {
   soul_soundbreaker: {
     id:'soul_soundbreaker', name:'The Wailing', icon:'🔇',
     tagline:'It screams the names of the dead. The dead answer.',
-    color:'#84ab80', element:'wailsoul', rarity:'epic',
+    color:'#84ab80', element:'sound', elementFlavor:'wailsoul', rarity:'epic',
     fusedFrom:['soulweaver','soundbreaker'],
     stats:{hp:75,maxHp:75,mp:93,maxMp:93,atk:11,def:6,spd:13,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -91,7 +91,7 @@ const FUSION_CLASSES_3 = {
   soul_chrono: {
     id:'soul_chrono', name:'Remnant Hourglass', icon:'⏳',
     tagline:'It borrows time from the dying. It never returns it.',
-    color:'#6a9ad5', element:'timeghost', rarity:'epic',
+    color:'#6a9ad5', element:'time', elementFlavor:'timeghost', rarity:'epic',
     fusedFrom:['soulweaver','chronomancer'],
     stats:{hp:70,maxHp:70,mp:105,maxMp:105,atk:9,def:6,spd:12,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -105,7 +105,7 @@ const FUSION_CLASSES_3 = {
   soul_spellsword: {
     id:'soul_spellsword', name:'Mindreaper', icon:'🔮',
     tagline:'It reads your thoughts. Then it empties them.',
-    color:'#6a78ab', element:'mindghost', rarity:'epic',
+    color:'#6a78ab', element:'psychic', elementFlavor:'mindghost', rarity:'epic',
     fusedFrom:['soulweaver','spellsword'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:11,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -119,7 +119,7 @@ const FUSION_CLASSES_3 = {
   soul_plague: {
     id:'soul_plague', name:'Soulrot', icon:'🧫',
     tagline:'The plague rots the body. This one rots what is underneath.',
-    color:'#5a8855', element:'blightsoul', rarity:'epic',
+    color:'#5a8855', element:'poison', elementFlavor:'blightsoul', rarity:'epic',
     fusedFrom:['soulweaver','plaguedoctor'],
     stats:{hp:73,maxHp:73,mp:100,maxMp:100,atk:9,def:7,spd:11,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:5,SPD:7,MP:10},
@@ -133,7 +133,7 @@ const FUSION_CLASSES_3 = {
   soul_geo: {
     id:'soul_geo', name:'Gravemound', icon:'🪨',
     tagline:'The earth holds the dead. It does not forget them.',
-    color:'#8a7255', element:'earthsoul', rarity:'rare',
+    color:'#8a7255', element:'ghost', elementFlavor:'earthsoul', rarity:'rare',
     fusedFrom:['soulweaver','geomancer'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:10,def:9,spd:9,crit:10},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:5,MP:8},
@@ -147,7 +147,7 @@ const FUSION_CLASSES_3 = {
   soul_lightbringer: {
     id:'soul_lightbringer', name:'Requiem Light', icon:'🕯️',
     tagline:'The light at the end does not guide. It harvests.',
-    color:'#d4a855', element:'soulight', rarity:'epic',
+    color:'#d4a855', element:'ghost', elementFlavor:'soulight', rarity:'epic',
     fusedFrom:['soulweaver','lightbringer'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:11,def:8,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -161,7 +161,7 @@ const FUSION_CLASSES_3 = {
   soul_beast: {
     id:'soul_beast', name:'Spiriteater', icon:'🐺',
     tagline:'It hunts the soul, not the body. The body just comes with it.',
-    color:'#886644', element:'beastsoul', rarity:'rare',
+    color:'#886644', element:'ghost', elementFlavor:'beastsoul', rarity:'rare',
     fusedFrom:['soulweaver','beastmaster'],
     stats:{hp:83,maxHp:83,mp:83,maxMp:83,atk:12,def:8,spd:13,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -175,7 +175,7 @@ const FUSION_CLASSES_3 = {
   soul_tech: {
     id:'soul_tech', name:'Ghost In The Machine', icon:'💾',
     tagline:'The ghost found the machine. The machine found a use.',
-    color:'#4488aa', element:'ghosttech', rarity:'epic',
+    color:'#4488aa', element:'ghost', elementFlavor:'ghosttech', rarity:'epic',
     fusedFrom:['soulweaver','techsavant'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:10,def:7,spd:13,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:8,MP:9},
@@ -189,7 +189,7 @@ const FUSION_CLASSES_3 = {
   soul_grave: {
     id:'soul_grave', name:'Barrowborn', icon:'🪦',
     tagline:'Born from graves. Returns to them enriched.',
-    color:'#557766', element:'gravesoul', rarity:'rare',
+    color:'#557766', element:'ghost', elementFlavor:'gravesoul', rarity:'rare',
     fusedFrom:['soulweaver','gravewarden'],
     stats:{hp:93,maxHp:93,mp:83,maxMp:83,atk:10,def:10,spd:9,crit:10},
     statDisplay:{HP:6,ATK:7,DEF:7,SPD:5,MP:8},
@@ -203,7 +203,7 @@ const FUSION_CLASSES_3 = {
   soul_magnetist: {
     id:'soul_magnetist', name:'Soulpuller', icon:'🧲',
     tagline:'It does not chase souls. It reaches.',
-    color:'#557799', element:'magsoul', rarity:'epic',
+    color:'#557799', element:'ghost', elementFlavor:'magsoul', rarity:'epic',
     fusedFrom:['soulweaver','magnetist'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:11,def:8,spd:11,crit:12},
     statDisplay:{HP:5,ATK:8,DEF:6,SPD:7,MP:9},
@@ -217,7 +217,7 @@ const FUSION_CLASSES_3 = {
   soul_crystal: {
     id:'soul_crystal', name:'The Shardcage', icon:'💎',
     tagline:'Souls do not need a vessel. But they cannot escape a cage.',
-    color:'#aa88cc', element:'crystalsoul', rarity:'legendary',
+    color:'#aa88cc', element:'crystal', elementFlavor:'crystalsoul', rarity:'legendary',
     fusedFrom:['soulweaver','crystalmancer'],
     stats:{hp:70,maxHp:70,mp:100,maxMp:100,atk:12,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -231,7 +231,7 @@ const FUSION_CLASSES_3 = {
   soul_war: {
     id:'soul_war', name:'Warlord Undying', icon:'⚔️',
     tagline:'It commands armies. It commands itself to not stop.',
-    color:'#884422', element:'warsoul', rarity:'rare',
+    color:'#884422', element:'ghost', elementFlavor:'warsoul', rarity:'rare',
     fusedFrom:['soulweaver','warlord'],
     stats:{hp:95,maxHp:95,mp:78,maxMp:78,atk:13,def:9,spd:11,crit:11},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -245,7 +245,7 @@ const FUSION_CLASSES_3 = {
   soul_spirit: {
     id:'soul_spirit', name:'The Undivided', icon:'🌿',
     tagline:'Spirit and soul are the same word in the oldest language.',
-    color:'#559966', element:'twinsoul', rarity:'epic',
+    color:'#559966', element:'ghost', elementFlavor:'twinsoul', rarity:'epic',
     fusedFrom:['soulweaver','spiritwalker'],
     stats:{hp:80,maxHp:80,mp:93,maxMp:93,atk:10,def:8,spd:12,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:6,SPD:7,MP:9},
@@ -259,7 +259,7 @@ const FUSION_CLASSES_3 = {
   soul_hex: {
     id:'soul_hex', name:'Deathhex', icon:'🔮',
     tagline:'The curse reaches where the blade cannot. The soul goes further still.',
-    color:'#885599', element:'hexsoul', rarity:'epic',
+    color:'#885599', element:'ghost', elementFlavor:'hexsoul', rarity:'epic',
     fusedFrom:['soulweaver','hexblade'],
     stats:{hp:75,maxHp:75,mp:95,maxMp:95,atk:11,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -273,7 +273,7 @@ const FUSION_CLASSES_3 = {
   soul_cosmo: {
     id:'soul_cosmo', name:'Void Between Stars', icon:'🌌',
     tagline:'Between every star is darkness. Between every soul is nothing.',
-    color:'#334488', element:'cosmosoul', rarity:'legendary',
+    color:'#334488', element:'cosmic', elementFlavor:'cosmosoul', rarity:'legendary',
     fusedFrom:['soulweaver','cosmomancer'],
     stats:{hp:70,maxHp:70,mp:108,maxMp:108,atk:10,def:6,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -287,7 +287,7 @@ const FUSION_CLASSES_3 = {
   soul_pestilence: {
     id:'soul_pestilence', name:'The Undying Plague', icon:'☣️',
     tagline:'Plagues die out. This one learned not to.',
-    color:'#558833', element:'plagueghost', rarity:'legendary',
+    color:'#558833', element:'ghost', elementFlavor:'plagueghost', rarity:'legendary',
     fusedFrom:['soulweaver','pestilencelord'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:10,def:7,spd:11,crit:12},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:10},
@@ -301,7 +301,7 @@ const FUSION_CLASSES_3 = {
   soul_wind: {
     id:'soul_wind', name:'Howling Remnant', icon:'💨',
     tagline:'The wind carries the dead. It always has.',
-    color:'#6688aa', element:'windsoul', rarity:'rare',
+    color:'#6688aa', element:'ghost', elementFlavor:'windsoul', rarity:'rare',
     fusedFrom:['soulweaver','windwalker'],
     stats:{hp:75,maxHp:75,mp:85,maxMp:85,atk:11,def:6,spd:16,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:8},
@@ -315,7 +315,7 @@ const FUSION_CLASSES_3 = {
   soul_doom: {
     id:'soul_doom', name:'Harbinger', icon:'💀',
     tagline:'Doom is already decided. It just needs delivery.',
-    color:'#554433', element:'doomsoul', rarity:'legendary',
+    color:'#554433', element:'ghost', elementFlavor:'doomsoul', rarity:'legendary',
     fusedFrom:['soulweaver','doomcaster'],
     stats:{hp:70,maxHp:70,mp:105,maxMp:105,atk:10,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -329,7 +329,7 @@ const FUSION_CLASSES_3 = {
   soul_arcanist: {
     id:'soul_arcanist', name:'The Obliteration', icon:'📚',
     tagline:'Magic erases matter. Soul magic erases more than that.',
-    color:'#6655bb', element:'arcanesoul', rarity:'legendary',
+    color:'#6655bb', element:'ghost', elementFlavor:'arcanesoul', rarity:'legendary',
     fusedFrom:['soulweaver','arcanist'],
     stats:{hp:68,maxHp:68,mp:110,maxMp:110,atk:9,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -340,10 +340,10 @@ const FUSION_CLASSES_3 = {
     lore:'The arcanist studied the rules of reality. The soulweaver studied the rules of existence. Together they found the clause that says both can be revoked. They are still deciding whether this is a discovery or a warning.'
   },
 
-  soul_sentinel: {
-    id:'soul_sentinel', name:'The Undying Wall', icon:'🛡️',
+  undying_wall: {
+    id:'undying_wall', name:'The Undying Wall', icon:'🛡️',
     tagline:'It will not move. It will not end. You will.',
-    color:'#556688', element:'soulshard', rarity:'rare',
+    color:'#556688', element:'ghost', elementFlavor:'soulshard', rarity:'rare',
     fusedFrom:['soulweaver','sentinel'],
     stats:{hp:115,maxHp:115,mp:70,maxMp:70,atk:9,def:13,spd:8,crit:8},
     statDisplay:{HP:8,ATK:6,DEF:9,SPD:5,MP:7},
@@ -357,7 +357,7 @@ const FUSION_CLASSES_3 = {
   soul_phantom: {
     id:'soul_phantom', name:'Void Between Breaths', icon:'👻',
     tagline:'It exists in the pause. Between heartbeats. Between thoughts.',
-    color:'#8866cc', element:'phansoul', rarity:'mythical',
+    color:'#8866cc', element:'ghost', elementFlavor:'phansoul', rarity:'mythical',
     fusedFrom:['soulweaver','phantom'],
     stats:{hp:70,maxHp:70,mp:90,maxMp:90,atk:12,def:5,spd:15,crit:19},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:9},
@@ -371,7 +371,7 @@ const FUSION_CLASSES_3 = {
   pyro_storm: {
     id:'pyro_storm', name:'Stormforged', icon:'⛈️',
     tagline:'Where fire meets lightning, the air itself becomes the weapon.',
-    color:'#cc6622', element:'stormfire', rarity:'uncommon',
+    color:'#cc6622', element:'fire', elementFlavor:'stormfire', rarity:'uncommon',
     fusedFrom:['pyromancer','stormcaller'],
     stats:{hp:80,maxHp:80,mp:85,maxMp:85,atk:10,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:8},
@@ -385,7 +385,7 @@ const FUSION_CLASSES_3 = {
   pyro_blood: {
     id:'pyro_blood', name:'Cauterizer', icon:'🩸',
     tagline:'Fire stops the bleeding. It also causes it. Both are useful.',
-    color:'#cc3322', element:'bloodfire', rarity:'uncommon',
+    color:'#cc3322', element:'fire', elementFlavor:'bloodfire', rarity:'uncommon',
     fusedFrom:['pyromancer','bloodknight'],
     stats:{hp:98,maxHp:98,mp:70,maxMp:70,atk:11,def:8,spd:11,crit:11},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:7,MP:7},
@@ -399,7 +399,7 @@ const FUSION_CLASSES_3 = {
   pyro_void: {
     id:'pyro_void', name:'Nullfire', icon:'🌑',
     tagline:'Fire that consumes even the absence of things.',
-    color:'#772299', element:'voidfire', rarity:'rare',
+    color:'#772299', element:'fire', elementFlavor:'voidfire', rarity:'rare',
     fusedFrom:['pyromancer','voidmancer'],
     stats:{hp:70,maxHp:70,mp:100,maxMp:100,atk:9,def:5,spd:11,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -413,7 +413,7 @@ const FUSION_CLASSES_3 = {
   pyro_rune: {
     id:'pyro_rune', name:'Blazing Inscription', icon:'🔱',
     tagline:'The rune ignites. Everything it touches remembers the fire.',
-    color:'#cc6611', element:'runefire', rarity:'uncommon',
+    color:'#cc6611', element:'fire', elementFlavor:'runefire', rarity:'uncommon',
     fusedFrom:['pyromancer','runeblade'],
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:10,def:7,spd:12,crit:13},
     statDisplay:{HP:6,ATK:7,DEF:5,SPD:7,MP:8},
@@ -427,7 +427,7 @@ const FUSION_CLASSES_3 = {
   pyro_necro: {
     id:'pyro_necro', name:'Ashwalker', icon:'💀',
     tagline:'Fire does not destroy. It transforms. The dead know this.',
-    color:'#886633', element:'ashbone', rarity:'rare',
+    color:'#886633', element:'fire', elementFlavor:'ashbone', rarity:'rare',
     fusedFrom:['pyromancer','necromancer'],
     stats:{hp:73,maxHp:73,mp:105,maxMp:105,atk:8,def:5,spd:11,crit:12},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -441,7 +441,7 @@ const FUSION_CLASSES_3 = {
   pyro_paladin: {
     id:'pyro_paladin', name:'Pyre Saint', icon:'🔥',
     tagline:'Sanctify through fire. Both kinds of fire.',
-    color:'#dd9922', element:'holyfire', rarity:'rare',
+    color:'#dd9922', element:'fire', elementFlavor:'holyfire', rarity:'rare',
     fusedFrom:['pyromancer','paladin'],
     stats:{hp:103,maxHp:103,mp:75,maxMp:75,atk:10,def:9,spd:10,crit:10},
     statDisplay:{HP:7,ATK:7,DEF:6,SPD:6,MP:7},
@@ -455,7 +455,7 @@ const FUSION_CLASSES_3 = {
   pyro_frost: {
     id:'pyro_frost', name:'The Tempering', icon:'🌡️',
     tagline:'Steel is made by fire and water together. So is this.',
-    color:'#5599cc', element:'steamfire', rarity:'rare',
+    color:'#5599cc', element:'fire', elementFlavor:'steamfire', rarity:'rare',
     fusedFrom:['pyromancer','frostweaver'],
     stats:{hp:78,maxHp:78,mp:88,maxMp:88,atk:9,def:7,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:5,SPD:7,MP:8},
@@ -469,7 +469,7 @@ const FUSION_CLASSES_3 = {
   pyro_dragon: {
     id:'pyro_dragon', name:'True Drakefire', icon:'🐉',
     tagline:'One breathes fire by birthright. One earned it.',
-    color:'#cc5511', element:'drakefire', rarity:'rare',
+    color:'#cc5511', element:'fire', elementFlavor:'drakefire', rarity:'rare',
     fusedFrom:['pyromancer','dragonknight'],
     stats:{hp:103,maxHp:103,mp:70,maxMp:70,atk:12,def:9,spd:11,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:7,MP:7},
@@ -483,7 +483,7 @@ const FUSION_CLASSES_3 = {
   pyro_tide: {
     id:'pyro_tide', name:'The Scalding', icon:'♨️',
     tagline:'The water boils. Then everything else does.',
-    color:'#cc4433', element:'scaldtide', rarity:'uncommon',
+    color:'#cc4433', element:'fire', elementFlavor:'scaldtide', rarity:'uncommon',
     fusedFrom:['pyromancer','tidecaller'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:9,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:5,SPD:7,MP:9},
@@ -497,7 +497,7 @@ const FUSION_CLASSES_3 = {
   pyro_gravitist: {
     id:'pyro_gravitist', name:'Collapsing Star', icon:'🌟',
     tagline:'Everything falls toward the heat. Then into it.',
-    color:'#cc4422', element:'gravfire', rarity:'rare',
+    color:'#cc4422', element:'fire', elementFlavor:'gravfire', rarity:'rare',
     fusedFrom:['pyromancer','gravitist'],
     stats:{hp:75,maxHp:75,mp:93,maxMp:93,atk:9,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:9},
@@ -511,7 +511,7 @@ const FUSION_CLASSES_3 = {
   pyro_soundbreaker: {
     id:'pyro_soundbreaker', name:'The Detonation', icon:'💥',
     tagline:'Sound travels through fire. Fire answers the call.',
-    color:'#cc6633', element:'pyrowave', rarity:'rare',
+    color:'#cc6633', element:'fire', elementFlavor:'pyrowave', rarity:'rare',
     fusedFrom:['pyromancer','soundbreaker'],
     stats:{hp:78,maxHp:78,mp:88,maxMp:88,atk:10,def:6,spd:14,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:8},
@@ -525,7 +525,7 @@ const FUSION_CLASSES_3 = {
   pyro_chrono: {
     id:'pyro_chrono', name:'Eternal Flame', icon:'🕰️',
     tagline:'Fire that burns outside of time cannot be extinguished inside it.',
-    color:'#cc5522', element:'timfire', rarity:'rare',
+    color:'#cc5522', element:'fire', elementFlavor:'timfire', rarity:'rare',
     fusedFrom:['pyromancer','chronomancer'],
     stats:{hp:73,maxHp:73,mp:100,maxMp:100,atk:9,def:6,spd:13,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:8,MP:10},
@@ -539,7 +539,7 @@ const FUSION_CLASSES_3 = {
   pyro_spellsword: {
     id:'pyro_spellsword', name:'The Igniting Word', icon:'📜',
     tagline:'Every spell ends in fire. That is not a coincidence.',
-    color:'#cc4455', element:'spellfire', rarity:'rare',
+    color:'#cc4455', element:'fire', elementFlavor:'spellfire', rarity:'rare',
     fusedFrom:['pyromancer','spellsword'],
     stats:{hp:83,maxHp:83,mp:85,maxMp:85,atk:10,def:7,spd:12,crit:14},
     statDisplay:{HP:6,ATK:7,DEF:5,SPD:7,MP:8},
@@ -553,7 +553,7 @@ const FUSION_CLASSES_3 = {
   pyro_plague: {
     id:'pyro_plague', name:'The Burning Sickness', icon:'🔥',
     tagline:'The plague spreads through fire. The fire spreads the plague.',
-    color:'#886622', element:'plaguefire', rarity:'rare',
+    color:'#886622', element:'fire', elementFlavor:'plaguefire', rarity:'rare',
     fusedFrom:['pyromancer','plaguedoctor'],
     stats:{hp:75,maxHp:75,mp:95,maxMp:95,atk:9,def:6,spd:11,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:9},
@@ -567,7 +567,7 @@ const FUSION_CLASSES_3 = {
   pyro_geo: {
     id:'pyro_geo', name:'The Magmaborn', icon:'🌋',
     tagline:'The earth was molten once. It remembers.',
-    color:'#cc4400', element:'magmastone', rarity:'uncommon',
+    color:'#cc4400', element:'fire', elementFlavor:'magmastone', rarity:'uncommon',
     fusedFrom:['pyromancer','geomancer'],
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:10,def:9,spd:10,crit:12},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:6,MP:8},

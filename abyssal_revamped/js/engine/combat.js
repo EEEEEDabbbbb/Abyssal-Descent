@@ -736,14 +736,28 @@ function playerAction(type, abilityId=null) {
     openInventoryUse(); return; // opens inventory modal without ending turn
 
   } else if (type === 'flee') {
-    // Flee chance: 40 + player SPD - enemy SPD (can go negative)
-    const chance = 40 + p.stats.spd - (e.spd||8);
+    // Bosses, guardians and secret bosses hold the way forward — no escape
+    if (G.enemies.some(en => en.hp > 0 && (en.isBoss || en.isGuardian || en.isSecretBoss))) {
+      logEntry('system', 'There is no escape — this foe bars the way forward!');
+      updateUI(); return;
+    }
+    // Flee chance: 40 + player SPD - fastest enemy SPD, clamped to 10–90%
+    const fastest = Math.max(...G.enemies.filter(en => en.hp > 0).map(en => en.spd || 8));
+    const chance = clamp(40 + p.stats.spd - fastest, 10, 90);
     if (rand(100) < chance) {
       logEntry('system','You flee from combat!');
       resetCombo(p);
+      // The enemies stay where they were, wounded but with their statuses gone
+      const survivors = G.enemies.filter(en => en.hp > 0);
+      survivors.forEach(en => { en.status = []; });
+      const cell = G.map[G.playerPos.y][G.playerPos.x];
       endCombat(false); // false = fled, not won
       G.phase = 'explore';
-      G.map[G.playerPos.y][G.playerPos.x].content = 'visited';
+      if (survivors.length > 1) { cell.enemies = survivors; cell.enemy = null; }
+      else if (survivors.length === 1) { cell.enemy = survivors[0]; delete cell.enemies; }
+      cell.content = survivors.length ? 'enemy' : 'visited';
+      // Step back to where you came from so you aren't standing on the enemy
+      if (G._prevPlayerPos) G.playerPos = { ...G._prevPlayerPos };
       updateUI(); return;
     } else {
       logEntry('system','Failed to flee!');
@@ -874,9 +888,13 @@ function endPlayerTurn() {
 // system needed no changes: "the enemy side" is still a single conceptual
 // turn-slot within a round, however many individual enemies act inside it.
 function enemyTurn() {
-  if (!G.inCombat || !G.enemies || !G.enemies.length) return;
-  // Safety: close any lingering modal from the turn delay window
-  document.getElementById('overlay').classList.remove('active');
+  if (!G.inCombat || !G.enemies || !G.enemies.length || G.turn !== 'enemy') return;
+  // A dialog is open (pause menu, weapon arts choice…) — wait for it to close
+  // instead of acting behind it. This is also what makes the pause menu pause.
+  if (document.getElementById('overlay').classList.contains('active')) {
+    setTimeout(enemyTurn, 250);
+    return;
+  }
 
   for (let i = 0; i < G.enemies.length; i++) {
     const e = G.enemies[i];
@@ -1031,7 +1049,8 @@ function winCombat() {
   gainXP(xpGain);
   // Class XP: 10 base + 2 per floor, persists in G.meta.classXP (used for fusion unlock)
   const classXpGain = 10 + (G.floor * 2);
-  if (G.selectedClass) gainClassXP(G.selectedClass, classXpGain);
+  gainClassXP(G.player.classId, classXpGain);
+  G.player._classXpGained = (G.player._classXpGained || 0) + classXpGain;
   G.player.gold += goldGain;
 
   if (e.isBoss) {
@@ -1097,7 +1116,8 @@ function winCombat() {
   // Floor 50 final boss: triggers full conquest reward sequence
   if (e.isFinalBoss) {
     endCombat(true);
-    if (typeof clearActiveRunSave === 'function') clearActiveRunSave();
+    G.phase = 'victory';
+    clearActiveRunSave();
     triggerConquestReward();
     return;
   }
@@ -1178,7 +1198,8 @@ function renderBossPhaseBar(e) {
 // One-time shard bonus protected by shardDumpClaimed flag
 function triggerConquestReward() {
   const m = G.meta;
-  if (!m.conquestRewards.conquered) {
+  const firstTime = !m.conquestRewards.conquered;
+  if (firstTime) {
     m.conquestRewards.conquered = true;
     m.conquestRewards.title = true;
     m.conquestRewards.permanentGear = 'abyssal_crown';
@@ -1196,10 +1217,21 @@ function triggerConquestReward() {
     }
     saveMeta();
   }
-  showConquestModal();
+  showConquestModal(firstTime);
 }
 
-function showConquestModal() {
+function showConquestModal(firstTime) {
+  const m = G.meta;
+  if (!firstTime) {
+    showModal(`
+      <div class="modal-title" style="color:#9900ff;text-shadow:0 0 20px #9900ff88">⚜ THE ABYSS FALLS AGAIN ⚜</div>
+      <div style="text-align:center;font-style:italic;color:var(--text-mid);margin:1rem 0;line-height:1.8">
+        "${m.ngPlus > 0 ? `NG+${m.ngPlus} conquered.` : 'Conquered once more.'} The Abyssal God remembers you."
+      </div>
+      <button class="title-btn primary" style="width:100%;margin-top:0.5rem;background:var(--accent-violet)" onclick="closeModal();returnToTitle();showNGPlusModal()">🔄 Begin NG+${m.ngPlus + 1}</button>
+      <button class="title-btn" style="width:100%;margin-top:0.4rem" onclick="closeModal();returnToTitle()">Return to the Surface</button>`, false);
+    return;
+  }
   const html = `
     <div class="modal-title" style="color:#9900ff;text-shadow:0 0 20px #9900ff88">⚜ THE ABYSS IS CONQUERED ⚜</div>
     <div style="text-align:center;font-style:italic;color:var(--text-mid);margin:1rem 0;line-height:1.8">
@@ -1222,6 +1254,6 @@ function showConquestModal() {
         <div class="shop-item-info"><div class="item-name">⚗ +150 Soul Shards</div><div style="font-size:0.68rem;color:var(--text-dim);font-style:italic">One-time conquest reward.</div></div>
       </div>
     </div>
-    <button class="title-btn primary" style="width:100%;margin-top:0.5rem" onclick="document.getElementById('overlay').classList.remove('active');showScreen('title-screen')">Return to the Surface</button>`;
-  showModal(html);
+    <button class="title-btn primary" style="width:100%;margin-top:0.5rem" onclick="closeModal();returnToTitle()">Return to the Surface</button>`;
+  showModal(html, false);
 }

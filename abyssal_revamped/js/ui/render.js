@@ -654,17 +654,19 @@ function renderExploreView(view) {
 }
 
 // ── Right panel (log) ─────────────────────────────────────────
-let _lastLogLength = 0;
+// The log is newest-first. It only re-renders when logEntry() bumps
+// G._logVersion (or the log is cleared/replaced, e.g. on load).
+let _lastLogLength = -1;
+let _lastLogVersion = -1;
 function renderRightPanel() {
   const log = document.getElementById('combat-log');
   if (!log) return;
-  const entries = G.log.slice(0, 60);
-  if (entries.length === _lastLogLength) return; // nothing new, don't touch the DOM
-  _lastLogLength = entries.length;
-  const wasAtBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
-  log.innerHTML = entries.map(entry=>`
-    <div class="log-entry ${entry.type}">${entry.msg}</div>`).join('');
-  if (wasAtBottom) log.scrollTop = log.scrollHeight;
+  if (G._logVersion === _lastLogVersion && G.log.length === _lastLogLength) return;
+  _lastLogVersion = G._logVersion;
+  _lastLogLength = G.log.length;
+  const atTop = log.scrollTop < 40;
+  log.innerHTML = G.log.slice(0, 60).map(entry => `<div class="log-entry ${entry.type}">${entry.msg}</div>`).join('');
+  if (atTop) log.scrollTop = 0; // keep the newest lines in view unless you scrolled down to read
 }
 
 // ── Floating damage numbers ───────────────────────────────────

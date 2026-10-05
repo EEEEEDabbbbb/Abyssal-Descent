@@ -48,7 +48,7 @@ const FUSION_CLASSES_4 = {
   pyro_lightbringer: {
     id:'pyro_lightbringer', name:'Solar Flare', icon:'☀️',
     tagline:'The sun does not ask permission to burn.',
-    color:'#e68033', element:'holyfire', rarity:'rare',
+    color:'#e68033', element:'fire', elementFlavor:'holyfire', rarity:'rare',
     fusedFrom:['pyromancer','lightbringer'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:10,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:8,MP:8},
@@ -62,7 +62,7 @@ const FUSION_CLASSES_4 = {
   pyro_beast: {
     id:'pyro_beast', name:'Fireborn', icon:'🦁',
     tagline:'The beast does not tame the fire. They understand each other.',
-    color:'#aa6f33', element:'runefire', rarity:'uncommon',
+    color:'#aa6f33', element:'fire', elementFlavor:'runefire', rarity:'uncommon',
     fusedFrom:['pyromancer','beastmaster'],
     stats:{hp:85,maxHp:85,mp:78,maxMp:78,atk:11,def:7,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:8,MP:8},
@@ -76,7 +76,7 @@ const FUSION_CLASSES_4 = {
   pyro_tech: {
     id:'pyro_tech', name:'Plasma Forge', icon:'⚙️',
     tagline:'Heat applied with precision is engineering. This is that.',
-    color:'#885566', element:'techflame', rarity:'rare',
+    color:'#885566', element:'fire', elementFlavor:'techflame', rarity:'rare',
     fusedFrom:['pyromancer','techsavant'],
     stats:{hp:78,maxHp:78,mp:93,maxMp:93,atk:10,def:6,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:9},
@@ -90,7 +90,7 @@ const FUSION_CLASSES_4 = {
   pyro_grave: {
     id:'pyro_grave', name:'The Pyre', icon:'🕯️',
     tagline:'What burns is not destroyed. It is preserved in ash.',
-    color:'#914455', element:'soulfire', rarity:'uncommon',
+    color:'#914455', element:'fire', elementFlavor:'soulfire', rarity:'uncommon',
     fusedFrom:['pyromancer','gravewarden'],
     stats:{hp:95,maxHp:95,mp:78,maxMp:78,atk:10,def:9,spd:10,crit:12},
     statDisplay:{HP:6,ATK:7,DEF:6,SPD:6,MP:8},
@@ -104,7 +104,7 @@ const FUSION_CLASSES_4 = {
   pyro_magnetist: {
     id:'pyro_magnetist', name:'Molten Lodestone', icon:'🧲',
     tagline:'Molten iron follows no compass. It follows hunger.',
-    color:'#915e66', element:'ironfire', rarity:'rare',
+    color:'#915e66', element:'fire', elementFlavor:'ironfire', rarity:'rare',
     fusedFrom:['pyromancer','magnetist'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:10,def:7,spd:12,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:8},
@@ -118,7 +118,7 @@ const FUSION_CLASSES_4 = {
   pyro_crystal: {
     id:'pyro_crystal', name:'Prism Inferno', icon:'💎',
     tagline:'Crystal refracts. Fire amplifies. Together they multiply.',
-    color:'#aa6f91', element:'crystalfire', rarity:'epic',
+    color:'#aa6f91', element:'fire', elementFlavor:'crystalfire', rarity:'epic',
     fusedFrom:['pyromancer','crystalmancer'],
     stats:{hp:73,maxHp:73,mp:95,maxMp:95,atk:11,def:6,spd:13,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -132,7 +132,7 @@ const FUSION_CLASSES_4 = {
   pyro_war: {
     id:'pyro_war', name:'The Warchief\'s Pyre', icon:'🔥',
     tagline:'The army that fights behind fire never breaks.',
-    color:'#cc3311', element:'infernofist', rarity:'uncommon',
+    color:'#cc3311', element:'fire', elementFlavor:'infernofist', rarity:'uncommon',
     fusedFrom:['pyromancer','warlord'],
     stats:{hp:98,maxHp:98,mp:73,maxMp:73,atk:12,def:9,spd:12,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:7,MP:7},
@@ -146,7 +146,7 @@ const FUSION_CLASSES_4 = {
   pyro_spirit: {
     id:'pyro_spirit', name:'Soulpyre', icon:'🌿',
     tagline:'Spirits do not burn. They become the fire.',
-    color:'#886655', element:'soulflame', rarity:'rare',
+    color:'#886655', element:'fire', elementFlavor:'soulflame', rarity:'rare',
     fusedFrom:['pyromancer','spiritwalker'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:9,def:7,spd:13,crit:13},
     statDisplay:{HP:6,ATK:6,DEF:5,SPD:8,MP:8},
@@ -160,7 +160,7 @@ const FUSION_CLASSES_4 = {
   pyro_hex: {
     id:'pyro_hex', name:'Hellbrand', icon:'🔮',
     tagline:'Cursed fire does not go out. It is the curse.',
-    color:'#aa2255', element:'hellfire', rarity:'rare',
+    color:'#aa2255', element:'fire', elementFlavor:'hellfire', rarity:'rare',
     fusedFrom:['pyromancer','hexblade'],
     stats:{hp:78,maxHp:78,mp:90,maxMp:90,atk:10,def:6,spd:13,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:8,MP:9},
@@ -174,7 +174,7 @@ const FUSION_CLASSES_4 = {
   pyro_cosmo: {
     id:'pyro_cosmo', name:'Stellar Cremation', icon:'🌟',
     tagline:'Stars burn for millions of years. It is patient.',
-    color:'#882b66', element:'starfire', rarity:'epic',
+    color:'#882b66', element:'fire', elementFlavor:'starfire', rarity:'epic',
     fusedFrom:['pyromancer','cosmomancer'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:9,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -188,7 +188,7 @@ const FUSION_CLASSES_4 = {
   pyro_pestilence: {
     id:'pyro_pestilence', name:'The Immolation', icon:'☣️',
     tagline:'The plague needs a vector. Fire is very fast.',
-    color:'#915511', element:'plaguefire', rarity:'epic',
+    color:'#915511', element:'fire', elementFlavor:'plaguefire', rarity:'epic',
     fusedFrom:['pyromancer','pestilencelord'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:10,def:6,spd:11,crit:13},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:9},
@@ -202,7 +202,7 @@ const FUSION_CLASSES_4 = {
   pyro_wind: {
     id:'pyro_wind', name:'Firestorm', icon:'🌪️',
     tagline:'Wind does not fight the fire. It carries it everywhere.',
-    color:'#aa7766', element:'firestorm', rarity:'uncommon',
+    color:'#aa7766', element:'fire', elementFlavor:'firestorm', rarity:'uncommon',
     fusedFrom:['pyromancer','windwalker'],
     stats:{hp:78,maxHp:78,mp:80,maxMp:80,atk:10,def:6,spd:16,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:9,MP:8},
@@ -216,7 +216,7 @@ const FUSION_CLASSES_4 = {
   pyro_doom: {
     id:'pyro_doom', name:'The Last Conflagration', icon:'💣',
     tagline:'Doom announced with fire is not a warning. It is a schedule.',
-    color:'#992b2b', element:'hellfire', rarity:'epic',
+    color:'#992b2b', element:'fire', elementFlavor:'hellfire', rarity:'epic',
     fusedFrom:['pyromancer','doomcaster'],
     stats:{hp:73,maxHp:73,mp:100,maxMp:100,atk:9,def:5,spd:12,crit:15},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:7,MP:10},
@@ -230,7 +230,7 @@ const FUSION_CLASSES_4 = {
   pyro_arcanist: {
     id:'pyro_arcanist', name:'Burning Theorem', icon:'📚',
     tagline:'Every equation has a heat solution.',
-    color:'#912b77', element:'mindfire', rarity:'epic',
+    color:'#912b77', element:'fire', elementFlavor:'mindfire', rarity:'epic',
     fusedFrom:['pyromancer','arcanist'],
     stats:{hp:70,maxHp:70,mp:105,maxMp:105,atk:9,def:5,spd:13,crit:15},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:8,MP:10},
@@ -244,7 +244,7 @@ const FUSION_CLASSES_4 = {
   pyro_sentinel: {
     id:'pyro_sentinel', name:'Molten Wall', icon:'🧱',
     tagline:'Nothing passes a wall that is also on fire.',
-    color:'#aa5555', element:'molten', rarity:'uncommon',
+    color:'#aa5555', element:'fire', elementFlavor:'molten', rarity:'uncommon',
     fusedFrom:['pyromancer','sentinel'],
     stats:{hp:118,maxHp:118,mp:65,maxMp:65,atk:8,def:12,spd:9,crit:9},
     statDisplay:{HP:8,ATK:6,DEF:8,SPD:5,MP:6},
@@ -258,7 +258,7 @@ const FUSION_CLASSES_4 = {
   pyro_phantom: {
     id:'pyro_phantom', name:'Phantom Blaze', icon:'👻',
     tagline:'The ghost burns. What it haunts burns with it.',
-    color:'#aa5e6f', element:'soulfire', rarity:'legendary',
+    color:'#aa5e6f', element:'fire', elementFlavor:'soulfire', rarity:'legendary',
     fusedFrom:['pyromancer','phantom'],
     stats:{hp:73,maxHp:73,mp:85,maxMp:85,atk:11,def:5,spd:15,crit:20},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:8},
@@ -272,7 +272,7 @@ const FUSION_CLASSES_4 = {
   storm_blood: {
     id:'storm_blood', name:'Hemorrhage Storm', icon:'⚡',
     tagline:'The lightning opens the wound. The wound feeds the storm.',
-    color:'#805577', element:'stormblood', rarity:'rare',
+    color:'#805577', element:'electric', elementFlavor:'stormblood', rarity:'rare',
     fusedFrom:['stormcaller','bloodknight'],
     stats:{hp:103,maxHp:103,mp:65,maxMp:65,atk:13,def:9,spd:12,crit:13},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:6},
@@ -286,7 +286,7 @@ const FUSION_CLASSES_4 = {
   storm_void: {
     id:'storm_void', name:'Null Tempest', icon:'🌀',
     tagline:'The storm that erases the things it passes through.',
-    color:'#666fcc', element:'stormshade', rarity:'epic',
+    color:'#666fcc', element:'electric', elementFlavor:'stormshade', rarity:'epic',
     fusedFrom:['stormcaller','voidmancer'],
     stats:{hp:75,maxHp:75,mp:95,maxMp:95,atk:11,def:6,spd:13,crit:16},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -300,7 +300,7 @@ const FUSION_CLASSES_4 = {
   storm_rune: {
     id:'storm_rune', name:'Runic Tempest', icon:'🔱',
     tagline:'The rune inscribed by lightning lasts forever. The lightning does not need to.',
-    color:'#99a280', element:'runestorm', rarity:'rare',
+    color:'#99a280', element:'electric', elementFlavor:'runestorm', rarity:'rare',
     fusedFrom:['stormcaller','runeblade'],
     stats:{hp:93,maxHp:93,mp:75,maxMp:75,atk:13,def:8,spd:14,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:7},
@@ -314,7 +314,7 @@ const FUSION_CLASSES_4 = {
   storm_necro: {
     id:'storm_necro', name:'The Galvanic Dead', icon:'💀',
     tagline:'Lightning does not kill the dead. It recruits them.',
-    color:'#44a2a2', element:'stormsoul', rarity:'rare',
+    color:'#44a2a2', element:'ghost', elementFlavor:'stormsoul', rarity:'rare',
     fusedFrom:['stormcaller','necromancer'],
     stats:{hp:78,maxHp:78,mp:100,maxMp:100,atk:10,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -328,7 +328,7 @@ const FUSION_CLASSES_4 = {
   storm_paladin: {
     id:'storm_paladin', name:'Thundersaint', icon:'⚜️',
     tagline:'The divine mandate arrives at lightning speed.',
-    color:'#99b399', element:'holystorm', rarity:'rare',
+    color:'#99b399', element:'electric', elementFlavor:'holystorm', rarity:'rare',
     fusedFrom:['stormcaller','paladin'],
     stats:{hp:108,maxHp:108,mp:70,maxMp:70,atk:12,def:11,spd:12,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:7},
@@ -342,7 +342,7 @@ const FUSION_CLASSES_4 = {
   storm_frost: {
     id:'storm_frost', name:'Blizzard Voltage', icon:'❄️',
     tagline:'Cold slows the charge. Charge shatters the cold. Both win.',
-    color:'#6fbbee', element:'frostbolt', rarity:'rare',
+    color:'#6fbbee', element:'ice', elementFlavor:'frostbolt', rarity:'rare',
     fusedFrom:['stormcaller','frostweaver'],
     stats:{hp:83,maxHp:83,mp:83,maxMp:83,atk:12,def:8,spd:14,crit:16},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -356,7 +356,7 @@ const FUSION_CLASSES_4 = {
   storm_dragon: {
     id:'storm_dragon', name:'Stormlord Drake', icon:'🐉',
     tagline:'The dragon breathes fire. This one breathes lightning.',
-    color:'#99806f', element:'dragonbolt', rarity:'rare',
+    color:'#99806f', element:'dragon', elementFlavor:'dragonbolt', rarity:'rare',
     fusedFrom:['stormcaller','dragonknight'],
     stats:{hp:108,maxHp:108,mp:65,maxMp:65,atk:14,def:10,spd:13,crit:14},
     statDisplay:{HP:7,ATK:10,DEF:7,SPD:8,MP:6},
@@ -370,7 +370,7 @@ const FUSION_CLASSES_4 = {
   storm_tide: {
     id:'storm_tide', name:'Maelstrom Caller', icon:'🌊',
     tagline:'The storm and the sea were always the same argument.',
-    color:'#4d99d5', element:'stormsurge', rarity:'rare',
+    color:'#4d99d5', element:'electric', elementFlavor:'stormsurge', rarity:'rare',
     fusedFrom:['stormcaller','tidecaller'],
     stats:{hp:85,maxHp:85,mp:85,maxMp:85,atk:12,def:8,spd:14,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -384,7 +384,7 @@ const FUSION_CLASSES_4 = {
   storm_gravitist: {
     id:'storm_gravitist', name:'The Gravity Storm', icon:'⚫',
     tagline:'Mass and charge are cousins. This one found the family resemblance.',
-    color:'#4d77a2', element:'gravitron', rarity:'epic',
+    color:'#4d77a2', element:'electric', elementFlavor:'gravitron', rarity:'epic',
     fusedFrom:['stormcaller','gravitist'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:11,def:7,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
@@ -398,7 +398,7 @@ const FUSION_CLASSES_4 = {
   storm_soundbreaker: {
     id:'storm_soundbreaker', name:'The Thunderbreak', icon:'🔊',
     tagline:'Thunder and sound were always the same. Now they are weaponized together.',
-    color:'#99a299', element:'thunderwave', rarity:'rare',
+    color:'#99a299', element:'electric', elementFlavor:'thunderwave', rarity:'rare',
     fusedFrom:['stormcaller','soundbreaker'],
     stats:{hp:83,maxHp:83,mp:83,maxMp:83,atk:13,def:7,spd:15,crit:16},
     statDisplay:{HP:6,ATK:9,DEF:5,SPD:9,MP:8},
@@ -412,7 +412,7 @@ const FUSION_CLASSES_4 = {
   storm_chrono: {
     id:'storm_chrono', name:'Temporal Lightning', icon:'⏳',
     tagline:'Lightning already struck. It also will strike. It is striking.',
-    color:'#8091ee', element:'timestorm', rarity:'epic',
+    color:'#8091ee', element:'electric', elementFlavor:'timestorm', rarity:'epic',
     fusedFrom:['stormcaller','chronomancer'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:11,def:7,spd:14,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:9},
@@ -426,7 +426,7 @@ const FUSION_CLASSES_4 = {
   storm_spellsword: {
     id:'storm_spellsword', name:'Arc Blade', icon:'⚡',
     tagline:'The blade carries the charge. The spell carries the blade.',
-    color:'#806fc4', element:'psiblast', rarity:'rare',
+    color:'#806fc4', element:'psychic', elementFlavor:'psiblast', rarity:'rare',
     fusedFrom:['stormcaller','spellsword'],
     stats:{hp:88,maxHp:88,mp:80,maxMp:80,atk:13,def:8,spd:14,crit:16},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -440,7 +440,7 @@ const FUSION_CLASSES_4 = {
   storm_plague: {
     id:'storm_plague', name:'The Epidemic Arc', icon:'🧫',
     tagline:'The lightning spreads the plague. The plague spreads by proximity. The proximity spreads by lightning.',
-    color:'#6fa288', element:'toxicstorm', rarity:'epic',
+    color:'#6fa288', element:'poison', elementFlavor:'toxicstorm', rarity:'epic',
     fusedFrom:['stormcaller','plaguedoctor'],
     stats:{hp:80,maxHp:80,mp:90,maxMp:90,atk:11,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:9},
@@ -454,7 +454,7 @@ const FUSION_CLASSES_4 = {
   storm_geo: {
     id:'storm_geo', name:'The Groundstrike', icon:'🪨',
     tagline:'The earth remembers every bolt. It conducts the next one.',
-    color:'#809199', element:'grounding', rarity:'uncommon',
+    color:'#809199', element:'electric', elementFlavor:'grounding', rarity:'uncommon',
     fusedFrom:['stormcaller','geomancer'],
     stats:{hp:93,maxHp:93,mp:75,maxMp:75,atk:12,def:10,spd:12,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:7,SPD:7,MP:7},
@@ -468,7 +468,7 @@ const FUSION_CLASSES_4 = {
   storm_lightbringer: {
     id:'storm_lightbringer', name:'Aurora Wrath', icon:'🌅',
     tagline:'The northern lights are just divine lightning at full brightness.',
-    color:'#aabb91', element:'holystorm', rarity:'rare',
+    color:'#aabb91', element:'electric', elementFlavor:'holystorm', rarity:'rare',
     fusedFrom:['stormcaller','lightbringer'],
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:13,def:8,spd:14,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -482,7 +482,7 @@ const FUSION_CLASSES_4 = {
   storm_beast: {
     id:'storm_beast', name:'The Thunderpack', icon:'🐺',
     tagline:'The pack moves like lightning. Lightning moves like a pack.',
-    color:'#6faa91', element:'runestorm', rarity:'uncommon',
+    color:'#6faa91', element:'electric', elementFlavor:'runestorm', rarity:'uncommon',
     fusedFrom:['stormcaller','beastmaster'],
     stats:{hp:90,maxHp:90,mp:73,maxMp:73,atk:13,def:8,spd:15,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:9,MP:7},
@@ -496,7 +496,7 @@ const FUSION_CLASSES_4 = {
   storm_tech: {
     id:'storm_tech', name:'Overclocked', icon:'💻',
     tagline:'The system runs hot. Hotter. Past the rated maximum. Still faster.',
-    color:'#4d91c4', element:'techstorm', rarity:'epic',
+    color:'#4d91c4', element:'electric', elementFlavor:'techstorm', rarity:'epic',
     fusedFrom:['stormcaller','techsavant'],
     stats:{hp:83,maxHp:83,mp:88,maxMp:88,atk:12,def:7,spd:15,crit:15},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:9,MP:8},
@@ -510,7 +510,7 @@ const FUSION_CLASSES_4 = {
   storm_grave: {
     id:'storm_grave', name:'The Lightning Lich', icon:'💀',
     tagline:'The storm that refuses death is considerably more inconvenient than one that accepts it.',
-    color:'#5580b3', element:'stormsoul', rarity:'rare',
+    color:'#5580b3', element:'ghost', elementFlavor:'stormsoul', rarity:'rare',
     fusedFrom:['stormcaller','gravewarden'],
     stats:{hp:100,maxHp:100,mp:73,maxMp:73,atk:12,def:11,spd:12,crit:13},
     statDisplay:{HP:7,ATK:8,DEF:8,SPD:7,MP:7},
@@ -524,7 +524,7 @@ const FUSION_CLASSES_4 = {
   storm_magnetist: {
     id:'storm_magnetist', name:'The Lodestone Storm', icon:'🧲',
     tagline:'Every bolt finds the largest conductor. The lodestone makes itself that conductor.',
-    color:'#5599c4', element:'magnetstorm', rarity:'rare',
+    color:'#5599c4', element:'electric', elementFlavor:'magnetstorm', rarity:'rare',
     fusedFrom:['stormcaller','magnetist'],
     stats:{hp:85,maxHp:85,mp:83,maxMp:83,atk:13,def:8,spd:13,crit:15},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -538,7 +538,7 @@ const FUSION_CLASSES_4 = {
   storm_crystal: {
     id:'storm_crystal', name:'Crystal Conductor', icon:'💎',
     tagline:'Perfect crystal lattice conducts without resistance. The enemy provides the resistance.',
-    color:'#6faaee', element:'crystalstorm', rarity:'epic',
+    color:'#6faaee', element:'crystal', elementFlavor:'crystalstorm', rarity:'epic',
     fusedFrom:['stormcaller','crystalmancer'],
     stats:{hp:78,maxHp:78,mp:90,maxMp:90,atk:13,def:7,spd:15,crit:18},
     statDisplay:{HP:5,ATK:9,DEF:5,SPD:9,MP:9},
@@ -552,7 +552,7 @@ const FUSION_CLASSES_4 = {
   storm_war: {
     id:'storm_war', name:'Stormbreaker General', icon:'⚔️',
     tagline:'Commands the battlefield. The battlefield includes the sky.',
-    color:'#916f6f', element:'warstorm', rarity:'rare',
+    color:'#916f6f', element:'electric', elementFlavor:'warstorm', rarity:'rare',
     fusedFrom:['stormcaller','warlord'],
     stats:{hp:103,maxHp:103,mp:68,maxMp:68,atk:14,def:10,spd:13,crit:14},
     statDisplay:{HP:7,ATK:10,DEF:7,SPD:8,MP:7},

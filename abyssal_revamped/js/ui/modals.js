@@ -106,7 +106,8 @@ function _generateShopItems() {
     'spring_water','verdant_tonic','earthen_ward','wind_draught','mind_shard',
     'berserker_brew','shadow_dust'
   ];
-  const cons = ITEM_POOL.find(it=>it.id===consIds[rand(consIds.length)]);
+  const consId = consIds[rand(consIds.length)]; // pick once (not inside find)
+  const cons = ITEM_POOL.find(it=>it.id===consId);
   if (cons) items.push({...cloneItem(cons), shopPrice:12+rand(10)});
   return items;
 }
@@ -140,6 +141,7 @@ function buyShopItem(idx) {
   const p    = G.player;
   const item = G._shopItems[idx];
   if (!item||p.gold<item.shopPrice) return;
+  if (inventoryFull(p)) { logEntry('system','🎒 Your pack is full — sell or drop something first.'); renderShop(); updateUI(); return; }
   p.gold -= item.shopPrice;
   G._shopItems.splice(idx,1);
   const clean = cloneItem(item);
@@ -248,9 +250,14 @@ function openInventoryUse() {
   showModal(html, false);
 }
 
+// useItemInCombat — using or equipping an item mid-fight takes your turn.
+// Items that deal damage just lower HP; checkCombatEnd() decides if the fight
+// is over (all pack members dead), never the item itself.
 function useItemInCombat(idx) {
+  if (!G.inCombat || G.turn !== 'player') return;
   closeModal();
   useItem(idx);
+  checkCombatEnd();
   if (G.inCombat) endPlayerTurn();
 }
 

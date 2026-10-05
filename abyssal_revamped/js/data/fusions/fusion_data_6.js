@@ -48,7 +48,7 @@ const FUSION_CLASSES_6 = {
   blood_phantom: {
     id:'blood_phantom', name:'The Crimson Shade', icon:'👻',
     tagline:'The ghost bleeds. Everything it passes through bleeds with it.',
-    color:'#995566', element:'deathblood', rarity:'legendary',
+    color:'#995566', element:'dark', elementFlavor:'deathblood', rarity:'legendary',
     fusedFrom:['bloodknight','phantom'],
     stats:{hp:95,maxHp:95,mp:65,maxMp:65,atk:14,def:8,spd:14,crit:18},
     statDisplay:{HP:6,ATK:10,DEF:6,SPD:8,MP:6},
@@ -62,7 +62,7 @@ const FUSION_CLASSES_6 = {
   void_rune: {
     id:'void_rune', name:'The Erased Inscription', icon:'🌀',
     tagline:'The rune that unmakes what it marks.',
-    color:'#aa776f', element:'runeshadow', rarity:'epic',
+    color:'#aa776f', element:'shadow', elementFlavor:'runeshadow', rarity:'epic',
     fusedFrom:['voidmancer','runeblade'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:12,def:7,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:7,MP:9},
@@ -76,7 +76,7 @@ const FUSION_CLASSES_6 = {
   void_necro: {
     id:'void_necro', name:'The Unmaker', icon:'💀',
     tagline:'Death is not void. Death is the absence of life. Void is the absence of both.',
-    color:'#557791', element:'wraith', rarity:'epic',
+    color:'#557791', element:'shadow', elementFlavor:'wraith', rarity:'epic',
     fusedFrom:['voidmancer','necromancer'],
     stats:{hp:68,maxHp:68,mp:115,maxMp:115,atk:9,def:5,spd:10,crit:13},
     statDisplay:{HP:5,ATK:6,DEF:4,SPD:6,MP:11},
@@ -90,7 +90,7 @@ const FUSION_CLASSES_6 = {
   void_paladin: {
     id:'void_paladin', name:'The Fallen Absolute', icon:'🌀',
     tagline:'When the holy light touches the void, one of them wins. Ask which.',
-    color:'#aa8888', element:'dusklight', rarity:'epic',
+    color:'#aa8888', element:'shadow', elementFlavor:'dusklight', rarity:'epic',
     fusedFrom:['voidmancer','paladin'],
     stats:{hp:98,maxHp:98,mp:85,maxMp:85,atk:11,def:9,spd:9,crit:12},
     statDisplay:{HP:7,ATK:8,DEF:6,SPD:5,MP:8},
@@ -104,7 +104,7 @@ const FUSION_CLASSES_6 = {
   void_frost: {
     id:'void_frost', name:'Absolute Zero', icon:'❄️',
     tagline:'Cold enough and nothing moves. Nothing exists at that temperature.',
-    color:'#8091dd', element:'frostshadow', rarity:'epic',
+    color:'#8091dd', element:'shadow', elementFlavor:'frostshadow', rarity:'epic',
     fusedFrom:['voidmancer','frostweaver'],
     stats:{hp:73,maxHp:73,mp:98,maxMp:98,atk:10,def:6,spd:12,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:9},
@@ -118,7 +118,7 @@ const FUSION_CLASSES_6 = {
   void_dragon: {
     id:'void_dragon', name:'The Void Drake', icon:'🌀',
     tagline:'A dragon with no breath. It erases things instead.',
-    color:'#aa555e', element:'shadowdrake', rarity:'epic',
+    color:'#aa555e', element:'shadow', elementFlavor:'shadowdrake', rarity:'epic',
     fusedFrom:['voidmancer','dragonknight'],
     stats:{hp:98,maxHp:98,mp:80,maxMp:80,atk:13,def:8,spd:11,crit:13},
     statDisplay:{HP:7,ATK:9,DEF:6,SPD:7,MP:8},
@@ -132,7 +132,7 @@ const FUSION_CLASSES_6 = {
   void_tide: {
     id:'void_tide', name:'The Null Current', icon:'🌀',
     tagline:'The tide erases the shore. This one erases what the tide touches.',
-    color:'#5e6fc4', element:'mireshadow', rarity:'epic',
+    color:'#5e6fc4', element:'shadow', elementFlavor:'mireshadow', rarity:'epic',
     fusedFrom:['voidmancer','tidecaller'],
     stats:{hp:75,maxHp:75,mp:100,maxMp:100,atk:10,def:6,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -146,7 +146,7 @@ const FUSION_CLASSES_6 = {
   void_gravitist: {
     id:'void_gravitist', name:'The Event Horizon', icon:'⚫',
     tagline:'Past a certain point, nothing returns. Not even the void.',
-    color:'#5e4d91', element:'gravshade', rarity:'legendary',
+    color:'#5e4d91', element:'shadow', elementFlavor:'gravshade', rarity:'legendary',
     fusedFrom:['voidmancer','gravitist'],
     stats:{hp:70,maxHp:70,mp:103,maxMp:103,atk:10,def:5,spd:11,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -160,7 +160,7 @@ const FUSION_CLASSES_6 = {
   void_soundbreaker: {
     id:'void_soundbreaker', name:'The Silence', icon:'🔇',
     tagline:'The void has no sound. It will share this quality with the room.',
-    color:'#aa7788', element:'silentwave', rarity:'epic',
+    color:'#aa7788', element:'shadow', elementFlavor:'silentwave', rarity:'epic',
     fusedFrom:['voidmancer','soundbreaker'],
     stats:{hp:73,maxHp:73,mp:98,maxMp:98,atk:12,def:5,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:9},
@@ -174,7 +174,7 @@ const FUSION_CLASSES_6 = {
   void_chrono: {
     id:'void_chrono', name:'The End of Hours', icon:'⏳',
     tagline:'Time runs out. The void is what is left after.',
-    color:'#9166dd', element:'timeshade', rarity:'legendary',
+    color:'#9166dd', element:'shadow', elementFlavor:'timeshade', rarity:'legendary',
     fusedFrom:['voidmancer','chronomancer'],
     stats:{hp:68,maxHp:68,mp:110,maxMp:110,atk:10,def:5,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -188,7 +188,7 @@ const FUSION_CLASSES_6 = {
   void_spellsword: {
     id:'void_spellsword', name:'The Null Formula', icon:'🌀',
     tagline:'The spell that unmakes spells. The blade that unmakes blades.',
-    color:'#9144b3', element:'spellshadow', rarity:'epic',
+    color:'#9144b3', element:'shadow', elementFlavor:'spellshadow', rarity:'epic',
     fusedFrom:['voidmancer','spellsword'],
     stats:{hp:78,maxHp:78,mp:95,maxMp:95,atk:12,def:6,spd:12,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:9},
@@ -202,7 +202,7 @@ const FUSION_CLASSES_6 = {
   void_plague: {
     id:'void_plague', name:'The Unclean Nothing', icon:'🌀',
     tagline:'A plague that erases the host along with the disease. Efficient.',
-    color:'#807777', element:'plagueshadow', rarity:'legendary',
+    color:'#807777', element:'shadow', elementFlavor:'plagueshadow', rarity:'legendary',
     fusedFrom:['voidmancer','plaguedoctor'],
     stats:{hp:70,maxHp:70,mp:105,maxMp:105,atk:10,def:6,spd:11,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:10},
@@ -216,7 +216,7 @@ const FUSION_CLASSES_6 = {
   void_geo: {
     id:'void_geo', name:'The Hollowed Earth', icon:'🌀',
     tagline:'What the void leaves behind is a shape. The shape of what was removed.',
-    color:'#916688', element:'dustshade', rarity:'rare',
+    color:'#916688', element:'shadow', elementFlavor:'dustshade', rarity:'rare',
     fusedFrom:['voidmancer','geomancer'],
     stats:{hp:83,maxHp:83,mp:90,maxMp:90,atk:11,def:8,spd:9,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:5,MP:9},
@@ -230,7 +230,7 @@ const FUSION_CLASSES_6 = {
   void_lightbringer: {
     id:'void_lightbringer', name:'The Eclipse', icon:'🌑',
     tagline:'The light goes in. Nothing comes out.',
-    color:'#bb9180', element:'eclipseblade', rarity:'epic',
+    color:'#bb9180', element:'shadow', elementFlavor:'eclipseblade', rarity:'epic',
     fusedFrom:['voidmancer','lightbringer'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:12,def:7,spd:12,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -244,7 +244,7 @@ const FUSION_CLASSES_6 = {
   void_beast: {
     id:'void_beast', name:'The Hollow Predator', icon:'🌀',
     tagline:'The void-touched beast does not hunger. It is a hunger.',
-    color:'#808080', element:'runeshadow', rarity:'rare',
+    color:'#808080', element:'shadow', elementFlavor:'runeshadow', rarity:'rare',
     fusedFrom:['voidmancer','beastmaster'],
     stats:{hp:80,maxHp:80,mp:88,maxMp:88,atk:12,def:7,spd:13,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:8,MP:8},
@@ -258,7 +258,7 @@ const FUSION_CLASSES_6 = {
   void_tech: {
     id:'void_tech', name:'System Null', icon:'💻',
     tagline:'Every system has a delete command. This one found them all.',
-    color:'#5e66b3', element:'ghosttech', rarity:'legendary',
+    color:'#5e66b3', element:'shadow', elementFlavor:'ghosttech', rarity:'legendary',
     fusedFrom:['voidmancer','techsavant'],
     stats:{hp:73,maxHp:73,mp:103,maxMp:103,atk:11,def:6,spd:13,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -272,7 +272,7 @@ const FUSION_CLASSES_6 = {
   void_grave: {
     id:'void_grave', name:'The Empty Grave', icon:'🌀',
     tagline:'The void does not raise the dead. It makes raising them impossible.',
-    color:'#6655a2', element:'wraith', rarity:'epic',
+    color:'#6655a2', element:'shadow', elementFlavor:'wraith', rarity:'epic',
     fusedFrom:['voidmancer','gravewarden'],
     stats:{hp:90,maxHp:90,mp:88,maxMp:88,atk:11,def:9,spd:9,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:5,MP:8},
@@ -286,7 +286,7 @@ const FUSION_CLASSES_6 = {
   void_magnetist: {
     id:'void_magnetist', name:'The Null Pole', icon:'🌀',
     tagline:'Magnetism attracts and repels. Void only does one of those.',
-    color:'#666fb3', element:'ironshadow', rarity:'epic',
+    color:'#666fb3', element:'shadow', elementFlavor:'ironshadow', rarity:'epic',
     fusedFrom:['voidmancer','magnetist'],
     stats:{hp:75,maxHp:75,mp:98,maxMp:98,atk:12,def:7,spd:11,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:5,SPD:7,MP:9},
@@ -300,7 +300,7 @@ const FUSION_CLASSES_6 = {
   void_crystal: {
     id:'void_crystal', name:'The Null Lattice', icon:'🌀',
     tagline:'A crystal that refracts into nothing. The nothing goes everywhere.',
-    color:'#8080dd', element:'prismshade', rarity:'legendary',
+    color:'#8080dd', element:'shadow', elementFlavor:'prismshade', rarity:'legendary',
     fusedFrom:['voidmancer','crystalmancer'],
     stats:{hp:68,maxHp:68,mp:105,maxMp:105,atk:12,def:5,spd:13,crit:18},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:8,MP:10},
@@ -314,7 +314,7 @@ const FUSION_CLASSES_6 = {
   void_war: {
     id:'void_war', name:'The Null Warlord', icon:'🌀',
     tagline:'Commands armies. The armies do not need to be real to follow orders.',
-    color:'#a2445e', element:'warshadow', rarity:'epic',
+    color:'#a2445e', element:'shadow', elementFlavor:'warshadow', rarity:'epic',
     fusedFrom:['voidmancer','warlord'],
     stats:{hp:93,maxHp:93,mp:83,maxMp:83,atk:13,def:8,spd:11,crit:13},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:7,MP:8},
@@ -328,7 +328,7 @@ const FUSION_CLASSES_6 = {
   void_spirit: {
     id:'void_spirit', name:'The Hollow Saint', icon:'🌀',
     tagline:'The spirit reaches where the void cannot. The void takes what the spirit finds.',
-    color:'#5e77a2', element:'spiritshadow', rarity:'legendary',
+    color:'#5e77a2', element:'shadow', elementFlavor:'spiritshadow', rarity:'legendary',
     fusedFrom:['voidmancer','spiritwalker'],
     stats:{hp:78,maxHp:78,mp:98,maxMp:98,atk:10,def:7,spd:12,crit:14},
     statDisplay:{HP:5,ATK:7,DEF:5,SPD:7,MP:9},
@@ -342,7 +342,7 @@ const FUSION_CLASSES_6 = {
   void_hex: {
     id:'void_hex', name:'The Absolute Curse', icon:'🌀',
     tagline:'Curses can be broken. Void is not a condition. It is a destination.',
-    color:'#8033a2', element:'abyssblade', rarity:'legendary',
+    color:'#8033a2', element:'shadow', elementFlavor:'abyssblade', rarity:'legendary',
     fusedFrom:['voidmancer','hexblade'],
     stats:{hp:73,maxHp:73,mp:100,maxMp:100,atk:12,def:6,spd:12,crit:15},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
@@ -356,7 +356,7 @@ const FUSION_CLASSES_6 = {
   void_cosmo: {
     id:'void_cosmo', name:'The Dead Universe', icon:'🌌',
     tagline:'Stars die. Galaxies go dark. This is what that looks like, locally.',
-    color:'#5e3cb3', element:'starshadow', rarity:'mythical',
+    color:'#5e3cb3', element:'shadow', elementFlavor:'starshadow', rarity:'mythical',
     fusedFrom:['voidmancer','cosmomancer'],
     stats:{hp:68,maxHp:68,mp:113,maxMp:113,atk:10,def:5,spd:12,crit:15},
     statDisplay:{HP:5,ATK:7,DEF:4,SPD:7,MP:11},
@@ -370,7 +370,7 @@ const FUSION_CLASSES_6 = {
   void_pestilence: {
     id:'void_pestilence', name:'The Empty Plague', icon:'🌀',
     tagline:'It spreads. What it spreads is absence.',
-    color:'#66665e', element:'plagueshadow', rarity:'legendary',
+    color:'#66665e', element:'shadow', elementFlavor:'plagueshadow', rarity:'legendary',
     fusedFrom:['voidmancer','pestilencelord'],
     stats:{hp:73,maxHp:73,mp:105,maxMp:105,atk:11,def:6,spd:11,crit:14},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:7,MP:10},
@@ -384,7 +384,7 @@ const FUSION_CLASSES_6 = {
   void_wind: {
     id:'void_wind', name:'The Null Wind', icon:'🌀',
     tagline:'A wind that carries nothing to everywhere.',
-    color:'#8088b3', element:'windshade', rarity:'epic',
+    color:'#8088b3', element:'shadow', elementFlavor:'windshade', rarity:'epic',
     fusedFrom:['voidmancer','windwalker'],
     stats:{hp:73,maxHp:73,mp:90,maxMp:90,atk:12,def:5,spd:16,crit:17},
     statDisplay:{HP:5,ATK:8,DEF:4,SPD:9,MP:9},
@@ -398,7 +398,7 @@ const FUSION_CLASSES_6 = {
   void_doom: {
     id:'void_doom', name:'Absolute End', icon:'🌀',
     tagline:'Doom says you will die. Void says you will stop existing. Different.',
-    color:'#6f3c77', element:'abyssblade', rarity:'mythical',
+    color:'#6f3c77', element:'shadow', elementFlavor:'abyssblade', rarity:'mythical',
     fusedFrom:['voidmancer','doomcaster'],
     stats:{hp:68,maxHp:68,mp:110,maxMp:110,atk:10,def:4,spd:12,crit:16},
     statDisplay:{HP:5,ATK:7,DEF:3,SPD:7,MP:10},
@@ -412,7 +412,7 @@ const FUSION_CLASSES_6 = {
   void_arcanist: {
     id:'void_arcanist', name:'The Unwritten', icon:'🌀',
     tagline:'Magic writes the world. The void erases the writing.',
-    color:'#663cc4', element:'spellshadow', rarity:'legendary',
+    color:'#663cc4', element:'shadow', elementFlavor:'spellshadow', rarity:'legendary',
     fusedFrom:['voidmancer','arcanist'],
     stats:{hp:65,maxHp:65,mp:115,maxMp:115,atk:10,def:4,spd:12,crit:17},
     statDisplay:{HP:5,ATK:7,DEF:3,SPD:7,MP:11},
@@ -426,7 +426,7 @@ const FUSION_CLASSES_6 = {
   void_sentinel: {
     id:'void_sentinel', name:'The Null Gate', icon:'🌀',
     tagline:'Nothing passes. Not even light. Especially not light.',
-    color:'#8066a2', element:'voidsteel', rarity:'rare',
+    color:'#8066a2', element:'shadow', elementFlavor:'voidsteel', rarity:'rare',
     fusedFrom:['voidmancer','sentinel'],
     stats:{hp:113,maxHp:113,mp:75,maxMp:75,atk:9,def:12,spd:8,crit:10},
     statDisplay:{HP:8,ATK:6,DEF:8,SPD:5,MP:7},
@@ -440,7 +440,7 @@ const FUSION_CLASSES_6 = {
   void_phantom: {
     id:'void_phantom', name:'The Absence', icon:'🌀',
     tagline:'You cannot fight what is not there. You cannot fight what is less than that.',
-    color:'#806fbb', element:'wraith', rarity:'mythical',
+    color:'#806fbb', element:'shadow', elementFlavor:'wraith', rarity:'mythical',
     fusedFrom:['voidmancer','phantom'],
     stats:{hp:68,maxHp:68,mp:95,maxMp:95,atk:12,def:4,spd:15,crit:21},
     statDisplay:{HP:5,ATK:8,DEF:3,SPD:9,MP:9},
@@ -454,7 +454,7 @@ const FUSION_CLASSES_6 = {
   rune_necro: {
     id:'rune_necro', name:'The Deathscribed', icon:'🔱',
     tagline:'Death is not the end of the inscription. It is the beginning of the second draft.',
-    color:'#88aa44', element:'runesoul', rarity:'rare',
+    color:'#88aa44', element:'normal', elementFlavor:'runesoul', rarity:'rare',
     fusedFrom:['runeblade','necromancer'],
     stats:{hp:85,maxHp:85,mp:95,maxMp:95,atk:11,def:7,spd:11,crit:12},
     statDisplay:{HP:6,ATK:8,DEF:5,SPD:7,MP:9},
@@ -468,7 +468,7 @@ const FUSION_CLASSES_6 = {
   rune_paladin: {
     id:'rune_paladin', name:'The Sworn Inscription', icon:'⚜️',
     tagline:'Oaths carved in stone outlast the one who swore them. This is the point.',
-    color:'#ddbb3c', element:'runelight', rarity:'rare',
+    color:'#ddbb3c', element:'normal', elementFlavor:'runelight', rarity:'rare',
     fusedFrom:['runeblade','paladin'],
     stats:{hp:115,maxHp:115,mp:65,maxMp:65,atk:13,def:12,spd:11,crit:10},
     statDisplay:{HP:8,ATK:9,DEF:8,SPD:7,MP:6},
@@ -482,7 +482,7 @@ const FUSION_CLASSES_6 = {
   rune_frost: {
     id:'rune_frost', name:'The Frozen Sigil', icon:'❄️',
     tagline:'Cold preserves the inscription. The inscription preserves the cold.',
-    color:'#b3c491', element:'frostrune', rarity:'rare',
+    color:'#b3c491', element:'normal', elementFlavor:'frostrune', rarity:'rare',
     fusedFrom:['runeblade','frostweaver'],
     stats:{hp:90,maxHp:90,mp:78,maxMp:78,atk:12,def:9,spd:13,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -496,7 +496,7 @@ const FUSION_CLASSES_6 = {
   rune_dragon: {
     id:'rune_dragon', name:'The Branded Drake', icon:'🐉',
     tagline:'Every scale is an inscription. Every inscription is a weapon.',
-    color:'#dd8811', element:'runedrake', rarity:'rare',
+    color:'#dd8811', element:'normal', elementFlavor:'runedrake', rarity:'rare',
     fusedFrom:['runeblade','dragonknight'],
     stats:{hp:115,maxHp:115,mp:60,maxMp:60,atk:15,def:11,spd:12,crit:12},
     statDisplay:{HP:8,ATK:10,DEF:8,SPD:7,MP:6},
@@ -510,7 +510,7 @@ const FUSION_CLASSES_6 = {
   rune_tide: {
     id:'rune_tide', name:'The Tidal Inscription', icon:'🌊',
     tagline:'The tide writes the shore. These runes do not wash away.',
-    color:'#91a277', element:'runetide', rarity:'rare',
+    color:'#91a277', element:'normal', elementFlavor:'runetide', rarity:'rare',
     fusedFrom:['runeblade','tidecaller'],
     stats:{hp:93,maxHp:93,mp:80,maxMp:80,atk:12,def:9,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:8},
@@ -524,7 +524,7 @@ const FUSION_CLASSES_6 = {
   rune_gravitist: {
     id:'rune_gravitist', name:'The Binding Law', icon:'⚫',
     tagline:'Gravity is the oldest inscription. Everything obeys it.',
-    color:'#918044', element:'runeweight', rarity:'epic',
+    color:'#918044', element:'normal', elementFlavor:'runeweight', rarity:'epic',
     fusedFrom:['runeblade','gravitist'],
     stats:{hp:88,maxHp:88,mp:83,maxMp:83,atk:12,def:8,spd:12,crit:14},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:7,MP:8},
@@ -538,7 +538,7 @@ const FUSION_CLASSES_6 = {
   rune_soundbreaker: {
     id:'rune_soundbreaker', name:'The Resonant Inscription', icon:'🔊',
     tagline:'The rune that vibrates at the right frequency shatters everything nearby.',
-    color:'#ddaa3c', element:'runesound', rarity:'rare',
+    color:'#ddaa3c', element:'normal', elementFlavor:'runesound', rarity:'rare',
     fusedFrom:['runeblade','soundbreaker'],
     stats:{hp:90,maxHp:90,mp:78,maxMp:78,atk:13,def:8,spd:14,crit:14},
     statDisplay:{HP:6,ATK:9,DEF:6,SPD:8,MP:8},
@@ -552,7 +552,7 @@ const FUSION_CLASSES_6 = {
   rune_chrono: {
     id:'rune_chrono', name:'The Eternal Mark', icon:'⏳',
     tagline:'Some inscriptions cannot be removed. Some have not been written yet.',
-    color:'#c49991', element:'runetime', rarity:'epic',
+    color:'#c49991', element:'normal', elementFlavor:'runetime', rarity:'epic',
     fusedFrom:['runeblade','chronomancer'],
     stats:{hp:85,maxHp:85,mp:90,maxMp:90,atk:12,def:8,spd:13,crit:13},
     statDisplay:{HP:6,ATK:8,DEF:6,SPD:8,MP:9},
