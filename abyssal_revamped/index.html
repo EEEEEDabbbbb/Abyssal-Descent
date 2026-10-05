@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abyssal Descent</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TITLE SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="title-screen" class="screen active">
+  <div class="title-runes" id="title-runes"></div>
+  <div class="title-logo">
+    <h1>ABYSSAL<br>DESCENT</h1>
+    <div class="subtitle">A Gothic Dungeon Crawler</div>
+  </div>
+  <div class="title-divider"></div>
+  <div class="title-menu">
+    <button class="title-btn primary" onclick="showClassSelect()">⚔ Begin Descent</button>
+    <button class="title-btn" onclick="showContinue()" id="continue-btn" style="display:none">↺ Continue Run</button>
+    <button class="title-btn" onclick="showShardShop()">⚗ Shard Emporium</button>
+    <button class="title-btn" onclick="showScreen('fusion-lab-screen')">⚗ Fusion Lab</button>
+    <button class="title-btn" onclick="showScreen('collection-screen')">📖 Class Collection</button>
+    <button class="title-btn" onclick="showLoadoutSelect()">🎒 Choose Loadout</button>
+    <button class="title-btn" onclick="showTalentTree()">✦ Relics &amp; Legacy</button>
+    <button class="title-btn" onclick="showHowToPlay()">? How To Play</button>
+    <button class="title-btn" onclick="showScreen('settings-screen')">⚙ Settings</button>
+  </div>
+  <div class="title-flavor">
+    <em>"Below lies a darkness older than memory.<br>
+    Each descent shapes the soul — if the soul survives."</em>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CLASS SELECT SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="class-select-screen" class="screen" style="flex-direction:column;padding:1rem;overflow:hidden">
+  <div class="cs-header">
+    <h2>Choose Your Class</h2>
+    <div style="font-size:0.72rem;color:var(--text-dim);margin-top:0.25rem">50 floors of darkness await.</div>
+  </div>
+  <div style="margin-bottom:0.5rem;display:flex;gap:0.4rem;align-items:center">
+    <input id="class-search" type="text" placeholder="🔍 Search classes..." autocomplete="off" spellcheck="false"
+      oninput="filterClassGrid(this.value)"
+      style="flex:1;background:var(--bg-deep);border:1px solid var(--border);color:var(--text-bright);padding:0.4rem 0.6rem;border-radius:4px;font-size:0.75rem;outline:none"/>
+    <button onclick="document.getElementById('class-search').value='';filterClassGrid('')" style="background:var(--bg-deep);border:1px solid var(--border);color:var(--text-dim);padding:0.4rem 0.5rem;font-size:0.75rem;border-radius:4px;cursor:pointer;flex-shrink:0;line-height:1;transition:color 0.2s" onmouseover="this.style.color='var(--text-bright)'" onmouseout="this.style.color='var(--text-dim)'">✕</button>
+  </div>
+  <div id="class-grid"></div>
+  <div class="cs-footer" style="margin-top:0.5rem">
+    <div id="selected-class-desc" style="flex:1;font-size:0.72rem;color:var(--text-mid);line-height:1.5;min-height:48px">
+      <span style="color:var(--text-dim);font-style:italic">Select a class to begin.</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0.4rem;flex-shrink:0">
+      <button class="title-btn primary" id="start-run-btn" disabled onclick="startRun()">▼ Begin Run</button>
+      <button class="title-btn" onclick="showScreen('title-screen')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     GAME SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="game-screen" class="screen">
+
+  <!-- HUD row -->
+  <div id="hud-row">
+    <div id="floor-badge">FLOOR 1</div>
+    <div class="hud-right">
+      <span id="ng-badge" class="title-ng-badge" style="display:none"></span>
+      <span style="color:var(--accent-violet-bright)">⚗ <span id="soul-shards-display">0</span></span>
+      <span style="color:var(--accent-gold)">💰 <span id="gold-display">0</span></span>
+      <button class="basic-btn" style="padding:2px 8px;font-size:0.68rem" onclick="showPauseMenu()">⏸</button>
+    </div>
+  </div>
+
+  <!-- Left panel -->
+  <div id="left-panel" class="panel">
+
+    <!-- Character -->
+    <div class="panel-section">
+      <div class="panel-label">Character</div>
+      <div class="char-card">
+        <div id="char-portrait" style="position:relative">⚔</div>
+        <div class="char-meta">
+          <div class="name" id="char-name">—</div>
+          <div class="class" id="char-class">—</div>
+          <div class="level" id="char-level">Level 1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="panel-section">
+      <div class="resource-bars">
+        <div class="resource-bar">
+          <div class="resource-bar-label">
+            <span class="rbl-name">HP</span><span id="hp-val">0/0</span>
+          </div>
+          <div class="resource-bar-track"><div class="resource-bar-fill" id="hp-bar" style="width:100%"></div></div>
+        </div>
+        <div class="resource-bar">
+          <div class="resource-bar-label">
+            <span class="rbl-name">MP</span><span id="mp-val">0/0</span>
+          </div>
+          <div class="resource-bar-track"><div class="resource-bar-fill" id="mp-bar" style="width:100%"></div></div>
+        </div>
+        <div id="shield-bar-container" style="display:none">
+          <div class="resource-bar">
+            <div class="resource-bar-label">
+              <span class="rbl-name">🛡 Shield</span><span id="shield-val">0</span>
+            </div>
+            <div class="resource-bar-track"><div class="resource-bar-fill" id="shield-bar" style="width:100%;background:var(--shield-color)"></div></div>
+          </div>
+        </div>
+        <div>
+          <div class="resource-bar-label" style="font-size:0.6rem">
+            <span style="color:var(--text-dim)">XP</span>
+            <span id="xp-val" style="font-size:0.6rem">0/50</span>
+            <span id="talent-pts-badge" style="display:none">✦ <span id="talent-pts">0</span> pts</span>
+          </div>
+          <div id="xp-bar-track" class="resource-bar-track" style="height:4px"><div class="resource-bar-fill" id="xp-bar" style="width:0%;background:var(--xp-color);height:4px"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="panel-section">
+      <div class="panel-label">Stats</div>
+      <div id="stats-grid"></div>
+    </div>
+
+    <!-- Status -->
+    <div class="panel-section">
+      <div class="panel-label">Status</div>
+      <div class="status-row" id="player-status"></div>
+    </div>
+
+    <!-- Equipment -->
+    <div class="panel-section">
+      <div class="panel-label">Equipment</div>
+      <div id="equip-slots"></div>
+    </div>
+
+    <!-- Inventory -->
+    <div class="panel-section">
+      <div class="panel-label" style="display:flex;justify-content:space-between">
+        Inventory <span id="inv-count">(0/12)</span>
+      </div>
+      <div id="inventory-grid"></div>
+    </div>
+
+    <!-- Meta buttons -->
+    <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;padding-top:0.25rem">
+      <button class="title-btn" style="flex:1;font-size:0.65rem;padding:4px" onclick="openTalentTree()">🌟 Talents</button>
+      <button class="title-btn" style="flex:1;font-size:0.65rem;padding:4px" onclick="openShardEmporium()">⚗ Emporium</button>
+      <button class="title-btn" style="flex:1;font-size:0.65rem;padding:4px" onclick="saveRunWithFeedback()" title="Save run">💾 Save</button>
+    </div>
+    <div id="run-save-indicator" style="font-size:0.6rem;color:var(--accent-gold);text-align:center;margin-top:2px;opacity:0;transition:opacity 0.4s"></div>
+  </div>
+
+  <!-- Center panel -->
+  <div id="center-panel">
+    <!-- Top area: dungeon view / combat -->
+    <div id="dungeon-view" class="panel" style="flex:1;overflow:hidden;position:relative;min-height:320px"></div>
+    <!-- Bottom area: abilities + actions -->
+    <div class="panel" style="flex-shrink:0;max-height:42%;overflow-y:auto">
+      <div style="display:flex;gap:0.4rem;align-items:flex-start">
+        <div style="flex:1;min-width:0">
+          <div class="panel-label">Abilities <span style="font-size:0.6rem;color:var(--text-dim)">(1-4 or click)</span></div>
+          <div id="abilities-grid"></div>
+        </div>
+        <div style="width:140px;flex-shrink:0">
+          <div class="panel-label">Actions</div>
+          <div id="basic-actions"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div id="right-panel" class="panel">
+    <div class="panel-label" style="display:flex;justify-content:space-between;align-items:center">
+      Combat Log
+      <button style="background:none;border:none;color:var(--text-dim);font-size:0.65rem;cursor:pointer" onclick="G.log=[];updateUI()">Clear</button>
+    </div>
+    <div id="combat-log"></div>
+  </div>
+
+</div><!-- end game-screen -->
+
+<!-- ══════════════════════════════════════════════════════════
+     GAME OVER SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="game-over-screen" class="screen">
+  <div class="death-screen">
+
+    <!-- Atmospheric background pulse -->
+    <div class="death-bg-pulse"></div>
+
+    <!-- Class identity block -->
+    <div class="death-class-block" id="death-class-block">
+      <div class="death-class-icon" id="death-class-icon">⚔</div>
+      <div class="death-class-name" id="death-class-name">—</div>
+      <div class="death-class-element" id="death-class-element"></div>
+    </div>
+
+    <!-- YOU DIED -->
+    <div class="death-title">YOU DIED</div>
+    <div class="death-quote" id="death-quote">"The abyss reclaimed you."</div>
+
+    <!-- Run stats -->
+    <div class="death-stats">
+      <div class="death-stat">
+        <span class="death-stat-label">Floor Reached</span>
+        <span class="death-stat-val gold" id="game-over-floor">—</span>
+      </div>
+      <div class="death-stat">
+        <span class="death-stat-label">Run Level</span>
+        <span class="death-stat-val" id="game-over-level">—</span>
+      </div>
+      <div class="death-stat">
+        <span class="death-stat-label">Soul Shards Earned</span>
+        <span class="death-stat-val violet" id="game-over-shards">—</span>
+      </div>
+      <div class="death-stat">
+        <span class="death-stat-label">Personal Best</span>
+        <span class="death-stat-val" id="game-over-best">—</span>
+      </div>
+    </div>
+
+    <!-- Class level progress -->
+    <div class="death-class-progress" id="death-class-progress">
+      <div class="death-clvl-header">
+        <span class="death-clvl-label" id="death-clvl-label">Class Level</span>
+        <span class="death-clvl-val" id="death-clvl-val">—</span>
+      </div>
+      <div class="death-clvl-bar-wrap">
+        <div class="death-clvl-bar-fill" id="death-clvl-bar"></div>
+      </div>
+      <div class="death-clvl-xp" id="death-clvl-xp"></div>
+      <div class="death-clvl-hint" id="death-clvl-hint"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="death-actions">
+      <button class="title-btn primary" onclick="retryRun()">↺ Try Again</button>
+      <button class="title-btn fusion-lab-btn" onclick="showScreen('fusion-lab-screen')">⚗ Fusion Lab</button>
+      <button class="title-btn" onclick="returnToTitle()">↩ Title Screen</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SETTINGS SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="settings-screen" class="screen">
+  <div style="max-width:480px;margin:0 auto;padding:1rem;width:100%;overflow-y:auto;height:100%">
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem">
+      <button class="title-btn" style="padding:4px 10px" onclick="returnToTitle()">← Back</button>
+      <h2 style="font-size:1rem;color:var(--accent-violet-bright)">⚙ Settings</h2>
+    </div>
+
+    <!-- Display -->
+    <div class="settings-group">
+      <h3>Display</h3>
+      <div class="settings-row">
+        <span class="settings-label">Font Size</span>
+        <input type="range" id="s-font-size" min="1" max="5" value="3" oninput="applySetting('fontSize',this.value)">
+        <span class="settings-val" id="s-font-size-val">Normal</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Map Cell Size</span>
+        <input type="range" id="s-map-size" min="1" max="3" value="2" oninput="applySetting('mapSize',this.value)">
+        <span class="settings-val" id="s-map-size-val">Medium</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Combat Log Height</span>
+        <div class="seg-group" id="s-log-size">
+          <button class="seg-btn" onclick="applySetting('logSize','small')">Small</button>
+          <button class="seg-btn active" onclick="applySetting('logSize','medium')">Medium</button>
+          <button class="seg-btn" onclick="applySetting('logSize','large')">Large</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Damage Numbers</span>
+        <input type="checkbox" id="s-dmg-numbers" checked onchange="applySetting('dmgNumbers',this.checked)">
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Reduce Motion</span>
+        <input type="checkbox" id="s-reduce-motion" onchange="applySetting('reduceMotion',this.checked)">
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Screen Shake</span>
+        <input type="checkbox" id="s-screenshake" checked onchange="applySetting('screenShake',this.checked)">
+      </div>
+    </div>
+
+    <!-- Themes -->
+    <div class="settings-group">
+      <h3>Theme</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem" id="theme-grid"></div>
+    </div>
+
+    <!-- Combat -->
+    <div class="settings-group">
+      <h3>Combat</h3>
+      <div class="settings-row">
+        <span class="settings-label">Animation Speed</span>
+        <div class="seg-group" id="s-anim-speed">
+          <button class="seg-btn" onclick="applySetting('animSpeed','slow')">Slow</button>
+          <button class="seg-btn active" onclick="applySetting('animSpeed','normal')">Normal</button>
+          <button class="seg-btn" onclick="applySetting('animSpeed','fast')">Fast</button>
+          <button class="seg-btn" onclick="applySetting('animSpeed','instant')">Instant</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio -->
+    <div class="settings-group">
+      <h3>Audio</h3>
+      <div class="settings-row">
+        <span class="settings-label">Master Volume</span>
+        <input type="range" id="s-master-vol" min="0" max="100" value="80" oninput="applySetting('masterVol',this.value)">
+        <span class="settings-val" id="s-master-vol-val">80%</span>
+      </div>
+    </div>
+
+    <!-- Loadouts -->
+    <div class="settings-group">
+      <h3>Run Loadout</h3>
+      <div style="font-size:0.7rem;color:var(--text-dim);margin-bottom:0.4rem">Selected loadout activates at run start (cost deducted per run).</div>
+      <div id="loadout-grid" style="display:flex;flex-direction:column;gap:0.4rem"></div>
+    </div>
+
+    <!-- Danger zone -->
+    <div class="settings-group" style="border-color:var(--accent-crimson)">
+      <h3 style="color:var(--accent-crimson)">Data</h3>
+      <button class="title-btn danger" style="width:100%" onclick="if(confirm('Reset ALL save data?')){localStorage.clear();location.reload()}">Reset All Save Data</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     FUSION LAB SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="fusion-lab-screen" class="screen" style="flex-direction:column;padding:1rem;overflow:hidden">
+  <div class="cs-header">
+    <h2>⚗ Fusion Lab</h2>
+    <div style="font-size:0.72rem;color:var(--text-dim);margin-top:0.25rem">Drag two mastered classes into the slots to forge a new one.</div>
+  </div>
+
+  <div id="fusion-lab-body" style="display:flex;flex-direction:column;align-items:center;flex:1;overflow:hidden;gap:1rem;padding:0.5rem 0">
+
+    <!-- Slots row -->
+    <div style="display:flex;align-items:center;gap:1.5rem;flex-shrink:0">
+      <div id="fusion-slot-a" class="fusion-slot" ondragover="event.preventDefault()" ondrop="fusionDrop(event,'a')">
+        <div class="fusion-slot-placeholder">Drop<br>Class A</div>
+      </div>
+      <div style="font-size:2rem;color:var(--accent-gold);font-family:'Cinzel',serif">+</div>
+      <div id="fusion-slot-b" class="fusion-slot" ondragover="event.preventDefault()" ondrop="fusionDrop(event,'b')">
+        <div class="fusion-slot-placeholder">Drop<br>Class B</div>
+      </div>
+      <div style="font-size:2rem;color:var(--text-dim)">→</div>
+      <div id="fusion-slot-result" class="fusion-slot fusion-slot-result">
+        <div class="fusion-slot-placeholder">Result</div>
+      </div>
+    </div>
+
+    <!-- Fuse button -->
+    <button id="fusion-fuse-btn" class="title-btn primary" style="min-width:180px;opacity:0.4;pointer-events:none" onclick="doFusion()">⚗ Fuse</button>
+
+    <!-- Status message -->
+    <div id="fusion-status" style="font-size:0.75rem;color:var(--text-dim);text-align:center;min-height:1.2em"></div>
+
+    <!-- Convergence / Final Fusion — hidden until conditions are met -->
+    <div id="fusion-convergence-zone" style="
+      display:none;
+      flex-direction:column;
+      align-items:center;
+      width:100%;
+      max-width:900px;
+      border-top:1px solid #330044;
+      padding-top:0.75rem;
+      flex-shrink:0;
+    "></div>
+
+    <!-- Draggable class roster -->
+    <div style="width:100%;max-width:900px;overflow-y:auto;flex:1">
+      <div style="font-size:0.7rem;color:var(--text-dim);font-family:'Cinzel',serif;margin-bottom:0.5rem">Your Classes — drag to a slot</div>
+      <div id="fusion-class-roster" style="
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+        gap:0.6rem;
+      "></div>
+    </div>
+  </div>
+
+  <div class="cs-footer">
+    <div style="flex:1"></div>
+    <button class="title-btn" onclick="showScreen('title-screen')">← Back</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CLASS COLLECTION SCREEN
+     ══════════════════════════════════════════════════════════ -->
+<div id="collection-screen" class="screen" style="flex-direction:column;padding:0;overflow:hidden">
+
+  <!-- Header -->
+  <div class="coll-header">
+    <div class="coll-header-left">
+      <h2 style="margin:0;font-size:1.3rem;letter-spacing:0.08em">📖 CLASS COLLECTION</h2>
+      <div id="collection-subtitle" class="coll-subtitle">Discovering the abyss one class at a time.</div>
+    </div>
+    <div class="coll-header-right">
+      <div id="coll-progress-wrap">
+        <div id="coll-progress-bar-bg"><div id="coll-progress-bar"></div></div>
+        <div id="coll-progress-label"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rarity filter tabs -->
+  <div class="coll-tabs" id="coll-tabs">
+    <button class="coll-tab active" data-filter="all" onclick="filterCollection('all')">All</button>
+    <button class="coll-tab" data-filter="common"    onclick="filterCollection('common')"    style="--tab-color:#aaaaaa">Common</button>
+    <button class="coll-tab" data-filter="uncommon"  onclick="filterCollection('uncommon')"  style="--tab-color:#55cc55">Uncommon</button>
+    <button class="coll-tab" data-filter="rare"      onclick="filterCollection('rare')"      style="--tab-color:#4488ff">Rare</button>
+    <button class="coll-tab" data-filter="epic"      onclick="filterCollection('epic')"      style="--tab-color:#aa44ff">Epic</button>
+    <button class="coll-tab" data-filter="legendary" onclick="filterCollection('legendary')" style="--tab-color:#ffaa00">Legendary</button>
+    <button class="coll-tab" data-filter="mythical"  onclick="filterCollection('mythical')"  style="--tab-color:#ff4488">Mythical</button>
+    <button class="coll-tab" data-filter="divine"    onclick="filterCollection('divine')"    style="--tab-color:#88ffff">Divine</button>
+    <button class="coll-tab" data-filter="secret"    onclick="filterCollection('secret')"    style="--tab-color:#ff6600">🔒 Secret</button>
+    <button class="coll-tab" data-filter="abyssal"   onclick="filterCollection('abyssal')"   style="--tab-color:#cc00ff">Abyssal</button>
+    <button class="coll-tab" data-filter="fusion"    onclick="filterCollection('fusion')"    style="--tab-color:#dd44ff">⛗ Fusions</button>
+  </div>
+
+  <!-- Collection grid -->
+  <div id="collection-grid" class="coll-grid"></div>
+
+  <!-- Footer -->
+  <div class="cs-footer" style="padding:0.5rem 1rem">
+    <div style="flex:1"></div>
+    <div style="display:flex;gap:0.5rem;align-items:center">
+      <button class="title-btn primary" onclick="showScreen('fusion-lab-screen')">⛗ Fusion Lab</button>
+      <button class="title-btn" onclick="showScreen('title-screen')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     OVERLAY (modals)
+     ══════════════════════════════════════════════════════════ -->
+<div id="overlay">
+  <div id="overlay-content"></div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip" class="tooltip"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     SCRIPTS — Data first, then engine, then UI, then main
+     ══════════════════════════════════════════════════════════ -->
+
+<!-- Data layer -->
+<script src="js/data/elements.js"></script>
+<script src="js/data/items.js"></script>
+<script src="js/data/abilities.js"></script>
+<script src="js/data/classes.js"></script>
+<script src="js/data/enemies.js"></script>
+<script src="js/data/biomes.js"></script>
+<script src="js/data/events.js"></script>
+<script src="js/data/meta.js"></script>
+<script src="js/data/fusion_lookup.js"></script>
+<script src="js/data/fusion.js"></script>
+
+<!-- Engine layer -->
+<script src="js/engine/state.js"></script>
+<script src="js/engine/utils.js"></script>
+<script src="js/engine/status.js"></script>
+<script src="js/engine/player.js"></script>
+<script src="js/engine/combat.js"></script>
+<script src="js/engine/mapgen.js"></script>
+<script src="js/engine/run_save.js"></script>
+
+<!-- UI layer -->
+<script src="js/ui/settings.js"></script>
+<script src="js/ui/render.js"></script>
+<script src="js/ui/modals.js"></script>
+<script src="js/ui/fusion_modal.js"></script>
+<script src="js/ui/continue_modal.js"></script>
+<script src="js/ui/screens.js"></script>
+
+<!-- Main -->
+<script src="js/main.js"></script>
+<script src="js/dev_console.js"></script>
+<script src="js/devtest.js"></script>
+
+<script>
+  // Boot
+  window.addEventListener('load', () => {
+    init();
+    // Settings screen needs post-init render
+    document.getElementById('settings-screen').addEventListener('transitionend', renderSettingsScreen, {once:true});
+    document.querySelectorAll('.screen').forEach(s=>{
+      const obs=new MutationObserver(()=>{
+        if(s.id==='settings-screen'&&s.classList.contains('active')) renderSettingsScreen();
+      });
+      obs.observe(s,{attributeFilter:['class']});
+    });
+    // Show NG+ button if unlocked
+    if(G.meta.conquestRewards?.ngPlusUnlocked) document.getElementById('ngplus-btn').style.display='';
+    // Show Continue button if there's a saved run
+    if(typeof _updateContinueBtn === 'function') _updateContinueBtn();
+  });
+</script>
+
+
+
+
+
+<script id="debug-logger">
+(function() {
+  var LOG = [];
+  var START = Date.now();
+
+  function dbg(cat, msg, data) {
+    var ts = '[+' + (Date.now()-START) + 'ms]';
+    var entry = ts + '[' + cat + '] ' + msg + (data !== undefined ? ' => ' + JSON.stringify(data) : '');
+    LOG.push(entry);
+    console.log(entry);
+  }
+
+  function safe(fn, name, args) {
+    try { return fn.apply(this, args); }
+    catch(e) { dbg('ERROR', name + ' THREW: ' + e.message, {stack: e.stack}); throw e; }
+  }
+
+  function wrap(obj, name, category) {
+    if (!obj || typeof obj[name] !== 'function') return;
+    var orig = obj[name];
+    obj[name] = function() {
+      var args = Array.from(arguments);
+      var preview = args.map(function(a) {
+        if (a === null) return 'null';
+        if (a === undefined) return 'undefined';
+        if (typeof a === 'object') {
+          try { return JSON.stringify(a).slice(0,80); } catch(e) { return '[obj]'; }
+        }
+        return String(a).slice(0,80);
+      });
+      dbg(category, name + '(' + preview.join(', ') + ')');
+      var result;
+      try { result = orig.apply(this, arguments); }
+      catch(e) { dbg('ERROR', name + ' THREW: ' + e.message); throw e; }
+      if (result !== undefined && result !== null && typeof result !== 'object') {
+        dbg(category, name + ' returned: ' + result);
+      }
+      return result;
+    };
+  }
+
+  window.addEventListener('load', function() {
+    dbg('BOOT', 'Wrapping all game functions...');
+
+    // === COMBAT ===
+    wrap(window, 'dealDmgToEnemy',   'COMBAT');
+    wrap(window, 'dealDmgToPlayer',  'COMBAT');
+    wrap(window, 'startCombat',      'COMBAT');
+    wrap(window, 'playerAction',     'COMBAT');
+    wrap(window, 'endPlayerTurn',    'COMBAT');
+    wrap(window, 'enemyTurn',        'COMBAT');
+    wrap(window, 'checkBossPhase',   'COMBAT');
+    wrap(window, 'checkBossEnrage',  'COMBAT');
+    wrap(window, 'checkCombatEnd',   'COMBAT');
+    wrap(window, 'winCombat',        'COMBAT');
+    wrap(window, 'endCombat',        'COMBAT');
+
+    // === MAP / MOVEMENT ===
+    wrap(window, 'movePlayer',       'MAP');
+    wrap(window, 'handleCellContent','MAP');
+    wrap(window, 'nextFloor',        'MAP');
+    wrap(window, 'getValidMoves',    'MAP');
+
+    // === PLAYER ===
+    wrap(window, 'gainXP',           'PLAYER');
+    wrap(window, 'gainClassXP',      'PLAYER');
+    wrap(window, 'addToInventory',   'PLAYER');
+    wrap(window, 'useItem',          'PLAYER');
+    wrap(window, 'equipItem',        'PLAYER');
+
+    // === UI ===
+    wrap(window, 'updateUI',         'UI');
+    wrap(window, 'renderCenterPanel','UI');
+    wrap(window, 'closeModal',       'UI');
+
+    // === STATE SNAPSHOTS on winCombat ===
+    var origWin = window.winCombat;
+    window.winCombat = function() {
+      var e = G.enemy;
+      dbg('COMBAT', 'winCombat: enemy snapshot', {
+        name: e ? e.name : null,
+        isBoss: e ? e.isBoss : null,
+        isGuardian: e ? e.isGuardian : null,
+        isFinalBoss: e ? e.isFinalBoss : null
+      });
+      dbg('COMBAT', 'winCombat: G.exitPos', G.exitPos);
+      var result = origWin.apply(this, arguments);
+      dbg('COMBAT', 'winCombat: exit cell after', G.exitPos ? G.map[G.exitPos.y][G.exitPos.x] : 'no exitPos');
+      return result;
+    };
+
+    // === CLICK logger ===
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('button,[onclick]');
+      if (btn) dbg('CLICK', '"' + btn.textContent.trim().slice(0,40) + '" onclick="' + (btn.getAttribute('onclick')||'').slice(0,80) + '"');
+    }, true);
+
+    // === JS errors ===
+    window.addEventListener('error', function(e) {
+      dbg('JS-ERROR', e.message, {file: e.filename, line: e.lineno});
+    });
+
+    dbg('BOOT', 'All functions wrapped. Ready.');
+  });
+
+  dbg('BOOT', 'Debug logger installed');
+})();
+</script>
+</body>
+</html>
