@@ -91,6 +91,8 @@
   event or dropped loot, otherwise to the nearest unexplored ground, and
   stops as soon as an enemy comes into view. It never walks into fights,
   shops or the exit.
+- Number keys pick choices in events and boss rewards, and Enter continues
+  after an event, so a keyboard player never needs the mouse.
 - Run statistics: kills, damage, biggest hit, chests, steps, play time and
   more. They're shown on the death screen and in the pause menu (📊 Run Stats).
 - Records screen (🏆 on the title screen): lifetime totals, your last 20

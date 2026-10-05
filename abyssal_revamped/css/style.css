@@ -2713,6 +2713,15 @@ body.reduce-motion .toast { animation: none; transition: none; }
   background: rgba(255,90,90,0.10); white-space: nowrap; font-variant-numeric: tabular-nums;
 }
 
+/* Number-key hints on dialog choices (main.js handleKeyDown) */
+.key-hint {
+  display: inline-block; min-width: 1.35em; margin-right: 0.5em; padding: 0 0.3em;
+  border: 1px solid var(--border-bright, rgba(201,168,76,0.4)); border-radius: 4px;
+  font-size: 0.85em; line-height: 1.35; text-align: center; color: var(--text-dim);
+  font-variant-numeric: tabular-nums; vertical-align: 0.05em;
+}
+@media (hover: none) { .key-hint { display: none; } } /* touch screens have no number keys */
+
 /* First-visit hint on the How To Play button (screens.js renderTitleScreen) */
 .title-btn.first-visit-hint { border-color: var(--accent-gold); color: var(--accent-gold); animation: hintGlow 2.4s ease-in-out infinite; }
 @keyframes hintGlow { 0%,100% { box-shadow: 0 0 0 rgba(201,168,76,0); } 50% { box-shadow: 0 0 14px rgba(201,168,76,0.45); } }

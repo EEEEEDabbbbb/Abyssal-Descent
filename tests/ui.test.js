@@ -186,3 +186,25 @@ test('auto-explore says so when the floor is fully explored', async () => {
   assert.deepEqual(errors, []);
   await page.close();
 });
+
+test('number keys pick event choices and boss rewards; Enter continues', async () => {
+  const { page, errors } = await gamePage();
+  await page.evaluate(() => {
+    const ev = EVENTS.find(e => e.id === 'fountain') || EVENTS[0];
+    const cell = { content: 'event', event: ev };
+    G.phase = 'event'; showEvent(ev, cell, 0, 0);
+    window.__evCell = cell;
+  });
+  await page.keyboard.press('2');
+  const afterChoice = await page.evaluate(() => ({ cell: __evCell.content, focused: document.activeElement && document.activeElement.id }));
+  assert.deepEqual(afterChoice, { cell: 'visited', focused: 'event-continue-btn' });
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(() => isModalOpen()), false);
+
+  const r = await page.evaluate(() => { G.floor = 5; showFloorReward(); return G._rewardChoices.map(i => i.name); });
+  await page.keyboard.press('3');
+  const claimed = await page.evaluate(() => ({ open: isModalOpen(), last: G.player.inventory[G.player.inventory.length - 1].name }));
+  assert.deepEqual(claimed, { open: false, last: r[2] });
+  assert.deepEqual(errors, []);
+  await page.close();
+});

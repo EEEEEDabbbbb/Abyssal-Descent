@@ -52,7 +52,7 @@ function showEvent(event, cell, cx, cy) {
     <div style="display:flex;flex-direction:column;gap:0.5rem">`;
   event.choices.forEach((ch,i)=>{
     const text = typeof ch.text === 'function' ? ch.text(G.player) : ch.text;
-    html+=`<button class="title-btn" onclick="resolveEvent(${i})" style="text-align:left;font-size:0.75rem;padding:0.5rem 0.8rem;min-width:0;max-width:100%;white-space:normal;letter-spacing:0.05em;line-height:1.4">${text}</button>`;
+    html+=`<button class="title-btn choice-btn" data-key="${i + 1}" onclick="resolveEvent(${i})" style="text-align:left;font-size:0.75rem;padding:0.5rem 0.8rem;min-width:0;max-width:100%;white-space:normal;letter-spacing:0.05em;line-height:1.4"><span class="key-hint">${i + 1}</span>${text}</button>`;
   });
   html+='</div>';
   G._currentEvent = event;
@@ -70,9 +70,11 @@ function resolveEvent(idx) {
   document.querySelector('#overlay-content .modal-body').innerHTML = `
     <div class="modal-title">${event.icon} ${event.name}</div>
     <div style="color:var(--text-mid);font-size:0.9rem;margin:1rem 0;font-style:italic">${result}</div>
-    <button class="title-btn primary" style="display:block;width:100%;min-width:0;max-width:100%;margin-top:0.5rem;font-size:0.85rem;padding:0.5rem 1rem" onclick="closeModal()">Continue</button>`;
+    <button class="title-btn primary" id="event-continue-btn" style="display:block;width:100%;min-width:0;max-width:100%;margin-top:0.5rem;font-size:0.85rem;padding:0.5rem 1rem" onclick="closeModal()">Continue</button>`;
   G._currentEvent=null;
   updateUI();
+  const cont = document.getElementById('event-continue-btn');
+  if (cont) cont.focus({ preventScroll: true }); // Enter / Space continues
 }
 
 // ── Shop ──────────────────────────────────────────────────────
@@ -242,9 +244,9 @@ function showFloorReward(choices) {
     <div style="display:flex;flex-direction:column;gap:0.5rem">`;
   choices.forEach((item,i)=>{
     const elObj = item.element ? ELEMENTS[item.element] : null;
-    html+=`<div class="shop-item reward-item" onclick="claimReward(${i})" role="button" tabindex="0" style="cursor:pointer">
+    html+=`<div class="shop-item reward-item" data-key="${i + 1}" onclick="claimReward(${i})" role="button" tabindex="0" style="cursor:pointer">
       <div class="shop-item-info">
-        <div class="item-name">${item.icon} ${item.name} <span class="item-rarity-badge ${item.rarity}">${item.rarity}</span>${elObj?` <span style="color:${elObj.color};font-size:0.65rem">${elObj.icon}</span>`:''}</div>
+        <div class="item-name"><span class="key-hint">${i + 1}</span>${item.icon} ${item.name} <span class="item-rarity-badge ${item.rarity}">${item.rarity}</span>${elObj?` <span style="color:${elObj.color};font-size:0.65rem">${elObj.icon}</span>`:''}</div>
         <div style="font-size:0.68rem;color:var(--text-dim)">${item.desc}</div>
       </div>
     </div>`;
@@ -472,7 +474,7 @@ function openHowToPlay() {
     <div class="modal-title">? How to Play</div>
     <div style="font-size:0.78rem;line-height:1.9;color:var(--text-mid)">
       <b style="color:var(--accent-gold)">Exploration</b><br>
-      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼. The minimap (M) shows everything you've uncovered; click it to walk there. Auto-explore (X or 🧭) walks to the nearest chest or unexplored ground and stops when an enemy comes into view. Each level-up restores a quarter of your HP and MP, and descending restores some too.<br><br>
+      Move with WASD / arrow keys, the on-screen pad, or tap any revealed tile to walk there. Explore each floor for chests, shops, events and secret rooms, then defeat the floor's guardian (or boss every 5th floor) to unlock the exit ▼. The minimap (M) shows everything you've uncovered; click it to walk there. Auto-explore (X or 🧭) walks to the nearest chest or unexplored ground and stops when an enemy comes into view. In events and boss rewards, number keys pick a choice. Each level-up restores a quarter of your HP and MP, and descending restores some too.<br><br>
       <b style="color:var(--accent-gold)">Combat</b><br>
       Each round, SPD decides who acts first. <b>Attack</b> (Q) builds combo and MP, <b>Defend</b> (E) gives shield and MP, <b>Item</b> (R) uses a consumable, <b>Flee</b> (F) escapes ordinary fights (never bosses or guardians). Abilities use keys 1–9. Every hit builds Combo (+10% damage each) and charges <b>Burst</b> (Space). Watch the enemy's <i>Next:</i> line to see what it will do and roughly how hard it will hit you (≈45 dmg) — Defend before the big ones.<br><br>
       <b style="color:var(--accent-gold)">Buffs & Debuffs</b><br>

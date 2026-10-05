@@ -24,6 +24,7 @@
 //   Arrows/WASD  — movement (exploration only)
 //   M            — toggle the minimap
 //   X            — auto-explore
+//   1–9 (dialog) — pick that choice in an event or boss reward
 //   Escape       — close a closeable dialog, otherwise open the pause menu
 // ══════════════════════════════════════════════════════════════
 
@@ -172,6 +173,13 @@ function handleKeyDown(e) {
     } else if (isScreenActive('game-screen') && G.player) {
       showPauseMenu();
     }
+    return;
+  }
+
+  // Number keys pick a numbered choice in a dialog (events, boss rewards)
+  if (isModalOpen() && /^[1-9]$/.test(key)) {
+    const choice = document.querySelector(`#overlay-content [data-key="${key}"]`);
+    if (choice) { e.preventDefault(); choice.click(); }
     return;
   }
 
