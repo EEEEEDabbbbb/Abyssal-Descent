@@ -32,6 +32,11 @@
   Shade, Flame Archon…) have a bit less ATK, so a single unlucky
   encounter is less often run-ending. Void Stalker, the top killer in
   testing, was toned down.
+- Arcanist (a floor-35 unlock) played worse than the starting classes: the
+  lowest HP, ATK and DEF in the game, and weak to the shadow enemies that
+  dominate floors 8–20. Now HP 88 (was 72), ATK 12 (10), DEF 6 (4); it
+  keeps the biggest MP pool. In testing its median depth went from 5–8 to
+  10, and it stopped dying on floors 1–5.
 - Enemy Bleed (Shadow Slash, Talon Rake) deals 12% of the enemy's ATK per
   stack each turn, down from 20%. It ignores DEF and stacks up to 10, so
   its users (Void Stalker, the Shadow Tyrant, Cursed Knight, Harpy…) were
