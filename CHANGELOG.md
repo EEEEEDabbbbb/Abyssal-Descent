@@ -1,20 +1,8 @@
 # Changelog
 
-## 2.2.0
+## 2.3.0
 
 ### Fixed
-- Re-casting a buff or debuff refreshes it instead of compounding it
-  ("-25% DEF" cast three times was -58%). Effects that are meant to stack
-  (Frenzy, Bleed, Dominion, Cleaved…) still stack, up to 10 times.
-- Enemies you flee from no longer keep that fight's buffs and debuffs.
-- Chronomancer and Soundbreaker could cast their Burst every turn for free
-  from the ability bar.
-- Spectral Haunt's dodge bonus did nothing.
-- Enemy attacks logged their damage before resistances and shields ("attacks
-  for 49" when you lost 25). The log now shows what you actually took.
-- A boss low on HP could chain Life Drain every turn and out-heal you
-  forever. Enemies never use a draining move twice in a row now.
-- Cleaved counted its DEF loss twice.
 - Closing the game mid-fight and pressing Continue rewound you to before
   the fight, so you could walk around an enemy (or a guardian or boss) you
   were losing to. The game now saves as each fight starts, and Continue puts
@@ -24,8 +12,6 @@
   are fixed by where they are on the floor, so reloading and taking a
   different route can't re-roll them. In a Daily Descent everyone gets the
   same merchants and the same luck.
-- Removed 4,650 duplicate ability definitions (the ability file is 40% smaller,
-  so the game loads faster).
 
 ### Balance
 - **Difficulty curve rebuilt.** Enemy strength came from per-tier stat
@@ -65,30 +51,16 @@
 - Armour can block at most 85% of a hit (high-DEF builds took a flat 1
   damage from anything weaker than them).
 - Life Drain heals the enemy for half the damage dealt (was all of it).
-- 26 classes had padded kits that repeated the same 2–7 abilities. Every
-  class now has 8 different abilities, filled from its element's ability set.
 - The same fix for fusion classes: 26 had padded kits and 46 had two
   abilities with the same name. All 638 now have 8 distinct abilities.
 - The five secret classes were defined twice, and the Collection and Fusion
   Lab showed an outdated copy (different stats and kit from what you
   played). There is now one definition.
-- Nullbringer's Sunders now also deal damage, and an already-applied Sunder
-  can't be cast again by mistake.
-- Weaker classes got more ATK/HP (Phantom, Frostweaver, Ironclad, Sentinel,
-  Nullbringer, Magnetist and others); Abyssal Tyrant's control and
-  Soulrender's lifesteal were toned down. In simulated fights every shop
-  class now wins 60–88% of the time (was 45–90%).
 - Hard and Nightmare world settings pay ×1.25 and ×1.5 Soul Shards during
   the run (they only made enemies stronger before). Achievements pay their
   fixed amounts.
-- Class unlocks cost half as many Soul Shards (about 4,000 for all classes,
-  was 8,085). Bosses pay 5 + floor shards (was 5 + half the floor), and every
-  new depth record pays 2 shards per floor.
 
 ### New
-- Run seeds: every run has a seed (shown in the pause menu, or enter one in
-  World Settings). The same seed and settings build the same floors, and
-  reloading a save can't re-roll chests, drops or flee attempts.
 - Class select shows which elements the selected class is strong against
   and weak to.
 - Enemy cards show the element matchup when it isn't neutral ("You deal
@@ -101,8 +73,6 @@
   standard settings and any class (always at NG+0, so New Game+ players get
   the same floors). Your best floor for the day is shown on the button and in
   Records.
-- Minimap in the corner of the map (toggle with M or in Settings); click it
-  to walk somewhere you have already seen.
 - Auto-explore (X, or the 🧭 button on the map): walks to the nearest chest,
   event or dropped loot, otherwise to the nearest unexplored ground, and
   stops as soon as an enemy comes into view. It never walks into fights,
@@ -113,19 +83,6 @@
 - Number keys pick choices in events, boss rewards and the in-fight item
   menu (R), Esc cancels the item menu, and Enter continues after an event,
   so a keyboard player never needs the mouse.
-- Run statistics: kills, damage, biggest hit, chests, steps, play time and
-  more. They're shown on the death screen and in the pause menu (📊 Run Stats).
-- Records screen (🏆 on the title screen): lifetime totals, your last 20
-  runs, and 20 achievements that each pay Soul Shards once.
-- The death screen counts every shard the run earned (bosses, records,
-  events), not just the death payout.
-- 9 rival bosses: on every boss floor from 5 to 45, a run meets either the
-  usual boss or its rival (the Carrion Matron, the Hollow Choir, the
-  Frostbound Queen, the Mirror Sovereign, the Drowned Titan, the Star Eater,
-  the Blood Regent, the Unwound, the Eye of Oblivion). Each has three phases
-  and its own signature move.
-- 15 new items with 7 new gear effects: Thorns, Executioner, First Strike,
-  Mana Siphon, Last Stand, Scholar and Midas.
 
 ### Death screen
 - The buttons were narrower than the panels above them on wider screens.
@@ -150,6 +107,71 @@
   comfortably (about 2.5:1 contrast); it now meets the WCAG AA 4.5:1 minimum.
 - The title screen was cut off at the top and bottom on windows shorter than
   about 850px (most laptops); it now fits, and scrolls if it ever can't.
+
+### Developer
+- Run saves pack the map (one letter per tile for its type and flags, one for
+  its room): a fully explored large map saves in 59 KB instead of 378 KB.
+  Older saves still load. This matters on itch.io, where browser storage may
+  be shared with other games.
+- `tools/honest_run.js` plays whole runs with no cheats and reports how deep
+  they get and what killed them (`GOD=1` prints the player growth curve,
+  `META=max` simulates a fully upgraded account, `FLEE=1` flees hard
+  counters like a person, `PRE="…"` tries a change without editing data).
+- `tools/measure_moves.js` measures each enemy move's real damage (DoTs
+  included) against the power the stat normalisation credits it with.
+
+## 2.2.0
+
+### Fixed
+- Re-casting a buff or debuff refreshes it instead of compounding it
+  ("-25% DEF" cast three times was -58%). Effects that are meant to stack
+  (Frenzy, Bleed, Dominion, Cleaved…) still stack, up to 10 times.
+- Enemies you flee from no longer keep that fight's buffs and debuffs.
+- Chronomancer and Soundbreaker could cast their Burst every turn for free
+  from the ability bar.
+- Spectral Haunt's dodge bonus did nothing.
+- Enemy attacks logged their damage before resistances and shields ("attacks
+  for 49" when you lost 25). The log now shows what you actually took.
+- A boss low on HP could chain Life Drain every turn and out-heal you
+  forever. Enemies never use a draining move twice in a row now.
+- Cleaved counted its DEF loss twice.
+- Removed 4,650 duplicate ability definitions (the ability file is 40% smaller,
+  so the game loads faster).
+
+### Balance
+- 26 classes had padded kits that repeated the same 2–7 abilities. Every
+  class now has 8 different abilities, filled from its element's ability set.
+- Nullbringer's Sunders now also deal damage, and an already-applied Sunder
+  can't be cast again by mistake.
+- Weaker classes got more ATK/HP (Phantom, Frostweaver, Ironclad, Sentinel,
+  Nullbringer, Magnetist and others); Abyssal Tyrant's control and
+  Soulrender's lifesteal were toned down. In simulated fights every shop
+  class now wins 60–88% of the time (was 45–90%).
+- Class unlocks cost half as many Soul Shards (about 4,000 for all classes,
+  was 8,085). Bosses pay 5 + floor shards (was 5 + half the floor), and every
+  new depth record pays 2 shards per floor.
+
+### New
+- Run seeds: every run has a seed (shown in the pause menu, or enter one in
+  World Settings). The same seed and settings build the same floors, and
+  reloading a save can't re-roll chests, drops or flee attempts.
+- Minimap in the corner of the map (toggle with M or in Settings); click it
+  to walk somewhere you have already seen.
+- Run statistics: kills, damage, biggest hit, chests, steps, play time and
+  more. They're shown on the death screen and in the pause menu (📊 Run Stats).
+- Records screen (🏆 on the title screen): lifetime totals, your last 20
+  runs, and 20 achievements that each pay Soul Shards once.
+- The death screen counts every shard the run earned (bosses, records,
+  events), not just the death payout.
+- 9 rival bosses: on every boss floor from 5 to 45, a run meets either the
+  usual boss or its rival (the Carrion Matron, the Hollow Choir, the
+  Frostbound Queen, the Mirror Sovereign, the Drowned Titan, the Star Eater,
+  the Blood Regent, the Unwound, the Eye of Oblivion). Each has three phases
+  and its own signature move.
+- 15 new items with 7 new gear effects: Thorns, Executioner, First Strike,
+  Mana Siphon, Last Stand, Scholar and Midas.
+
+### Accessibility
 - Tooltips work without a mouse: they open on keyboard focus and on a long
   press on touch screens (the press doesn't also trigger the button).
 - Unusable abilities stay focusable and their tooltip says why ("Not enough
@@ -157,17 +179,7 @@
 - Item names with apostrophes ("Miser's Coin") showed a backtick in tooltips.
 
 ### Developer
-- Run saves pack the map (one letter per tile for its type and flags, one for
-  its room): a fully explored large map saves in 59 KB instead of 378 KB.
-  Older saves still load. This matters on itch.io, where browser storage may
-  be shared with other games.
 - `tools/class_balance.js` simulates fights for every class and prints win rates.
-- `tools/honest_run.js` plays whole runs with no cheats and reports how deep
-  they get and what killed them (`GOD=1` prints the player growth curve,
-  `META=max` simulates a fully upgraded account, `FLEE=1` flees hard
-  counters like a person, `PRE="…"` tries a change without editing data).
-- `tools/measure_moves.js` measures each enemy move's real damage (DoTs
-  included) against the power the stat normalisation credits it with.
 - The bundled fonts now ship with their SIL Open Font License files
   (`abyssal_revamped/css/fonts/`).
 - New tests: run records, rival bosses and gear effects, tooltip
