@@ -133,6 +133,22 @@ test('Sunders hit, and can\'t be wasted on an enemy that already has them', asyn
   assert.equal(r.def, 0);
 });
 
+test('a boss saved before its fight keeps its scaling after a reload', async () => {
+  const r = await run(async () => {
+    __startTestRun('shadowblade', 25, 'BOSSSAVE');
+    const cell = G.map.flat().find(c => c.content === 'boss');
+    const before = { hp: cell.enemy.hp, atk: cell.enemy.atk, ps: JSON.stringify(cell.enemy._phaseScale) };
+    assignRunSlot(); saveRun();
+    await loadRun(G._runSaveSlot);
+    const c2 = G.map.flat().find(c => c.content === 'boss');
+    const after = { hp: c2.enemy.hp, atk: c2.enemy.atk, ps: JSON.stringify(c2.enemy._phaseScale) };
+    clearActiveRunSave();
+    return { before, after };
+  });
+  assert.deepEqual(r.after, r.before);
+  assert.ok(r.before.ps && r.before.ps !== 'undefined');
+});
+
 test('save → load keeps packs, consumables, dropped items, stats and secret-boss state', async () => {
   const r = await run(async () => {
     __startTestRun('shadowblade', 6);
