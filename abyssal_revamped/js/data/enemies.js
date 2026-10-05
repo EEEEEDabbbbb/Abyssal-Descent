@@ -6,8 +6,6 @@
 const ENEMY_ABILITIES = {
   basic:(e,p)=>{
     const dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
-    const el=document.getElementById('enemy-sprite');
-    if(el){el.classList.remove('hurt','attacking','dead');void el.offsetWidth;el.classList.add('attacking');}
     dealDmgToPlayer(dmg);
     logEntry('enemy-action',`${e.name} attacks for ${dmg}.`);
   },
@@ -24,12 +22,11 @@ const ENEMY_ABILITIES = {
   },
   drain:(e,p)=>{
     const dmg=Math.max(1,calcDmg(e.atk*1.2,p.stats.def*0.5));
-    dealDmgToPlayer(dmg);
-    if(!(e._sunders && e._sunders.flesh)){
-      e.hp=Math.min(e.maxHp,e.hp+Math.round(dmg*0.4));
-      logEntry('enemy-action',`${e.name} drains ${dmg} HP and heals!`);
+    const taken=dealDmgToPlayer(dmg);
+    if(healEnemy(e,Math.round(taken*0.4))>0){
+      logEntry('enemy-action',`${e.name} drains ${taken} HP and heals!`);
     } else {
-      logEntry('enemy-action',`${e.name} attempts to drain ${dmg} HP — but its flesh is sundered! (No healing)`);
+      logEntry('enemy-action',`${e.name} drains ${taken} HP — but cannot heal!`);
     }
   },
   curse:(e,p)=>{
@@ -83,9 +80,9 @@ const ENEMY_ABILITIES = {
   },
   life_drain:(e,p)=>{
     const dmg=Math.max(1,calcDmg(e.atk*1.4,p.stats.def*0.4));
-    dealDmgToPlayer(dmg);
-    e.hp=Math.min(e.maxHp,e.hp+dmg);
-    logEntry('enemy-action',`${e.name} drains your life for ${dmg}! Fully healed!`);
+    const taken=dealDmgToPlayer(dmg);
+    const healed=healEnemy(e,taken);
+    logEntry('enemy-action',`${e.name} drains your life for ${taken}!${healed>0?` Heals ${healed}.`:''}`);
   },
   shadow_slash:(e,p)=>{
     const dmg=Math.max(1,calcDmg(e.atk*1.3,p.stats.def*0.6));
@@ -107,10 +104,10 @@ const ENEMY_ABILITIES = {
     logEntry('enemy-action',`${e.name} tears the void for ${dmg}! (Shield ignored)`);
   },
   summon:(e,p)=>{
-    e.hp=Math.min(e.maxHp,e.hp+Math.round(e.maxHp*0.1));
+    const healed=healEnemy(e,Math.round(e.maxHp*0.1));
     const dmg=Math.max(1,calcDmg(e.atk,p.stats.def));
     dealDmgToPlayer(dmg);
-    logEntry('enemy-action',`${e.name} summons minions and attacks for ${dmg}! Healed 10%.`);
+    logEntry('enemy-action',`${e.name} summons minions and attacks for ${dmg}!${healed>0?` Healed ${healed}.`:''}`);
   },
   enrage_strike:(e,p)=>{
     const mult=1.0+(1.0-e.hp/e.maxHp);
@@ -1175,7 +1172,7 @@ function getRandomEnemy(floor, allowElite=true) {
   const mult = getFloorStatMult(floor);
   const floorScale = 1 + (floor - 1) * 0.18;
   const diffMult = getDifficultyMult();
-  const totalScale = mult * floorScale * diffMult;
+  const totalScale = mult * floorScale * diffMult * getNgPlusMult();
 
   // ELITE VARIANTS: cheap content multiplier — reuses every existing
   // regular enemy with buffed stats + better loot instead of hand-authoring
@@ -1211,10 +1208,14 @@ function getRandomEnemy(floor, allowElite=true) {
 function getRandomEnemyPack(floor) {
   const a = getRandomEnemy(floor, false);
   const b = getRandomEnemy(floor, false);
+  // Rewards scale down with the stats so a pack pays ~1.4× a single enemy, not 2×
   [a, b].forEach(en => {
     en.hp  = Math.round(en.hp * 0.7);
     en.maxHp = en.hp;
     en.atk = Math.round(en.atk * 0.7);
+    en.xp  = Math.round(en.xp * 0.7);
+    en.gold = en.gold.map(g => Math.round(g * 0.7));
+    en.loot = (en.loot || 0) * 0.7;
   });
   return [a, b];
 }
@@ -1224,7 +1225,10 @@ function getBossForFloor(floor) {
   if (!bossId) return null;
   const b = deepCopy(ENEMY_POOL[bossId]);
   const mult = getFloorStatMult(floor);
-  const diffMult = getDifficultyMult();
+  const diffMult = getDifficultyMult() * getNgPlusMult();
+  // Rewards scale with depth like everything else
+  b.xp = Math.round(b.xp * mult * (1 + (floor - 1) * 0.12));
+  b.gold = (b.gold || [20, 40]).map(g => Math.round(g * (1 + (floor - 1) * 0.1)));
   // Bosses scale harder on high floors
   if (floor > 10) {
     const extraScale = 1 + (floor - 10) * 0.15;
@@ -1255,12 +1259,13 @@ function getGuardianForFloor(floor) {
   const base = deepCopy(ENEMY_POOL[pool[rand(pool.length)]]);
   const mult = getFloorStatMult(floor) * 1.4;
   const floorScale = 1 + (floor - 1) * 0.18;
-  const diffMult = getDifficultyMult();
+  const diffMult = getDifficultyMult() * getNgPlusMult();
   base.hp    = Math.round(base.hp * floorScale * mult * diffMult);
   base.maxHp = base.hp;
   base.atk   = Math.round(base.atk * floorScale * mult * diffMult);
   base.def   = Math.round(base.def + floor * 0.6 * diffMult);
   base.xp    = Math.round(base.xp * floorScale * 1.5);
+  base.gold  = base.gold.map(g => Math.round(g * (1 + (floor - 1) * 0.1) * 1.5));
   base.isGuardian = true;
   base.status = [];
   base.patternIndex = 0;

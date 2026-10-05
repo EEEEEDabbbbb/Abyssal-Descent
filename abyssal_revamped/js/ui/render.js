@@ -87,119 +87,10 @@ function renderStatsGrid() {
   const p   = G.player;
   const el  = getClassData(p.classId)?.element;
   const elObj = el ? ELEMENTS[el] : null;
-  // ⚠️ When adding new passives (base or fusion), add entries to BOTH
-  // passiveNames and passiveDescs below, or tooltips will silently show nothing.
-  const passiveNames = {
-    // ── Base class passives ──
-    shadow_step:      '🗡️ Shadow Step',
-    iron_skin:        '🛡️ Iron Skin',
-    soul_harvest:     '🌀 Soul Harvest',
-    combustion:       '🔥 Combustion',
-    static_charge:    '⚡ Static Charge',
-    vital_hunger:     '🩸 Vital Hunger',
-    void_affinity:    '🌑 Void Affinity',
-    rune_mastery:     '🔱 Rune Mastery',
-    death_aura:       '💀 Death Aura',
-    sacred_aura:      '⚜️ Sacred Aura',
-    abyssal_presence: '👁️ Abyssal Presence',
-    anatomical_study: '🔬 Anatomical Study',
-    // ── Fusion class passives ──
-    arcane_mastery:   '✨ Arcane Mastery',
-    bastion:          '🏰 Bastion',
-    battle_hardened:  '⚔️ Battle Hardened',
-    crystal_body:     '💎 Crystal Body',
-    death_mastery:    '💀 Death Mastery',
-    divine_grace:     '⚜️ Divine Grace',
-    doom_aura:        '🌑 Doom Aura',
-    dragon_scales:    '🐉 Dragon Scales',
-    earth_body:       '🌍 Earth Body',
-    feral_bond:       '🐾 Feral Bond',
-    fire_mastery:     '🔥 Fire Mastery',
-    frost_armor:      '❄️ Frost Armor',
-    frost_mastery:    '❄️ Frost Mastery',
-    gravity_mastery:  '🌀 Gravity Mastery',
-    gravity_well:     '🌀 Gravity Well',
-    gust:             '💨 Gust',
-    hex_master:       '🔮 Hex Master',
-    immunity:         '🛡️ Immunity',
-    intimidation:     '😤 Intimidation',
-    iron_will:        '🛡️ Iron Will',
-    magnetic_field:   '🧲 Magnetic Field',
-    overclock:        '⚙️ Overclock',
-    phase:            '👻 Phase',
-    plague_lord:      '🦠 Plague Lord',
-    psionic_link:     '🔮 Psionic Link',
-    radiant:          '☀️ Radiant',
-    resonance:        '🔊 Resonance',
-    resonance_master: '🔊 Resonance Master',
-    shadow_veil:      '🌑 Shadow Veil',
-    spellblade:       '⚔️ Spellblade',
-    spirit_bond:      '👻 Spirit Bond',
-    stardust:         '⭐ Stardust',
-    storm_mastery:    '⚡ Storm Mastery',
-    tidal_flow:       '🌊 Tidal Flow',
-    tide_mastery:     '🌊 Tide Mastery',
-    time_warp:        '⏳ Time Warp',
-    undying:          '💀 Undying',
-    void_mastery:     '🌀 Void Mastery',
-  };
-  const passiveDescs = {
-    // ── Base class passives ──
-    shadow_step:      'First strike each combat is a guaranteed critical hit.',
-    iron_skin:        'Gain bonus shield (50% DEF) at combat start.',
-    soul_harvest:     '+15% magic damage. MP regen doubled in combat.',
-    combustion:       'All burn applications gain +1 extra stack.',
-    static_charge:    'First ability each combat costs 0 MP.',
-    vital_hunger:     'Deal up to +50% damage when low HP. Lifesteal below 50% HP.',
-    void_affinity:    '+20% magic damage. Enemy starts with 1 Entropy stack.',
-    rune_mastery:     'ATK increased by 8% at combat start.',
-    death_aura:       'Enemies begin combat with 2 Plague stacks.',
-    sacred_aura:      'Gain 20% max MP at combat start.',
-    abyssal_presence: 'Enemies start combat with -10% ATK (Dread).',
-    anatomical_study: '+18% damage per active Sunder on the enemy (up to +90% at 5 Sunders).',
-    // ── Fusion class passives ──
-    arcane_mastery:   'Arcane damage is applied before each strike lands, effectively hitting twice.',
-    bastion:          'Can vanish while holding the defensive line — punishes enemies that overcommit to an empty position.',
-    battle_hardened:  'Marks priority targets at combat start. Shadow strikes against marked targets deal bonus damage.',
-    crystal_body:     'Shatters into crystal shards on taking damage, each shard dealing a small counter-hit.',
-    death_mastery:    'Necromantic power amplifies all death-element effects. Undead allies persist one extra turn.',
-    divine_grace:     'Holy conviction amplifies Sunder delivery — Sundered enemies take bonus holy damage.',
-    doom_aura:        'Each Vanish tightens a doom mark on the enemy. At max stacks, the next strike is an instant kill.',
-    dragon_scales:    'Draconic armor absorbs a portion of incoming damage and converts it to ATK.',
-    earth_body:       'Rooted in stone — immune to SPD reduction effects. Strike eruptions deal bonus ground damage.',
-    feral_bond:       'Stacks hunt marks on targets from stealth. At 3 marks, the next strike deals 200% bonus damage.',
-    fire_mastery:     'Fire applications prime targets for Sunder rather than consuming them, amplifying both systems.',
-    frost_armor:      'Ice shell absorbs the first hit each combat. Shatters on break, dealing frost damage to the attacker.',
-    frost_mastery:    'Slows targets from stealth before striking. Frozen enemies take 50% bonus damage from the opening hit.',
-    gravity_mastery:  'Gravitational force amplifies Sunder — each active Sunder increases crush damage dealt.',
-    gravity_well:     'Warps gravity around the target at combat start, reducing their SPD by 20% for the first 3 turns.',
-    gust:             'Movement speed exceeds targeting — first strike each combat cannot be counterattacked.',
-    hex_master:       'Applies Weakness and Misfortune to the enemy before the first strike lands.',
-    immunity:         'Immune to poison and disease effects. Contagion abilities deal 25% bonus damage.',
-    intimidation:     'Reduces enemy ATK by 15% at combat start through sheer draconic presence.',
-    iron_will:        'Cannot be reduced below 1 HP more than once per combat. Second near-death restores 20% HP.',
-    magnetic_field:   'Strips metallic armor from enemies at combat start, reducing their DEF by 10%.',
-    overclock:        'First two abilities each combat have their cooldowns reduced by 1.',
-    phase:            'Passes through armor on the opening strike — first hit ignores DEF entirely.',
-    plague_lord:      'All poison and disease effects applied by this class last 2 extra turns.',
-    psionic_link:     'Spells and strikes share damage scaling — each spell cast boosts the next strike by 10%, and vice versa.',
-    radiant:          'Blinds the enemy with a radiant flash at combat start, causing them to miss their first attack.',
-    resonance:        'Resonance stacks persist between encounters. Enter each combat with stacks carried from the last.',
-    resonance_master: 'Resonance stacks cap is increased. Each stack beyond the normal cap adds bonus void damage.',
-    shadow_veil:      'Enters combat cloaked — enemy cannot act on turn 1.',
-    spellblade:       'Spells set up strikes and strikes set up spells — alternating between them grants +15% damage to each.',
-    spirit_bond:      'Stalks from the spirit plane before manifesting — first strike deals bonus damage and cannot miss.',
-    stardust:         'Teleports between strikes, making counterattacks impossible. Each teleport adds 5% crit chance for that hit.',
-    storm_mastery:    'Thunder strikes amplify Sunder — each Sunder increases chain lightning damage dealt.',
-    tidal_flow:       'Water currents cloak movement — first strike from stealth deals bonus water damage.',
-    tide_mastery:     'Ocean power surges with each turn — tidal damage increases by 5% per combat round, up to 50%.',
-    time_warp:        'Strikes targets before they react — first ability each combat takes effect before the enemy turn.',
-    undying:          'Survives one lethal hit per combat, rising with 15% HP. The killing blow is reflected back at half damage.',
-    void_mastery:     'Entropy stacks applied by this class reduce all enemy stats, not just the primary targets.',
-  };
+  // Passive names/descriptions live in PASSIVE_INFO (js/engine/passives.js)
   const passiveHtml = (p.passives||[]).map(passive => {
-    const name = passiveNames[passive] || passive;
-    const desc = passiveDescs[passive] || 'No description available.';
+    const name = PASSIVE_INFO[passive]?.name || passive;
+    const desc = PASSIVE_INFO[passive]?.desc || 'No description available.';
     const safeName = name.replace(/'/g,'`');
     const safeDesc = desc.replace(/'/g,'`');
     return `<div class="stat-item" style="grid-column:span 2;cursor:help"
@@ -430,18 +321,18 @@ function renderAbilities() {
   const p = G.player;
   const inCombat = G.inCombat && G.turn==='player';
   const weaponEl = p.equipment?.weapon?.element;
-  document.getElementById('abilities-grid').innerHTML = p.abilities.map(abId=>{
+  document.getElementById('abilities-grid').innerHTML = p.abilities.map((abId, idx)=>{
     const ab = ABILITIES[abId]; if(!ab) return '';
     const onCd   = (p.cooldowns[abId]||0)>0;
     const isHpCost = ab.costType === 'hp';
-    const noResource = isHpCost ? (p.stats.hp <= ab.cost + 1) : (p.stats.mp < ab.cost);
-    const disabled = !inCombat||onCd||noResource;
+    const cost = getAbilityCost(p, ab);
+    const disabled = !inCombat || !canUseAbility(p, abId).ok;
     const elObj = ab.element ? ELEMENTS[ab.element] : null;
     const costColor = isHpCost ? 'var(--hp-color)' : 'var(--mp-color)';
     const costLabel = isHpCost ? '♥' : '✦';
-    const costDisplay = ab.cost > 0 ? `${ab.cost}${costLabel}` : (isHpCost ? '—♥' : '0✦');
-    // Affinity glow: weapon element matches ability element
-    const hasAffinity = weaponEl && ab.element && weaponEl === ab.element;
+    const costDisplay = cost > 0 ? `${cost}${costLabel}` : (isHpCost ? '—♥' : (ab.cost > 0 ? 'FREE' : '0✦'));
+    // Affinity glow: any equipped item's element matches the ability (same rule as combat)
+    const hasAffinity = affinityFor(p, ab) > 1;
     const affinityStyle = hasAffinity ? `box-shadow:0 0 6px 2px ${elObj?.color||'#ffaa00'}88;` : '';
     const affinityBadge = hasAffinity ? `<span style="position:absolute;top:2px;right:3px;font-size:0.55rem;color:${elObj?.color||'#ffaa00'}" title="Weapon Affinity +20%">⚔</span>` : '';
     return `<button class="ability-btn ${onCd?'on-cooldown':''}"
@@ -451,6 +342,7 @@ function renderAbilities() {
       onmouseenter="showAbilityTooltip(event,'${abId}')"
       onmouseleave="hideTooltip()">
       ${onCd?`<span class="ab-cd">${p.cooldowns[abId]}t</span>`:''}
+      ${idx < 9 ? `<span class="ab-key" aria-hidden="true">${idx+1}</span>` : ''}
       ${affinityBadge}
       <span class="abn">${ab.icon} ${ab.name}${elObj?` <span style="font-size:0.6rem;color:${elObj.color}">${elObj.icon}</span>`:''}</span>
       <div class="ab-cost"><span style="color:${costColor}">${costDisplay}</span></div>
@@ -669,6 +561,19 @@ function renderRightPanel() {
   if (atTop) log.scrollTop = 0; // keep the newest lines in view unless you scrolled down to read
 }
 
+// ── Screen shake ──────────────────────────────────────────────
+// intensity 1 (crit) … 3 (boss phase). Respects Screen Shake / Reduce Motion.
+function screenShake(intensity = 1) {
+  if (!S.screenShake || S.reduceMotion) return;
+  const el = document.getElementById('center-panel');
+  if (!el) return;
+  el.classList.remove('shake-1','shake-2','shake-3');
+  void el.offsetWidth;
+  el.classList.add(`shake-${clamp(intensity,1,3)}`);
+  clearTimeout(el._shakeTimer);
+  el._shakeTimer = setTimeout(() => el.classList.remove('shake-1','shake-2','shake-3'), 400);
+}
+
 // ── Floating damage numbers ───────────────────────────────────
 function spawnFloat(text, type, containerId) {
   if (!S.dmgNumbers) return;
@@ -709,8 +614,7 @@ function showAbilityTooltip(event, abId) {
   const costStr = ab.costType==='hp' ? `<span style="color:var(--hp-color)">${ab.cost>0?ab.cost:'—'}♥ HP</span>`
                 : ab.costType==='burst' ? `<span style="color:#cc44ff">BURST</span>`
                 : `<span style="color:var(--mp-color)">${ab.cost}✦ MP</span>`;
-  const weaponEl = G.player?.equipment?.weapon?.element;
-  const affinityStr = (weaponEl && ab.element && weaponEl===ab.element)
+  const affinityStr = (G.player && affinityFor(G.player, ab) > 1)
     ? ` · <span style="color:${elObj?.color||'#ffaa00'}">⚔ +20% Affinity</span>` : '';
   showTooltip(event, ab.name+elStr, ab.desc + ` · ${costStr}` + (ab.maxCooldown?` · CD: ${ab.maxCooldown}t`:'') + affinityStr);
 }

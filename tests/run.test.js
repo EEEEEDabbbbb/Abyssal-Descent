@@ -206,6 +206,7 @@ test('damage-over-time hurts enemies', async () => {
     __startTestRun('pyromancer', 5);
     const e = getRandomEnemy(5); e.hp = e.maxHp = 5000;
     startCombat(e);
+    G.turn = 'player';                       // you apply DoTs on your own turn
     applyBurn(e, G.player, 3); applyPlague(e, G.player, 2);
     const hp0 = e.hp;
     G.turn = 'enemy'; tickStatus(e);

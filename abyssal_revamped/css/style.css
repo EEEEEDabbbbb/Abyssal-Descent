@@ -2436,3 +2436,14 @@
   box-shadow: var(--shadow-raised-hover);
   transform: translateY(-2px);
 }
+
+/* ── Screen shake (screenShake() in render.js) ── */
+@keyframes shake-small  { 0%,100%{transform:translate(0,0)} 25%{transform:translate(-2px,1px)} 50%{transform:translate(2px,-1px)} 75%{transform:translate(-1px,-1px)} }
+@keyframes shake-medium { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-4px,2px)} 40%{transform:translate(4px,-2px)} 60%{transform:translate(-3px,-2px)} 80%{transform:translate(3px,2px)} }
+@keyframes shake-large  { 0%,100%{transform:translate(0,0)} 15%{transform:translate(-7px,3px)} 30%{transform:translate(6px,-4px)} 45%{transform:translate(-5px,-3px)} 60%{transform:translate(5px,4px)} 80%{transform:translate(-3px,2px)} }
+#center-panel.shake-1 { animation: shake-small 0.25s; }
+#center-panel.shake-2 { animation: shake-medium 0.3s; }
+#center-panel.shake-3 { animation: shake-large 0.4s; }
+
+/* Hotkey number on ability buttons */
+.ability-btn .ab-key { position:absolute; bottom:2px; right:4px; font-size:0.55rem; opacity:0.45; }

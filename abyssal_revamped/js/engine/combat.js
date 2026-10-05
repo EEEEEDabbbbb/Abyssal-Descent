@@ -24,8 +24,58 @@
 //   checkBossPhase() compares e.hp/e.maxHp to phase thresholds
 // ══════════════════════════════════════════════════════════════
 
+// ── Helpers ───────────────────────────────────────────────────
+function isBossLike(e) { return !!(e && (e.isBoss || e.isGuardian || e.isSecretBoss)); }
+
+// DOM ids of an enemy's card/sprite (pack fights use per-index ids)
+function enemyDisplayId(e) {
+  const i = G.enemies.indexOf(e);
+  return G.enemies.length > 1 && i >= 0 ? `enemy-display-${i}` : 'enemy-display';
+}
+function enemySpriteId(e) {
+  const i = G.enemies.indexOf(e);
+  return G.enemies.length > 1 && i >= 0 ? `enemy-sprite-${i}` : 'enemy-sprite';
+}
+function playSpriteAnim(id, cls) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.remove('hurt','attacking','dead'); void el.offsetWidth; el.classList.add(cls); }
+}
+
+// reflectDamage — retaliation (reflects, counters, shards). Never consumes
+// Vanish, never builds combo-based bonuses, never triggers lifesteal.
+function reflectDamage(target, amount, element) {
+  if (!target || target.hp <= 0 || amount <= 0) return 0;
+  G._reflecting = true;
+  try { return dealDmgToEnemy(target, amount, false, false, false, element); }
+  finally { G._reflecting = false; }
+}
+
+// healEnemy — every enemy heal goes through here so "no healing" effects work
+function healEnemy(e, amount) {
+  if (!e || amount <= 0) return 0;
+  if ((e._sunders && e._sunders.flesh) || (e.status || []).some(s => s.noHeal)) return 0;
+  let cap = e.maxHp;
+  (e.status || []).forEach(s => { if (s.hpCapPct) cap = Math.min(cap, Math.round(e.maxHp * s.hpCapPct)); });
+  const before = e.hp;
+  e.hp = Math.min(cap, e.hp + Math.round(amount));
+  return Math.max(0, e.hp - before);
+}
+
+// executeEnemy — instant kills. Bosses/guardians lose 25% max HP instead.
+function executeEnemy(e, source) {
+  if (!e || e.hp <= 0) return;
+  if (isBossLike(e)) {
+    const dmg = Math.round(e.maxHp * 0.25);
+    e.hp = Math.max(0, e.hp - dmg);
+    logEntry('player-action', `${source}: ${e.name} resists execution but loses ${dmg} HP!`);
+  } else {
+    e.hp = 0;
+    logEntry('player-action', `${source}: ${e.name} is executed!`);
+  }
+}
+
 // dealDmgToEnemy — main outgoing damage function
-// Called by: attack, abilities, DoTs, Nullbringer sunders
+// Called by: attack, abilities, DoTs, reflects, Nullbringer sunders
 // Parameters:
 //   e         — enemy object
 //   dmg       — raw damage before multipliers
@@ -33,281 +83,329 @@
 //   isDot     — boolean; skips combo mult, weapon affinity, animations if true
 //   isMagic   — boolean; uses getMagicDmgMult instead of getDmgMult
 //   atkElement — override element (defaults to class element for magic, 'normal' for physical)
+// A "direct" hit is one the player made this action (not a DoT tick or a
+// reflect) — only direct hits consume Vanish, trigger lifesteal, etc.
 function dealDmgToEnemy(e, dmg, isCrit, isDot=false, isMagic=false, atkElement=null) {
-  if (!e) return 0;
+  if (!e || e.hp <= 0) return 0;
   const p     = G.player;
   const magic = isMagic || !!G._currentAbilityMagic; // G._currentAbilityMagic set in playerAction() ability branch
+  const direct = !isDot && !G._reflecting;
   let mult    = magic ? getMagicDmgMult(p) : getDmgMult(p);
 
   // Weapon affinity bonus (+20% when weapon element matches ability element)
-  // G._weaponAffinity is set in playerAction() ability/burst branches, reset after use
-  if (!isDot && G._weaponAffinity && G._weaponAffinity !== 1.0) {
-    mult *= G._weaponAffinity;
-  }
+  if (direct && G._weaponAffinity && G._weaponAffinity !== 1.0) mult *= G._weaponAffinity;
 
-  // Element effectiveness — looks up ELEMENTS table
-  // For magic: uses class element. For physical: 'normal'. Can be overridden by atkElement param.
+  // Element effectiveness — for magic: class element, physical: 'normal', unless overridden
   const atkEl  = atkElement || (magic ? (getClassData(p.classId)?.element||'normal') : 'normal');
   const defEl  = e.element || 'normal';
   const elMult = getElementMult(atkEl, defEl); // defined in elements.js
   mult *= elMult;
 
-  // Combo multiplier: +10% per combo stack (getComboMult in utils.js)
-  // DoTs don't benefit from combo so they can't be exploited with defend-spam
-  if (!isDot) mult *= getComboMult(p);
+  // Combo multiplier: +10% per combo stack. DoTs/reflects don't benefit.
+  if (direct) mult *= getComboMult(p);
 
-  // Nullbringer: anatomical_study passive — +18% dmg per active Sunder on this enemy
-  // G._nullSunderActive set in startCombat() if player has anatomical_study passive
-  // e._sunders tracks which sunders are active: { flesh, will, form, time, existence }
+  // Debuffs on the target that make it take more damage
+  (e.status || []).forEach(s => {
+    if (s.incomingDmgMult) mult *= s.incomingDmgMult;
+    if (s.dmgAmpIn) mult *= 1 + s.dmgAmpIn;
+  });
+  // Player buffs that boost a damage type
+  (p.status || []).forEach(s => { if (s.crystalDmgBonus && atkEl === 'crystal') mult *= 1 + s.crystalDmgBonus; });
+
+  // Nullbringer: anatomical_study — +18% dmg per active Sunder on this enemy
   if (G._nullSunderActive && e._sunders) {
     const sunderCount = Object.keys(e._sunders).length;
     if (sunderCount > 0) mult *= (1 + sunderCount * 0.18);
   }
 
-  // ── PER-COMBAT PASSIVE FLAGS ──────────────────────────────────────
-  // These G._ flags are set at combat start (startCombat) and cleared
-  // in endCombat(). They're checked in dealDmgToEnemy, endPlayerTurn etc.
-  // ⚠️  Always add new flags to the endCombat() cleanup block or they'll
-  //     bleed into the next fight.
-  //
-  //   G._combustionActive     — Pyromancer: +25% dmg when enemy has Burn
-  //   G._voidMasteryActive    — Voidreaper/Convergence: void/shadow +20% dmg
-  //   G._plagueLordActive     — Plagueborn: diseases tick on player turn too
-  //   G._stormMasteryActive   — Stormlord: +1 storm charge per ability
-  //   G._phaseActive          — The Unnamed: 25% chance to bypass all DEF
-  //   G._soulrenderActive     — Soulrender: >90%HP +40% dmg, <30%HP lifesteal×3
-  //   G._nullSunderActive     — Nullbringer: anatomical_study sunder damage amp
-  //   G._arcaneMasteryActive  — Fusion: deals bonus psychic dmg before each strike
-  //   G._battleHardenedActive — Fusion: shadow strikes vs marked enemy +20% dmg
-  //   G._bastionActive        — Fusion: first incoming attack evaded
-  //   G._doomAuraActive       — Fusion: vanish builds doom stacks, 3 stacks = execute
-  //   G._gustActive           — Fusion: first strike cannot be counterattacked
-  //   G._spiritBondActive     — Fusion: first strike +40% dmg, cannot miss
-  //   G._stardustActive       — Fusion: +5% crit per hit in a turn
-  // ─────────────────────────────────────────────────────────────────
+  // ── PER-COMBAT PASSIVE FLAGS (set in startCombat, cleared in endCombat) ──
+  //   G._combustionActive, _voidMasteryActive, _plagueLordActive, _stormMasteryActive,
+  //   _phaseActive, _soulrenderActive, _nullSunderActive, _arcaneMasteryActive,
+  //   _battleHardenedActive, _bastionActive, _doomAuraActive, _gustActive,
+  //   _spiritBondActive, _stardustActive. Newer passives live in passives.js.
 
-  // Combustion (Pyromancer): +25% damage when enemy has any Burn status
-  if (G._combustionActive && G.enemy) {
-    const hasBurn = (G.enemy.status||[]).some(s => s.id==='burn'||s.id==='burning'||s.id==='ignite'||s.id==='fire_dot'||s.id==='combustion');
-    if (hasBurn) mult *= 1.25;
-  }
+  // Combustion (Pyromancer): +25% damage when THIS enemy is burning
+  if (G._combustionActive && (e.status||[]).some(s => /burn|ignit|fire_dot|combustion/.test(s.id))) mult *= 1.25;
 
-  // Void Mastery (Voidreaper/Convergence): void/shadow abilities +20% damage
-  if (G._voidMasteryActive && (atkElement==='void'||atkElement==='shadow'||atkElement==='dark')) {
-    mult *= 1.20;
-  }
+  // Void Mastery: void/shadow/dark damage +20%
+  if (G._voidMasteryActive && ['void','shadow','dark'].includes(atkEl)) mult *= 1.20;
 
   // Soulrender high-HP bonus: above 90% HP, +40% damage
-  if (G._soulrenderActive && G.player) {
-    const hpPct = G.player.stats.hp / G.player.stats.maxHp;
-    if (hpPct >= 0.90) mult *= 1.40;
-    // Lifesteal triple at low HP handled after damage is dealt
-  }
+  if (G._soulrenderActive && p.stats.hp / p.stats.maxHp >= 0.90) mult *= 1.40;
 
-  // Battle Hardened (fusion): shadow/dark strikes vs marked enemy +20% damage
-  if (G._battleHardenedActive && e._battleHardenedMark &&
-      (atkElement==='shadow'||atkElement==='dark'||atkElement==='void')) {
-    mult *= 1.20;
-  }
+  // Battle Hardened: shadow/dark/void damage vs marked enemy +20%
+  if (G._battleHardenedActive && e._battleHardenedMark && ['shadow','dark','void'].includes(atkEl)) mult *= 1.20;
 
-  // Spirit Bond (fusion): first strike +40% damage
-  if (G._spiritBondActive && p && p._spiritBondFirstStrike) {
+  // Spirit Bond: first direct strike +40%
+  if (direct && G._spiritBondActive && p._spiritBondFirstStrike) {
     mult *= 1.40;
     p._spiritBondFirstStrike = false;
   }
 
-  // Stardust (fusion): each hit in a turn adds 5% crit chance (tracked via G._stardustHits)
-  if (G._stardustActive && !isDot) {
+  // Stardust: each direct hit in a turn adds 5% chance for a +50% burst
+  if (direct && G._stardustActive) {
     G._stardustHits = (G._stardustHits || 0) + 1;
-    const stardustCritBonus = G._stardustHits * 5;
-    if (rand(100) < stardustCritBonus) {
+    if (rand(100) < G._stardustHits * 5) {
       mult *= 1.5;
-      spawnFloat('STARDUST CRIT', 'crit', 'enemy-display');
+      spawnFloat('STARDUST', 'crit', enemyDisplayId(e));
     }
   }
+
+  // Newer passives (passives.js)
+  mult *= passiveDamageMult(p, e, { direct, isDot, magic, kind: magic ? 'magic' : 'physical', element: atkEl });
 
   let finalDmg = Math.round(dmg * mult);
 
-  // Phase (The Unnamed): 25% chance to ignore DEF entirely
-  // dmg was already calculated with DEF applied — we boost by the DEF reduction ratio
-  if (G._phaseActive && !isDot && G.enemy && rand(100) < 25) {
-    const rawDmg = Math.round(dmg * mult); // with DEF
-    const defBoost = G.enemy.def > 0 ? (1 + G.enemy.def / (G.enemy.def + 20)) : 1; // approximate DEF bypass gain
-    finalDmg = Math.round(rawDmg * defBoost);
-    spawnFloat('PHASE', 'crit', 'enemy-display');
-    logEntry('player-action', `　 Phase: strike bypasses all DEF!`);
+  // Phase: 25% chance per direct hit to slip past most of the enemy's DEF
+  if (direct && G._phaseActive && rand(100) < 25) {
+    const defBoost = e.def > 0 ? (1 + e.def / (e.def + 20)) : 1;
+    finalDmg = Math.round(finalDmg * defBoost);
+    spawnFloat('PHASE', 'crit', enemyDisplayId(e));
+    logEntry('player-action', `👻 Phase: the strike slips past their guard!`);
   }
 
-  // Vanish (Shadowblade ability) — next attack gets bonus mult then vanish clears
-  const vanish = p && p.status && p.status.find(s=>s.id==='vanished');
-  if (vanish && p.nextAttackMult) {
+  // Vanish — the next direct hit gets the bonus multiplier, then Vanish ends
+  if (direct && p.nextAttackMult && hasStatus(p, 'vanished')) {
     finalDmg = Math.round(finalDmg * p.nextAttackMult);
     p.nextAttackMult = null;
-    p.status = p.status.filter(s=>s.id!=='vanished');
+    removeStatuses(p, s => s.id === 'vanished');
   }
 
-  e.hp = Math.max(0, e.hp - finalDmg);
-
-  // Soulrender: below 30% HP, lifesteal triples (adds on top of equipment lifesteal)
-  if (G._soulrenderActive && G.player && !isDot) {
-    const hpPct = G.player.stats.hp / G.player.stats.maxHp;
-    if (hpPct < 0.30) {
-      const tripleHeal = Math.round(finalDmg * 0.45); // 3× the base 15%
-      G.player.stats.hp = Math.min(G.player.stats.maxHp, G.player.stats.hp + tripleHeal);
+  // Bosses can't be executed outright: an "execute" ability that would kill a
+  // boss in one hit is capped at 15% of its max HP.
+  if (direct && isBossLike(e) && (G._currentAbilityTags || []).includes('execute') && finalDmg >= e.hp) {
+    const cap = Math.max(1, Math.round(e.maxHp * 0.15));
+    if (finalDmg > cap) {
+      finalDmg = cap;
+      if (!G._executeResistLogged) { G._executeResistLogged = true; logEntry('system', `${e.name} resists being executed!`); }
     }
   }
 
-  // Lifesteal equipment effects — heals 15% of damage dealt
-  if (!isDot && (hasEquipEffect(p,'lifesteal') || hasEquipEffect(p,'soulcrown'))) {
-    const heal = Math.round(finalDmg * 0.15);
-    p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + heal);
-  }
+  e.hp = Math.max(0, e.hp - finalDmg);
+  if (direct) G._directHitsThisAction = (G._directHitsThisAction || 0) + 1;
 
-  // Visual feedback — only for direct hits, not DoTs
-  if (!isDot) {
-    const el = document.getElementById('enemy-sprite');
-    if (el) { el.classList.remove('hurt','attacking','dead'); void el.offsetWidth; el.classList.add('hurt'); }
-    spawnFloat(finalDmg.toString(), isCrit ? 'crit' : 'damage', 'enemy-display');
+  if (direct) {
+    // Lifesteal: gear 15%, Soulrender +45% below 30% HP, buffs
+    let steal = 0;
+    if (hasEquipEffect(p,'lifesteal') || hasEquipEffect(p,'soulcrown')) steal += 0.15;
+    if (G._soulrenderActive && p.stats.hp / p.stats.maxHp < 0.30) steal += 0.45;
+    (p.status || []).forEach(s => {
+      if (s.fullLifesteal) steal += 1;
+      if (s.lifestealBonus) steal += s.lifestealBonus / 100;
+    });
+    if (steal > 0) p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + Math.round(finalDmg * steal));
 
-    // Show "SUPER EFFECTIVE" / "NOT VERY EFFECTIVE" label if element matters
+    // Resonance Field: direct hits echo for extra damage
+    const echo = (p.status || []).find(s => s.echoOnHit);
+    if (echo && !G._echoing && e.hp > 0) {
+      G._echoing = true;
+      try { dealDmgToEnemy(e, Math.round(finalDmg * echo.echoOnHit), false, true, magic, atkEl); }
+      finally { G._echoing = false; }
+    }
+
+    // Visual feedback
+    playSpriteAnim(enemySpriteId(e), 'hurt');
+    spawnFloat(finalDmg.toString(), isCrit ? 'crit' : 'damage', enemyDisplayId(e));
+    if (isCrit) screenShake(1);
+
+    // "Super effective" etc. — once per action, not once per hit
     const elLabel = getEffectivenessLabel(elMult);
-    if (elLabel) logEntry('system', `${elLabel.text} (${ELEMENTS[atkEl]?.icon||''}${ELEMENTS[defEl]?.icon||''})`);
+    if (elLabel && !G._elLoggedThisAction) {
+      G._elLoggedThisAction = true;
+      logEntry('system', `${elLabel.text} (${ELEMENTS[atkEl]?.icon||''}→${ELEMENTS[defEl]?.icon||''})`);
+    }
   }
 
   return finalDmg;
 }
 
-// dealDmgToPlayer — all incoming damage routes through here
-// Handles: difficulty scaling, element effectiveness vs player, smoke screen miss,
-//          evasion, invulnerability, block, Iron Fortress reflect, Magma Coat burn,
-//          shield absorption, Undying talent, Blood Knight lifesteal, combo reset
+// dealDmgToPlayer — all incoming combat damage routes through here
+// The attacker is G._actingEnemy (set by enemyTurn while an enemy acts); it
+// is null for damage-over-time ticks, which can't be dodged/blocked/reflected.
+// Handles: enemy damage modifiers, element vs your class element, misses,
+// evasion, invulnerability, block, reflects/counters, damage reduction,
+// shields, lethal-save effects, on-hit callbacks, combo reset.
+// Difficulty is NOT applied here — it is already in enemy ATK (enemies.js).
 function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   const p  = G.player;
+  if (!p) return 0;
+  const attacker = G._actingEnemy && G._actingEnemy.hp > 0 ? G._actingEnemy : null;
   let   dmg = Math.max(1, rawDmg);
 
-  // Bastion (fusion): evade the very first incoming attack each combat
-  if (G._bastionActive) {
-    G._bastionActive = false;
-    spawnFloat('BASTION', 'miss', 'char-portrait');
-    logEntry('player-action', `🏰 Bastion: You hold the line and vanish — attack evaded!`);
-    return 0;
+  if (attacker) {
+    // Attacker debuffs: Taunted (atkMult), Suppressed/Nullified (dmgReduction)
+    (attacker.status || []).forEach(s => {
+      if (s.atkMult) dmg *= s.atkMult;
+      if (s.dmgReduction) dmg *= Math.max(0, 1 - s.dmgReduction);
+    });
+    dmg = Math.round(dmg);
+    if (dmg <= 0) { logEntry('player-action', `${attacker.name}'s attack is nullified!`); return 0; }
+    if (!atkElement) atkElement = attacker.element || null;
+
+    // Bastion: the first enemy attack each fight is evaded
+    if (G._bastionActive) {
+      G._bastionActive = false;
+      spawnFloat('BASTION', 'miss', 'char-portrait');
+      logEntry('player-action', `🏰 Bastion: You hold the line and vanish — attack evaded!`);
+      return 0;
+    }
+
+    // Misses caused by the attacker's own debuffs (Radiant flash, Smoke Screen)
+    const dazzled = (attacker.status || []).find(s => s.missNext);
+    if (dazzled) {
+      removeStatuses(attacker, s => s === dazzled);
+      spawnFloat('MISS','miss','char-portrait');
+      logEntry('player-action', `${attacker.name} is dazzled and misses!`);
+      return 0;
+    }
+    const blind = (attacker.status || []).find(s => s.id === 'smoke_blind');
+    if (blind && rand(100) < (blind.missChance || 35)) {
+      spawnFloat('MISS','miss','char-portrait');
+      logEntry('player-action',`${attacker.name} misses through the smoke!`);
+      return 0;
+    }
   }
 
-  // Nightmare/Hard difficulty increases incoming damage
-  dmg = Math.round(dmg * getDifficultyMult());
-
-  // Element check: enemy element vs player's class element
+  // Element check: enemy element vs your class element
   if (atkElement) {
     const defEl  = getClassData(p.classId)?.element || 'normal';
     const elMult = getElementMult(atkElement, defEl);
     dmg = Math.round(dmg * elMult);
     const elLabel = getEffectivenessLabel(elMult);
-    if (elLabel) logEntry('system', `Enemy element ${elLabel.text} against you!`);
-  }
-
-  // Smoke screen (Shadowblade ability): 35% chance enemy misses entirely
-  if (G.enemy) {
-    const blind = G.enemy.status && G.enemy.status.find(s=>s.id==='smoke_blind');
-    if (blind && rand(100) < (blind.missChance||35)) {
-      spawnFloat('MISS','miss','char-portrait');
-      logEntry('player-action',`${G.enemy.name} misses through the smoke!`);
-      return 0;
+    if (elLabel && attacker && attacker._elLoggedRound !== G.combatRound) {
+      attacker._elLoggedRound = G.combatRound;
+      logEntry('system', `${attacker.name}'s ${ELEMENTS[atkElement]?.name || atkElement} attacks: ${elLabel.text} against you!`);
     }
   }
 
-  // Evasion — check equipment effects, take highest applicable %
-  // divinemantle=20%, evasion_block=20%, evasion2=15%, evasion=10%
-  let evasChance = 0;
-  if (hasEquipEffect(p,'divinemantle')) evasChance = Math.max(evasChance, 20);
-  if (hasEquipEffect(p,'evasion_block')) evasChance = Math.max(evasChance, 20);
-  if (hasEquipEffect(p,'evasion2'))      evasChance = Math.max(evasChance, 15);
-  if (hasEquipEffect(p,'evasion'))       evasChance = Math.max(evasChance, 10);
-  // Status-based dodge chance (dodgeChance field on buff status)
-  if (p.status) {
-    p.status.forEach(s => { if (s.dodgeChance) evasChance = Math.max(evasChance, s.dodgeChance); });
-  }
-  if (evasChance > 0 && rand(100) < evasChance) {
-    spawnFloat('EVADE','miss','char-portrait');
-    logEntry('player-action','You evade the attack!');
-    return 0;
-  }
-
-  // Invulnerable status (Paladin burst: divine_aegis)
-  if (p.status && p.status.find(s=>s.id==='invulnerable')) {
+  // Invulnerable status (e.g. Paladin burst: divine_aegis)
+  if (hasStatus(p, 'invulnerable')) {
     spawnFloat('IMMUNE','miss','char-portrait');
     logEntry('player-action','You are invulnerable!');
     return 0;
   }
 
-  // Block chance from equipment (10% if block or evasion_block equipped)
-  const blockChance = (hasEquipEffect(p,'block') || hasEquipEffect(p,'evasion_block')) ? 10 : 0;
-  if (blockChance > 0 && rand(100) < blockChance) {
-    spawnFloat('BLOCK','miss','char-portrait');
-    logEntry('player-action','Attack blocked!');
-    return 0;
-  }
+  if (attacker) {
+    // Guaranteed dodges (Astral Veil)
+    const veil = (p.status || []).find(s => s.dodgesRemaining > 0);
+    if (veil) {
+      veil.dodgesRemaining--;
+      spawnFloat('EVADE','miss','char-portrait');
+      logEntry('player-action','You phase out of the way!');
+      if (veil.onHitDodge) veil.onHitDodge(p);
+      if (veil.dodgesRemaining <= 0) removeStatuses(p, s => s === veil);
+      return 0;
+    }
+    // Evasion — best gear chance, plus buff dodge chances/bonuses (cap 75%)
+    let evasChance = 0;
+    if (hasEquipEffect(p,'divinemantle'))  evasChance = Math.max(evasChance, 20);
+    if (hasEquipEffect(p,'evasion_block')) evasChance = Math.max(evasChance, 20);
+    if (hasEquipEffect(p,'evasion2'))      evasChance = Math.max(evasChance, 15);
+    if (hasEquipEffect(p,'evasion'))       evasChance = Math.max(evasChance, 10);
+    (p.status || []).forEach(s => {
+      if (s.dodgeChance) evasChance = Math.max(evasChance, s.dodgeChance);
+      if (s.dodgeBonus)  evasChance += s.dodgeBonus;
+    });
+    if (evasChance > 0 && rand(100) < Math.min(75, evasChance)) {
+      spawnFloat('EVADE','miss','char-portrait');
+      logEntry('player-action','You evade the attack!');
+      return 0;
+    }
 
-  // Iron Fortress (Ironclad ability): reflects 100% of damage back, consumed on use
-  const fortress = p.status && p.status.find(s=>s.id==='iron_fortress');
-  if (fortress) {
-    const reflectDmg = Math.round(dmg * (fortress.counterReflect||1.0));
-    p.status = p.status.filter(s=>s.id!=='iron_fortress');
-    p.counterReflect = 0;
-    if (G.enemy) {
-      dealDmgToEnemy(G.enemy, reflectDmg, false, false, false, null);
-      logEntry('player-action', `Iron Fortress REFLECTS ${reflectDmg} damage back!`);
+    // Block chance from equipment
+    if ((hasEquipEffect(p,'block') || hasEquipEffect(p,'evasion_block')) && rand(100) < 10) {
+      spawnFloat('BLOCK','miss','char-portrait');
+      logEntry('player-action','Attack blocked!');
+      return 0;
+    }
+
+    // Iron Fortress: reflects the whole hit back, consumed on use
+    const fortress = (p.status || []).find(s => s.id === 'iron_fortress' && !s.defBonus);
+    if (fortress) {
+      const back = reflectDamage(attacker, Math.round(dmg * (fortress.counterReflect || 1.0)), null);
+      removeStatuses(p, s => s === fortress);
+      logEntry('player-action', `Iron Fortress REFLECTS ${back} damage back!`);
       spawnFloat('REFLECT','crit','char-portrait');
+      return 0;
     }
-    return 0;
-  }
 
-  // Status-based reflect (reflectPct field) — reflects a % of damage back, non-consuming
-  if (p.status && G.enemy) {
-    const reflectStatus = p.status.find(s => s.reflectPct);
-    if (reflectStatus) {
-      const reflectDmg = Math.round(dmg * (reflectStatus.reflectPct / 100));
-      if (reflectDmg > 0) {
-        dealDmgToEnemy(G.enemy, reflectDmg, false, false, false, null);
-        logEntry('player-action', `Reflected ${reflectDmg} damage back!`);
-        spawnFloat('REFLECT','crit','char-portrait');
+    // Partial reflects / counters / on-hit effects (non-consuming)
+    (p.status || []).slice().forEach(s => {
+      if (s.reflectPct) {
+        const back = reflectDamage(attacker, Math.round(dmg * (s.reflectPct / 100)), null);
+        if (back > 0) logEntry('player-action', `Reflected ${back} damage back!`);
       }
-    }
+      if (s.counterOnHit) {
+        const back = reflectDamage(attacker, Math.round(calcDmg(p.stats.atk * s.counterOnHit, attacker.def)), null);
+        if (back > 0) logEntry('player-action', `⚔️ Counter-attack for ${back}!`);
+      }
+      if (s.onHit) s.onHit(p, attacker);
+      else if (s.id === 'magma_coat') { applyBurn(attacker, p, 3); logEntry('player-action',`Magma Coat burns ${attacker.name} for 3 stacks!`); }
+    });
   }
 
-  // Magma Coat (Pyromancer ability): burn attacker when hit
-  const magmaCoat = p.status && p.status.find(s=>s.id==='magma_coat');
-  if (magmaCoat && G.enemy) {
-    applyBurn(G.enemy, p, 3);
-    logEntry('player-action',`Magma Coat burns ${G.enemy.name} for 3 stacks!`);
-  }
+  // Flat damage reduction buffs (cap 75%)
+  const reduce = (p.status || []).reduce((sum, s) => sum + (s.dmgReduce || 0), 0);
+  if (reduce > 0) dmg = Math.round(dmg * (1 - Math.min(0.75, reduce)));
+
+  // Passive defenses (passives.js)
+  dmg = passiveIncoming(p, dmg, attacker);
+  if (dmg <= 0) return 0;
 
   // Shield absorption — shield acts as HP buffer, absorbs damage first
   if (!ignoreShield && p.shield > 0) {
     const absorbed = Math.min(p.shield, dmg);
     p.shield -= absorbed; dmg -= absorbed;
     if (absorbed > 0) spawnFloat(`-${absorbed}🛡️`,'miss','char-portrait');
-    if (p.shield <= 0) p.shield = 0;
+    if (p.shield <= 0) {
+      p.shield = 0;
+      // Bone Shield: backlash when the shield breaks
+      const bone = (p.status || []).find(s => s.shieldBonus);
+      if (bone && attacker) {
+        const back = reflectDamage(attacker, bone.shieldBonus, null);
+        removeStatuses(p, s => s === bone);
+        logEntry('player-action', `🦴 Your shield shatters — backlash for ${back}!`);
+      }
+    }
   }
 
   if (dmg <= 0) return 0;
 
-  // Undying talent — survives lethal blow once per run with 1 HP
-  // p.undying set in createPlayer() based on meta talent; p.undyingUsed resets on new run
-  if (p.undying && !p.undyingUsed && p.stats.hp - dmg <= 0) {
-    p.stats.hp = 1;
-    p.undyingUsed = true;
-    logEntry('system', '✦ Undying — survived with 1 HP!');
-    spawnFloat('UNDYING','heal','char-portrait');
-    resetCombo(p);
-    return dmg;
+  // Lethal hit: Undying talent (once per run), then lethal-save passives (once per fight)
+  if (p.stats.hp - dmg <= 0) {
+    if (p.undying && !p.undyingUsed) {
+      p.stats.hp = 1;
+      p.undyingUsed = true;
+      logEntry('system', '✦ Undying — survived with 1 HP!');
+      spawnFloat('UNDYING','heal','char-portrait');
+      resetCombo(p);
+      return dmg;
+    }
+    if (passiveLethal(p, dmg, attacker)) {
+      spawnFloat('SAVED','heal','char-portrait');
+      resetCombo(p);
+      return dmg;
+    }
   }
 
   p.stats.hp = Math.max(0, p.stats.hp - dmg);
   p.damageTakenCombat = (p.damageTakenCombat||0) + dmg;
   spawnFloat(dmg.toString(),'damage','char-portrait');
+  if (dmg >= p.stats.maxHp * 0.2) screenShake(2);
 
-  // Blood Knight passive: vital_hunger — lifesteal 12% of damage taken when below 50% HP
-  if (p.passives && p.passives.includes('vital_hunger') && p.stats.hp / p.stats.maxHp < 0.5) {
+  // On-damage callbacks on buffs (e.g. slime coat: damage → MP; stone resonance: reflect)
+  (p.status || []).slice().forEach(s => {
+    if (s.onDamage) s.onDamage(p, dmg, attacker);
+    if (s.onDamageTaken) s.onDamageTaken(p, dmg, attacker);
+  });
+  // Resonance Field: hits you take echo back at the attacker
+  const echo = (p.status || []).find(s => s.echoOnHit);
+  if (echo && attacker) reflectDamage(attacker, Math.round(dmg * echo.echoOnHit), null);
+
+  passiveDamaged(p, dmg, attacker);
+
+  // Blood Knight passive: vital_hunger — heal 12% of damage taken when below 50% HP
+  if (p.passives && p.passives.includes('vital_hunger') && p.stats.hp > 0 && p.stats.hp / p.stats.maxHp < 0.5) {
     const steal = Math.round(dmg * 0.12);
     if (steal > 0) { p.stats.hp = Math.min(p.stats.maxHp, p.stats.hp + steal); spawnFloat(`+${steal}`,'heal','char-portrait'); }
   }
@@ -316,6 +414,17 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
   resetCombo(p);
 
   return dmg;
+}
+
+// dealEnvironmentDamage — hazards outside combat (biomes). Can't be dodged,
+// never kills (leaves at least 1 HP) and doesn't touch combat state.
+function dealEnvironmentDamage(p, dmg) {
+  if (!p || dmg <= 0) return 0;
+  const before = p.stats.hp;
+  p.stats.hp = Math.max(1, p.stats.hp - Math.round(dmg));
+  const lost = before - p.stats.hp;
+  if (lost > 0) spawnFloat(String(lost), 'damage', 'char-portrait');
+  return lost;
 }
 
 // ── Combat flow ──────────────────────────────────────────────
@@ -336,9 +445,15 @@ function dealDmgToPlayer(rawDmg, ignoreShield=false, atkElement=null) {
 // elsewhere in this file (see the evasion check ~line 672) for consistency.
 function determineFirstActor(p, e) {
   const pSpd = p.stats.spd;
-  const eSpd = e.spd || 8;
+  const eSpd = e.spd ?? 8;
   const pFirstChance = clamp(50 + (pSpd - eSpd) * 2, 10, 90);
   return rand(100) < pFirstChance ? 'player' : 'enemy';
+}
+
+// fastestEnemy — the alive enemy with the highest SPD (packs race as one side)
+function fastestEnemy() {
+  const alive = (G.enemies || []).filter(en => en.hp > 0);
+  return alive.reduce((best, en) => (en.spd ?? 8) > (best.spd ?? 8) ? en : best, alive[0] || null);
 }
 
 // resolveNextRoundInitiative — rolls who acts first for the upcoming round
@@ -348,15 +463,32 @@ function determineFirstActor(p, e) {
 // startCombat() to open the fight, and again at the end of every round from
 // endPlayerTurn() / enemyTurn().
 function resolveNextRoundInitiative() {
-  const p = G.player, e = G.enemy;
+  const p = G.player, e = fastestEnemy();
   if (!p || !e) return;
-  const first = determineFirstActor(p, e);
+  // Opening-round passives (Time Warp, Shadow Veil) guarantee the first move
+  const forced = G.combatRound === 0 ? passiveOpening(p, G.enemies) : null;
+  const first = forced || determineFirstActor(p, e);
   G._pendingSecondActor = first === 'player' ? 'enemy' : 'player';
   G.turn = first;
   if (first === 'enemy') {
     logEntry('system', `⚡ ${e.name} is faster this round and strikes first!`);
     setTimeout(enemyTurn, G._enemyTurnDelay ?? 600);
   }
+}
+
+// advanceRound — closes a round (both sides acted) and opens the next one.
+// The single place combatRound changes, so round-based effects never miss.
+function advanceRound() {
+  G.combatRound++;
+  // The Convergence: auto-reset at round 10 with double power
+  const p2 = G.player;
+  if (p2 && p2.classId === 'the_convergence' && G.combatRound === 10 && !hasStatus(p2, 'convergence_reset')) {
+    p2._convergenceForm = 'null';
+    Object.keys(p2.cooldowns||{}).forEach(k=>p2.cooldowns[k]=0);
+    addStatus(p2,{id:'convergence_reset',name:'Reset ×2',type:'buff',icon:'↺',duration:4,dmgMult:2.0});
+    logEntry('system','✦ THE CONVERGENCE RESETS — Round 10. All Forms double-powered for 4 turns.');
+  }
+  resolveNextRoundInitiative();
 }
 
 // startCombat — called from mapgen.js when player steps on enemy cell.
@@ -370,34 +502,40 @@ function startCombat(enemyOrEnemies) {
   const enemyList = (Array.isArray(enemyOrEnemies) ? enemyOrEnemies : [enemyOrEnemies]).filter(Boolean);
   if (!enemyList.length) return;
   enemyList.forEach(prepareEnemy); // gives enemies a `stats` view (stats.js)
-  const enemy = enemyList[0]; // primary/lead enemy — used below for the single-target
-                              // pre-combat passives (curse/mark/debuff-on-start effects)
-                              // and for boss-only fields (isBoss/title/etc.)
+  const enemy = enemyList[0]; // lead enemy — for the intro text and boss-only fields
   G.inCombat    = true;
   G.phase       = 'combat';
   G.enemies     = enemyList;
   G.targetIndex = 0;
   G.combatRound = 0;
   G.turn        = 'player';
+  G._executeResistLogged = false;
   G.player.damageTakenCombat = 0;
 
   const p = G.player;
+  const passives = p.passives || [];
+  const each = fn => enemyList.forEach(fn);
+  const names = enemyList.length > 1 ? 'the enemies' : enemy.name;
 
-  // Clear stale mp_regen from previous combat before adding a fresh one
-  p.status = p.status.filter(s => s.id !== 'mp_regen');
+  // Per-fight class counters ("for this combat" mechanics) start fresh.
+  // Resonance stacks carry over only with the Resonance passive.
+  p._stormCharge = 0;
+  p._dominionStacks = 0;
+  p._executeThreshold = 0.20;
+  p._convergenceForm = 'null';
+  if (!passives.includes('resonance')) p._resonanceStacks = 0;
+  p._resonanceStacks = Math.min(p._resonanceStacks || 0, resonanceCap(p));
 
-  // MP regen relics — checked by equipment effect tokens
-  // soulcrown=10/turn, mpregen2=6/turn, mpregen=3/turn
-  const mpRate = hasEquipEffect(p,'soulcrown') ? 10
-    : hasEquipEffect(p,'mpregen2') ? 6
-    : hasEquipEffect(p,'mpregen')  ? 3 : 0;
+  // MP regen relics — soulcrown=10/turn, mpregen2=6/turn, mpregen=3/turn
+  // (Soulweaver's soul_harvest doubles it)
+  const mpRate = (hasEquipEffect(p,'soulcrown') ? 10 : hasEquipEffect(p,'mpregen2') ? 6 : hasEquipEffect(p,'mpregen') ? 3 : 0)
+    * (passives.includes('soul_harvest') ? 2 : 1);
   if (mpRate > 0) {
     addStatus(p, {id:'mp_regen',name:'MP Regen',type:'buff',icon:'💙',duration:999,
       onTurn:(pl)=>{ pl.stats.mp=Math.min(pl.stats.maxMp,pl.stats.mp+mpRate); }});
   }
 
   // HP regen (jade amulet, bark armor equipment)
-  p.status = p.status.filter(s => s.id !== 'hp_regen_combat');
   if (hasEquipEffect(p,'hpregen')) {
     addStatus(p, {id:'hp_regen_combat',name:'HP Regen',type:'buff',icon:'🌿',duration:999,
       onTurn:(pl)=>{ const h=Math.min(5,pl.stats.maxHp-pl.stats.hp); if(h>0){pl.stats.hp+=h;} }});
@@ -412,8 +550,7 @@ function startCombat(enemyOrEnemies) {
   p.divineMantleActive = hasEquipEffect(p,'divinemantle');
 
   // ── Class passives at combat start ─────────────────────────
-  // Each passive listed here corresponds to a class defined in classes.js
-  const passives = p.passives || [];
+  // Effects aimed at "the enemy" apply to EVERY enemy in a pack.
 
   // Ironclad: iron_skin — shield = 50% of DEF stat
   if (passives.includes('iron_skin')) {
@@ -422,178 +559,125 @@ function startCombat(enemyOrEnemies) {
     logEntry('player-action', `🛡️ Iron Skin: +${bonusShield} shield from DEF.`);
   }
 
-  // Stormcaller: static_charge — p.nextAbilityFree flag consumed in playerAction() ability branch
+  // Stormcaller: static_charge — first ability free (consumed in playerAction)
   if (passives.includes('static_charge')) {
     p.nextAbilityFree = true;
     logEntry('player-action', `⚡ Static Charge: first ability is free!`);
   }
 
-  // Shadowblade: shadow_step — p.nextAttackGuaranteed consumed in playerAction() attack branch
+  // Shadowblade: shadow_step — first strike guaranteed crit (consumed in playerAction)
   if (passives.includes('shadow_step')) {
     p.nextAttackGuaranteed = true;
     logEntry('player-action', `🗡️ Shadow Step: first strike guaranteed critical!`);
   }
 
-  // Necromancer: death_aura — applies 2 plague stacks via applyPlague() in utils.js
-  if (passives.includes('death_aura') && G.enemy) {
-    applyPlague(G.enemy, p, 2);
-    logEntry('player-action', `💀 Death Aura: ${G.enemy.name} is afflicted with Plague!`);
+  // Necromancer: death_aura — 2 Plague stacks on every enemy
+  if (passives.includes('death_aura')) {
+    each(en => applyPlague(en, p, 2));
+    logEntry('player-action', `💀 Death Aura: ${names} ${enemyList.length > 1 ? 'are' : 'is'} afflicted with Plague!`);
   }
 
-  // Paladin: sacred_aura — +20% max MP at combat start
+  // Paladin: sacred_aura — restore 20% max MP at combat start
   if (passives.includes('sacred_aura')) {
     const mpBonus = Math.round(p.stats.maxMp * 0.2);
     p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + mpBonus);
     logEntry('player-action', `⚜️ Sacred Aura: +${mpBonus} MP at combat start.`);
   }
 
-  // Soulweaver: soul_harvest — doubles existing mp_regen rate if active
-  if (passives.includes('soul_harvest') && mpRate > 0) {
-    const existing = p.status.find(s => s.id === 'mp_regen');
-    if (existing) { existing.onTurn = (pl) => { pl.stats.mp = Math.min(pl.stats.maxMp, pl.stats.mp + mpRate * 2); }; }
+  // Voidmancer: void_affinity — 1 Entropy stack on every enemy
+  if (passives.includes('void_affinity')) {
+    each(en => applyEntropy(en, p, 1));
+    logEntry('player-action', `🌀 Void Affinity: Entropy seeps into ${names}.`);
   }
 
-  // Voidmancer: void_affinity — 1 entropy stack on enemy at start
-  if (passives.includes('void_affinity') && G.enemy) {
-    applyEntropy(G.enemy, p, 1);
-    logEntry('player-action', `🌀 Void Affinity: Entropy seeps into ${G.enemy.name}.`);
-  }
-
-  // Runeblade: rune_mastery — +8% ATK for this fight (reset with all temporary stats in endCombat)
+  // Runeblade: rune_mastery — +8% ATK for this fight (reset with temporary stats in endCombat)
   if (passives.includes('rune_mastery')) {
     p.stats.atk = Math.round(p.stats.atk * 1.08);
     logEntry('player-action', `🔱 Rune Mastery: ATK empowered by rune inscriptions.`);
   }
 
-  // Abyssal One: abyssal_presence — enemy ATK penalized 10% at start
-  if (passives.includes('abyssal_presence') && G.enemy) {
-    const pen = Math.round(G.enemy.atk * 0.10);
-    G.enemy.atk = Math.max(1, G.enemy.atk - pen);
-    addStatus(G.enemy, {id:'abyssal_dread', name:'Dread', type:'debuff', icon:'👁️', duration:999, atkPen:pen});
-    logEntry('player-action', `👁️ Abyssal Presence: ${G.enemy.name} is filled with dread (-${pen} ATK).`);
+  // Abyssal One: abyssal_presence — every enemy -10% ATK
+  if (passives.includes('abyssal_presence')) {
+    each(en => {
+      const pen = Math.round(en.atk * 0.10);
+      en.atk = Math.max(1, en.atk - pen);
+      addStatus(en, {id:'abyssal_dread', name:'Dread', type:'debuff', icon:'👁️', duration:999, atkPen:pen});
+    });
+    logEntry('player-action', `👁️ Abyssal Presence: ${names} ${enemyList.length > 1 ? 'are' : 'is'} filled with dread (-10% ATK).`);
   }
 
-  // Nullbringer: anatomical_study — G._nullSunderActive flag enables sunder bonus in dealDmgToEnemy
-  // e._sunders tracks which of the 5 sunders are applied to the current enemy
-  if (passives.includes('anatomical_study')) {
-    G._nullSunderActive = true;
-    G.enemy._sunders = G.enemy._sunders || {};
+  // Nullbringer: anatomical_study — sunder damage amp (dealDmgToEnemy reads e._sunders)
+  G._nullSunderActive = passives.includes('anatomical_study');
+  if (G._nullSunderActive) {
+    each(en => { en._sunders = en._sunders || {}; });
     logEntry('player-action', `🌑 Anatomical Study: Each Sunder applied will amplify all damage by +18%.`);
   }
 
-  // Pyromancer: combustion — all damage +25% when enemy has any Burn status
-  // Implemented as a flag checked in dealDmgToEnemy
-  G._combustionActive = passives.includes('combustion');
-
-  // Voidreaper/Convergence: void_mastery — void/shadow abilities +20% damage, execute threshold +5%
-  G._voidMasteryActive = passives.includes('void_mastery');
-  if (passives.includes('void_mastery')) {
-    logEntry('player-action', `🌑 Void Mastery: Void/shadow abilities +20% damage. Execute threshold +5%.`);
-  }
-
-  // Plagueborn: plague_lord — diseases tick on both player AND enemy turn (double rate)
-  // Handled in endPlayerTurn via G._plagueLordActive flag
-  G._plagueLordActive = passives.includes('plague_lord');
-  if (passives.includes('plague_lord')) {
-    logEntry('player-action', `🦠 Plague Lord: All diseases tick at double rate.`);
-  }
-
-  // Stormlord: storm_mastery — storm charges gained +1 extra per ability (tracked in ability use)
-  G._stormMasteryActive = passives.includes('storm_mastery');
-  if (passives.includes('storm_mastery')) {
-    logEntry('player-action', `⛈️ Storm Mastery: +1 extra Storm Charge per ability.`);
-  }
-
-  // Abyssal Tyrant / Dragon: intimidation — additional -15% enemy ATK at combat start
-  if (passives.includes('intimidation') && G.enemy) {
-    const pen = Math.round(G.enemy.atk * 0.15);
-    G.enemy.atk = Math.max(1, G.enemy.atk - pen);
-    addStatus(G.enemy, {id:'intimidated',name:'Intimidated',type:'debuff',icon:'😨',duration:999,atkPen:pen});
-    logEntry('player-action', `😨 Intimidation: ${G.enemy.name} is shaken! -${pen} ATK.`);
-  }
-
-  // The Unnamed: phase — 25% chance per hit to completely ignore enemy DEF
-  // Handled as a flag in dealDmgToEnemy
-  G._phaseActive = passives.includes('phase');
-  if (passives.includes('phase')) {
-    logEntry('player-action', `　 Phase: 25% chance each hit ignores all DEF.`);
-  }
-
-  // Soulrender: vital_hunger (high HP bonus) is already checked in dealDmgToEnemy
-  // Additional soulrender passive: above 90% HP, +40% damage; below 30% HP, lifesteal triples
-  G._soulrenderActive = passives.includes('soul_harvest') && passives.includes('undying');
-
-  // ── Fusion passives ─────────────────────────────────────────
-
-  // arcane_mastery — arcane pre-strike: deals bonus psychic damage before each physical hit
-  // Implemented as a flag checked in dealDmgToEnemy
-  G._arcaneMasteryActive = passives.includes('arcane_mastery');
-  if (passives.includes('arcane_mastery')) {
-    logEntry('player-action', `✨ Arcane Mastery: Arcane damage precedes every strike.`);
-  }
-
-  // bastion — first enemy attack each combat is evaded entirely (the "vanish while holding the line")
-  G._bastionActive = passives.includes('bastion');
-  if (passives.includes('bastion')) {
-    logEntry('player-action', `🏰 Bastion: First incoming attack will be evaded.`);
-  }
-
-  // battle_hardened — marks enemy at combat start; shadow strikes vs marked targets +20% damage
+  // Flags checked in dealDmgToEnemy / endPlayerTurn / playerAction
+  G._combustionActive     = passives.includes('combustion');
+  G._voidMasteryActive    = passives.includes('void_mastery');
+  G._plagueLordActive     = passives.includes('plague_lord');
+  G._stormMasteryActive   = passives.includes('storm_mastery');
+  G._phaseActive          = passives.includes('phase');
+  G._soulrenderActive     = p.classId === 'soulrender';
+  G._arcaneMasteryActive  = passives.includes('arcane_mastery');
+  G._bastionActive        = passives.includes('bastion');
   G._battleHardenedActive = passives.includes('battle_hardened');
-  if (passives.includes('battle_hardened') && G.enemy) {
-    G.enemy._battleHardenedMark = true;
-    logEntry('player-action', `⚔️ Battle Hardened: ${G.enemy.name} is marked — shadow strikes deal bonus damage.`);
+  G._doomAuraActive       = passives.includes('doom_aura');
+  G._doomAuraStacks       = 0;
+  G._gustActive           = passives.includes('gust');
+  G._spiritBondActive     = passives.includes('spirit_bond');
+  G._stardustActive       = passives.includes('stardust');
+
+  // Abyssal Tyrant / Dragon: intimidation — every enemy -15% ATK
+  if (passives.includes('intimidation')) {
+    each(en => {
+      const pen = Math.round(en.atk * 0.15);
+      en.atk = Math.max(1, en.atk - pen);
+      addStatus(en, {id:'intimidated',name:'Intimidated',type:'debuff',icon:'😨',duration:999,atkPen:pen});
+    });
+    logEntry('player-action', `😨 Intimidation: ${names} ${enemyList.length > 1 ? 'are' : 'is'} shaken! -15% ATK.`);
   }
 
-  // doom_aura — each vanish tightens a doom mark; at 3 stacks next strike is an execute
-  G._doomAuraActive = passives.includes('doom_aura');
-  G._doomAuraStacks = 0;
-  if (passives.includes('doom_aura')) {
-    logEntry('player-action', `🌑 Doom Aura: Vanishing builds doom stacks. At 3 — execute.`);
+  if (G._battleHardenedActive) {
+    each(en => { en._battleHardenedMark = true; });
+    logEntry('player-action', `⚔️ Battle Hardened: ${names} marked — shadow strikes deal bonus damage.`);
   }
 
-  // gust — first strike cannot be counterattacked (enemy skips retaliation on turn 1)
-  G._gustActive = passives.includes('gust');
-  if (passives.includes('gust')) {
-    logEntry('player-action', `💨 Gust: First strike is too fast to counter.`);
+  // hex_master — every enemy: Weakness (-20% ATK) and Misfortune (-20% DEF)
+  if (passives.includes('hex_master')) {
+    each(en => {
+      const atkPen = Math.round(en.atk * 0.20);
+      const defPen = Math.round(en.def * 0.20);
+      en.atk = Math.max(1, en.atk - atkPen);
+      en.def = Math.max(0, en.def - defPen);
+      addStatus(en, {id:'hex_weakness', name:'Weakness', type:'debuff', icon:'🔮', duration:999, atkPen});
+      addStatus(en, {id:'hex_misfortune', name:'Misfortune', type:'debuff', icon:'🔮', duration:999, defPen});
+    });
+    logEntry('player-action', `🔮 Hex Master: ${names} cursed! -20% ATK, -20% DEF.`);
   }
 
-  // hex_master — applies Weakness (-20% ATK) and Misfortune (-20% DEF) to enemy at combat start
-  if (passives.includes('hex_master') && G.enemy) {
-    const atkPen = Math.round(G.enemy.atk * 0.20);
-    const defPen = Math.round(G.enemy.def * 0.20);
-    G.enemy.atk = Math.max(1, G.enemy.atk - atkPen);
-    G.enemy.def = Math.max(0, G.enemy.def - defPen);
-    addStatus(G.enemy, {id:'hex_weakness', name:'Weakness', type:'debuff', icon:'🔮', duration:999, atkPen});
-    addStatus(G.enemy, {id:'hex_misfortune', name:'Misfortune', type:'debuff', icon:'🔮', duration:999, defPen});
-    logEntry('player-action', `🔮 Hex Master: ${G.enemy.name} cursed! -${atkPen} ATK, -${defPen} DEF.`);
-  }
-
-  // spirit_bond — first strike deals +40% bonus damage and cannot miss
-  G._spiritBondActive = passives.includes('spirit_bond');
-  if (passives.includes('spirit_bond')) {
+  // spirit_bond — first strike: guaranteed crit with +40% damage
+  if (G._spiritBondActive) {
     p.nextAttackGuaranteed = true;
     p._spiritBondFirstStrike = true;
     logEntry('player-action', `👻 Spirit Bond: Manifesting from the spirit plane — first strike enhanced.`);
   }
 
-  // stardust — each hit adds 5% crit chance for that hit (stacking per combo hit, resets each turn)
-  G._stardustActive = passives.includes('stardust');
-  if (passives.includes('stardust')) {
-    logEntry('player-action', `⭐ Stardust: Each strike teleports — crit chance escalates per hit.`);
-  }
+  // Newer passives (passives.js)
+  passivesCombatStart(p, enemyList);
 
   if (enemy.isBoss) {
     logEntry('system', `════ BOSS BATTLE: ${enemy.name} ════`);
+    screenShake(2);
   } else if (enemyList.length > 1) {
     logEntry('system', `══ Combat begins: ${enemy.name} and ${enemyList.length-1} other${enemyList.length>2?'s':''} ══`);
   } else {
     logEntry('system', `══ Combat begins: ${enemy.name} ══`);
   }
-  logEntry('enemy-action', `"${enemy.title}"`);
+  if (enemy.title) logEntry('enemy-action', `"${enemy.title}"`);
 
-  // INITIATIVE: roll who opens the fight based on relative SPD instead of
-  // always defaulting to the player. See resolveNextRoundInitiative().
+  // INITIATIVE: roll who opens the fight (see resolveNextRoundInitiative)
   resolveNextRoundInitiative();
 
   updateUI();
@@ -611,41 +695,76 @@ function targetEnemy(idx) {
   updateUI();
 }
 
+// getAbilityCost — what casting this ability would cost right now
+// (free-cast flags and Divine Mantle apply to MP abilities only)
+function getAbilityCost(p, ab) {
+  if (!ab) return Infinity;
+  if (ab.costType === 'hp') return ab.cost || 0;
+  if (p.nextAbilityFree || p.nextAbilityFreeCount > 0) return 0;
+  return p.divineMantleActive ? Math.floor((ab.cost || 0) * 0.8) : (ab.cost || 0);
+}
+
+// canUseAbility — { ok, reason } for the UI and playerAction
+function canUseAbility(p, abilityId) {
+  const ab = ABILITIES[abilityId];
+  if (!ab) return { ok:false, reason:'Unknown ability' };
+  if ((p.cooldowns[abilityId] || 0) > 0) return { ok:false, reason:`${ab.name} on cooldown (${p.cooldowns[abilityId]} turns)` };
+  const cost = getAbilityCost(p, ab);
+  if (ab.costType === 'hp' ? p.stats.hp <= cost + 1 : p.stats.mp < cost) {
+    return { ok:false, reason: ab.costType === 'hp' ? 'Not enough HP!' : 'Not enough mana!' };
+  }
+  return { ok:true, cost };
+}
+
+// affinityFor — +20% when any equipped item's element matches the ability's
+function affinityFor(p, ab) {
+  if (!ab.element) return 1.0;
+  const eq = p.equipment || {};
+  return [eq.weapon, eq.armor, eq.relic].some(it => it && it.element === ab.element) ? 1.20 : 1.0;
+}
+
 // playerAction — dispatches player input during combat
 // type: 'attack' | 'defend' | 'item' | 'flee' | 'burst' | 'ability'
 // abilityId: required when type === 'ability'
-// Called from: HTML onclick buttons, handleKeyDown (main.js keys 1-5, q/e/r/f/space)
+// Called from: HTML onclick buttons, handleKeyDown (main.js)
 function playerAction(type, abilityId=null) {
   if (!G.inCombat || G.turn !== 'player') return;
+  const p = G.player;
+  const e = G.enemy;
+  if (!e) return;
 
-  // Stun check — consumed here, skip turn
-  const stun = G.player.status && G.player.status.find(s=>s.id==='stunned'||s.id==='stun');
-  if (stun) {
+  // Stunned: the turn is lost; the stun wears off as its duration ticks down
+  if (p.status.some(s => s.id === 'stunned' || s.id === 'stun')) {
     logEntry('system','You are stunned and cannot act!');
-    G.player.status = G.player.status.filter(s=>s.id!=='stunned'&&s.id!=='stun');
     endPlayerTurn(); return;
   }
 
+  // Per-action bookkeeping read by dealDmgToEnemy
+  G._elLoggedThisAction = false;
+  G._directHitsThisAction = 0;
+  G._currentAbilityTags = null;
+  let kind = null; // 'physical' | 'magic' — for alternating-damage passives
   let msg = '';
-  const p = G.player;
-  const e = G.enemy;
 
   if (type === 'attack') {
-    // Arcane Mastery (fusion): fire a bonus psychic hit before the main strike lands
-    if (G._arcaneMasteryActive && G.enemy) {
+    kind = 'physical';
+    // Arcane Mastery: a psychic strike precedes the basic attack
+    if (G._arcaneMasteryActive) {
       const arcaneDmg = Math.round(calcDmg(p.stats.atk * 0.5, 0)); // ignores DEF
-      dealDmgToEnemy(G.enemy, arcaneDmg, false, true, true, 'psychic');
+      dealDmgToEnemy(e, arcaneDmg, false, true, true, 'psychic');
       logEntry('player-action', `✨ Arcane Mastery: ${arcaneDmg} psychic damage precedes the strike.`);
     }
+    // Doom Aura: attacking while Vanished tightens the doom mark
+    const fromVanish = hasStatus(p, 'vanished');
+
     // Basic attack: uses p.stats.atk vs e.def, crit applies 1.5x + critDmg bonus
     const nCrit = p.nextNAttackCount > 0 && p.nextNAttackCrit;
     const isCrit    = p.nextAttackGuaranteed || nCrit ? true : rand(100) < p.stats.crit;
     if (p.nextAttackGuaranteed) p.nextAttackGuaranteed = false;
     const critMult  = 1.5 + ((p.stats.critDmg||0)/100);
-    // 'piercing' equipment: reduces effective DEF by 30%
-    // nextNAttackPierce: reduces effective DEF by 50%
+    // 'piercing' equipment: -30% effective DEF; nextNAttackPierce: -50%
     const isPiercing = hasEquipEffect(p,'piercing') || (p.nextNAttackCount > 0 && p.nextNAttackPierce);
-    let effectiveDef = isPiercing ? Math.round(e.def * (hasEquipEffect(p,'piercing') ? 0.7 : 0.5)) : e.def;
+    const effectiveDef = isPiercing ? Math.round(e.def * (hasEquipEffect(p,'piercing') ? 0.7 : 0.5)) : e.def;
     let dmg = Math.round(calcDmg(p.stats.atk, effectiveDef) * (isCrit ? critMult : 1));
 
     // nextNAttack bonus — consume one charge
@@ -659,63 +778,55 @@ function playerAction(type, abilityId=null) {
       }
     }
 
-    // Venom: 20% chance to apply poison on attack
-    // Dual-venom bonus: if 2+ equipped items have venom, proc chance → 25% and damage → +25% (capped)
+    // Venom: 20% chance to poison (25% and +25% damage with 2+ venom items)
     if (hasEquipEffect(p,'venom')) {
       const venomCount = Object.values(p.equipment).filter(s => s && s.effect && s.effect.split('_').includes('venom')).length;
       const dualVenom  = venomCount >= 2;
-      const procChance = dualVenom ? 25 : 20;
       const dmgMult    = dualVenom ? 1.25 : 1.0;
-      if (rand(100) < procChance) {
+      if (rand(100) < (dualVenom ? 25 : 20)) {
         addStatus(e,{id:'poison',name:'Poison',type:'debuff',icon:'☠️',duration:3,
           onTurn:(en)=>{const pd=Math.round(p.stats.atk*0.3*dmgMult);dealDmgToEnemy(en,pd,false,true);}});
         logEntry('player-action', dualVenom ? 'Twin Venom poisons the enemy! (+25%)' : 'Venom poisons the enemy!');
       }
     }
 
-    // Toxin Buildup (normal_poison_buildup): _doubleToxin charges apply plague at double stacks on hit
-    if (p._doubleToxin > 0 && e) {
-      applyPlague(e, p, 2); // double stacks
+    // Toxin Buildup: _doubleToxin charges apply plague at double stacks on hit
+    if (p._doubleToxin > 0) {
+      applyPlague(e, p, 2);
       p._doubleToxin--;
       logEntry('player-action', `Toxin Buildup: double poison stacks applied! (${p._doubleToxin} charges left)`);
     }
 
-    // Weapon element used for effectiveness check (defaults to 'normal' if no element)
+    // Weapon element used for effectiveness check (defaults to 'normal')
     const weaponEl = p.equipment?.weapon?.element || 'normal';
-    dealDmgToEnemy(e, dmg, isCrit, false, false, weaponEl);
+    const dealt = dealDmgToEnemy(e, dmg, isCrit, false, false, weaponEl);
 
     // Bloodlust ability effect: p.nextAttackLifesteal set by ability, consumed here
     if (p.nextAttackLifesteal) {
-      const h=Math.round(dmg*0.3); p.stats.hp=Math.min(p.stats.maxHp,p.stats.hp+h);
+      const h=Math.round(dealt*0.3); p.stats.hp=Math.min(p.stats.maxHp,p.stats.hp+h);
       p.nextAttackLifesteal=false; logEntry('heal',`Bloodlust lifesteals ${h} HP.`);
     }
 
     addCombo(p); // increments combo counter, charges burst meter
     const mpGain = Math.max(1, Math.round(p.stats.maxMp * 0.10));
     p.stats.mp = Math.min(p.stats.maxMp, p.stats.mp + mpGain);
-    msg = isCrit ? `Critical hit! ${dmg} damage. +${mpGain} MP.` : `You attack for ${dmg} damage. +${mpGain} MP.`;
+    msg = isCrit ? `Critical hit! ${dealt} damage. +${mpGain} MP.` : `You attack for ${dealt} damage. +${mpGain} MP.`;
     logEntry('player-action', msg);
 
-    // Gust (fusion): first strike each combat is too fast to counter — skip enemy retaliation
+    // Gust: the first attack each fight is too fast to counter — enemies lose their next action
     if (G._gustActive) {
       G._gustActive = false;
-      logEntry('player-action', `💨 Gust: Strike too fast to counter — enemy cannot retaliate!`);
-      updateUI();
-      return; // skip endPlayerTurn = skip enemy turn this once
+      G.enemies.forEach(en => { if (en.hp > 0) en._skipNextTurn = 'gust'; });
+      logEntry('player-action', `💨 Gust: Strike too fast to counter — the enemy loses its next action!`);
     }
 
-    // Doom Aura (fusion): track vanish state; if player just attacked from vanish, add stack
-    if (G._doomAuraActive) {
-      const wasVanished = p.status && p.status.find(s=>s.id==='vanished');
-      if (wasVanished) {
-        G._doomAuraStacks = (G._doomAuraStacks || 0) + 1;
-        logEntry('player-action', `🌑 Doom Aura: Doom tightens (${G._doomAuraStacks}/3).`);
-        if (G._doomAuraStacks >= 3 && G.enemy) {
-          G.enemy.hp = 0;
-          logEntry('player-action', `🌑 Doom Aura: EXECUTE — doom fulfilled!`);
-          spawnFloat('DOOM', 'crit', 'enemy-display');
-          G._doomAuraStacks = 0;
-        }
+    if (G._doomAuraActive && fromVanish && e.hp > 0) {
+      G._doomAuraStacks = (G._doomAuraStacks || 0) + 1;
+      logEntry('player-action', `🌑 Doom Aura: Doom tightens (${G._doomAuraStacks}/3).`);
+      if (G._doomAuraStacks >= 3) {
+        G._doomAuraStacks = 0;
+        executeEnemy(e, '🌑 Doom Aura');
+        spawnFloat('DOOM', 'crit', enemyDisplayId(e));
       }
     }
 
@@ -728,22 +839,21 @@ function playerAction(type, abilityId=null) {
     resetCombo(p);
     p.nextAttackMult = null; p.nextAttackGuaranteed = false;
     p.nextNAttackBonus = 1.0; p.nextNAttackCount = 0; p.nextNAttackCrit = false; p.nextNAttackPierce = false;
-    p.status = p.status.filter(s=>s.id!=='vanished');
+    removeStatuses(p, s => s.id === 'vanished');
     msg = `You brace! +${shield} shield, +${mpGain} MP.`;
     logEntry('player-action', msg);
 
   } else if (type === 'item') {
-    openInventoryUse(); return; // opens inventory modal without ending turn
+    openInventoryUse(); return; // opens inventory modal; using an item ends the turn
 
   } else if (type === 'flee') {
     // Bosses, guardians and secret bosses hold the way forward — no escape
-    if (G.enemies.some(en => en.hp > 0 && (en.isBoss || en.isGuardian || en.isSecretBoss))) {
+    if (G.enemies.some(en => en.hp > 0 && isBossLike(en))) {
       logEntry('system', 'There is no escape — this foe bars the way forward!');
       updateUI(); return;
     }
     // Flee chance: 40 + player SPD - fastest enemy SPD, clamped to 10–90%
-    const fastest = Math.max(...G.enemies.filter(en => en.hp > 0).map(en => en.spd || 8));
-    const chance = clamp(40 + p.stats.spd - fastest, 10, 90);
+    const chance = clamp(40 + p.stats.spd - (fastestEnemy()?.spd ?? 8), 10, 90);
     if (rand(100) < chance) {
       logEntry('system','You flee from combat!');
       resetCombo(p);
@@ -759,84 +869,68 @@ function playerAction(type, abilityId=null) {
       // Step back to where you came from so you aren't standing on the enemy
       if (G._prevPlayerPos) G.playerPos = { ...G._prevPlayerPos };
       updateUI(); return;
-    } else {
-      logEntry('system','Failed to flee!');
-      endPlayerTurn(); return;
     }
+    logEntry('system','Failed to flee!');
+    endPlayerTurn(); return;
 
   } else if (type === 'burst') {
-    // Burst: requires burstCharge >= BURST_THRESHOLD (5)
-    // G._weaponAffinity set here for burst abilities too
-    if ((p.burstCharge||0) < BURST_THRESHOLD) { logEntry('system','Burst not ready!'); return; }
-    const burstId = p.burstAbility;
-    if (!burstId || !ABILITIES[burstId]) { logEntry('system','No burst ability!'); return; }
-    const ab = ABILITIES[burstId];
-    const weaponElB = p.equipment?.weapon?.element;
-    const relicElB  = p.equipment?.relic?.element;
-    const armorElB  = p.equipment?.armor?.element;
-    const affinityMatchB = ab.element && (weaponElB === ab.element || relicElB === ab.element || armorElB === ab.element);
-    G._weaponAffinity = affinityMatchB ? 1.20 : 1.0;
-    if (affinityMatchB) logEntry('system', `⚔ ${ELEMENTS[ab.element]?.icon||''} Affinity! +20% ${ab.element} burst!`);
+    if ((p.burstCharge||0) < BURST_THRESHOLD) { logEntry('system','Burst not ready!'); updateUI(); return; }
+    const ab = ABILITIES[p.burstAbility];
+    if (!ab) { logEntry('system','No burst ability!'); updateUI(); return; }
+    G._weaponAffinity = affinityFor(p, ab);
+    if (G._weaponAffinity > 1) logEntry('system', `⚔ ${ELEMENTS[ab.element]?.icon||''} Affinity! +20% ${ab.element} burst!`);
     G._currentAbilityMagic = !!(ab.tags && ab.tags.includes('magic'));
-    msg = ab.use(p, e);
-    G._currentAbilityMagic = false;
-    G._weaponAffinity = 1.0;
+    G._currentAbilityTags = ab.tags || [];
+    kind = G._currentAbilityMagic ? 'magic' : 'physical';
+    try { msg = ab.use(p, e); }
+    finally { G._currentAbilityMagic = false; G._weaponAffinity = 1.0; G._currentAbilityTags = null; }
     p.burstCharge = 0;
     p.combo = 0;
     updateComboUI();
+    screenShake(2);
     logEntry('player-action', `⚡ BURST: ${msg}`);
 
   } else if (type === 'ability' && abilityId) {
     const ab = ABILITIES[abilityId];
     if (!ab) return;
-    let cost = ab.cost;
-    // Divine Mantle relic: 20% MP cost reduction
-    if (p.divineMantleActive) cost = Math.floor(cost * 0.8);
-    // static_charge passive: first ability costs 0 MP (flag set in startCombat)
-    if (p.nextAbilityFree)    { cost=0; p.nextAbilityFree=false; logEntry('player-action','⚡ Storm Surge: ability was free!'); }
-    // nextAbilityFreeCount: multi-ability free charge (from stances/buffs)
-    if (!p.nextAbilityFree && p.nextAbilityFreeCount > 0) { cost=0; p.nextAbilityFreeCount--; logEntry('player-action','✦ Ability costs no MP!'); }
-    // Resource check: HP-cost abilities (costType:'hp') check health instead of MP
+    const check = canUseAbility(p, abilityId);
+    if (!check.ok) { logEntry('system', check.reason); updateUI(); return; }
+    // Pay — free-cast charges are only spent on a cast that actually happens
     if (ab.costType === 'hp') {
-      if (p.stats.hp <= cost + 1) { logEntry('system','Not enough HP!'); return; }
+      p.stats.hp = Math.max(1, p.stats.hp - check.cost);
     } else {
-      if (p.stats.mp < cost)      { logEntry('system','Not enough mana!'); return; }
+      if (p.nextAbilityFree) { p.nextAbilityFree = false; logEntry('player-action','⚡ Static Charge: ability was free!'); }
+      else if (p.nextAbilityFreeCount > 0) { p.nextAbilityFreeCount--; logEntry('player-action','✦ Ability costs no MP!'); }
+      p.stats.mp -= check.cost;
     }
-    if ((p.cooldowns[abilityId]||0) > 0) { logEntry('system',`${ab.name} on cooldown (${p.cooldowns[abilityId]} turns)`); return; }
-    if (ab.costType === 'hp') {
-      p.stats.hp = Math.max(1, p.stats.hp - cost);
-    } else {
-      p.stats.mp -= cost;
-    }
-    // Affinity: +20% damage when any equipped item's element matches ability element (capped at +20%)
-    const weaponEl  = p.equipment?.weapon?.element;
-    const relicEl   = p.equipment?.relic?.element;
-    const armorEl   = p.equipment?.armor?.element;
-    const affinityMatch = ab.element && (weaponEl === ab.element || relicEl === ab.element || armorEl === ab.element);
-    G._weaponAffinity = affinityMatch ? 1.20 : 1.0;
-    if (affinityMatch) logEntry('system', `⚔ ${ELEMENTS[ab.element]?.icon||''} Affinity! +20% ${ab.element} damage.`);
+    G._weaponAffinity = affinityFor(p, ab);
+    if (G._weaponAffinity > 1) logEntry('system', `⚔ ${ELEMENTS[ab.element]?.icon||''} Affinity! +20% ${ab.element} damage.`);
 
     G._currentAbilityMagic = !!(ab.tags && ab.tags.includes('magic'));
+    G._currentAbilityTags = ab.tags || [];
+    const damaging = ab.tags && (ab.tags.includes('physical') || ab.tags.includes('magic'));
+    if (damaging) kind = G._currentAbilityMagic ? 'magic' : 'physical';
     const comboBefore = p.combo || 0;
-    msg = ab.use(p, e); // ability function returns a description string for the log
-    G._currentAbilityMagic = false;
-    G._weaponAffinity = 1.0;
+    try { msg = ab.use(p, e); } // ability function returns a description string for the log
+    finally { G._currentAbilityMagic = false; G._weaponAffinity = 1.0; G._currentAbilityTags = null; }
     if (ab.maxCooldown > 0) p.cooldowns[abilityId] = ab.maxCooldown;
-    // Physical/magic tagged abilities advance combo; utility abilities don't.
-    // Some abilities bump p.combo themselves — that bump IS this cast's combo,
-    // so don't count it twice (but still charge the burst meter once).
-    if (ab.tags && (ab.tags.includes('physical')||ab.tags.includes('magic'))) {
+    // Physical/magic abilities advance combo once. Some bump p.combo themselves
+    // — that bump IS this cast's combo, so don't count it twice.
+    if (damaging) {
       if ((p.combo || 0) > comboBefore) p.combo -= 1;
       addCombo(p);
     }
     // Storm Mastery: +1 extra storm charge per ability use
-    if (G._stormMasteryActive && typeof p._stormCharge !== 'undefined') {
+    if (G._stormMasteryActive) {
       p._stormCharge = (p._stormCharge || 0) + 1;
       logEntry('player-action', `⛈️ Storm Mastery: +1 Storm Charge (${p._stormCharge} total).`);
     }
+    p._resonanceStacks = Math.min(p._resonanceStacks || 0, resonanceCap(p));
+    passiveAbilityCast(p, abilityId);
     logEntry('player-action', msg);
   }
 
+  passiveActionEnd(p, { kind, directHits: G._directHitsThisAction || 0 });
   checkCombatEnd();
   if (G.inCombat) endPlayerTurn();
 }
@@ -845,48 +939,41 @@ function playerAction(type, abilityId=null) {
 // Ticks player statuses, decrements cooldowns, then resolves what happens
 // next per the SPD initiative system (see resolveNextRoundInitiative()).
 function endPlayerTurn() {
+  if (!G.inCombat) return;
   G._stardustHits = 0; // Stardust: crit bonus resets each turn
   tickStatus(G.player); // runs onTurn callbacks and decrements duration (status.js)
 
-  // Plague Lord: tick all enemy diseases an extra time on player turn end
-  if (G._plagueLordActive && G.enemy && G.inCombat) {
-    const diseases = (G.enemy.status || []).filter(s => s.disease && s.onTurn);
-    for (const d of diseases) {
-      d.onTurn(G.enemy);
-    }
-    if (diseases.length > 0) logEntry('player-action', `🦠 Plague Lord: diseases tick again!`);
+  // Plague Lord: your poisons/diseases on every enemy tick an extra time
+  if (G._plagueLordActive) {
+    let ticks = 0;
+    G.enemies.filter(en => en.hp > 0).forEach(en => (en.status || []).slice().forEach(s => {
+      if (s.onTurn && (s.disease || /poison|plague|toxin|venom|rot|blight|disease|spore|pestil|virus|infect|contag|fester/.test(s.id))) {
+        s.onTurn(en); ticks++;
+      }
+    }));
+    if (ticks > 0) logEntry('player-action', `🦠 Plague Lord: diseases tick again!`);
   }
   checkCombatEnd();
-  if (!G.inCombat) {
-    // Combat ended during status tick (e.g. DoT killed enemy or player died to status)
-    G.turn = 'player';
-    return;
-  }
+  if (!G.inCombat) return; // a status tick ended the fight
   Object.keys(G.player.cooldowns).forEach(ab => { if(G.player.cooldowns[ab]>0) G.player.cooldowns[ab]--; });
 
-  // INITIATIVE: if the enemy hasn't acted yet this round, it's owed a turn
-  // now. If the enemy already went first, the player was this round's
-  // second actor — the round is complete, so close it out and roll fresh
-  // initiative for the next one instead of always handing it to the enemy.
+  // INITIATIVE: if the enemy side hasn't acted yet this round it acts now;
+  // otherwise the round is complete and a new one starts.
   if (G._pendingSecondActor === 'enemy') {
     G.turn = 'enemy';
     updateUI();
     // G._enemyTurnDelay: can be set to 0 in tests/dev for instant enemy turns
     setTimeout(enemyTurn, G._enemyTurnDelay ?? 600);
   } else {
-    G.combatRound++;
-    resolveNextRoundInitiative();
+    advanceRound();
     updateUI();
   }
 }
 
 // enemyTurn — resolves the ENTIRE enemy phase for this round: every enemy
-// currently alive in G.enemies takes one action, in array order, one after
-// another (packs — see mapgen.js). The round-closing logic (combatRound++,
-// rerolling initiative, The Convergence's turn-10 check) runs ONCE after
-// the whole phase completes, not once per enemy — so Phase 1's initiative
-// system needed no changes: "the enemy side" is still a single conceptual
-// turn-slot within a round, however many individual enemies act inside it.
+// alive in G.enemies takes one action, in order (packs — see mapgen.js).
+// G._actingEnemy marks who is attacking so reflects/misses/elements apply to
+// the right enemy. Round bookkeeping runs ONCE after the whole phase.
 function enemyTurn() {
   if (!G.inCombat || !G.enemies || !G.enemies.length || G.turn !== 'enemy') return;
   // A dialog is open (pause menu, weapon arts choice…) — wait for it to close
@@ -900,61 +987,50 @@ function enemyTurn() {
     const e = G.enemies[i];
     if (e.hp <= 0) continue; // already defeated — skip, no turn for it
 
-    checkBossPhase(e);   // upgrades boss stats if HP threshold crossed
+    checkBossPhase(e);   // upgrades boss stats if HP thresholds were crossed
     checkBossEnrage(e);  // periodic ATK/DEF buff if enrage timer set
     checkRegularEscalation(e); // lightweight ATK ramp for long non-boss fights
+    if (e._stunImmune > 0) e._stunImmune--;
 
-    // Stun: this enemy loses its turn, status consumed — the pack still
-    // continues to the next enemy in line
-    const stun = e.status && e.status.find(s=>s.id==='stun'||s.id==='stunned');
-    if (stun) {
+    const stun = (e.status || []).find(s => s.id === 'stun' || s.id === 'stunned');
+    if (e._skipNextTurn) {
+      logEntry('system', e._skipNextTurn === 'gust' ? `${e.name} is still reeling from the first strike!`
+        : `${e.name} can't find you in the dark!`);
+      delete e._skipNextTurn;
+    } else if (stun) {
       logEntry('system', `${e.name} is stunned and cannot act!`);
-      e.status = e.status.filter(s=>s.id!=='stun'&&s.id!=='stunned');
-      tickStatus(e);
+      if (isBossLike(e)) {
+        // Bosses shake off stuns quickly and can't be stunned again right away
+        removeStatuses(e, s => s.id === 'stun' || s.id === 'stunned');
+        e._stunImmune = 2;
+        logEntry('system', `${e.name} steadies itself — immune to stuns for 2 turns.`);
+      }
     } else {
-      // Cycle through ability pattern (e.patterns array from enemy definition)
       // pickEnemyAbility (enemies.js) — HP-reactive selection within the
       // enemy's own pattern list; see its comment for the exact bias rules.
       const abId = pickEnemyAbility(e, G.player);
       e.patternIndex++;
-
       const abFn = ENEMY_ABILITIES[abId] || ENEMY_ABILITIES.basic;
-
-      // Multiple enemy cards get per-index sprite ids (enemy-sprite-0, -1,
-      // ...) from render.js; a solo fight keeps the original single id.
-      const spriteEl = document.getElementById(G.enemies.length > 1 ? `enemy-sprite-${i}` : 'enemy-sprite');
-      if (spriteEl) { spriteEl.classList.remove('hurt','attacking','dead'); void spriteEl.offsetWidth; spriteEl.classList.add('attacking'); }
-
-      abFn(e, G.player); // enemy ability function — defined in enemies.js
-
-      tickStatus(e);
+      playSpriteAnim(enemySpriteId(e), 'attacking');
+      G._actingEnemy = e;
+      try { abFn(e, G.player); } // enemy ability function — defined in enemies.js
+      finally { G._actingEnemy = null; }
     }
+    tickStatus(e);
 
     checkCombatEnd();
-    if (!G.inCombat) { updateUI(); return; } // player died mid-barrage — stop immediately
+    if (!G.inCombat) { updateUI(); return; } // fight ended mid-phase
   }
 
-  // ── Round fully resolved: every alive enemy has acted ──
-  // INITIATIVE: only close out the round (increment combatRound, reroll who
-  // acts first next round) if the enemy side was this round's second actor.
-  // If the enemy side won initiative and went first, the player still owes
-  // an action before the round is over.
+  passiveEnemyTurnEnd(G.player);
+
+  // ── Enemy phase resolved ──
+  // Close the round if the enemy side acted second; otherwise the player
+  // still owes this round's action.
   if (G._pendingSecondActor === 'enemy') {
-    G.combatRound++;
-    resolveNextRoundInitiative();
+    advanceRound();
   } else {
     G.turn = 'player';
-  }
-
-  // The Convergence: auto-reset at turn 10 with double power (if player hasn't already reset)
-  if (G.player && (G.player.classId === 'the_convergence') && G.combatRound === 10) {
-    const p2 = G.player;
-    if (!(p2.status||[]).find(s=>s.id==='convergence_reset')) {
-      p2._convergenceForm = 'null';
-      Object.keys(p2.cooldowns||{}).forEach(k=>p2.cooldowns[k]=0);
-      addStatus(p2,{id:'convergence_reset',name:'Reset ×2',type:'buff',icon:'↺',duration:4,dmgMult:2.0});
-      logEntry('system','✦ THE CONVERGENCE RESETS — Turn 10. All Forms double-powered for 4 turns.');
-    }
   }
 
   checkCombatEnd();
@@ -963,22 +1039,25 @@ function enemyTurn() {
 
 // checkBossPhase — compares current HP% to phase thresholds
 // e.phases = [{ threshold:0.6, atkBoost:5, newPatterns:[...], announce:'...' }, ...]
-// Phase index stored in e.currentPhase, incremented on crossing threshold
+// e.currentPhase counts phases passed; a big hit can cross several at once.
 function checkBossPhase(e) {
   if (!e.phases || !e.phases.length) return;
-  const hpPct = e.hp / e.maxHp;
-  const nextPhase = e.currentPhase + 1;
-  if (nextPhase > e.phases.length) return;
-  const phase = e.phases[nextPhase - 1];
-  if (hpPct <= phase.threshold && e.currentPhase < nextPhase) {
-    e.currentPhase = nextPhase;
+  e.currentPhase = e.currentPhase || 0;
+  let changed = false;
+  while (e.currentPhase < e.phases.length && e.hp / e.maxHp <= e.phases[e.currentPhase].threshold) {
+    const phase = e.phases[e.currentPhase];
+    e.currentPhase++;
     e.atk += phase.atkBoost || 0;
     e.def += phase.defBoost || 0;
     if (phase.newPatterns) e.patterns = phase.newPatterns;
     e.patternIndex = 0;
     logEntry('system', `⚠ ${phase.announce}`);
-    const spriteEl = document.getElementById('enemy-sprite');
+    changed = true;
+  }
+  if (changed) {
+    const spriteEl = document.getElementById(enemySpriteId(e));
     if (spriteEl) { spriteEl.style.filter='brightness(3)'; setTimeout(()=>spriteEl.style.filter='',600); }
+    screenShake(3);
     renderBossPhaseBar(e);
   }
 }
@@ -1165,6 +1244,11 @@ function endCombat(won) {
   G._spiritBondActive     = false;
   G._stardustActive       = false;
   G._stardustHits         = 0;
+  G._actingEnemy          = null;
+  G._passiveState         = {};
+  G._currentAbilityTags   = null;
+  G.player.nextAbilityFree = false;
+  G.player.nextAttackMult  = null;
   G.player.shield = 0;
   // Every buff/debuff ends with the fight and live stats snap back to the
   // permanent base (status.js / stats.js) — nothing temporary can leak.

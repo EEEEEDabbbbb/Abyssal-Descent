@@ -146,6 +146,8 @@ function getBurnBoost(p) {
   if(hasEquipEffect(p,'burnboost2')) boost+=3;
   // Pyromancer passive: combustion — extra burn stack on all applications
   if(p.passives && p.passives.includes('combustion')) boost+=1;
+  // Fire Mastery passive: +1 burn stack on all applications
+  if(p.passives && p.passives.includes('fire_mastery')) boost+=1;
   return boost;
 }
 

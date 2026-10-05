@@ -39,7 +39,7 @@ const BIOMES = [
     ],
     effect(p) {
       const dmg = Math.max(1, Math.round(p.stats.maxHp * 0.025));
-      dealDmgToPlayer(dmg, true);
+      dealEnvironmentDamage(p, dmg);
       logEntry('system', `❄️ Frostbite nips at exposed skin. You take ${dmg} damage.`);
     },
   },
@@ -52,7 +52,7 @@ const BIOMES = [
     ],
     effect(p) {
       const dmg = Math.max(1, Math.round(p.stats.maxHp * 0.03));
-      dealDmgToPlayer(dmg, true);
+      dealEnvironmentDamage(p, dmg);
       logEntry('system', `🔥 Heat rises from the cracked floor. You take ${dmg} damage.`);
     },
   },
@@ -65,7 +65,7 @@ const BIOMES = [
     ],
     effect(p) {
       const dmg = Math.max(1, Math.round(p.stats.maxHp * 0.035));
-      dealDmgToPlayer(dmg, true);
+      dealEnvironmentDamage(p, dmg);
       logEntry('system', `⚡ A stray bolt arcs down and catches you for ${dmg} damage.`);
     },
   },
@@ -91,7 +91,7 @@ const BIOMES = [
     ],
     effect(p) {
       const dmg = Math.max(1, Math.round(p.stats.maxHp * 0.04));
-      dealDmgToPlayer(dmg, true);
+      dealEnvironmentDamage(p, dmg);
       logEntry('system', `🕳️ The void gnaws at the edges of your resolve. You take ${dmg} damage.`);
     },
   },
@@ -104,7 +104,7 @@ const BIOMES = [
     ],
     effect(p) {
       const dmg = Math.max(1, Math.round(p.stats.maxHp * 0.05));
-      dealDmgToPlayer(dmg, true);
+      dealEnvironmentDamage(p, dmg);
       logEntry('system', `🌌 The Maw presses against your resolve. You take ${dmg} damage.`);
     },
   },

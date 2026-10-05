@@ -802,6 +802,10 @@ function generateSecretBossFloor(floor, secretBossId) {
   const bossY = roomY + 3;
   const bossDef = SECRET_BOSSES[secretBossId];
   const bossEnemy = JSON.parse(JSON.stringify(bossDef.enemy));
+  const scale = getDifficultyMult() * getNgPlusMult();
+  bossEnemy.maxHp = Math.round((bossEnemy.maxHp || bossEnemy.hp) * scale);
+  bossEnemy.hp    = bossEnemy.maxHp;
+  bossEnemy.atk   = Math.round(bossEnemy.atk * scale);
   map[bossY][bossX].content = 'enemy';
   map[bossY][bossX].enemy   = bossEnemy;
   G._secretBossCell = { x:bossX, y:bossY };

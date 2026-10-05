@@ -3,7 +3,7 @@
   "private": true,
   "description": "Dev tooling for Abyssal Descent. The game itself needs none of this: just open abyssal_revamped/index.html.",
   "scripts": {
-    "test": "node --test --test-concurrency=4 tests/",
+    "test": "node --test --test-concurrency=4 \"tests/*.test.js\"",
     "postinstall": "playwright install chromium"
   },
   "devDependencies": {

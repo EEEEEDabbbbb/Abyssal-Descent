@@ -160,7 +160,7 @@ const ITEM_POOL = [
     use:(p)=>{ addStatus(p,{id:'warlord',name:'Warlord',type:'buff',icon:'⚔️',duration:6,atkBonus:35,critBonus:20,spdBonus:15}); p.stats.atk+=35; p.stats.crit+=20; p.stats.spd+=15; logEntry('status-applied','Warlord Tonic: +35 ATK, +20 CRIT, +15 SPD for 6 turns!'); } },
   { id:'iron_fortress',    name:'Iron Fortress Brew',    type:'consumable', icon:'🏰', rarity:'legendary',
     desc:'+40 DEF for 5 turns. Gain 120 shield. Reflect 20% of damage taken.',  element:'steel',
-    use:(p)=>{ addStatus(p,{id:'iron_fortress',name:'Iron Fortress',type:'buff',icon:'🏰',duration:5,defBonus:40}); p.stats.def+=40; p.shield=(p.shield||0)+120; logEntry('status-applied','Iron Fortress: +40 DEF, +120 shield, damage reflect for 5 turns!'); } },
+    use:(p)=>{ addStatus(p,{id:'iron_fortress_draught',name:'Iron Fortress',type:'buff',icon:'🏰',duration:5,defBonus:40,reflectPct:25}); p.stats.def+=40; p.shield=(p.shield||0)+120; logEntry('status-applied','Iron Fortress: +40 DEF, +120 shield, 25% damage reflect for 5 turns!'); } },
   { id:'abyssal_elixir_l', name:'Abyssal Tincture',      type:'consumable', icon:'🌑', rarity:'legendary',
     desc:'Fully restore HP and MP.',                   element:'shadow',
     use:(p)=>{ const h=p.stats.maxHp-p.stats.hp; const m=p.stats.maxMp-p.stats.mp; p.stats.hp=p.stats.maxHp; p.stats.mp=p.stats.maxMp; logEntry('heal',`Abyssal Tincture fully restores ${h} HP and ${m} MP!`); } },
